@@ -33,9 +33,9 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
 
-            <Route path="/project/create" element={<CreateReport />} />
+            <Route path="/project/create" element={<CreateReport  setState={setDrawerState}/>} />
             <Route path="/project/import" element={<ImportData />} />
-            <Route path="/project/gallery" exact element={<Gallery />} />
+            <Route path="/project/gallery" exact element={<Gallery setState={setDrawerState} />} />
             <Route path="/project/templates" element={<Templates />} />
 
             <Route
