@@ -16,24 +16,24 @@ export default function Drawer(props) {
     <div className="col-2">
       <div className="m-2">
         <ul class="list-group">
-          <a class="list-group-item border-0 p-0" onClick={workspaceState}>
-            <h6>WORKSPACE</h6>
+          <a class="list-group-item border-0 p-0" onClick={workspaceState} href="">
+            WORKSPACE
           </a>
           {props.state === "workspace" ? (
             <div className="m-2">
               <Workspace />
             </div>
           ) : null}
-          <a class="list-group-item border-0 p-0" onClick={projectState}>
-            <h6>PROJECT</h6>
+          <a class="list-group-item border-0 p-0" onClick={projectState} href="">
+            PROJECT
           </a>
 					{props.state === "project" ? (
             <div className="m-2">
               <Project />
             </div>
           ) : null}
-					<a class="list-group-item border-0 p-0">
-            <h6>PERSONAL</h6>
+					<a class="list-group-item border-0 p-0" href="">
+            PERSONAL
           </a>
         </ul>
       </div>
