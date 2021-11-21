@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 import SelectData from './Children/SelectData'
 import EditData from './Children/EditData'
-import {ImportData} from 'api/DataSources'
+import {ImportDataApi} from 'api/DataSources'
 
 
 export default function ImportData() {
@@ -27,7 +27,7 @@ export default function ImportData() {
             return row
         })
         // send it to server
-        ImportData(name, data)
+        ImportDataApi(name, data)
 
     }
 
