@@ -20,51 +20,58 @@ import Setting from "./pages/Setting/Setting";
 import Drawer from "./pages/Drawer/Drawer";
 
 function App() {
-  const [drawerState, setDrawerState] = useState("workspace");
-  return (
-    <Router>
-      <div className="row">
-        <Drawer state={drawerState} setState={setDrawerState} />
-        <div className="col">
-          <Routes>
-            <Route path="/" exact element={<Dashboard />} />
-            <Route path="/datasources" element={<DataSources />} />
-            <Route path="/people" element={<People />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
+    const [drawerState, setDrawerState] = useState("workspace");
+    return (
+        <Router>
+            <div className="row">
+                <Drawer state={drawerState} setState={setDrawerState} />
+                <div className="col bg-light">
+                    <Routes>
+                        <Route path="/" exact element={<Dashboard />} />
+                        <Route path="/datasources" element={<DataSources />} />
+                        <Route path="/people" element={<People />} />
+                        <Route path="/login" element={<Login />} />
+                        <Route path="/register" element={<Register />} />
 
-            <Route path="/project/create" element={<CreateReport  setState={setDrawerState}/>} />
-            <Route path="/project/import" element={<ImportData />} />
-            <Route path="/project/gallery" exact element={<Gallery setState={setDrawerState} />} />
-            <Route path="/project/templates" element={<Templates />} />
+                        <Route
+                            path="/project/create"
+                            element={<CreateReport setState={setDrawerState} />}
+                        />
+                        <Route path="/project/import" element={<ImportData />} />
+                        <Route
+                            path="/project/gallery"
+                            exact
+                            element={<Gallery setState={setDrawerState} />}
+                        />
+                        <Route path="/project/templates" element={<Templates />} />
 
-            <Route
-              path="/project/gallery/:id"
-              exact
-              element={<EditReport isEdit={false} />}
-            />
-            <Route
-              path="/project/gallery/:id/edit"
-              element={<EditReport isEdit={true} />}
-            />
+                        <Route
+                            path="/project/gallery/:id"
+                            exact
+                            element={<EditReport isEdit={false} />}
+                        />
+                        <Route
+                            path="/project/gallery/:id/edit"
+                            element={<EditReport isEdit={true} />}
+                        />
 
-            <Route path="/personal/profile" element={<Profile />} />
-            <Route path="/personal/setting" element={<Setting />} />
+                        <Route path="/personal/profile" element={<Profile />} />
+                        <Route path="/personal/setting" element={<Setting />} />
 
-            <Route
-              path="*"
-              element={
-                <div className="m-4">
-                  <h1>404 not found</h1>
-                  <p>Please check the correct link when browsing</p>
+                        <Route
+                            path="*"
+                            element={
+                                <div className="m-4">
+                                    <h1>404 not found</h1>
+                                    <p>Please check the correct link when browsing</p>
+                                </div>
+                            }
+                        />
+                    </Routes>
                 </div>
-              }
-            />
-          </Routes>
-        </div>
-      </div>
-    </Router>
-  );
+            </div>
+        </Router>
+    );
 }
 
 export default App;

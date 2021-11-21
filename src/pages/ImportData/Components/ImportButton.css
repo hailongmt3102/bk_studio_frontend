@@ -1,0 +1,10 @@
+.import_button{
+    box-shadow: 2px 2px 2px 2px #c7c7c7;
+}
+.import_button:active {
+    border: none;
+}
+.import_button img {
+    min-width: 60px;
+    min-height: 60px;
+}
