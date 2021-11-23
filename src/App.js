@@ -24,10 +24,11 @@ function App() {
     return (
         <Router>
             <div className="row">
-                <Drawer state={drawerState} setState={setDrawerState} />
+                <Drawer state={drawerState} setDrawerState={setDrawerState} />
                 <div className="col bg-light">
                     <Routes>
-                        <Route path="/" exact element={<Dashboard />} />
+                        <Route path="/" exact element={<Dashboard />} >
+                        </Route>
                         <Route path="/datasources" element={<DataSources />} />
                         <Route path="/people" element={<People />} />
                         <Route path="/login" element={<Login />} />
@@ -35,13 +36,13 @@ function App() {
 
                         <Route
                             path="/project/create"
-                            element={<CreateReport setState={setDrawerState} />}
+                            element={<CreateReport />}
                         />
                         <Route path="/project/import" element={<ImportData />} />
                         <Route
                             path="/project/gallery"
                             exact
-                            element={<Gallery setState={setDrawerState} />}
+                            element={<Gallery />}
                         />
                         <Route path="/project/templates" element={<Templates />} />
 
