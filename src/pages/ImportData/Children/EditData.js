@@ -20,7 +20,7 @@ export default function EditData(props) {
 
     const editColumns = (index) => {
         setColumns({...columns, active: columns.active.map((element, i) => {
-            if (i == index) return !element
+            if (i === index) return !element
             else return element
         })})
     }

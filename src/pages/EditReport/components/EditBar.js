@@ -13,6 +13,7 @@ import save from "resources/icons/save.svg";
 import share from "resources/icons/share.svg";
 import shareWith from "resources/icons/addPeople.svg";
 import view from "resources/icons/eye.svg";
+import DropdownMenu, { DropdownItem, DropdownItemGroup } from '@atlaskit/dropdown-menu';
 
 export default function EditBar(props) {
     // variable for add shape button
@@ -63,10 +64,23 @@ export default function EditBar(props) {
                     </div>
 
                     <div className="col p-0">
-                        <button className="btn">
-                            <img src={addShape}></img>
-                            <p className="p-0 m-0">add shape</p>
-                        </button>
+                        <DropdownMenu
+                            trigger={({ triggerRef, isSelected, testId, ...providedProps }) => (
+                                <button className='btn'
+                                    type="button"
+                                    {...providedProps}
+                                    ref={triggerRef}
+                                >
+                                    <img src={addShape}></img>
+                                    <p className="p-0 m-0">add shape</p>
+                                </button>
+                            )}
+                        >
+                            <DropdownItemGroup>
+                                <DropdownItem>Doughnut chart</DropdownItem>
+                            </DropdownItemGroup>
+                        </DropdownMenu>
+
                     </div>
 
                     <div className="col p-0">
@@ -132,6 +146,6 @@ export default function EditBar(props) {
                     </div>
                 </div>
             </div>
-        </div>
+        </div >
     )
 }
