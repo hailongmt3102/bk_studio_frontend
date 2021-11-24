@@ -1,39 +1,33 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef , useEffect} from "react";
 import CircleModel from "./components/AddShapeModel/CircleModel";
 import Content from "./components/Content";
 import EditBar from "./components/EditBar";
 import ViewBar from "./components/ViewBar";
 import "./EditReport.css";
 
+import {GetTableColumns, QueryData} from "api/DataSources"
+
 
 export default function EditReport(props) {
+    useEffect(() => {
+        // get data source
+        GetTableColumns()
+        .then(res => console.log(res))  
+        .catch(err => console.log(err))
+    }, [])
+
     const colorTemplate = ['rgb(255, 99, 132)',
         'rgb(54, 162, 235)',
         'rgb(255, 205, 86)',
-    ]
+        'rgb(54, 162, 235)',
+        'rgb(255, 205, 86)', 
+        'rgb(54, 162, 235)',
+        'rgb(255, 205, 86)',
+    ] 
+    const [dataSource, setDataSource] = useState({
+        user_details_csv : ["user_id", "username", "first_name", "last_name", "gender", "password", "status"]
+    })
     const [reports, setReports] = useState([
-        {
-            type: 'doughnut',
-            data: {
-                labels: [
-                    'male',
-                    'female',
-                    'unknown'
-                ],
-                datasets: [
-                    {
-                        label: "example report",
-                        data: [100, 200, 300],
-                        backgroundColor:[
-                            colorTemplate[0],
-                            colorTemplate[1],
-                            colorTemplate[2]
-                        ],
-                        hoverOffset: 10
-                    }
-                ]
-            }
-        },
         {
             type: 'pie',
             data: {
@@ -56,6 +50,30 @@ export default function EditReport(props) {
         }
     ])
 
+    const addShape = (query) => {
+        QueryData(query)
+        .then(res => {
+            let dataResponse = res.data.body[0]
+            setReports([...reports, {
+                type: 'doughnut',
+                data : {
+                    labels : Object.keys(dataResponse),
+                    datasets : [
+                        {
+                            label : "report",
+                            data : Object.values(dataResponse),
+                            backgroundColor : Object.values(dataResponse).map((_,i) => i < colorTemplate.length ? colorTemplate[i] : colorTemplate[colorTemplate.length - 1]),
+                            hoverOffset : 5
+                        }
+                    ]
+                }
+            }])
+        })
+        .catch(err => {
+            console.log(err)
+        })
+    }
+
     return (
         <div>
             <div className="row">
@@ -67,7 +85,7 @@ export default function EditReport(props) {
                         <h2>My report</h2>
                         {
                             props.isEdit === true ? (
-                                <EditBar />
+                                <EditBar dataSource={dataSource} addShape={addShape}/>
 
                             ) : (
                                 <ViewBar />

@@ -7,6 +7,18 @@ const ImportDataApi = (tableName, data) => {
     })
 }
 
+const GetTableColumns = () => {
+    return axiosClient.get("/data/")
+}
+
+const QueryData = (query) => {
+    return axiosClient.post("/data/query", {
+        query: query
+    })
+}
+
 export {
-    ImportDataApi
+    ImportDataApi,
+    GetTableColumns,
+    QueryData
 }

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState , useCallback } from 'react'
 
 import plus from "resources/icons/plus.svg";
 import dataBoard from "resources/icons/dataBoard.svg";
@@ -14,11 +14,17 @@ import share from "resources/icons/share.svg";
 import shareWith from "resources/icons/addPeople.svg";
 import view from "resources/icons/eye.svg";
 import DropdownMenu, { DropdownItem, DropdownItemGroup } from '@atlaskit/dropdown-menu';
+import CircleModel from './AddShapeModel/CircleModel';
 
 export default function EditBar(props) {
     // variable for add shape button
-    const [addShapeBtn, setAddShapeBtn] = useState(false)
-    const addShapeBtnTarget = useRef(null)
+    const [isOpen, setIsOpen] = useState(false);
+    const openModal = useCallback(() => setIsOpen(true), []);
+    const closeModal = useCallback(() => setIsOpen(false), []);
+
+    const onSubmit = (query) => {
+        console.log(query)
+    }
     //
     return (
         <div>
@@ -77,9 +83,11 @@ export default function EditBar(props) {
                             )}
                         >
                             <DropdownItemGroup>
-                                <DropdownItem>Doughnut chart</DropdownItem>
+                                <DropdownItem onClick={openModal}>Doughnut chart</DropdownItem>
                             </DropdownItemGroup>
                         </DropdownMenu>
+
+                        <CircleModel isOpen={isOpen} closeModal={closeModal} dataSource={props.dataSource} addShape={props.addShape}/>
 
                     </div>
 
