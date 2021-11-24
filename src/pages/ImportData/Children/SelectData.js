@@ -8,22 +8,26 @@ export default function SelectData(props) {
 
     const executeStringResult = (result) => {
         let data = []
-
-        let dataSheet = result.split('\n')
-        let keys = dataSheet[0].split(';')
-        keys.map((ele, index) => typeof (ele) === 'string' ? keys[index] = ele.substring(1, ele.length - 1) : ele)
-
+        let dataSheet = result.split('\n').length == 2 ? result.split('\r') : result.split('\n')
+        if (dataSheet.length ===  0) return
+        // find the sign to split string
+        let divider = dataSheet[0].includes(',') ? ',' : ';'
+        let keys = dataSheet[0].split(divider)
+        console.log(dataSheet[1])
+        keys.map((ele, index) => ele.includes('\"') ? keys[index] = ele.substring(1, ele.length - 1) : ele)
+        console.log(keys)
         dataSheet.map((row, index) => {
-            if (row.includes(';')) {
+            if (row.includes(divider)) {
                 if (index != 0){
                     let rows = {}
-                    row.split(';').map((ele, index) => {
-                        rows[keys[index]] = isNaN(parseInt(ele)) ? ele.substring(1, ele.length - 1) : parseInt(ele)
+                    row.split(divider).map((ele, index) => {
+                        rows[keys[index]] = ele.includes('\"')? ele.substring(1, ele.length - 1) : ele
                     })
                     data.push(rows)
                 }
             }
         })
+        console.log(data)
         props.setDataFile(data)
         // void callback
         props.onloadComplete()
@@ -36,9 +40,10 @@ export default function SelectData(props) {
         } else {
             // valid format
             // store file information
-            props.setFileInformation(file[0])
+            props.setFileInformation({...file[0], name: file[0].name.replaceAll('.', '_')})
             var reader = new FileReader();
             reader.readAsText(file[0]);
+            console.log(file[0])
             reader.onloadend = e => {
                 // set data when loaded
                 executeStringResult(reader.result)

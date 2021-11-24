@@ -1,7 +1,10 @@
-const axiosClient = require("./axios");
+import axiosClient from "./axios"
 
 const ImportDataApi = (tableName, data) => {
-    return axiosClient.post("")
+    return axiosClient.post("/data/new", {
+        table: tableName,
+        data : data
+    })
 }
 
 export {

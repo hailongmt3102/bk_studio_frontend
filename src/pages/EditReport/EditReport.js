@@ -1,4 +1,5 @@
 import React, { useState, useRef } from "react";
+import CircleModel from "./components/AddShapeModel/CircleModel";
 import Content from "./components/Content";
 import EditBar from "./components/EditBar";
 import ViewBar from "./components/ViewBar";
@@ -58,7 +59,9 @@ export default function EditReport(props) {
     return (
         <div>
             <div className="row">
-                <div className="col-2 bg-info"> menu</div>
+                <div className="col-2 bg-info"> 
+                Menu
+                </div>
                 <div className="col-10">
                     <div className="rightColumn p-3">
                         <h2>My report</h2>

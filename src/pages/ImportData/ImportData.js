@@ -15,11 +15,12 @@ export default function ImportData() {
     const onloadComplete = () => {
         // navigate to next step, execute data file
         setStep(2)
-        console.log(dataFile)
     }
 
+    // send data to server
     const submit = (name, columns) => {
-        // filter data
+        console.log("submit")
+        // filter data  
         let data = dataFile.map(row => {
             columns.active.map((state, index) => {
                 if (!state) delete row[columns.data[index]]
@@ -28,6 +29,13 @@ export default function ImportData() {
         })
         // send it to server
         ImportDataApi(name, data)
+        .then (res => {
+            alert(res.data.body)
+            setStep(1)
+        })
+        .catch(err => {
+            alert(err)
+        })
 
     }
 
