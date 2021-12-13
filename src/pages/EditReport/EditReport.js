@@ -1,5 +1,5 @@
 import React, { useState, useRef , useEffect} from "react";
-import CircleModel from "./components/AddShapeModel/CircleModel";
+import CircleModel from "./components/addShapeModel/CircleModel";
 import Content from "./components/Content";
 import EditBar from "./components/EditBar";
 import ViewBar from "./components/ViewBar";
@@ -28,46 +28,27 @@ export default function EditReport(props) {
         user_details_csv : ["user_id", "username", "first_name", "last_name", "gender", "password", "status"]
     })
     const [reports, setReports] = useState([
-        {
-            type: 'pie',
-            data: {
-                labels: [
-                    'male',
-                    'female'
-                ],
-                datasets: [
-                    {
-                        label: "example report",
-                        data: [100, 200],
-                        backgroundColor:[
-                            colorTemplate[0],
-                            colorTemplate[1]
-                        ],
-                        hoverOffset: 4
-                    }
-                ]
-            }
-        }
     ])
 
-    const addShape = (query) => {
-        QueryData(query)
+    const addShape = (table, query) => {
+        QueryData(table, query)
         .then(res => {
+            console.log(res)
             let dataResponse = res.data.body[0]
-            setReports([...reports, {
-                type: 'doughnut',
-                data : {
-                    labels : Object.keys(dataResponse),
-                    datasets : [
-                        {
-                            label : "report",
-                            data : Object.values(dataResponse),
-                            backgroundColor : Object.values(dataResponse).map((_,i) => i < colorTemplate.length ? colorTemplate[i] : colorTemplate[colorTemplate.length - 1]),
-                            hoverOffset : 5
-                        }
-                    ]
-                }
-            }])
+            // setReports([...reports, {
+            //     type: 'doughnut',
+            //     data : {
+            //         labels : Object.keys(dataResponse),
+            //         datasets : [
+            //             {
+            //                 label : "report",
+            //                 data : Object.values(dataResponse),
+            //                 backgroundColor : Object.values(dataResponse).map((_,i) => i < colorTemplate.length ? colorTemplate[i] : colorTemplate[colorTemplate.length - 1]),
+            //                 hoverOffset : 5
+            //             }
+            //         ]
+            //     }
+            // }])
         })
         .catch(err => {
             console.log(err)
@@ -78,7 +59,7 @@ export default function EditReport(props) {
         <div>
             <div className="row">
                 <div className="col-2 bg-info"> 
-                Menu
+                {/* Menu */}
                 </div>
                 <div className="col-10">
                     <div className="rightColumn p-3">
