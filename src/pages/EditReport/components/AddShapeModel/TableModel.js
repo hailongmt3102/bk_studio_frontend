@@ -1,63 +1,63 @@
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { Modal, Button } from 'react-bootstrap'
 import CustomDropdownButton from '../CustomDropdownButton'
 import WhereCondition from './WhereCondition'
+import { checkVariable } from 'utils/utils'
 
-export default function CircleModel(props) {
+export default function TableModel(props) {
     const [step, setStep] = useState(1)
     const [selectedTable, setSelectedTable] = useState([])
     const [calculateField, setCalculateField] = useState([])
 
     // method change condition of each computed field
-    const setWhereCondition = (index, value) => {
+    const setWhereCondition = useCallback((index, value) => {
         setCalculateField(calculateField.map((val, i) =>
             i === index ? { ...val, where: value } : val
         ))
-    }
+    }, [calculateField])
 
     // when click submit button
     const onsubmit = () => {
         let err = false
         if (calculateField.length === 0) return alert("You don't have anything to compute")
-        // compute query field
-        let query = calculateField.map((field, index) => {
+        // compute query field 
+        // parse some field input to string
+        let listFieldQuery = calculateField.map((field) => {
             if (!field.show) return ""
-            // check null of condition
-            field.where.map(condition => {
-                if ((condition.exp === "between" && (condition.val1 === "" || condition.val2 === "")) || (condition.exp !== "between" && condition.val1 === "" && condition.val2 === "")) {
-                    err = true
-                    return alert("Please fill all conditions")
-                }
-            })
-            // if have err, return
-            if (err) return
-            // merge condition to string
-            let condition = ""
-            if (field.where.length > 0) {
-                condition =
-                    field.where
-                        .map(ele => ele.exp === "between"
-                            ?
-                            `${ele.field.split('.')[1]} between '${ele.val1}' and '${ele.val2}'`
-                            :
-                            `${ele.field.split('.')[1]} ${ele.exp} '${ele.val1}'`
-                        )
-                        .reduce((pre, cur) => `${pre} \nand ${cur} `)
-
-            }
-            // get query field
-            let fieldQuery = `select ${field.fx}(${field.from.split('.')[1]}) as ${field.name} \nfrom ${field.from.split('.')[0]}`
-            if (condition !== "")
-                fieldQuery += `\nwhere \n${condition};`
+            let variable = `${field.from.split('.')[1]} as ${field.name}`
+            if (field.fx === "none")
+                return variable
             else
-                fieldQuery += ';'
-            return fieldQuery
-        }).join('\n')
-        // if have err, return
+                return `${field.fx}(${variable})`
+        }).join(',\n')
+
+        // check condition
+        calculateField[0].where.map(condition => {
+            if ((condition.exp === "between" && (condition.val1 === "" || condition.val2 === "")) || (condition.exp !== "between" && condition.val1 === "" && condition.val2 === "")) {
+                err = true
+                return alert("Please fill all conditions")
+            }
+        })
         if (err) return
+        // parse conditions
+        let condition = ""
+        if (calculateField[0].where.length > 0) {
+            condition = calculateField[0].where
+                .map(ele => ele.exp === "between"
+                    ?
+                    `${ele.field.split('.')[1]} between ${checkVariable(ele.val1)} and ${checkVariable(ele.val2)}`
+                    :
+                    `${ele.field.split('.')[1]} ${ele.exp} ${checkVariable(ele.val1)}`)
+                .reduce((pre, cur) => `${pre} \nand ${cur} `)
+        }
+        // merge all string above
+        let query = `select ${listFieldQuery} \nfrom ${calculateField[0].from.split('.')[0]}`
+        if (condition !== "")
+            query += `\nwhere ${condition}`
+        console.log(query)
         // send it to parent component
-        props.addShape("Doughnut", calculateField[0].from.split('.')[0], query)
-        props.handleClose("Doughnut")
+        props.addShape("Table", calculateField[0].from.split('.')[0], query)
+        props.handleClose("Table")
     }
     const body = () => {
         switch (step) {
@@ -140,7 +140,6 @@ export default function CircleModel(props) {
                         <div>
                             {
                                 <div class="overflow-scroll">
-
                                     <table className="table table-striped">
                                         <thead>
                                             <tr>
@@ -161,7 +160,7 @@ export default function CircleModel(props) {
                                                         setCalculateField([...calculateField, {
                                                             name: `field_${calculateField.length + 1}`,
                                                             from: `${selectedTable[0]}.${props.dataSource[selectedTable[0]][0]}`,
-                                                            fx: "sum",
+                                                            fx: "none",
                                                             where: [],
                                                             show: true
                                                         }])
@@ -198,7 +197,7 @@ export default function CircleModel(props) {
                                                             <th>
                                                                 <CustomDropdownButton
                                                                     title={calc.fx}
-                                                                    items={["sum", "count", "avg", "min", "max"]}
+                                                                    items={["none", "sum", "count", "avg", "min", "max"]}
                                                                     onClick={(value) => {
                                                                         setCalculateField(calculateField.map((val) =>
                                                                             val === calc ? { ...val, fx: value } : val
@@ -215,8 +214,9 @@ export default function CircleModel(props) {
                                                 <th scope='row'>Criteria</th>
                                                 {
                                                     calculateField.map((calc, i) => {
+                                                        if (i > 0) return null
                                                         return (
-                                                            <th>
+                                                            <th colspan={calculateField.length}>
                                                                 <WhereCondition
                                                                     conditions={calc.where}
                                                                     setWhereCondition={setWhereCondition}

@@ -1,4 +1,4 @@
-import React, { useRef, useState, useCallback } from 'react'
+import React, { useState, useCallback, useEffect } from 'react'
 import CustomDropdownButton from './CustomDropdownButton'
 
 import plus from "resources/icons/plus.svg";
@@ -14,21 +14,22 @@ import save from "resources/icons/save.svg";
 import share from "resources/icons/share.svg";
 import shareWith from "resources/icons/addPeople.svg";
 import view from "resources/icons/eye.svg";
-import DropdownMenu, { DropdownItem, DropdownItemGroup } from '@atlaskit/dropdown-menu';
 import CircleModel from './addShapeModel/CircleModel';
-import DoughnutModel from './addShapeModel/DoughnutModel';
+import TableModel from './addShapeModel/TableModel';
 
 export default function EditBar(props) {
-    // variable for add shape button
-    const [isOpen, setIsOpen] = useState(false);
-    const [modelIndex, setModelIndex] = useState(0)
-    const openModal = useCallback(() => setIsOpen(true), []);
-    const closeModal = useCallback(() => setIsOpen(false), []);
 
-    const onSubmit = (query) => {
-        console.log(query)
-    }
-    //
+    // variable for add shape button
+    const [modelState, setModelState] = useState({
+        "Doughnut": false,
+        "Table": false
+    })
+    const openModal = (name) => {
+        setModelState({ ...modelState, [name]: true })
+    };
+    const closeModal = (name) => {
+        setModelState({ ...modelState, [name]: false })
+    };
     return (
         <div>
             <div className="col">
@@ -73,12 +74,11 @@ export default function EditBar(props) {
                     </div>
 
                     <div className="col-1 p-0">
-                        <CustomDropdownButton title="add shape" icon={addShape} items={["Doughnut", "Table"]} onClick={(index) => {
-                            setModelIndex(index)
-                            openModal()
-                        }}
-                        />
-                        <DoughnutModel show={isOpen} handleClose={closeModal} modelIndex={modelIndex} dataSource={props.dataSource} addShape={props.addShape}/>
+                        <CustomDropdownButton title="add shape" icon={addShape} items={["Doughnut", "Table"]} onClick={(val) => {
+                            openModal(val)
+                        }} />
+                        <CircleModel show={modelState["Doughnut"]} handleClose={() => { closeModal("Doughnut") }} dataSource={props.dataSource} addShape={props.addShape} />
+                        <TableModel show={modelState["Table"]} handleClose={() => { closeModal("Table") }} dataSource={props.dataSource} addShape={props.addShape} />
                     </div>
 
                     <div className="col-1 p-0">

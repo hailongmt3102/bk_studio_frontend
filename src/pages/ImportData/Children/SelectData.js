@@ -3,7 +3,6 @@ import ReactFileReader from 'react-file-reader'
 import ImportFileImage from 'resources/images/importFile.png'
 import ImportButton from '../Components/ImportButton'
 
-
 export default function SelectData(props) {
 
     const executeStringResult = (result) => {
