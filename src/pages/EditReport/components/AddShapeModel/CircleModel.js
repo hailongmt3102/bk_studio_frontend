@@ -212,7 +212,7 @@ export default function CircleModel(props) {
                                             </tr>
 
                                             <tr>
-                                                <th scope='row'>Criteria</th>
+                                                <th scope='row'>Conditions</th>
                                                 {
                                                     calculateField.map((calc, i) => {
                                                         return (

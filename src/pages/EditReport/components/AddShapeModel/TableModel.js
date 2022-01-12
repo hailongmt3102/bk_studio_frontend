@@ -211,7 +211,7 @@ export default function TableModel(props) {
                                             </tr>
 
                                             <tr>
-                                                <th scope='row'>Criteria</th>
+                                                <th scope='row'>Conditions</th>
                                                 {
                                                     calculateField.map((calc, i) => {
                                                         if (i > 0) return null

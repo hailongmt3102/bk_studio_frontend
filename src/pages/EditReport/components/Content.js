@@ -27,6 +27,7 @@ export default function Content(props) {
                     })
                 }
             </div>
+            <div className='col-2'></div>
             <div className='col-6'>
                 {
                     props.reports.map(report => {

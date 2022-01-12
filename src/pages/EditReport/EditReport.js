@@ -90,7 +90,7 @@ export default function EditReport(props) {
                 </div>
                 <div className="col-10">
                     <div className="rightColumn p-3">
-                        <h2>My report</h2>
+                        <h2>My report1</h2>
                         {
                             props.isEdit === true ? (
                                 <EditBar dataSource={dataSource} addShape={addShape}/>
