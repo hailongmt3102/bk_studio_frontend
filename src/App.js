@@ -31,8 +31,8 @@ function App() {
                         </Route>
                         <Route path="/datasources" element={<DataSources />} />
                         <Route path="/people" element={<People />} />
-                        <Route path="/login" element={<Login />} />
-                        <Route path="/register" element={<Register />} />
+                        <Route path="/account/login" element={<Login />} />
+                        <Route path="/account/register" element={<Register />} />
 
                         <Route
                             path="/project/create"
