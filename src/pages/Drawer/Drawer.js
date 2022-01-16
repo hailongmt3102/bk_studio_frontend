@@ -1,5 +1,5 @@
-import React, {useEffect} from "react";
-import {useLocation} from 'react-router-dom'
+import React, { useEffect } from "react";
+import { useLocation } from 'react-router-dom'
 
 import Project from "./Components/Project";
 import Workspace from "./Components/Workspace";
@@ -15,19 +15,23 @@ export default function Drawer(props) {
 		// declare some regular expression
 		let projectExp = /project/
 		let personalExp = /personal/
-		if (projectExp.test(url)){
+		let accountExp = /account\/[a-zA-Z]/
+		if (projectExp.test(url)) {
 			// launch project state
 			let reportExp = /project\/gallery\/[0-9a-zA-z]+/
-			if (reportExp.test(url)){
+			if (reportExp.test(url)) {
 				// launch report , no drawer
 				props.setDrawerState("")
-			}else {
+			} else {
 				props.setDrawerState("project")
 			}
-		}else if (personalExp.test(url)){
+		} else if (personalExp.test(url)) {
 			// launch personal state
 			props.setDrawerState("personal")
-		}else {
+		} else if (accountExp.test(url)) {
+			// launch login, signup, forgot password
+			props.setDrawerState("")
+		} else {
 			// launch workspace state
 			props.setDrawerState("workspace")
 		}
