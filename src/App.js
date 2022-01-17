@@ -16,7 +16,7 @@ import Gallery from "./pages/Gallery/Gallery";
 
 import Profile from "./pages/Profile/Profile";
 import Setting from "./pages/Setting/Setting";
-
+import ForgetPassword from "./pages/ForgetPassword/ForgetPassword";
 import Drawer from "./pages/Drawer/Drawer";
 
 function App() {
@@ -32,6 +32,8 @@ function App() {
                         <Route path="/datasources" element={<DataSources />} />
                         <Route path="/people" element={<People />} />
                         <Route path="/account/login" element={<Login />} />
+
+                        <Route path="/account/forgetPassword" element={<ForgetPassword />} />
                         <Route path="/account/register" element={<Register />} />
 
                         <Route
