@@ -1,76 +1,157 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { Form, InputGroup, Col, Button, FormControl } from 'react-bootstrap'
 
+import login_image from "resources/images/login_image.png"
+
+import lock from "resources/icons/lock.svg";
+import eye_black from "resources/icons/eye_black.svg";
+import google from "resources/icons/google.svg";
+import email from "resources/icons/email.svg";
+import visible from "resources/icons/visible.svg"
+import { Link } from "react-router-dom";
+import {deep_blue_primary} from "../../utils/color"
 export default function Login() {
+    const [isVisible, setisVisible] = useState(false)
+    const [information, setinformation] = useState({
+        username: "",
+        password: ""
+    })
+    const onSubmitHandler = (event) => {
+        // event.preventDefault()
+        // let information = {
+        //     email: loginForm.email,
+        //     password: loginForm.password
+        // }
+        // normalLogin(information)
+        // .then((res) => {
+        //     if (res.data.status === 'error') {
+        //         alert(res.data.error)
+        //     }else {
+        //         console.log(res.data)
+        //         onLoginSuccess("lecturer", "john", res.data.token, res.data.refreshToken)
+        //     }
+        // })
+
+    }
     return (
-        <section class="vh-100" style={{ backgroundColor: "#eee" }}>
+        <section class="vh-100" style={{ backgroundColor: "#fff" }}>
             <div class="container h-100">
                 <div class="row d-flex justify-content-center align-items-center h-100">
                     <div class="col-lg-12 col-xl-11">
                         <div class="card text-black" style={{ borderRadius: "25px" }}>
-                            <div class="card-body p-md-5">
+                            <div class="card-body p-0">
                                 <div class="row ">
                                     <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-2 order-lg-1">
-                                        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/draw1.webp" class="img-fluid" alt="Sample image" />
+                                        <img src={login_image} style={{ borderTopLeftRadius: "25px", borderBottomLeftRadius: "25px" }} class="img-fluid" alt="Sample image" />
                                     </div>
-                                    <div class="col-md-10 col-lg-6 col-xl-5 order-1 order-lg-2">
+                                    <div class="col-md-10 col-lg-6 col-xl-5 order-1 order-lg-2 mt-5 ">
 
-                                        <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Sign up</p>
+                                        <p class="h1 fw-bold mb-2 mx-1 mx-md-4 mt-5" style={{color:deep_blue_primary }}>Sign in</p>
 
+
+                                        <div class="form-check mb-4">
+                                            <div class="form-check-label" for="form2Example3">
+                                                If you don’t have an account register
+                                            </div>
+                                            <label class="form-check-label" for="form2Example3">
+                                                You can <Link to="/account/register" class="border-0"> Register here !
+                                                </Link>
+                                            </label>
+
+                                        </div>
                                         <form class="mx-1 mx-md-4">
 
-                                            <div class="d-flex flex-row align-items-center mb-4">
-                                                <i class="fas fa-user fa-lg me-3 fa-fw"></i>
-                                                <div class="form-outline flex-fill mb-0">
-                                                    <input type="text" id="form3Example1c" class="form-control" />
-                                                    <label class="form-label" for="form3Example1c">Your Name</label>
+                                            <Form.Group as={Col} md="12" controlId="validationCustomUsername">
+                                                <Form.Label>Email</Form.Label>
+                                                <InputGroup hasValidation>
+                                                    <InputGroup.Text id="inputGroupPrepend"><img src={email}></img></InputGroup.Text>
+                                                    <Form.Control
+                                                        onChange={(e) => {
+                                                            setinformation({
+                                                                ...information, username: e.target.value
+                                                            })
+                                                            console.log(information);
+                                                        }}
+
+                                                        type="email"
+                                                        placeholder="Enter your email address"
+                                                        aria-describedby="inputGroupPrepend"
+                                                        required
+                                                    />
+                                                    <Form.Control.Feedback type="invalid">
+                                                        Please choose a username.
+                                                    </Form.Control.Feedback>
+                                                </InputGroup>
+                                            </Form.Group>
+                                            <Form.Group as={Col} md="12" controlId="validationCustomUsername">
+                                                <Form.Label>Password</Form.Label>
+                                                <InputGroup hasValidation>
+                                                    <InputGroup.Text id="inputGroupPrepend "><img src={lock}></img></InputGroup.Text>
+                                                    <Form.Control
+                                                        onChange={(e) => {
+                                                            setinformation({
+                                                                ...information, password: e.target.value
+                                                            })
+                                                            console.log(information);
+                                                        }}
+                                                        type={isVisible ? "text" : "password"}
+                                                        placeholder="Enter your password"
+                                                        aria-describedby="inputGroupPrepend"
+                                                        required
+                                                    />
+                                                    <Form.Control.Feedback type="invalid">
+                                                        Please choose a username.
+                                                    </Form.Control.Feedback>
+                                                    <button class="btn shadow-none border-top border-bottom border-end" onClick={() => { setisVisible(!isVisible) }}><img src={isVisible ? visible : eye_black}></img></button>
+                                                    {/* <Button ><img src={eye_black}></img></Button> */}
+                                                </InputGroup>
+                                            </Form.Group>
+
+
+
+                                            <div className="row mt-2 mb-5 m-1">
+                                                <div class="form-check  col-7">
+                                                    <input
+                                                        class="form-check-input me-2"
+                                                        type="checkbox"
+                                                        value=""
+                                                        id="form2Example3c"
+                                                    />
+                                                    <label class="form-check-label" for="form2Example3">
+                                                        Remember me
+                                                    </label>
                                                 </div>
-                                            </div>
 
-                                            <div class="d-flex flex-row align-items-center mb-4">
-                                                <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
-                                                <div class="form-outline flex-fill mb-0">
-                                                    <input type="email" id="form3Example3c" class="form-control" />
-                                                    <label class="form-label" for="form3Example3c">Your Email</label>
-                                                </div>
+                                                <div className="d-grid  col-5"><Link to="" class="border-0">  Forgot Password !
+                                                </Link></div>
                                             </div>
+                                            <div class="d-grid gap-2  ">
+                                                <button class="btn btn-primary p-2" type="button" style={{backgroundColor:"#034078", borderRadius:"25px " }} onClick={onSubmitHandler}>Login</button>
 
-                                            <div class="d-flex flex-row align-items-center mb-4">
-                                                <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
-                                                <div class="form-outline flex-fill mb-0">
-                                                    <input type="password" id="form3Example4c" class="form-control" />
-                                                    <label class="form-label" for="form3Example4c">Password</label>
-                                                </div>
                                             </div>
-
-                                            <div class="d-flex flex-row align-items-center mb-4">
-                                                <i class="fas fa-key fa-lg me-3 fa-fw"></i>
-                                                <div class="form-outline flex-fill mb-0">
-                                                    <input type="password" id="form3Example4cd" class="form-control" />
-                                                    <label class="form-label" for="form3Example4cd">Repeat your password</label>
-                                                </div>
-                                            </div>
-
-                                            <div class="form-check d-flex justify-content-center mb-5">
-                                                <input
-                                                    class="form-check-input me-2"
-                                                    type="checkbox"
-                                                    value=""
-                                                    id="form2Example3c"
-                                                />
-                                                <label class="form-check-label" for="form2Example3">
-                                                    I agree all statements in <a href="#!">Terms of service</a>
-                                                </label>
-                                            </div>
-
-                                            <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                                            {/* <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4 m-2">
                                                 <button type="button" class="btn btn-primary btn-lg">Register</button>
-                                            </div>
+                                            </div> */}
+
+
 
                                         </form>
+                                        <div class="d-grid  gap-2 justify-content-center ">
+                                            <p class=" mb-2 mx-1 mx-md-4 mt-4">or continue with</p>
+                                            <button class="btn shadow-none"><img src={google}></img></button>
+                                            <p class=" mb-2 mx-1 mx-md-4 ">Google account</p>
+
+
+
+
+                                        </div>
+
 
                                     </div>
 
+
                                 </div>
+
                             </div>
                         </div>
                     </div>
