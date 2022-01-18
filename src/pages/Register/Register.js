@@ -11,15 +11,30 @@ import visible from "resources/icons/visible.svg"
 import profile from "resources/icons/profile.svg"
 import { deep_blue_primary } from "../../utils/color"
 import { Link } from "react-router-dom";
+import CustomDropdownButton from 'pages/EditReport/components/CustomDropdownButton';
+
 export default function Register() {
 
     const [isVisible, setisVisible] = useState(false)
     const [information, setinformation] = useState({
-        username: "",
-        password: ""
+        Email: "",
+        Password: "",
+        Username: "",
+        RankAccount: "",
+        Avatar: "",
+        Overview: "",
+        Company: "",
+        Gender: "",
+        Address: "",
+        Birthday: "",
+        Position: "",
+        NewCompany: true,
+        Tenant: "",
+
     })
     const [date, setDate] = useState(new Date());
-    const onSubmitHandler = (event) => {
+    const onSubmitHandler = () => {
+        console.log(information); 
         // event.preventDefault()
         // let information = {
         //     email: loginForm.email,
@@ -70,7 +85,7 @@ export default function Register() {
                                                     <Form.Control
                                                         onChange={(e) => {
                                                             setinformation({
-                                                                ...information, username: e.target.value
+                                                                ...information, Email: e.target.value
                                                             })
                                                             console.log(information);
                                                         }}
@@ -81,7 +96,7 @@ export default function Register() {
                                                         required
                                                     />
                                                     <Form.Control.Feedback type="invalid">
-                                                        Please choose a username.
+                                                        Please choose a email.
                                                     </Form.Control.Feedback>
                                                 </InputGroup>
                                             </Form.Group>
@@ -93,7 +108,7 @@ export default function Register() {
                                                     <Form.Control
                                                         onChange={(e) => {
                                                             setinformation({
-                                                                ...information, username: e.target.value
+                                                                ...information, Username: e.target.value
                                                             })
                                                             console.log(information);
                                                         }}
@@ -116,7 +131,7 @@ export default function Register() {
                                                     <Form.Control
                                                         onChange={(e) => {
                                                             setinformation({
-                                                                ...information, password: e.target.value
+                                                                ...information, Password: e.target.value
                                                             })
                                                             console.log(information);
                                                         }}
@@ -139,7 +154,7 @@ export default function Register() {
                                                     <Form.Control
                                                         onChange={(e) => {
                                                             setinformation({
-                                                                ...information, password: e.target.value
+                                                                ...information, Password: e.target.value
                                                             })
                                                             console.log(information);
                                                         }}
@@ -166,7 +181,13 @@ export default function Register() {
                                                                     name="duedate"
                                                                     placeholder="Due date"
                                                                     value={date}
-                                                                    onChange={(e) => setDate(e.target.value)}
+                                                                    onChange={(e) => {
+                                                                        setDate(e.target.value);
+                                                                        setinformation({
+                                                                            ...information, Birthday: e.target.value
+                                                                        })
+                                                                        console.log(information);
+                                                                    }}
                                                                 />
                                                             </Form.Group>
                                                         </div>
@@ -181,92 +202,66 @@ export default function Register() {
 
                                                 <div class="form-check form-check-inline mb-0 me-4">
                                                     <input
+                                                        onChange={(e) => {
+                                                            setDate(e.target.value);
+                                                            setinformation({
+                                                                ...information, Gender: e.target.value
+                                                            })
+                                                            console.log(information);
+                                                        }}
                                                         class="form-check-input"
                                                         type="radio"
                                                         name="inlineRadioOptions"
                                                         id="femaleGender"
-                                                        value="option1"
+                                                        value="Female"
                                                     />
                                                     <label class="form-check-label" for="femaleGender">Female</label>
                                                 </div>
 
                                                 <div class="form-check form-check-inline mb-0 me-4">
                                                     <input
+                                                        onChange={(e) => {
+                                                            setDate(e.target.value);
+                                                            setinformation({
+                                                                ...information, Gender: e.target.value
+                                                            })
+                                                            console.log(information);
+                                                        }}
                                                         class="form-check-input"
                                                         type="radio"
                                                         name="inlineRadioOptions"
                                                         id="maleGender"
-                                                        value="option2"
+                                                        value="Male"
                                                     />
                                                     <label class="form-check-label" for="maleGender">Male</label>
                                                 </div>
                                             </div>
                                             <div class="d-md-flex justify-content-start    ">
                                                 <div class=" justify-content-start me-2 mb-4 ">
-                                                    <Dropdown>
-                                                        <Dropdown.Toggle id="dropdown-button-dark-example1" variant="secondary">
-                                                            Company
-                                                        </Dropdown.Toggle>
-
-                                                        <Dropdown.Menu variant="dark">
-                                                            {/* <Dropdown.Item href="#/action-1" active>
-                                                        Action
-                                                    </Dropdown.Item> */}
-                                                            <Dropdown.Item href="#/action-2">Công ti trách nhiệm hữu hạn Trường Minh Thịnh</Dropdown.Item>
-                                                            <Dropdown.Item href="#/action-3">Tập đoàn VNG</Dropdown.Item>
-                                                            {/* <Dropdown.Divider />
-                                                    <Dropdown.Item href="#/action-4">Separated link</Dropdown.Item> */}
-                                                        </Dropdown.Menu>
-                                                    </Dropdown>
+                                                    <CustomDropdownButton title={information.Company == "" ? "Company" : information.Company}  items={["TMT", "UEH"]} onClick={(val) => {
+                                                        setinformation({
+                                                            ...information, Company: val
+                                                        })
+                                                        console.log(information);
+                                                    }} />
 
                                                 </div>
 
                                                 <div class="mb-4">
-                                                    <Dropdown>
-                                                        <Dropdown.Toggle id="dropdown-button-dark-example1" variant="secondary">
-                                                            Position
-                                                        </Dropdown.Toggle>
-
-                                                        <Dropdown.Menu variant="dark">
-                                                            {/* <Dropdown.Item href="#/action-1" active>
-                                                        Action
-                                                    </Dropdown.Item> */}
-                                                            <Dropdown.Item href="#/action-2">Manager</Dropdown.Item>
-                                                            <Dropdown.Item href="#/action-3">Member</Dropdown.Item>
-                                                            {/* <Dropdown.Divider />
-                                                    <Dropdown.Item href="#/action-4">Separated link</Dropdown.Item> */}
-                                                        </Dropdown.Menu>
-                                                    </Dropdown>
+                                                <CustomDropdownButton title={information.Position == "" ? "Position" : information.Position}  items={["Manager", "Member"]} onClick={(val) => {
+                                                        setinformation({
+                                                            ...information, Position: val
+                                                        })
+                                                        console.log(information);
+                                                    }} />
                                                 </div>
                                             </div>
-
-
-
-
-
-
-
-
-
-
                                             <div class="d-grid gap-2  ">
                                                 <button class="btn btn-primary p-2" type="button" style={{ backgroundColor: "#034078", borderRadius: "25px " }} onClick={onSubmitHandler}>Register</button>
 
                                             </div>
-
-
-
-
-
-
                                         </form>
-
-
-
-
                                     </div>
-
-
                                 </div>
 
                             </div>
