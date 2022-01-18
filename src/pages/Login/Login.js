@@ -1,23 +1,23 @@
 import React, { useState } from 'react'
 import { Form, InputGroup, Col, Button, FormControl } from 'react-bootstrap'
-
+import { useNavigate } from 'react-router-dom'
 import login_image from "resources/images/login_image.png"
-
+import { LoginApi } from "api/Account"
 import lock from "resources/icons/lock.svg";
 import eye_black from "resources/icons/eye_black.svg";
 import google from "resources/icons/google.svg";
 import email from "resources/icons/email.svg";
 import visible from "resources/icons/visible.svg"
 import { Link } from "react-router-dom";
-import {deep_blue_primary} from "../../utils/color"
+import { deep_blue_primary } from "../../utils/color"
 export default function Login() {
     const [isVisible, setisVisible] = useState(false)
     const [information, setinformation] = useState({
-        username: "",
-        password: ""
+        Email: "",
+        Password: ""
     })
-    const onSubmitHandler = (event) => {
-        // event.preventDefault()
+    const navigate = useNavigate()
+    const onSubmitHandler = () => {
         // let information = {
         //     email: loginForm.email,
         //     password: loginForm.password
@@ -31,6 +31,27 @@ export default function Login() {
         //         onLoginSuccess("lecturer", "john", res.data.token, res.data.refreshToken)
         //     }
         // })
+
+        //res.data la noi dung trong body tra ve
+        //res.status la so 
+        LoginApi(information)
+            .then((res) => {
+                // if (res.data.status === 'error') {
+
+                //     alert(res.data.error)
+                // } else {
+                //     console.log(res.data)
+                //     onLoginSuccess("lecturer", "john", res.data.token, res.data.refreshToken)
+                // }
+                console.log(res)
+                navigate("/")
+            })
+            .catch((e) => {
+                alert("Tài khoản không đúng. Vui lòng nhập lại");
+                // navigate("/");
+                console.log(e);
+            })
+
 
     }
     return (
@@ -46,7 +67,7 @@ export default function Login() {
                                     </div>
                                     <div class="col-md-10 col-lg-6 col-xl-5 order-1 order-lg-2 mt-5 ">
 
-                                        <p class="h1 fw-bold mb-2 mx-1 mx-md-4 mt-5" style={{color:deep_blue_primary }}>Sign in</p>
+                                        <p class="h1 fw-bold mb-2 mx-1 mx-md-4 mt-5" style={{ color: deep_blue_primary }}>Sign in</p>
 
 
                                         <div class="form-check mb-4">
@@ -68,7 +89,7 @@ export default function Login() {
                                                     <Form.Control
                                                         onChange={(e) => {
                                                             setinformation({
-                                                                ...information, username: e.target.value
+                                                                ...information, Email: e.target.value
                                                             })
                                                             console.log(information);
                                                         }}
@@ -90,7 +111,7 @@ export default function Login() {
                                                     <Form.Control
                                                         onChange={(e) => {
                                                             setinformation({
-                                                                ...information, password: e.target.value
+                                                                ...information, Password: e.target.value
                                                             })
                                                             console.log(information);
                                                         }}
@@ -126,7 +147,7 @@ export default function Login() {
                                                 </Link></div>
                                             </div>
                                             <div class="d-grid gap-2  ">
-                                                <button class="btn btn-primary p-2" type="button" style={{backgroundColor:"#034078", borderRadius:"25px " }} onClick={onSubmitHandler}>Login</button>
+                                                <button class="btn btn-primary p-2" type="button" style={{ backgroundColor: "#034078", borderRadius: "25px " }} onClick={onSubmitHandler}>Login</button>
 
                                             </div>
                                             {/* <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4 m-2">
