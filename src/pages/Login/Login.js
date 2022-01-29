@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Form, InputGroup, Col, Button, FormControl } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import login_image from "resources/images/login_image.png"
-import { LoginApi } from "api/Account"
+import { GoogleLoginApi, LoginApi } from "api/Account"
 import lock from "resources/icons/lock.svg";
 import eye_black from "resources/icons/eye_black.svg";
 import google from "resources/icons/google.svg";
@@ -10,6 +10,8 @@ import email from "resources/icons/email.svg";
 import visible from "resources/icons/visible.svg"
 import { Link } from "react-router-dom";
 import { deep_blue_primary } from "../../utils/color"
+import GoogleLogin from 'react-google-login';
+
 export default function Login() {
     const [isVisible, setisVisible] = useState(false)
     const [information, setinformation] = useState({
@@ -51,9 +53,25 @@ export default function Login() {
                 // navigate("/");
                 console.log(e);
             })
-
-
     }
+
+    const responseGoogle = (res) => {
+        if (res.error) {
+            alert("error")
+        }
+        else {
+            GoogleLoginApi({tokenId: res.tokenId})
+            .then((res) => {
+                // login successful
+                console.log(res)
+            })
+            .catch((err) => {
+                // login fail
+                console.log(err)
+            })
+        }
+    }
+
     return (
         <section class="vh-100" style={{ backgroundColor: "#fff" }}>
             <div class="container h-100">
@@ -159,7 +177,18 @@ export default function Login() {
                                         </form>
                                         <div class="d-grid  gap-2 justify-content-center ">
                                             <p class=" mb-2 mx-1 mx-md-4 mt-4">or continue with</p>
-                                            <button class="btn shadow-none"><img src={google}></img></button>
+                                            <GoogleLogin
+                                                clientId={process.env.REACT_APP_GOOGLE_LOGIN}
+                                                render={renderProps => (
+                                                    <button class="btn shadow-none" onClick={renderProps.onClick}>
+                                                        <img src={google}/>
+                                                    </button>
+                                                )}
+                                                buttonText="Login"
+                                                onSuccess={responseGoogle}
+                                                onFailure={responseGoogle}
+                                                cookiePolicy={'single_host_origin'}
+                                            />,
                                             <p class=" mb-2 mx-1 mx-md-4 ">Google account</p>
 
 
