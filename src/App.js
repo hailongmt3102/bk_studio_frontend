@@ -18,6 +18,7 @@ import Profile from "./pages/Profile/Profile";
 import Setting from "./pages/Setting/Setting";
 import ForgetPassword from "./pages/ForgetPassword/ForgetPassword";
 import Drawer from "./pages/Drawer/Drawer";
+import Header from "pages/Header";
 
 function App() {
     const [drawerState, setDrawerState] = useState("workspace");
@@ -26,6 +27,7 @@ function App() {
             <div className="row">
                 <Drawer state={drawerState} setDrawerState={setDrawerState} />
                 <div className="col bg-light">
+                    <Header/>
                     <Routes>
                         <Route path="/" exact element={<Dashboard />} >
                         </Route>
