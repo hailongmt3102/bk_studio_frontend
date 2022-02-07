@@ -10,6 +10,10 @@ const axiosClient = axios.create({
 
 axiosClient.interceptors.request.use(
     request => {
+        var token = localStorage.getItem("token")
+        if (token != null)
+            request.headers.authorization =`Bearer ${token}`
+
         return new Promise((resolve, reject) => {
             resolve(request)
         })
