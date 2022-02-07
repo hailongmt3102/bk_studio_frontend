@@ -20,38 +20,20 @@ export default function Login() {
     })
     const navigate = useNavigate()
     const onSubmitHandler = () => {
-        // let information = {
-        //     email: loginForm.email,
-        //     password: loginForm.password
-        // }
-        // normalLogin(information)
-        // .then((res) => {
-        //     if (res.data.status === 'error') {
-        //         alert(res.data.error)
-        //     }else {
-        //         console.log(res.data)
-        //         onLoginSuccess("lecturer", "john", res.data.token, res.data.refreshToken)
-        //     }
-        // })
+        // check email and password
+        if ([information.Email.length, information.Password.length].includes(0)) {
+            alert("login fail")
+            return
+        }
 
-        //res.data la noi dung trong body tra ve
-        //res.status la so 
+        // send information into server
         LoginApi(information)
             .then((res) => {
-                // if (res.data.status === 'error') {
-
-                //     alert(res.data.error)
-                // } else {
-                //     console.log(res.data)
-                //     onLoginSuccess("lecturer", "john", res.data.token, res.data.refreshToken)
-                // }
-                console.log(res)
+                localStorage.setItem("token", res.data.AccessToken)
                 navigate("/")
             })
             .catch((e) => {
-                alert("Tài khoản không đúng. Vui lòng nhập lại");
-                // navigate("/");
-                console.log(e);
+                alert(e.response.data);
             })
     }
 
@@ -63,11 +45,11 @@ export default function Login() {
             GoogleLoginApi({tokenId: res.tokenId})
             .then((res) => {
                 // login successful
-                console.log(res)
+                localStorage.setItem("token", res.data.AccessToken)
             })
             .catch((err) => {
                 // login fail
-                console.log(err)
+                alert(err.response.data);
             })
         }
     }
@@ -206,6 +188,9 @@ export default function Login() {
                         </div>
                     </div>
                 </div>
+            </div>
+
+            <div style={{height: "100px"}}>
             </div>
         </section>
     )
