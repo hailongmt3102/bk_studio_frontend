@@ -15,6 +15,8 @@ import CustomDropdownButton from 'pages/EditReport/components/CustomDropdownButt
 
 export default function Register() {
 
+    const [newCompany, setNewCompany] = useState(false)
+    const [listCompany, setlistCompany] = useState(["TMT", "UEH"])
     const [isVisible, setisVisible] = useState(false)
     const [information, setinformation] = useState({
         Email: "",
@@ -34,7 +36,7 @@ export default function Register() {
     })
     const [date, setDate] = useState(new Date());
     const onSubmitHandler = () => {
-        console.log(information); 
+        console.log(information);
         // event.preventDefault()
         // let information = {
         //     email: loginForm.email,
@@ -53,20 +55,20 @@ export default function Register() {
     }
     return (
         <section class="vh-100" style={{ backgroundColor: "#fff" }}>
-            <div class="container h-100">
-                <div class="row d-flex justify-content-center align-items-center h-100">
-                    <div class="col-lg-12 col-xl-11">
+            <div class="container h-100 ">
+                <div class="row justify-content-center align-items-center h-100">
+                    <div class="">
                         <div class="card text-black" style={{ borderRadius: "25px" }}>
                             <div class="card-body p-0">
                                 <div class="row ">
-                                    <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-2 order-lg-1">
+                                    <div class="col-md-10 col-lg-6 col-xl-7 order-2 order-lg-1">
                                         <img src={login_image} style={{ borderTopLeftRadius: "25px", borderBottomLeftRadius: "25px" }} class="img-fluid" alt="Sample image" />
                                     </div>
                                     <div class="col-md-10 col-lg-6 col-xl-5 order-1 order-lg-2 mt-4 ">
                                         <p class="h1 fw-bold  mx-1 mx-md-4" style={{ color: deep_blue_primary }}>
                                             Sign up
                                         </p>
-                                        <div class="form-check mb-4">
+                                        <div class="form-check mb-2">
                                             <div class="form-check-label" for="form2Example3">
                                                 If you already have an account register
                                             </div>
@@ -197,66 +199,137 @@ export default function Register() {
 
 
                                             <div class="d-md-flex justify-content-start align-items-center py-2">
-
                                                 <h6 class="mb-0 me-4">Gender: </h6>
 
-                                                <div class="form-check form-check-inline mb-0 me-4">
-                                                    <input
-                                                        onChange={(e) => {
-                                                            setDate(e.target.value);
-                                                            setinformation({
-                                                                ...information, Gender: e.target.value
-                                                            })
-                                                            console.log(information);
-                                                        }}
-                                                        class="form-check-input"
-                                                        type="radio"
-                                                        name="inlineRadioOptions"
-                                                        id="femaleGender"
-                                                        value="Female"
-                                                    />
-                                                    <label class="form-check-label" for="femaleGender">Female</label>
-                                                </div>
-
-                                                <div class="form-check form-check-inline mb-0 me-4">
-                                                    <input
-                                                        onChange={(e) => {
-                                                            setDate(e.target.value);
-                                                            setinformation({
-                                                                ...information, Gender: e.target.value
-                                                            })
-                                                            console.log(information);
-                                                        }}
-                                                        class="form-check-input"
-                                                        type="radio"
-                                                        name="inlineRadioOptions"
-                                                        id="maleGender"
-                                                        value="Male"
-                                                    />
-                                                    <label class="form-check-label" for="maleGender">Male</label>
-                                                </div>
-                                            </div>
-                                            <div class="d-md-flex justify-content-start    ">
-                                                <div class=" justify-content-start me-2 mb-4 ">
-                                                    <CustomDropdownButton title={information.Company == "" ? "Company" : information.Company}  items={["TMT", "UEH"]} onClick={(val) => {
+                                                <Form.Check
+                                                    onClick={(e) => {
                                                         setinformation({
-                                                            ...information, Company: val
+                                                            ...information, Gender: "Male"
                                                         })
+
                                                         console.log(information);
-                                                    }} />
+                                                    }}
+                                                    inline
+                                                    label="Male"
+                                                    name="group1"
+                                                    type="radio"
+                                                    id="MaleGender"
+                                                />
+                                                <Form.Check
+                                                    onClick={(e) => {
+                                                        setinformation({
+                                                            ...information, Gender: "Female"
+                                                        })
 
-                                                </div>
+                                                        console.log(information);
+                                                    }}
+                                                    inline
+                                                    label="Female"
+                                                    name="group1"
+                                                    type="radio"
+                                                    id="FemaleGender"
+                                                />
 
-                                                <div class="mb-4">
-                                                <CustomDropdownButton title={information.Position == "" ? "Position" : information.Position}  items={["Manager", "Member"]} onClick={(val) => {
+
+                                            </div>
+                                            <div class="d-md-flex justify-content-start align-items-center py-2">
+
+                                                <Form.Check
+                                                    onClick={(e) => {
+                                                        setinformation({
+                                                            ...information, NewCompany: true
+                                                        })
+                                                        setNewCompany(true)
+                                                        console.log(newCompany);
+                                                    }}
+                                                    inline
+                                                    label="New Company"
+                                                    name="group1"
+                                                    type="radio"
+                                                    id="Company"
+                                                />
+                                                <Form.Check
+                                                    onClick={(e) => {
+                                                        setinformation({
+                                                            ...information, NewCompany: false
+                                                        })
+                                                        setNewCompany(false)
+                                                        console.log(newCompany);
+                                                    }}
+
+                                                    inline
+                                                    label="Create Company"
+                                                    name="group1"
+                                                    type="radio"
+                                                    id="Company" F
+                                                />
+
+                                            </div>
+
+
+
+
+                                            {newCompany ?
+                                                <div><div class="d-md-flex mt-1 ">
+                                                    <h6 class="  me-2 mt-2">Company name: </h6>
+                                                    <div class="  me-2  ">
+                                                        <CustomDropdownButton title={information.Company == "" ? "Company" : information.Company} items={listCompany} onClick={(val) => {
+                                                            setinformation({
+                                                                ...information, Company: val
+                                                            })
+                                                            // console.log(information);
+                                                        }} />
+
+                                                    </div>
+
+                                                    <h6 class=" me-2 mt-2">Position: </h6>
+                                                    <CustomDropdownButton title={information.Position == "" ? "Position" : information.Position} items={["Manager", "Member"]} onClick={(val) => {
                                                         setinformation({
                                                             ...information, Position: val
                                                         })
-                                                        console.log(information);
+                                                        // console.log(information);
                                                     }} />
+
                                                 </div>
-                                            </div>
-                                            <div class="d-grid gap-2  ">
+
+                                                </div>
+                                                : <div>
+                                                    <Form.Group as={Col} md="12" controlId="validationCustomUsername">
+
+                                                        <InputGroup hasValidation>
+                                                            <InputGroup.Text id="inputGroupPrepend">Company name</InputGroup.Text>
+                                                            <Form.Control
+                                                                onChange={(e) => {
+                                                                    setinformation({
+                                                                        ...information, Company: e.target.value
+                                                                    })
+                                                                    console.log(information);
+                                                                }}
+
+                                                                type="text"
+                                                                placeholder="Enter new company name"
+                                                                aria-describedby="inputGroupPrepend"
+                                                                required
+                                                            />
+                                                            <Form.Control.Feedback type="invalid">
+                                                                Please choose a username.
+                                                            </Form.Control.Feedback>
+                                                        </InputGroup>
+                                                    </Form.Group>
+                                                    <div class="d-md-flex mt-1 ">
+                                                        <h6 class=" me-2 mt-2">Position: </h6>
+                                                        <CustomDropdownButton title={information.Position == "" ? "Position" : information.Position} items={["Manager", "Member"]} onClick={(val) => {
+                                                            setinformation({
+                                                                ...information, Position: val
+                                                            })
+                                                            // console.log(information);
+                                                        }} />
+
+                                                    </div>
+
+                                                </div>
+                                            }
+                                            <div class="d-grid gap-2  mt-2">
                                                 <button class="btn btn-primary p-2" type="button" style={{ backgroundColor: "#034078", borderRadius: "25px " }} onClick={onSubmitHandler}>Register</button>
 
                                             </div>
