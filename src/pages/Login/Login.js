@@ -29,7 +29,9 @@ export default function Login() {
         // send information into server
         LoginApi(information)
             .then((res) => {
+
                 localStorage.setItem("token", res.data.AccessToken)
+
                 navigate("/")
             })
             .catch((e) => {
@@ -56,13 +58,13 @@ export default function Login() {
 
     return (
         <section class="vh-100" style={{ backgroundColor: "#fff" }}>
-            <div class="container h-100">
+            <div class="container h-100 w-100">
                 <div class="row d-flex justify-content-center align-items-center h-100">
-                    <div class="col-lg-12 col-xl-11">
+                    <div class="">
                         <div class="card text-black" style={{ borderRadius: "25px" }}>
                             <div class="card-body p-0">
                                 <div class="row ">
-                                    <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-2 order-lg-1">
+                                    <div class="col-md-10 col-lg-6 col-xl-7 d-flex  order-2 order-lg-1">
                                         <img src={login_image} style={{ borderTopLeftRadius: "25px", borderBottomLeftRadius: "25px" }} class="img-fluid" alt="Sample image" />
                                     </div>
                                     <div class="col-md-10 col-lg-6 col-xl-5 order-1 order-lg-2 mt-5 ">
@@ -128,8 +130,6 @@ export default function Login() {
                                                 </InputGroup>
                                             </Form.Group>
 
-
-
                                             <div className="row mt-2 mb-5 m-1">
                                                 <div class="form-check  col-7">
                                                     <input
@@ -157,6 +157,7 @@ export default function Login() {
 
 
                                         </form>
+                                        
                                         <div class="d-grid  gap-2 justify-content-center ">
                                             <p class=" mb-2 mx-1 mx-md-4 mt-4">or continue with</p>
                                             <GoogleLogin
