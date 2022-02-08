@@ -17,7 +17,7 @@ export default function Dashboard() {
                     console.log(error)
                 }
             )
-    })
+    }, [])
     return (
         <div>
             <div className='m-2 rounded-5 bg-white'>

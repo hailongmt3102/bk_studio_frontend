@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState , useEffect} from 'react'
 import { Form, InputGroup, Col, SplitButton, Dropdown } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import login_image from "resources/images/login_image.png"
@@ -12,12 +12,12 @@ import profile from "resources/icons/profile.svg"
 import { deep_blue_primary } from "../../utils/color"
 import { Link } from "react-router-dom";
 import CustomDropdownButton from 'pages/EditReport/components/CustomDropdownButton';
-
+import {getListCompanies} from "api/ListCompanies"
 export default function Register() {
 
     const navigate = useNavigate()
-    const [newCompany, setNewCompany] = useState(false)
-    const [listCompany, setlistCompany] = useState(["TMT", "UEH"])
+    const [newCompany, setNewCompany] = useState(true)
+    const [listCompany, setlistCompany] = useState([])
     const [isVisible, setisVisible] = useState(false)
     const [information, setinformation] = useState({
         Email: "",
@@ -32,10 +32,23 @@ export default function Register() {
         Birthday: "",
         Position: "",
         NewCompany: true,
-        Tenant: "newnewt",
+        Tenant: "",
 
     })
     const [date, setDate] = useState(new Date());
+    useEffect(() => {
+        // get all project
+        getListCompanies()
+            .then(response => {
+                setlistCompany(response.data)
+            })
+            .catch(
+                error => {
+                    console.log(error)
+                }
+            )
+    }, [])
+
     const onSubmitHandler = () => {
         console.log(information);
 
@@ -235,12 +248,13 @@ export default function Register() {
                                                         setinformation({
                                                             ...information, NewCompany: true
                                                         })
+                
                                                         setNewCompany(true)
-                                                        console.log(newCompany);
+                                                        //console.log(newCompany);
                                                     }}
                                                     inline
                                                     label="New Company"
-                                                    name="group1"
+                                                    name="group2"
                                                     type="radio"
                                                     id="Company"
                                                 />
@@ -250,14 +264,14 @@ export default function Register() {
                                                             ...information, NewCompany: false
                                                         })
                                                         setNewCompany(false)
-                                                        console.log(newCompany);
+                                                        //console.log(newCompany);
                                                     }}
 
                                                     inline
-                                                    label="Create Company"
-                                                    name="group1"
+                                                    label="Created Company"
+                                                    name="group2"
                                                     type="radio"
-                                                    id="Company" F
+                                                    id="Company" 
                                                 />
 
                                             </div>
@@ -265,15 +279,14 @@ export default function Register() {
 
 
 
-                                            {newCompany ?
+                                            {!newCompany ?
                                                 <div><div class="d-md-flex mt-1 ">
                                                     <h6 class="  me-2 mt-2">Company name: </h6>
                                                     <div class="  me-2  ">
-                                                        <CustomDropdownButton title={information.Company == "" ? "Company" : information.Company} items={listCompany} onClick={(val) => {
+                                                        <CustomDropdownButton title={information.Company == "" ? "Company" : information.Company} items={listCompany.map(ele => ele.Company)} onClick={(val, index) => {
                                                             setinformation({
-                                                                ...information, Company: val
+                                                                ...information, Company: val, Tenant : listCompany[index].Tenant
                                                             })
-                                                            // console.log(information);
                                                         }} />
 
                                                     </div>
@@ -283,7 +296,6 @@ export default function Register() {
                                                         setinformation({
                                                             ...information, Position: val
                                                         })
-                                                        // console.log(information);
                                                     }} />
 
                                                 </div>
@@ -299,7 +311,10 @@ export default function Register() {
                                                                     setinformation({
                                                                         ...information, Company: e.target.value
                                                                     })
-                                                                    console.log(information);
+                                                                    setinformation({
+                                                                        ...information, Tenant : e.target.value
+                                                                    })
+                                                                    //console.log(information);
                                                                 }}
 
                                                                 type="text"
@@ -338,6 +353,7 @@ export default function Register() {
                     </div>
                 </div>
             </div>
+            <div style={{height: "100px"}}> </div>
         </section>
     )
 }
