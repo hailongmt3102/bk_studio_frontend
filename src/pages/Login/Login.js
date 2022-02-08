@@ -143,7 +143,7 @@ export default function Login() {
                                                     </label>
                                                 </div>
 
-                                                <div className="d-grid  col-5"><Link to="" class="border-0">  Forgot Password !
+                                                <div className="d-grid  col-5"><Link to="" class="border-0" onClick={navigate("/account/forgetPassword")}>   Forgot Password ! 
                                                 </Link></div>
                                             </div>
                                             <div class="d-grid gap-2  ">

@@ -2,59 +2,31 @@ import React, { useState } from 'react'
 import { Form, InputGroup, Col, Button, FormControl } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import login_image from "resources/images/login_image.png"
-import { LoginApi } from "api/Account"
+import { ForgotPassword } from "api/Account"
 
 import email from "resources/icons/email.svg";
 import logo   from "resources/images/logo.png"
 import { Link } from "react-router-dom";
 import { deep_blue_primary } from "../../utils/color"
 export default function ForgetPassword() {
-    const [isVisible, setisVisible] = useState(false)
-    const [information, setinformation] = useState({
-        Email: "",
-        Password: ""
-    })
+   
+    const [Email, setEmail] = useState("")
     const navigate = useNavigate()
     const onSubmitHandler = () => {
-        // let information = {
-        //     email: loginForm.email,
-        //     password: loginForm.password
-        // }
-        // normalLogin(information)
-        // .then((res) => {
-        //     if (res.data.status === 'error') {
-        //         alert(res.data.error)
-        //     }else {
-        //         console.log(res.data)
-        //         onLoginSuccess("lecturer", "john", res.data.token, res.data.refreshToken)
-        //     }
-        // })
-
-        //res.data la noi dung trong body tra ve
-        //res.status la so 
-        LoginApi(information)
+        console.log("da nhan send")
+        if (Email==""){
+            alert("Please fill in your email");
+        }
+        else{
+            ForgotPassword(Email)
             .then((res) => {
-                // if (res.data.status === 'error') {
-
-                //     alert(res.data.error)
-                // } else {
-                //     console.log(res.data)
-                //     onLoginSuccess("lecturer", "john", res.data.token, res.data.refreshToken)
-                // }
-                if (information.Email) {
-
-                }
-                else {
-
-                }
-                console.log(res)
-                navigate("/")
+                alert("Please check email to get forgot password code for your account");
             })
             .catch((e) => {
-                alert("Tài khoản không đúng. Vui lòng nhập lại");
-                // navigate("/");
-                console.log(e);
+                alert(e.response.data);
             })
+        }
+        
 
 
     }
@@ -92,10 +64,7 @@ export default function ForgetPassword() {
                                                     <InputGroup.Text id="inputGroupPrepend"><img src={email}></img></InputGroup.Text>
                                                     <Form.Control
                                                         onChange={(e) => {
-                                                            setinformation({
-                                                                ...information, Email: e.target.value
-                                                            })
-                                                            console.log(information);
+                                                            setEmail(e.target.value)
                                                         }}
 
                                                         type="email"
@@ -136,6 +105,7 @@ export default function ForgetPassword() {
                     </div>
                 </div>
             </div>
+            <div style={{height: "100px"}}> </div>
         </section>
     )
 }
