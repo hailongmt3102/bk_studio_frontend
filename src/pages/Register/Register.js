@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
 import { Form, InputGroup, Col, SplitButton, Dropdown } from 'react-bootstrap'
-
+import { useNavigate } from 'react-router-dom'
 import login_image from "resources/images/login_image.png"
 import lock from "resources/icons/lock.svg";
 import eye_black from "resources/icons/eye_black.svg";
 import google from "resources/icons/google.svg";
 import email from "resources/icons/email.svg";
 import visible from "resources/icons/visible.svg"
-
+import { RegisterApi } from "api/Account"
 import profile from "resources/icons/profile.svg"
 import { deep_blue_primary } from "../../utils/color"
 import { Link } from "react-router-dom";
@@ -15,42 +15,38 @@ import CustomDropdownButton from 'pages/EditReport/components/CustomDropdownButt
 
 export default function Register() {
 
+    const navigate = useNavigate()
     const [newCompany, setNewCompany] = useState(false)
     const [listCompany, setlistCompany] = useState(["TMT", "UEH"])
     const [isVisible, setisVisible] = useState(false)
     const [information, setinformation] = useState({
         Email: "",
         Password: "",
-        Username: "",
+        UserName: "",
         RankAccount: "",
         Avatar: "",
-        Overview: "",
+        OverView: "",
         Company: "",
         Gender: "",
         Address: "",
         Birthday: "",
         Position: "",
         NewCompany: true,
-        Tenant: "",
+        Tenant: "newnewt",
 
     })
     const [date, setDate] = useState(new Date());
     const onSubmitHandler = () => {
         console.log(information);
-        // event.preventDefault()
-        // let information = {
-        //     email: loginForm.email,
-        //     password: loginForm.password
-        // }
-        // normalLogin(information)
-        // .then((res) => {
-        //     if (res.data.status === 'error') {
-        //         alert(res.data.error)
-        //     }else {
-        //         console.log(res.data)
-        //         onLoginSuccess("lecturer", "john", res.data.token, res.data.refreshToken)
-        //     }
-        // })
+
+        RegisterApi(information)
+        .then((res) => {
+
+            navigate("/account/login")
+        })
+        .catch((e) => {
+            alert(e.response.data);
+        })
 
     }
     return (
@@ -110,7 +106,7 @@ export default function Register() {
                                                     <Form.Control
                                                         onChange={(e) => {
                                                             setinformation({
-                                                                ...information, Username: e.target.value
+                                                                ...information, UserName: e.target.value
                                                             })
                                                             console.log(information);
                                                         }}
