@@ -4,8 +4,8 @@ const LoginApi = (data) => {
     return axiosClient.post("/account/login", data)
 }
 const ForgotPasswordAPI  = (data) => {
-    console.log("account/forgot?Email="+ data)
-    return axiosClient.get("account/forgot?Email=$data" )
+    console.log("/account/forgot?Email="+ data)
+    return axiosClient.get("/account/forgot?Email=$data" )  
 }
 const SetNewPasswordAPI  = (data) => {
     console.log(data)
