@@ -7,7 +7,7 @@ import DataSources from "./pages/DataSources/DataSources";
 import People from "pages/People/People";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
-
+import ChangePassword from "pages/ChangePassword/ChangePassword";
 import EditReport from "./pages/EditReport/EditReport";
 import ImportData from "./pages/ImportData/ImportData";
 import Templates from "./pages/Templates/Templates";
@@ -37,6 +37,7 @@ function App() {
 
                         <Route path="/account/forgetPassword" element={<ForgetPassword />} />
                         <Route path="/account/register" element={<Register />} />
+                        <Route path="/account/changePassword" element={<ChangePassword />} />
 
                         <Route
                             path="/project/create"
