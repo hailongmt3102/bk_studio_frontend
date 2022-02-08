@@ -291,18 +291,18 @@ export default function Register() {
 
                                                     </div>
 
-                                                    <h6 class=" me-2 mt-2">Position: </h6>
-                                                    <CustomDropdownButton title={information.Position == "" ? "Position" : information.Position} items={["Manager", "Member"]} onClick={(val) => {
-                                                        setinformation({
-                                                            ...information, Position: val
-                                                        })
-                                                    }} />
+                                                    
 
                                                 </div>
 
                                                 </div>
                                                 : <div>
-                                                    <Form.Group as={Col} md="12" controlId="validationCustomUsername">
+                                                 <h6 class=" me-2 mt-2">Position: </h6>
+                                                    <CustomDropdownButton title={information.Position == "" ? "Position" : information.Position} items={["Manager", "Member"]} onClick={(val) => {
+                                                        setinformation({
+                                                            ...information, Position: val
+                                                        })
+                                                    }} />   <Form.Group as={Col} md="12" controlId="validationCustomUsername">
 
                                                         <InputGroup hasValidation>
                                                             <InputGroup.Text id="inputGroupPrepend">Company name</InputGroup.Text>
