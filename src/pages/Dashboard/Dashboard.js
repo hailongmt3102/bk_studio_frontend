@@ -21,7 +21,7 @@ export default function Dashboard() {
     return (
         <div>
             <div className='m-2 rounded-5 bg-white'>
-                <h1 className='m-2'>Project</h1>
+                <h1 className='m-2 '>Project</h1>
                 <div className='row'>
                     {
                         projectList.map((project, index) => {
