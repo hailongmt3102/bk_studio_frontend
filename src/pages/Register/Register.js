@@ -42,9 +42,7 @@ export default function Register() {
         RegisterApi(information)
         .then((res) => {
 
-            
-
-            navigate("/")
+            navigate("/account/login")
         })
         .catch((e) => {
             alert(e.response.data);
