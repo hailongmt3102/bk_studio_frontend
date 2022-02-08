@@ -312,7 +312,7 @@ export default function Register() {
                                                                         ...information, Company: e.target.value
                                                                     })
                                                                     setinformation({
-                                                                        ...information, Tenant : e.target.value
+                                                                        ...information, Tenant : e.target.value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replaceAll(' ', '')
                                                                     })
                                                                     //console.log(information);
                                                                 }}
