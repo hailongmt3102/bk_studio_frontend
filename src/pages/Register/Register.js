@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState , useEffect} from 'react'
 import { Form, InputGroup, Col, SplitButton, Dropdown } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import login_image from "resources/images/login_image.png"
@@ -12,7 +12,7 @@ import profile from "resources/icons/profile.svg"
 import { deep_blue_primary } from "../../utils/color"
 import { Link } from "react-router-dom";
 import CustomDropdownButton from 'pages/EditReport/components/CustomDropdownButton';
-
+import {getListCompanies} from "api/ListCompanies"
 export default function Register() {
 
     const navigate = useNavigate()
@@ -36,6 +36,21 @@ export default function Register() {
 
     })
     const [date, setDate] = useState(new Date());
+    useEffect(() => {
+        // get all project
+        getListCompanies()
+            .then(response => {
+                setlistCompany(response.data.map(ele=>ele.Company))
+                console.log(listCompany)
+               
+            })
+            .catch(
+                error => {
+                    console.log(error)
+                }
+            )
+    })
+
     const onSubmitHandler = () => {
         console.log(information);
 
@@ -338,6 +353,7 @@ export default function Register() {
                     </div>
                 </div>
             </div>
+            <div style={{height: "100px"}}> </div>
         </section>
     )
 }
