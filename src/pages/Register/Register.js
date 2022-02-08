@@ -17,7 +17,7 @@ export default function Register() {
 
     const navigate = useNavigate()
     const [newCompany, setNewCompany] = useState(false)
-    const [listCompany, setlistCompany] = useState(["TMT", "UEH"])
+    const [listCompany, setlistCompany] = useState([])
     const [isVisible, setisVisible] = useState(false)
     const [information, setinformation] = useState({
         Email: "",
@@ -32,7 +32,7 @@ export default function Register() {
         Birthday: "",
         Position: "",
         NewCompany: true,
-        Tenant: "newnewt",
+        Tenant: "",
 
     })
     const [date, setDate] = useState(new Date());
@@ -40,16 +40,14 @@ export default function Register() {
         // get all project
         getListCompanies()
             .then(response => {
-                setlistCompany(response.data.map(ele=>ele.Company))
-                console.log(listCompany)
-               
+                setlistCompany(response.data)
             })
             .catch(
                 error => {
                     console.log(error)
                 }
             )
-    })
+    }, [])
 
     const onSubmitHandler = () => {
         console.log(information);
@@ -284,11 +282,10 @@ export default function Register() {
                                                 <div><div class="d-md-flex mt-1 ">
                                                     <h6 class="  me-2 mt-2">Company name: </h6>
                                                     <div class="  me-2  ">
-                                                        <CustomDropdownButton title={information.Company == "" ? "Company" : information.Company} items={listCompany} onClick={(val) => {
+                                                        <CustomDropdownButton title={information.Company == "" ? "Company" : information.Company} items={[listCompany.map(ele => ele.Company)]} onClick={(val, index) => {
                                                             setinformation({
-                                                                ...information, Company: val
+                                                                ...information, Company: val, Tenant : listCompany[index].Tenant
                                                             })
-                                                            // console.log(information);
                                                         }} />
 
                                                     </div>
@@ -298,7 +295,6 @@ export default function Register() {
                                                         setinformation({
                                                             ...information, Position: val
                                                         })
-                                                        // console.log(information);
                                                     }} />
 
                                                 </div>
