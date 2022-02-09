@@ -44,15 +44,15 @@ export default function Login() {
             alert("error")
         }
         else {
-            GoogleLoginApi({tokenId: res.tokenId})
-            .then((res) => {
-                // login successful
-                localStorage.setItem("token", res.data.AccessToken)
-            })
-            .catch((err) => {
-                // login fail
-                alert(err.response.data);
-            })
+            GoogleLoginApi({ tokenId: res.tokenId })
+                .then((res) => {
+                    // login successful
+                    localStorage.setItem("token", res.data.AccessToken)
+                })
+                .catch((err) => {
+                    // login fail
+                    alert(err.response.data);
+                })
         }
     }
 
@@ -142,9 +142,13 @@ export default function Login() {
                                                         Remember me
                                                     </label>
                                                 </div>
+                                                <label class="d-grid  col-5" for="form2Example3">
+                                                    <Link to="/account/forgetPassword" class="border-0"> Forgot Password !
+                                                    </Link>
+                                                </label>
 
-                                                <div className="d-grid  col-5"><Link to="" class="border-0" onClick={navigate("/account/forgetPassword")}>   Forgot Password ! 
-                                                </Link></div>
+                                                {/* <div className="d-grid  col-5"><Link to="" class="border-0" onClick={navigate("/account/forgetPassword")}>   Forgot Password !
+                                                </Link></div> */}
                                             </div>
                                             <div class="d-grid gap-2  ">
                                                 <button class="btn btn-primary p-2" type="button" style={{ backgroundColor: "#034078", borderRadius: "25px " }} onClick={onSubmitHandler}>Login</button>
@@ -157,14 +161,14 @@ export default function Login() {
 
 
                                         </form>
-                                        
+
                                         <div class="d-grid  gap-2 justify-content-center ">
                                             <p class=" mb-2 mx-1 mx-md-4 mt-4">or continue with</p>
                                             <GoogleLogin
                                                 clientId={process.env.REACT_APP_GOOGLE_LOGIN}
                                                 render={renderProps => (
                                                     <button class="btn shadow-none" onClick={renderProps.onClick}>
-                                                        <img src={google}/>
+                                                        <img src={google} />
                                                     </button>
                                                 )}
                                                 buttonText="Login"
@@ -191,7 +195,7 @@ export default function Login() {
                 </div>
             </div>
 
-            <div style={{height: "100px"}}>
+            <div style={{ height: "100px" }}>
             </div>
         </section>
     )

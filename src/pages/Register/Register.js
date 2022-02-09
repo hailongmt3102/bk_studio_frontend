@@ -1,4 +1,4 @@
-import React, { useState , useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import { Form, InputGroup, Col, SplitButton, Dropdown } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import login_image from "resources/images/login_image.png"
@@ -12,7 +12,7 @@ import profile from "resources/icons/profile.svg"
 import { deep_blue_primary } from "../../utils/color"
 import { Link } from "react-router-dom";
 import CustomDropdownButton from 'pages/EditReport/components/CustomDropdownButton';
-import {getListCompanies} from "api/ListCompanies"
+import { getListCompanies } from "api/ListCompanies"
 export default function Register() {
 
     const navigate = useNavigate()
@@ -53,13 +53,13 @@ export default function Register() {
         console.log(information);
 
         RegisterApi(information)
-        .then((res) => {
+            .then((res) => {
 
-            navigate("/account/login")
-        })
-        .catch((e) => {
-            alert(e.response.data);
-        })
+                navigate("/account/login")
+            })
+            .catch((e) => {
+                alert(e.response.data);
+            })
 
     }
     return (
@@ -248,7 +248,7 @@ export default function Register() {
                                                         setinformation({
                                                             ...information, NewCompany: true
                                                         })
-                
+
                                                         setNewCompany(true)
                                                         //console.log(newCompany);
                                                     }}
@@ -271,7 +271,7 @@ export default function Register() {
                                                     label="Created Company"
                                                     name="group2"
                                                     type="radio"
-                                                    id="Company" 
+                                                    id="Company"
                                                 />
 
                                             </div>
@@ -285,24 +285,31 @@ export default function Register() {
                                                     <div class="  me-2  ">
                                                         <CustomDropdownButton title={information.Company == "" ? "Company" : information.Company} items={listCompany.map(ele => ele.Company)} onClick={(val, index) => {
                                                             setinformation({
-                                                                ...information, Company: val, Tenant : listCompany[index].Tenant
+                                                                ...information, Company: val, Tenant: listCompany[index].Tenant
                                                             })
                                                         }} />
 
-                                                    </div>
 
-                                                    
+
+
+                                                    </div>
+                                                    <div class="d-md-flex mt-1 ">
+                                                        <h6 class=" me-2 mt-2">Position: </h6>
+                                                        <CustomDropdownButton title={information.Position == "" ? "Position" : information.Position} items={["Manager", "Member"]} onClick={(val) => {
+                                                            setinformation({
+                                                                ...information, Position: val
+                                                            })
+                                                            // console.log(information);
+                                                        }} />
+
+                                                    </div>
 
                                                 </div>
 
                                                 </div>
                                                 : <div>
-                                                 <h6 class=" me-2 mt-2">Position: </h6>
-                                                    <CustomDropdownButton title={information.Position == "" ? "Position" : information.Position} items={["Manager", "Member"]} onClick={(val) => {
-                                                        setinformation({
-                                                            ...information, Position: val
-                                                        })
-                                                    }} />   <Form.Group as={Col} md="12" controlId="validationCustomUsername">
+
+                                                    <Form.Group as={Col} md="12" controlId="validationCustomUsername">
 
                                                         <InputGroup hasValidation>
                                                             <InputGroup.Text id="inputGroupPrepend">Company name</InputGroup.Text>
@@ -312,7 +319,7 @@ export default function Register() {
                                                                         ...information, Company: e.target.value
                                                                     })
                                                                     setinformation({
-                                                                        ...information, Tenant : e.target.value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replaceAll(' ', '')
+                                                                        ...information, Tenant: e.target.value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replaceAll(' ', '')
                                                                     })
                                                                     //console.log(information);
                                                                 }}
@@ -353,7 +360,7 @@ export default function Register() {
                     </div>
                 </div>
             </div>
-            <div style={{height: "100px"}}> </div>
+            <div style={{ height: "100px" }}> </div>
         </section>
     )
 }

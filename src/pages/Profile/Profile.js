@@ -6,7 +6,23 @@ import eye_black from "resources/icons/eye_black.svg";
 import profile from "resources/icons/profile.svg"
 import lock from "resources/icons/lock.svg";
 import CustomDropdownButton from 'pages/EditReport/components/CustomDropdownButton';
+import { GetInformationApi } from "api/Account"
 export default function Profile() {
+
+
+    useEffect(() => {
+        // get 
+        GetInformationApi()
+            .then(response => {
+                console.log(response.data)
+                setinformation(response.data)
+            })
+            .catch(
+                error => {
+                    console.log(error)
+                }
+            )
+    }, [])
     const [isVisible, setisVisible] = useState(false)
     const [date, setDate] = useState(new Date());
     const [information, setinformation] = useState({

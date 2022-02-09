@@ -18,6 +18,9 @@ const updatePasswordAPI  = (data) => {
 const RegisterApi= (data) => {
     return axiosClient.post("/account/register", data)
 }
+const GetInformationApi= () => {
+    return axiosClient.post("/user/info")
+}
 const GoogleLoginApi = (data) => {
     return axiosClient.post("/account/login/google", data)
 }
@@ -29,5 +32,6 @@ export {
     GoogleLoginApi, 
     ForgotPasswordAPI,
     updatePasswordAPI,
+    GetInformationApi,
     SetNewPasswordAPI 
 }
