@@ -17,7 +17,6 @@ import logo from "resources/images/logo.png"
 export default function ChangePassword() {
     const [isVisible, setisVisible] = useState(false)
     const [information, setinformation] = useState({
-        Code: 0,
         NewPassword: ""
     })
     const navigate = useNavigate()
@@ -27,7 +26,7 @@ export default function ChangePassword() {
             alert("Please fill in code or new password");
         }
         else {
-            SetNewPasswordAPI (information)
+            SetNewPasswordAPI(information)
                 .then((res) => {
                     console.log("da change thanh cong roi")
                     navigate("/account/login")
@@ -67,25 +66,6 @@ export default function ChangePassword() {
 
                                         </div>
                                         <form class="mx-1 mx-md-4 mt-2">
-                                            <Form.Group as={Col} md="12" controlId="validationCustomUsername">
-                                                <Form.Label>Code from email</Form.Label>
-                                                <InputGroup hasValidation>
-                                                    <InputGroup.Text id="inputGroupPrepend"><img src={lock}></img></InputGroup.Text>
-                                                    <Form.Control
-                                                        onChange={(e) => {
-                                                            setinformation({
-                                                                ...information, Code: e.target.value
-                                                            })
-                                                        }}
-
-                                                        type="email"
-                                                        placeholder="Enter your code from email"
-                                                        aria-describedby="inputGroupPrepend"
-                                                        required
-                                                    />
-
-                                                </InputGroup>
-                                            </Form.Group>
                                             <Form.Group as={Col} md="12" controlId="validationCustomUsername">
                                                 <Form.Label>New Password</Form.Label>
                                                 <InputGroup hasValidation>

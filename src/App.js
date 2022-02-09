@@ -19,6 +19,7 @@ import Setting from "./pages/Setting/Setting";
 import ForgetPassword from "./pages/ForgetPassword/ForgetPassword";
 import Drawer from "./pages/Drawer/Drawer";
 import Header from "pages/Header";
+import UpdatePassword from "pages/UpdatePassword/UpdatePassword";
 
 function App() {
     const [drawerState, setDrawerState] = useState("workspace");
@@ -38,6 +39,7 @@ function App() {
                         <Route path="/account/forgetPassword" element={<ForgetPassword />} />
                         <Route path="/account/register" element={<Register />} />
                         <Route path="/account/changePassword" element={<ChangePassword />} />
+                        <Route path="/account/updatePassword" element={<UpdatePassword />} />
 
                         <Route
                             path="/project/create"

@@ -7,7 +7,11 @@ const ForgotPasswordAPI  = (data) => {
     console.log("/account/forgot?Email="+ data)
     return axiosClient.get("/account/forgot?Email=$data" )  
 }
-const SetNewPasswordAPI  = (data) => {
+const SetNewPasswordAPI   = (data) => {
+    console.log(data)
+    return axiosClient.post("/user/newpassword", data)
+}
+const updatePasswordAPI  = (data) => {
     console.log(data)
     return axiosClient.post("/account/forgot", data)
 }
@@ -24,5 +28,6 @@ export {
     RegisterApi,
     GoogleLoginApi, 
     ForgotPasswordAPI,
+    updatePasswordAPI,
     SetNewPasswordAPI 
 }
