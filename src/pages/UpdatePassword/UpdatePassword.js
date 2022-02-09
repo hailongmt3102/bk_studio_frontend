@@ -30,6 +30,7 @@ export default function UpdatePassword() {
             updatePasswordAPI(information)
                 .then((res) => {
                     console.log("da change thanh cong roi")
+                    alert("Changed Password");
                     navigate("/account/login")
                 })
                 .catch((e) => {

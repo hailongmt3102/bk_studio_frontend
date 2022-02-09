@@ -7,11 +7,13 @@ import profile from "resources/icons/profile.svg"
 import lock from "resources/icons/lock.svg";
 import CustomDropdownButton from 'pages/EditReport/components/CustomDropdownButton';
 import { GetInformationApi } from "api/Account"
+import { useNavigate } from 'react-router-dom'
 export default function Profile() {
 
-
+    const navigate = useNavigate()
     useEffect(() => {
         // get 
+        console.log('Chay ham get info ne')
         GetInformationApi()
             .then(response => {
                 console.log(response.data)
@@ -27,18 +29,17 @@ export default function Profile() {
     const [date, setDate] = useState(new Date());
     const [information, setinformation] = useState({
         Email: "",
-        Password: "",
+        LastLoginTime: null,
         UserName: "",
+        Verification: 1,
         RankAccount: "",
         Avatar: "",
         OverView: "",
         Company: "",
-        Gender: "",
+        Gender: "M",
         Address: "",
         Birthday: "",
-        Position: "",
-        NewCompany: true,
-        Tenant: "",
+        Position: ""
 
     })
     return (
@@ -53,20 +54,11 @@ export default function Profile() {
                             Username
                         </Form.Label>
                         <Col sm="4">
-                            <Form.Control type="text" placeholder="Enter your username" />
+                            <Form.Control type="text" placeholder={information.UserName} />
                         </Col>
                     </Form.Group>
                 </div>
-                <div class=" justify-content-start align-items-center py-2">
-                    <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
-                        <Form.Label column sm="2">
-                            Password
-                        </Form.Label>
-                        <Col sm="4">
-                            <Form.Control type="password" placeholder="Enter your password" />
-                        </Col>
-                    </Form.Group>
-                </div>
+
 
                 <div class=" justify-content-start align-items-center py-2">
                     <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
@@ -74,7 +66,7 @@ export default function Profile() {
                             Email
                         </Form.Label>
                         <Col sm="4">
-                            <Form.Control type="text" placeholder="Enter your emaill" />
+                            <Form.Control type="text" placeholder={information.Email} />
                         </Col>
                     </Form.Group>
                 </div>
@@ -89,7 +81,7 @@ export default function Profile() {
                                 <Form.Control
                                     type="date"
                                     name="duedate"
-                                    placeholder="Due date"
+                                    placeholder={information.Birthday}
                                     value={date}
                                     onChange={(e) => {
                                         setDate(e.target.value);
@@ -112,7 +104,7 @@ export default function Profile() {
                             Company
                         </Form.Label>
                         <Col sm="4">
-                            <Form.Control type="text" placeholder="Enter your company" />
+                            <Form.Control type="text" placeholder={information.Company} />
                         </Col>
                     </Form.Group>
                 </div>
@@ -136,12 +128,17 @@ export default function Profile() {
                             Address
                         </Form.Label>
                         <Col sm="4">
-                            <Form.Control type="text" placeholder="Enter your address" />
+                            <Form.Control type="text" placeholder={information.Address} />
                         </Col>
                     </Form.Group>
                 </div>
 
             </Form>
+
+            <button class="btn btn-primary btn-lg p-3 " type="button" style={{ backgroundColor: "#034078", borderRadius: "30px " }} onClick={() => navigate("/account/changePassword")}>Change Password
+            </button>
+
+
         </div>
     )
 }

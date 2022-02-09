@@ -22,13 +22,14 @@ export default function ChangePassword() {
     const navigate = useNavigate()
     const onSubmitHandler = () => {
         console.log("da nhan Change")
-        if (information.Code == null || information.NewPassword == "") {
-            alert("Please fill in code or new password");
+        if ( information.NewPassword == "") {
+            alert("Please fill in password");
         }
         else {
             SetNewPasswordAPI(information)
                 .then((res) => {
                     console.log("da change thanh cong roi")
+                    alert("Changed Password");
                     navigate("/account/login")
                 })
                 .catch((e) => {
