@@ -24,7 +24,7 @@ const timeCaster = (time) => {
 
 export default function ProjectBox(props) {
     return (
-        <div className='shadow pb-2 pt-1 m-3 mb-5 bg-body' style={{ maxWidth: "450px", borderRadius: "20px" }}>
+        <div className='shadow pb-2 pt-1 m-3 mb-5 bg-body' style={{ width: "450px", borderRadius: "20px" }}>
             <div className='m-4'>
                 <div className='d-flex flex-row-reverse'>
                     <p className='m-3 mt-0'>{props.data.Status}</p>

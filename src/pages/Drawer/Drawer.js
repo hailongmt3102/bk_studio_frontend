@@ -1,13 +1,27 @@
-import React, { useEffect } from "react";
-import { useLocation } from 'react-router-dom'
-
+import React, { useEffect, useState, } from "react";
+import { useLocation, useNavigate } from 'react-router-dom'
 import Project from "./Components/Project";
 import Workspace from "./Components/Workspace";
+import { getListProject } from 'api/Project'
 
 
 export default function Drawer(props) {
 
 	var location = useLocation()
+	var navigate = useNavigate()
+
+	const [projectList, setProjectList] = useState([])
+
+	useEffect(() => {
+		// get all project
+		getListProject()
+		.then(res => {
+			setProjectList(res.data)
+		})
+		.catch (err => {
+			if (err.response.status == 403) navigate("/account/login")
+		})
+	}, [])
 
 	useEffect(() => {
 		// this function call when the url changed
@@ -54,7 +68,7 @@ export default function Drawer(props) {
 					</a>
 					{props.state === "workspace" ? (
 						<div className="m-2">
-							<Workspace />
+							<Workspace projectList={projectList}/>
 						</div>
 					) : null}
 					<a class="list-group-item border-0 p-0" onClick={projectState}>

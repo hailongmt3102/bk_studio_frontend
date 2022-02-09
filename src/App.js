@@ -7,6 +7,8 @@ import DataSources from "./pages/DataSources/DataSources";
 import People from "pages/People/People";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
+import ProjectDetail from "./pages/ProjectDetail/ProjectDetail"
+import ProjectList from "./pages/ProjectList/ProjectList"
 
 import EditReport from "./pages/EditReport/EditReport";
 import ImportData from "./pages/ImportData/ImportData";
@@ -31,6 +33,9 @@ function App() {
                     <Routes>
                         <Route path="/" exact element={<Dashboard />} >
                         </Route>
+                        <Route path="/pList" element={<ProjectList/>}/>
+                        <Route path="/pDetail/:id" element={<ProjectDetail/>}/>
+
                         <Route path="/datasources" element={<DataSources />} />
                         <Route path="/people" element={<People />} />
                         <Route path="/account/login" element={<Login />} />
