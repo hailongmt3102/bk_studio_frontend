@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 
 import { Form, InputGroup, Col, Row, Container } from 'react-bootstrap'
 import visible from "resources/icons/visible.svg"
-import eye_black from "resources/icons/eye_black.svg";
+
 import profile from "resources/icons/profile.svg"
 import lock from "resources/icons/lock.svg";
 import CustomDropdownButton from 'pages/EditReport/components/CustomDropdownButton';

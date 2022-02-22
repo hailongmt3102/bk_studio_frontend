@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import login_image from "resources/images/login_image.png"
 import { updatePasswordAPI } from "api/Account"
 import lock from "resources/icons/lock.svg";
-import eye_black from "resources/icons/eye_black.svg";
+import invisible from "resources/icons/invisible.svg"
 import email from "resources/icons/email.svg";
 
 import visible from "resources/icons/visible.svg"
@@ -104,8 +104,8 @@ export default function UpdatePassword() {
                                                         required
                                                     />
 
-                                                    <button class="btn shadow-none border-top border-bottom border-end" onClick={() => { setisVisible(!isVisible) }}><img src={isVisible ? visible : eye_black}></img></button>
-                                                    {/* <Button ><img src={eye_black}></img></Button> */}
+                                                    <button class="btn shadow-none border-top border-bottom border-end" onClick={() => { setisVisible(!isVisible) }}><img width="20px" height="20px" src={isVisible ? visible : invisible }></img></button>
+                                                    
                                                 </InputGroup>
                                             </Form.Group>
 
