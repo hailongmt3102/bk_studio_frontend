@@ -6,6 +6,7 @@ import lock from "resources/icons/lock.svg"
 
 import CustomDropdownButton from 'pages/EditReport/components/CustomDropdownButton';
 export default function Setting() {
+    const [language, setlanguage] = useState("Vietnamese")
     return (
         <div>
             <h3 class="mt-3 mb-3"> Setting:</h3>
@@ -14,7 +15,7 @@ export default function Setting() {
                     <Form.Label column sm="2">
                         <h5 className='mt-4'>Darkmode </h5>
                     </Form.Label>
-                    <Col sm="5">
+                    <Col className='mt-4' sm="5">
                         <Form.Check
                             type="switch"
                             id="custom-switch"
@@ -27,15 +28,15 @@ export default function Setting() {
                         <h5>Language </h5>
                     </Form.Label>
                     <Col sm="5">
-                        <CustomDropdownButton title="---" items={["French", "American"]} onClick={(val, index) => {
-
+                        <CustomDropdownButton style={{backgroundColor:"red"}} title={language} items={["French", "American"]} onClick={(val, index) => {
+                            setlanguage(val)
                         }} />
                     </Col>
                 </Form.Group>
 
                 <Row>
                     <Col className="mt-4 ms-5" md={3} style={{ backgroundColor: "#F7F7F7", borderRadius: "20px", marginRight: "40px" }}>
-                        <Col className=" text-center me-2 align-items-end "> <h3 class=" align-self-center mt-3 mb-3"> Free</h3></Col>
+                        <Col className=" text-center me-2 align-items-end "> <h3 class=" align-self-center mt-3 mb-3" > Free</h3></Col>
                         <div style={{ paddingLeft: "100px", fontFamily: "Roboto" }}>
                             <div className="row  ">
                                 <div class=" justify-content-center  col-1">
@@ -71,7 +72,7 @@ export default function Setting() {
                                 <div class=" justify-content-center  col-1">
                                     <img src={tick} style={{ height: 10, width: 10 }} />
                                 </div>
-                                <div class="col-7" style={{ fontFamily: "Roboto" }}>
+                                <div class="col-7" style={{ fontFamily: "Roboto", color:"grey"}}>
                                     multiple projects
                                 </div>
                             </div>
@@ -81,7 +82,7 @@ export default function Setting() {
                                 <div class=" justify-content-center  col-1">
                                     <img src={tick} style={{ height: 10, width: 10 }} />
                                 </div>
-                                <div class="col-7" style={{ fontFamily: "Roboto" }}>
+                                <div class="col-7" style={{ fontFamily: "Roboto" , color:"grey"}}>
                                     block ads
                                 </div>
                             </div>
@@ -91,7 +92,7 @@ export default function Setting() {
                                 <div class=" justify-content-center  col-1">
                                     <img src={tick} style={{ height: 10, width: 10 }} />
                                 </div>
-                                <div class="col-7" style={{ fontFamily: "Roboto" }}>
+                                <div class="col-7" style={{ fontFamily: "Roboto" ,color:"grey"}}>
                                     no limit reports
                                 </div>
                             </div>

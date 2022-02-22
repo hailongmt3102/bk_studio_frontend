@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 
 import { Form, InputGroup, Col, Row, Container } from 'react-bootstrap'
 import visible from "resources/icons/visible.svg"
-
+import avt from "resources/icons/avt.svg"
 import profile from "resources/icons/profile.svg"
 import lock from "resources/icons/lock.svg";
 import CustomDropdownButton from 'pages/EditReport/components/CustomDropdownButton';
@@ -46,97 +46,105 @@ export default function Profile() {
         <div>
 
             <h3 class="mt-3 mb-3"> Profile:</h3>
+            <div class="row">
+                <div class="col-2 me-5">
+                    <div class="mb-4"><img src={avt} /></div>
+                    <div class="mt-2 ms-3 text-center">
+                        <button class=" btn btn-primary lg p-3 " type="button" style={{ backgroundColor: "#034078", borderRadius: "30px " }} onClick={() => navigate("/account/changePassword")}>Change Password</button>
+                    </div>
+                </div>
+                <div class="ml-4 col-8">
+                    <div class=" justify-content-start align-items-center py-2">
+                        <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
+                            <Form.Label column sm="2">
+                                Username
+                            </Form.Label>
+                            <Col sm="4">
+                                <Form.Control type="text" placeholder={information.UserName} />
+                            </Col>
+                        </Form.Group>
+                    </div>
 
-            <Form>
-                <div class=" justify-content-start align-items-center py-2">
-                    <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
-                        <Form.Label column sm="2">
-                            Username
-                        </Form.Label>
-                        <Col sm="4">
-                            <Form.Control type="text" placeholder={information.UserName} />
-                        </Col>
-                    </Form.Group>
+
+                    <div class=" justify-content-start align-items-center py-2">
+                        <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
+                            <Form.Label column sm="2">
+                                Email
+                            </Form.Label>
+                            <Col sm="4">
+                                <Form.Control type="text" placeholder={information.Email} />
+                            </Col>
+                        </Form.Group>
+                    </div>
+                    <div class=" justify-content-start align-items-center py-2">
+
+                        <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
+                            <Form.Label column sm="2">
+                                Birthday
+                            </Form.Label>
+                            <Col sm="4">
+                                <Form.Group controlId="duedate">
+                                    <Form.Control
+                                        type="date"
+                                        name="duedate"
+                                        placeholder={information.Birthday}
+                                        value={date}
+                                        onChange={(e) => {
+                                            setDate(e.target.value);
+                                            setinformation({
+                                                ...information, Birthday: e.target.value
+                                            })
+                                            console.log(information);
+                                        }}
+                                    />
+                                </Form.Group>
+                            </Col>
+                        </Form.Group>
+                    </div>
+
+
+
+                    <div class=" justify-content-start align-items-center py-2">
+                        <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
+                            <Form.Label column sm="2">
+                                Company
+                            </Form.Label>
+                            <Col sm="4">
+                                <Form.Control type="text" placeholder={information.Company} />
+                            </Col>
+                        </Form.Group>
+                    </div>
+                    <div class=" justify-content-start align-items-center py-2">
+                        <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
+                            <Form.Label column sm="2">
+                                Position
+                            </Form.Label>
+                            <Col sm="4">
+                                <CustomDropdownButton title={information.Position == "" ? "Position" : information.Position} items={["Manager", "Member"]} onClick={(val) => {
+                                    setinformation({
+                                        ...information, Position: val
+                                    })
+                                }} />
+                            </Col>
+                        </Form.Group>
+                    </div>
+                    <div class=" justify-content-start align-items-center py-2">
+                        <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
+                            <Form.Label column sm="2">
+                                Address
+                            </Form.Label>
+                            <Col sm="4">
+                                <Form.Control type="text" placeholder={information.Address} />
+                            </Col>
+                        </Form.Group>
+                    </div>
+
                 </div>
 
-
-                <div class=" justify-content-start align-items-center py-2">
-                    <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
-                        <Form.Label column sm="2">
-                            Email
-                        </Form.Label>
-                        <Col sm="4">
-                            <Form.Control type="text" placeholder={information.Email} />
-                        </Col>
-                    </Form.Group>
-                </div>
-                <div class=" justify-content-start align-items-center py-2">
-
-                    <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
-                        <Form.Label column sm="2">
-                            Birthday
-                        </Form.Label>
-                        <Col sm="4">
-                            <Form.Group controlId="duedate">
-                                <Form.Control
-                                    type="date"
-                                    name="duedate"
-                                    placeholder={information.Birthday}
-                                    value={date}
-                                    onChange={(e) => {
-                                        setDate(e.target.value);
-                                        setinformation({
-                                            ...information, Birthday: e.target.value
-                                        })
-                                        console.log(information);
-                                    }}
-                                />
-                            </Form.Group>
-                        </Col>
-                    </Form.Group>
-                </div>
+            </div>
 
 
 
-                <div class=" justify-content-start align-items-center py-2">
-                    <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
-                        <Form.Label column sm="2">
-                            Company
-                        </Form.Label>
-                        <Col sm="4">
-                            <Form.Control type="text" placeholder={information.Company} />
-                        </Col>
-                    </Form.Group>
-                </div>
-                <div class=" justify-content-start align-items-center py-2">
-                    <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
-                        <Form.Label column sm="2">
-                            Position
-                        </Form.Label>
-                        <Col sm="4">
-                            <CustomDropdownButton title={information.Position == "" ? "Position" : information.Position} items={["Manager", "Member"]} onClick={(val) => {
-                                setinformation({
-                                    ...information, Position: val
-                                })
-                            }} />
-                        </Col>
-                    </Form.Group>
-                </div>
-                <div class=" justify-content-start align-items-center py-2">
-                    <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
-                        <Form.Label column sm="2">
-                            Address
-                        </Form.Label>
-                        <Col sm="4">
-                            <Form.Control type="text" placeholder={information.Address} />
-                        </Col>
-                    </Form.Group>
-                </div>
-
-            </Form>
-
-            <button class="btn btn-primary btn-lg p-3 " type="button" style={{ backgroundColor: "#034078", borderRadius: "30px " }} onClick={() => navigate("/account/changePassword")}>Change Password
-            </button>
 
 
         </div>
