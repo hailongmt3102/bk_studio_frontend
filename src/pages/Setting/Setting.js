@@ -1,37 +1,181 @@
 import React, { useState, useEffect } from 'react'
+import "@fontsource/roboto";
+import { Form, InputGroup, Col, Row, Container, Button } from 'react-bootstrap'
+import tick from "resources/icons/tick.svg"
+import lock from "resources/icons/lock.svg"
 
-import { Form, InputGroup, Col, Row, Container } from 'react-bootstrap'
-import visible from "resources/icons/visible.svg"
-
-import profile from "resources/icons/profile.svg"
-import lock from "resources/icons/lock.svg";
 import CustomDropdownButton from 'pages/EditReport/components/CustomDropdownButton';
 export default function Setting() {
     return (
         <div>
             <h3 class="mt-3 mb-3"> Setting:</h3>
-            <Form.Group as={Row} className="mb-3 align-items-center" controlId="formPlaintextPassword">
-                <Form.Label column sm="2">
-                    Darkmode
-                </Form.Label>
-                <Col sm="5">
-                    <Form.Check
-                        type="switch"
-                        id="custom-switch"
+            <div style={{ backgroundColor: "white", paddingBottom: "25px", height: "700px" }}>
+                <Form.Group as={Row} className="mb-3 mt-3 ms-4 align-items-center" controlId="formPlaintextPassword">
+                    <Form.Label column sm="2">
+                        <h5 className='mt-4'>Darkmode </h5>
+                    </Form.Label>
+                    <Col sm="5">
+                        <Form.Check
+                            type="switch"
+                            id="custom-switch"
 
-                    />
-                </Col>
-            </Form.Group>
-            <Form.Group as={Row} className="mb-3 align-items-center" controlId="formPlaintextPassword">
-                <Form.Label column sm="2">
-                    Language
-                </Form.Label>
-                <Col sm="5">
-                    <CustomDropdownButton title="---" items={["French", "American"]} onClick={(val, index) => {
+                        />
+                    </Col>
+                </Form.Group>
+                <Form.Group as={Row} className="mb-7 ms-4 ms-2 align-items-center" controlId="formPlaintextPassword">
+                    <Form.Label column sm="2">
+                        <h5>Language </h5>
+                    </Form.Label>
+                    <Col sm="5">
+                        <CustomDropdownButton title="---" items={["French", "American"]} onClick={(val, index) => {
 
-                    }} />
-                </Col>
-            </Form.Group>
-        </div>
+                        }} />
+                    </Col>
+                </Form.Group>
+
+                <Row>
+                    <Col className="mt-4 ms-5" md={3} style={{ backgroundColor: "#F7F7F7", borderRadius: "20px", marginRight: "40px" }}>
+                        <Col className=" text-center me-2 align-items-end "> <h3 class=" align-self-center mt-3 mb-3"> Free</h3></Col>
+                        <div style={{ paddingLeft: "100px", fontFamily: "Roboto" }}>
+                            <div className="row  ">
+                                <div class=" justify-content-center  col-1">
+                                    <img src={tick} style={{ height: 10, width: 10 }} />
+                                </div>
+                                <div class="col-7" style={{ fontFamily: "Roboto" }}>
+                                    use tool
+                                </div>
+                            </div>
+                        </div>
+                        <div style={{ paddingLeft: "100px", fontFamily: "Roboto" }}>
+                            <div className="row  ">
+                                <div class=" justify-content-center  col-1">
+                                    <img src={tick} style={{ height: 10, width: 10 }} />
+                                </div>
+                                <div class="col-7" style={{ fontFamily: "Roboto" }}>
+                                    create reports
+                                </div>
+                            </div>
+                        </div>
+                        <div style={{ paddingLeft: "100px", fontFamily: "Roboto" }}>
+                            <div className="row  ">
+                                <div class=" justify-content-center  col-1">
+                                    <img src={tick} style={{ height: 10, width: 10 }} />
+                                </div>
+                                <div class="col-7" style={{ fontFamily: "Roboto" }}>
+                                    share reports
+                                </div>
+                            </div>
+                        </div>
+                        <div style={{ paddingLeft: "100px", fontFamily: "Roboto" }}>
+                            <div className="row  ">
+                                <div class=" justify-content-center  col-1">
+                                    <img src={tick} style={{ height: 10, width: 10 }} />
+                                </div>
+                                <div class="col-7" style={{ fontFamily: "Roboto" }}>
+                                    multiple projects
+                                </div>
+                            </div>
+                        </div>
+                        <div style={{ paddingLeft: "100px", fontFamily: "Roboto" }}>
+                            <div className="row  ">
+                                <div class=" justify-content-center  col-1">
+                                    <img src={tick} style={{ height: 10, width: 10 }} />
+                                </div>
+                                <div class="col-7" style={{ fontFamily: "Roboto" }}>
+                                    block ads
+                                </div>
+                            </div>
+                        </div>
+                        <div style={{ paddingLeft: "100px", fontFamily: "Roboto" }}>
+                            <div className="row  ">
+                                <div class=" justify-content-center  col-1">
+                                    <img src={tick} style={{ height: 10, width: 10 }} />
+                                </div>
+                                <div class="col-7" style={{ fontFamily: "Roboto" }}>
+                                    no limit reports
+                                </div>
+                            </div>
+                        </div>
+                        <div className="text-center gap-2 mt-4 mb-4 " style={{ fontFamily: "Roboto" }} >
+                            <Button variant="success" size="sm" style={{ width: "200px", borderRadius: "20px" }}>
+                                Used
+                            </Button>
+                        </div>
+
+                    </Col>
+                    <Col className="mt-4 ms-5" md={3} style={{ backgroundColor: "#F7F7F7", borderRadius: "15px", marginRight: "40px" }}>
+                        <Col className=" text-center align-items-end "> <h3 class=" align-self-center mt-3 mb-3"> Premium</h3></Col>
+                        <div style={{ paddingLeft: "100px", fontFamily: "Roboto" }}>
+                            <div className="row  ">
+                                <div class=" justify-content-center  col-1">
+                                    <img src={tick} style={{ height: 10, width: 10 }} />
+                                </div>
+                                <div class="col-7" style={{ fontFamily: "Roboto" }}>
+                                    use tool
+                                </div>
+                            </div>
+                        </div>
+                        <div style={{ paddingLeft: "100px", fontFamily: "Roboto" }}>
+                            <div className="row  ">
+                                <div class=" justify-content-center  col-1">
+                                    <img src={tick} style={{ height: 10, width: 10 }} />
+                                </div>
+                                <div class="col-7" style={{ fontFamily: "Roboto" }}>
+                                    create reports
+                                </div>
+                            </div>
+                        </div>
+                        <div style={{ paddingLeft: "100px", fontFamily: "Roboto" }}>
+                            <div className="row  ">
+                                <div class=" justify-content-center  col-1">
+                                    <img src={tick} style={{ height: 10, width: 10 }} />
+                                </div>
+                                <div class="col-7" style={{ fontFamily: "Roboto" }}>
+                                    share reports
+                                </div>
+                            </div>
+                        </div>
+                        <div style={{ paddingLeft: "100px", fontFamily: "Roboto" }}>
+                            <div className="row  ">
+                                <div class=" justify-content-center  col-1">
+                                    <img src={tick} style={{ height: 10, width: 10 }} />
+                                </div>
+                                <div class="col-7" style={{ fontFamily: "Roboto" }}>
+                                    multiple projects
+                                </div>
+                            </div>
+                        </div>
+                        <div style={{ paddingLeft: "100px", fontFamily: "Roboto" }}>
+                            <div className="row  ">
+                                <div class=" justify-content-center  col-1">
+                                    <img src={tick} style={{ height: 10, width: 10 }} />
+                                </div>
+                                <div class="col-7" style={{ fontFamily: "Roboto" }}>
+                                    block ads
+                                </div>
+                            </div>
+                        </div>
+                        <div style={{ paddingLeft: "100px", fontFamily: "Roboto" }}>
+                            <div className="row  ">
+                                <div class=" justify-content-center  col-1">
+                                    <img src={tick} style={{ height: 10, width: 10 }} />
+                                </div>
+                                <div class="col-7" style={{ fontFamily: "Roboto" }}>
+                                    no limit reports
+                                </div>
+                            </div>
+                        </div>
+                        <div className="text-center gap-2 mt-4 mb-4" style={{ fontFamily: "Roboto" }} >
+                            <Button variant="warning" size="sm" style={{ width: "200px", borderRadius: "15px" }} >
+                                <div className='text-white'> Get Premium </div>
+                            </Button>
+                        </div>
+
+                    </Col>
+                </Row>
+            </div>
+
+
+        </div >
     )
 }
