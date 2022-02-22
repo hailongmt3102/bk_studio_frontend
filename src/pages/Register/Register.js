@@ -3,13 +3,12 @@ import { Form, InputGroup, Col, SplitButton, Dropdown } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import login_image from "resources/images/login_image.png"
 import lock from "resources/icons/lock.svg";
-import eye_black from "resources/icons/eye_black.svg";
-import google from "resources/icons/google.svg";
 import email from "resources/icons/email.svg";
 import visible from "resources/icons/visible.svg"
 import { RegisterApi } from "api/Account"
 import profile from "resources/icons/profile.svg"
 import { deep_blue_primary } from "../../utils/color"
+import invisible from "resources/icons/invisible.svg"
 import { Link } from "react-router-dom";
 import CustomDropdownButton from 'pages/EditReport/components/CustomDropdownButton';
 import { getListCompanies } from "api/ListCompanies"
@@ -19,6 +18,8 @@ export default function Register() {
     const [newCompany, setNewCompany] = useState(true)
     const [listCompany, setlistCompany] = useState([])
     const [isVisible, setisVisible] = useState(false)
+
+    const [isVisibleConfirmPassword, setisVisibleConfirmPassword] = useState(false)
     const [information, setinformation] = useState({
         Email: "",
         Password: "",
@@ -154,7 +155,7 @@ export default function Register() {
                                                     <Form.Control.Feedback type="invalid">
                                                         Please choose a username.
                                                     </Form.Control.Feedback>
-                                                    <button class="btn shadow-none border-top border-bottom border-end" onClick={() => { setisVisible(!isVisible) }}><img src={isVisible ? visible : eye_black}></img></button>
+                                                    <button class="btn shadow-none border-top border-bottom border-end" onClick={() => { setisVisible(!isVisible) }}><img width="20px" height="20px" src={isVisible ? visible : invisible}></img></button>
 
                                                 </InputGroup>
                                             </Form.Group>
@@ -169,7 +170,7 @@ export default function Register() {
                                                             })
                                                             console.log(information);
                                                         }}
-                                                        type={isVisible ? "text" : "password"}
+                                                        type={isVisibleConfirmPassword ? "text" : "password"}
                                                         placeholder="Confirm your Password."
                                                         aria-describedby="inputGroupPrepend"
                                                         required
@@ -177,7 +178,7 @@ export default function Register() {
                                                     <Form.Control.Feedback type="invalid">
                                                         Confirm your Password.
                                                     </Form.Control.Feedback>
-                                                    <button class="btn shadow-none border-top border-bottom border-end" onClick={() => { setisVisible(!isVisible) }}><img src={isVisible ? visible : eye_black}></img></button>
+                                                    <button class="btn shadow-none border-top border-bottom border-end" onClick={() => { setisVisibleConfirmPassword(!isVisibleConfirmPassword) }}><img width="20px" height="20px" src={isVisible ? visible : invisible}></img></button>
 
                                                 </InputGroup>
                                             </Form.Group>
