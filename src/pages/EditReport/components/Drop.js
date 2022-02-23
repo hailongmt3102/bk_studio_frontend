@@ -1,7 +1,7 @@
 import React from 'react'
 import { Dropdown } from 'react-bootstrap'
 
-export default function CustomDropdownButton(props) {
+export default function Drop(props) {
     // The forwardRef is important!!
     // Dropdown needs access to the DOM node in order to position the Menu
     const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
@@ -19,7 +19,7 @@ export default function CustomDropdownButton(props) {
 
     return (
         <Dropdown>
-            <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components-Secondary">
+            <Dropdown.Toggle  as={CustomToggle} id="dropdown-basic">
                 <div>
                     {
                         props.icon != null ? <img src={props.icon}></img> : null

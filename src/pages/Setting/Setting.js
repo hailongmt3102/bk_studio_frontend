@@ -3,17 +3,19 @@ import "@fontsource/roboto";
 import { Form, InputGroup, Col, Row, Container, Button } from 'react-bootstrap'
 import tick from "resources/icons/tick.svg"
 import lock from "resources/icons/lock.svg"
-
-import CustomDropdownButton from 'pages/EditReport/components/CustomDropdownButton';
+import { Roboto, Poppins } from "../../utils/font"
+import { deep_blue_primary } from "../../utils/color"
+import "@fontsource/poppins";
+import Drop from 'pages/EditReport/components/Drop';
 export default function Setting() {
     const [language, setlanguage] = useState("Vietnamese")
     return (
         <div>
-            <h3 class="mt-3 mb-3"> Setting:</h3>
+            <h2 class="mt-3 mb-3 ms-4" style={{fontFamily: Poppins, color: deep_blue_primary, "font-weight": "bold"}}> Setting:</h2>
             <div style={{ backgroundColor: "white", paddingBottom: "25px", height: "700px" }}>
                 <Form.Group as={Row} className="mb-3 mt-3 ms-4 align-items-center" controlId="formPlaintextPassword">
                     <Form.Label column sm="2">
-                        <h5 className='mt-4'>Darkmode </h5>
+                        <h5 className='mt-4' style={{fontFamily: Poppins, "font-weight": "bold", fontSize:16}}>Darkmode </h5>
                     </Form.Label>
                     <Col className='mt-4' sm="5">
                         <Form.Check
@@ -24,11 +26,11 @@ export default function Setting() {
                     </Col>
                 </Form.Group>
                 <Form.Group as={Row} className="mb-7 ms-4 ms-2 align-items-center" controlId="formPlaintextPassword">
-                    <Form.Label column sm="2">
-                        <h5>Language </h5>
+                    <Form.Label column sm="2" >
+                        <h5 style={{fontFamily: Poppins, "font-weight": "bold", fontSize:16}}>Language </h5>
                     </Form.Label>
-                    <Col sm="5">
-                        <CustomDropdownButton style={{backgroundColor:"red"}} title={language} items={["French", "American"]} onClick={(val, index) => {
+                    <Col sm="2" >
+                        <Drop  title={language} items={["French", "American"]} onClick={(val, index) => {
                             setlanguage(val)
                         }} />
                     </Col>
