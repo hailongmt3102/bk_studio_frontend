@@ -1,40 +1,42 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { colors } from "components/Colors";
+import DrawerItem from "./Item"
 
 import { ReactComponent as DashboardIcon } from "resources/icons/drawerIcons/dashboard.svg"
+import { ReactComponent as DataSourceIcon } from "resources/icons/drawerIcons/dataSource.svg"
+import { ReactComponent as PeopleIcon } from "resources/icons/drawerIcons/people.svg"
+
 
 export default function Workspace(props) {
 	const [showProject, setShowProject] = useState(false)
 	return (
 		<div>
 			<ul class="list-group">
-				<Link to="/" class="list-group-item border-0" onClick={() => {
-					props.setSelectedIndex(0)
-				}}
-					className="p-2 ps-4"
+				<DrawerItem
+					link="/"
+					active={props.selectedIndex == 0 ? true : false}
+					child={<DashboardIcon fill={props.selectedIndex == 0 ? colors.drawerActive : colors.drawerToggle} />}
+					title="Dashboard"
+				/>
+				<DrawerItem	
+					link="/datasources"
+					active={props.selectedIndex == 1 ? true : false}
+					child={<DataSourceIcon fill={props.selectedIndex == 1 ? colors.drawerActive : colors.drawerToggle} />}
+					title="DataSource"
+				/>
+				<DrawerItem
+					link="/people"
+					active={props.selectedIndex == 2 ? true : false}
+					child={<PeopleIcon fill={props.selectedIndex == 2 ? colors.drawerActive : colors.drawerToggle} />}
+					title="People"
+				/>
+				
+				<a className="btn d-flex flex-row"
+					onClick={() => {
+						setShowProject(!showProject)
+					}}
 				>
-					<div className="d-flex justify-content-start">
-						<DashboardIcon fill="#FF0000" /> 
-						<p className="ms-2 fw-normal">Dashboard</p>
-					</div>
-				</Link>
-				<Link to="/datasources" class="list-group-item border-0" onClick={() => {
-					props.setSelectedIndex(1)
-				}}
-					className="p-2 ps-4"
-				>
-					Data Sources
-				</Link>
-				<Link to="/people" class="list-group-item border-0" onClick={() => {
-					props.setSelectedIndex(2)
-				}}
-					className="p-2 ps-4"
-				>
-					People
-				</Link>
-				<a className="btn d-flex flex-row" onClick={() => {
-					setShowProject(!showProject)
-				}}>
 					Your projects
 				</a>
 				{
