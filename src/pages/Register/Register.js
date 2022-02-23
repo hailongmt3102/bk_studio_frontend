@@ -12,6 +12,8 @@ import invisible from "resources/icons/invisible.svg"
 import { Link } from "react-router-dom";
 import CustomDropdownButton from 'pages/EditReport/components/CustomDropdownButton';
 import { getListCompanies } from "api/ListCompanies"
+import { Roboto, Poppins } from "../../utils/font"
+
 export default function Register() {
 
     const navigate = useNavigate()
@@ -75,20 +77,20 @@ export default function Register() {
                                         <img src={login_image} style={{ borderTopLeftRadius: "25px", borderBottomLeftRadius: "25px" }} class="img-fluid" alt="Sample image" />
                                     </div>
                                     <div class="col-md-10 col-lg-6 col-xl-5 order-1 order-lg-2 mt-4 ">
-                                        <p class="h1 fw-bold  mx-1 mx-md-4" style={{ color: deep_blue_primary }}>
+                                        <p class="h1 fw-bold  mx-1 mx-md-4" style={{ color: deep_blue_primary, fontFamily: Poppins }}>
                                             Sign up
                                         </p>
                                         <div class="form-check mb-2">
-                                            <div class="form-check-label" for="form2Example3">
+                                            <div class="form-check-label" style={{ fontFamily: Poppins }}>
                                                 If you already have an account register
                                             </div>
-                                            <label class="form-check-label" for="form2Example3">
-                                                You can <Link to="/account/login" class="border-0">  Login here !
+                                            <label class="form-check-label" style={{ fontFamily: Poppins }}>
+                                                You can <Link to="/account/login" class="border-0" style={{ color: deep_blue_primary, fontFamily: Poppins, "font-weight": "bold" }}>   Login here !
                                                 </Link>
                                             </label>
 
                                         </div>
-                                        <form class="mx-1 mx-md-4">
+                                        <form class="mx-1 mx-md-4 " style={{ fontFamily: Poppins, fontSize: 16 }}>
 
                                             <Form.Group as={Col} md="12" controlId="validationCustomUsername">
                                                 <Form.Label>Email</Form.Label>
@@ -107,9 +109,7 @@ export default function Register() {
                                                         aria-describedby="inputGroupPrepend"
                                                         required
                                                     />
-                                                    <Form.Control.Feedback type="invalid">
-                                                        Please choose a email.
-                                                    </Form.Control.Feedback>
+
                                                 </InputGroup>
                                             </Form.Group>
                                             {/* Username */}
@@ -130,9 +130,7 @@ export default function Register() {
                                                         aria-describedby="inputGroupPrepend"
                                                         required
                                                     />
-                                                    <Form.Control.Feedback type="invalid">
-                                                        Please choose a username.
-                                                    </Form.Control.Feedback>
+
                                                 </InputGroup>
                                             </Form.Group>
                                             {/* Password */}
@@ -152,9 +150,7 @@ export default function Register() {
                                                         aria-describedby="inputGroupPrepend"
                                                         required
                                                     />
-                                                    <Form.Control.Feedback type="invalid">
-                                                        Please choose a username.
-                                                    </Form.Control.Feedback>
+
                                                     <button class="btn shadow-none border-top border-bottom border-end" onClick={() => { setisVisible(!isVisible) }}><img width="20px" height="20px" src={isVisible ? visible : invisible}></img></button>
 
                                                 </InputGroup>
@@ -175,9 +171,7 @@ export default function Register() {
                                                         aria-describedby="inputGroupPrepend"
                                                         required
                                                     />
-                                                    <Form.Control.Feedback type="invalid">
-                                                        Confirm your Password.
-                                                    </Form.Control.Feedback>
+
                                                     <button class="btn shadow-none border-top border-bottom border-end" onClick={() => { setisVisibleConfirmPassword(!isVisibleConfirmPassword) }}><img width="20px" height="20px" src={isVisible ? visible : invisible}></img></button>
 
                                                 </InputGroup>
@@ -206,8 +200,6 @@ export default function Register() {
                                                     </div>
                                                 </div>
                                             </div>
-
-
                                             <div class="d-md-flex justify-content-start align-items-center py-2">
                                                 <h6 class="mb-0 me-4">Gender: </h6>
 
@@ -239,8 +231,6 @@ export default function Register() {
                                                     type="radio"
                                                     id="FemaleGender"
                                                 />
-
-
                                             </div>
                                             <div class="d-md-flex justify-content-start align-items-center py-2">
 
@@ -267,19 +257,13 @@ export default function Register() {
                                                         setNewCompany(false)
                                                         //console.log(newCompany);
                                                     }}
-
                                                     inline
                                                     label="Created Company"
                                                     name="group2"
                                                     type="radio"
                                                     id="Company"
                                                 />
-
                                             </div>
-
-
-
-
                                             {!newCompany ?
                                                 <div><div class="d-md-flex mt-1 ">
                                                     <h6 class="  me-2 mt-2">Company name: </h6>
@@ -330,9 +314,7 @@ export default function Register() {
                                                                 aria-describedby="inputGroupPrepend"
                                                                 required
                                                             />
-                                                            <Form.Control.Feedback type="invalid">
-                                                                Please choose a username.
-                                                            </Form.Control.Feedback>
+
                                                         </InputGroup>
                                                     </Form.Group>
                                                     <div class="d-md-flex mt-1 ">

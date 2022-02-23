@@ -6,13 +6,13 @@ import { updatePasswordAPI } from "api/Account"
 import lock from "resources/icons/lock.svg";
 import invisible from "resources/icons/invisible.svg"
 import email from "resources/icons/email.svg";
-
+import { Roboto, Poppins } from "../../utils/font"
 import visible from "resources/icons/visible.svg"
 import { Link } from "react-router-dom";
 import { deep_blue_primary } from "../../utils/color"
 
 
-import logo from "resources/images/logo.png"
+
 
 export default function UpdatePassword() {
     const [isVisible, setisVisible] = useState(false)
@@ -53,21 +53,21 @@ export default function UpdatePassword() {
                                         <img src={login_image} style={{ borderTopLeftRadius: "25px", borderBottomLeftRadius: "25px" }} class="img-fluid" alt="Sample image" />
                                     </div>
                                     <div class="col-md-10 col-lg-6 col-xl-5 order-1 order-lg-2 mt-5 ">
-                                        <div class="text-center"> <img src={logo}></img></div>
-                                        <p class="h1 fw-bold mb-2 mx-1 mx-md-4 mt-5" style={{ color: deep_blue_primary }}>Update Password</p>
+
+                                        <p class="h1 fw-bold mb-2 mx-1 mx-md-4 mt-5" style={{ color: deep_blue_primary, fontFamily: Poppins }}>Update Password</p>
 
 
                                         <div class="form-check mb-5">
-                                            <div class="form-check-label" for="form2Example3">
+                                            <div class="form-check-label" style={{ fontFamily: Poppins }}>
                                                 If you already have an account register
                                             </div>
-                                            <label class="form-check-label" for="form2Example3">
-                                                You can <Link to="/account/login" class="border-0">  Login here !
+                                            <label class="form-check-label" style={{ fontFamily: Poppins }}>
+                                                You can <Link to="/account/login" class="border-0" style={{ color: deep_blue_primary, fontFamily: Poppins, "font-weight": "bold" }}>  Login here !
                                                 </Link>
                                             </label>
 
                                         </div>
-                                        <form class="mx-1 mx-md-4 mt-2">
+                                        <form class="mx-1 mx-md-4 mt-2 " style={{ fontFamily: Poppins, fontSize: 16 }}>
                                             <Form.Group as={Col} md="12" controlId="validationCustomUsername">
                                                 <Form.Label>Code from email</Form.Label>
                                                 <InputGroup hasValidation>
@@ -87,27 +87,30 @@ export default function UpdatePassword() {
 
                                                 </InputGroup>
                                             </Form.Group>
-                                            <Form.Group as={Col} md="12" controlId="validationCustomUsername">
-                                                <Form.Label>New Password</Form.Label>
-                                                <InputGroup hasValidation>
-                                                    <InputGroup.Text id="inputGroupPrepend "><img src={lock}></img></InputGroup.Text>
-                                                    <Form.Control
-                                                        onChange={(e) => {
-                                                            setinformation({
-                                                                ...information, NewPassword: e.target.value
-                                                            })
-                                                            console.log(information);
-                                                        }}
-                                                        type={isVisible ? "text" : "password"}
-                                                        placeholder="Enter your password"
-                                                        aria-describedby="inputGroupPrepend"
-                                                        required
-                                                    />
+                                            <div class="mt-2">
+                                                <Form.Group as={Col} md="12" controlId="validationCustomUsername">
+                                                    <Form.Label>New Password</Form.Label>
+                                                    <InputGroup hasValidation>
+                                                        <InputGroup.Text id="inputGroupPrepend "><img src={lock}></img></InputGroup.Text>
+                                                        <Form.Control
+                                                            onChange={(e) => {
+                                                                setinformation({
+                                                                    ...information, NewPassword: e.target.value
+                                                                })
+                                                                console.log(information);
+                                                            }}
+                                                            type={isVisible ? "text" : "password"}
+                                                            placeholder="Enter your password"
+                                                            aria-describedby="inputGroupPrepend"
+                                                            required
+                                                        />
 
-                                                    <button class="btn shadow-none border-top border-bottom border-end" onClick={() => { setisVisible(!isVisible) }}><img width="20px" height="20px" src={isVisible ? visible : invisible }></img></button>
-                                                    
-                                                </InputGroup>
-                                            </Form.Group>
+                                                        <button class="btn shadow-none border-top border-bottom border-end" onClick={() => { setisVisible(!isVisible) }}><img width="20px" height="20px" src={isVisible ? visible : invisible}></img></button>
+
+                                                    </InputGroup>
+                                                </Form.Group>
+                                            </div>
+
 
 
 
