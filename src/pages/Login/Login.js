@@ -12,7 +12,7 @@ import { Link } from "react-router-dom";
 import { deep_blue_primary } from "../../utils/color"
 import { Roboto, Poppins } from "../../utils/font"
 import GoogleLogin from 'react-google-login';
-import "@fontsource/poppins";
+
 
 
 
@@ -82,7 +82,7 @@ export default function Login() {
                                                 If you don’t have an account register
                                             </div>
                                             <label class="form-check-label"  style={{fontFamily: Poppins}} >
-                                                You can <Link to="/account/register" class="border-0" style={{color: deep_blue_primary, fontFamily: Poppins}}> Register here !
+                                                You can <Link to="/account/register" class="border-0 " style={{color: deep_blue_primary, fontFamily: Poppins, "font-weight": "bold"}}> Register here !
                                                 </Link>
                                             </label>
                                             
@@ -153,7 +153,7 @@ export default function Login() {
 
 
                                             <div class="col-4 text-end">
-                                                <Link to="/account/forgetPassword" class="border-0" style={{color: deep_blue_primary, fontFamily: Poppins}}> Forgot Password !</Link>
+                                                <Link to="/account/forgetPassword" class="border-0" style={{color: deep_blue_primary, fontFamily: Poppins,"font-weight": "bold"}}> Forgot Password !</Link>
                                             </div>
 
 
