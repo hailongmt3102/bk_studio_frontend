@@ -12,8 +12,7 @@ import { Link } from "react-router-dom";
 import { deep_blue_primary } from "../../utils/color"
 import { Roboto, Poppins } from "../../utils/font"
 import GoogleLogin from 'react-google-login';
-
-
+import "@fontsource/poppins";
 
 
 export default function Login() {
@@ -74,7 +73,7 @@ export default function Login() {
                                     </div>
                                     <div class="col-md-10 col-lg-6 col-xl-5 order-1 order-lg-2 mt-5 ">
 
-                                        <p class="h1 fw-bold mb-2 mx-1 mx-md-4 mt-5" style={{ color: deep_blue_primary,  fontFamily: Poppins }}>Sign in</p>
+                                        <p class="h1 fw-bold mb-2 mx-1 mx-md-4 mt-5" style={{ color: deep_blue_primary,  fontFamily: "Poppins" }}>Sign in</p>
 
 
                                         <div class="form-check mb-4">

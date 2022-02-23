@@ -10,7 +10,7 @@ import { Roboto, Poppins } from "../../utils/font"
 import visible from "resources/icons/visible.svg"
 import { Link } from "react-router-dom";
 import { deep_blue_primary } from "../../utils/color"
-
+import "@fontsource/poppins";
 
 
 

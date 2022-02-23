@@ -8,7 +8,7 @@ import lock from "resources/icons/lock.svg";
 import CustomDropdownButton from 'pages/EditReport/components/CustomDropdownButton';
 import { GetInformationApi } from "api/Account"
 import { useNavigate } from 'react-router-dom'
-
+import "@fontsource/poppins";
 import { Roboto, Poppins } from "../../utils/font"
 
 

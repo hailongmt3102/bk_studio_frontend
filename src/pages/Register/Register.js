@@ -13,7 +13,7 @@ import { Link } from "react-router-dom";
 import CustomDropdownButton from 'pages/EditReport/components/CustomDropdownButton';
 import { getListCompanies } from "api/ListCompanies"
 import { Roboto, Poppins } from "../../utils/font"
-
+import "@fontsource/poppins";
 export default function Register() {
 
     const navigate = useNavigate()
