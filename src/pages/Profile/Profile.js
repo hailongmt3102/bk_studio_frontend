@@ -8,6 +8,11 @@ import lock from "resources/icons/lock.svg";
 import CustomDropdownButton from 'pages/EditReport/components/CustomDropdownButton';
 import { GetInformationApi } from "api/Account"
 import { useNavigate } from 'react-router-dom'
+
+import { Roboto, Poppins } from "../../utils/font"
+
+
+
 export default function Profile() {
 
     const navigate = useNavigate()
