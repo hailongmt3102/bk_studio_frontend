@@ -14,8 +14,8 @@ import save from "resources/icons/save.svg";
 import share from "resources/icons/share.svg";
 import shareWith from "resources/icons/addPeople.svg";
 import view from "resources/icons/eye.svg";
-import CircleModel from './addShapeModel/CircleModel';
-import TableModel from './addShapeModel/TableModel';
+import CircleModel from './AddShapeModel/CircleModel';
+import TableModel from './AddShapeModel/TableModel';
 
 export default function EditBar(props) {
 

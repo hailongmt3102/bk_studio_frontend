@@ -7,8 +7,12 @@ import DataSources from "./pages/DataSources/DataSources";
 import People from "pages/People/People";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
+
 import ProjectDetail from "./pages/ProjectDetail/ProjectDetail"
 import ProjectList from "./pages/ProjectList/ProjectList"
+
+
+import ChangePassword from "pages/ChangePassword/ChangePassword";
 
 import EditReport from "./pages/EditReport/EditReport";
 import ImportData from "./pages/ImportData/ImportData";
@@ -21,6 +25,7 @@ import Setting from "./pages/Setting/Setting";
 import ForgetPassword from "./pages/ForgetPassword/ForgetPassword";
 import Drawer from "./pages/Drawer/Drawer";
 import Header from "pages/Header";
+import UpdatePassword from "pages/UpdatePassword/UpdatePassword";
 
 function App() {
     const [drawerState, setDrawerState] = useState("workspace");
@@ -42,6 +47,8 @@ function App() {
 
                         <Route path="/account/forgetPassword" element={<ForgetPassword />} />
                         <Route path="/account/register" element={<Register />} />
+                        <Route path="/account/changePassword" element={<ChangePassword />} />
+                        <Route path="/account/updatePassword" element={<UpdatePassword />} />
 
                         <Route
                             path="/project/create"

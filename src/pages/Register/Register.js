@@ -1,24 +1,27 @@
-import React, { useState , useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import { Form, InputGroup, Col, SplitButton, Dropdown } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import login_image from "resources/images/login_image.png"
 import lock from "resources/icons/lock.svg";
-import eye_black from "resources/icons/eye_black.svg";
-import google from "resources/icons/google.svg";
 import email from "resources/icons/email.svg";
 import visible from "resources/icons/visible.svg"
 import { RegisterApi } from "api/Account"
 import profile from "resources/icons/profile.svg"
 import { deep_blue_primary } from "../../utils/color"
+import invisible from "resources/icons/invisible.svg"
 import { Link } from "react-router-dom";
 import CustomDropdownButton from 'pages/EditReport/components/CustomDropdownButton';
-import {getListCompanies} from "api/ListCompanies"
+import { getListCompanies } from "api/ListCompanies"
+import { Roboto, Poppins } from "../../utils/font"
+import "@fontsource/poppins";
 export default function Register() {
 
     const navigate = useNavigate()
-    const [newCompany, setNewCompany] = useState(false)
+    const [newCompany, setNewCompany] = useState(true)
     const [listCompany, setlistCompany] = useState([])
     const [isVisible, setisVisible] = useState(false)
+
+    const [isVisibleConfirmPassword, setisVisibleConfirmPassword] = useState(false)
     const [information, setinformation] = useState({
         Email: "",
         Password: "",
@@ -53,13 +56,13 @@ export default function Register() {
         console.log(information);
 
         RegisterApi(information)
-        .then((res) => {
+            .then((res) => {
 
-            navigate("/account/login")
-        })
-        .catch((e) => {
-            alert(e.response.data);
-        })
+                navigate("/account/login")
+            })
+            .catch((e) => {
+                alert(e.response.data);
+            })
 
     }
     return (
@@ -74,20 +77,20 @@ export default function Register() {
                                         <img src={login_image} style={{ borderTopLeftRadius: "25px", borderBottomLeftRadius: "25px" }} class="img-fluid" alt="Sample image" />
                                     </div>
                                     <div class="col-md-10 col-lg-6 col-xl-5 order-1 order-lg-2 mt-4 ">
-                                        <p class="h1 fw-bold  mx-1 mx-md-4" style={{ color: deep_blue_primary }}>
+                                        <p class="h1 fw-bold  mx-1 mx-md-4" style={{ color: deep_blue_primary, fontFamily: Poppins }}>
                                             Sign up
                                         </p>
                                         <div class="form-check mb-2">
-                                            <div class="form-check-label" for="form2Example3">
+                                            <div class="form-check-label" style={{ fontFamily: Poppins }}>
                                                 If you already have an account register
                                             </div>
-                                            <label class="form-check-label" for="form2Example3">
-                                                You can <Link to="/account/login" class="border-0">  Login here !
+                                            <label class="form-check-label" style={{ fontFamily: Poppins }}>
+                                                You can <Link to="/account/login" class="border-0" style={{ color: deep_blue_primary, fontFamily: Poppins, "font-weight": "bold" }}>   Login here !
                                                 </Link>
                                             </label>
 
                                         </div>
-                                        <form class="mx-1 mx-md-4">
+                                        <form class="mx-1 mx-md-4 " style={{ fontFamily: Poppins, fontSize: 16 }}>
 
                                             <Form.Group as={Col} md="12" controlId="validationCustomUsername">
                                                 <Form.Label>Email</Form.Label>
@@ -106,9 +109,7 @@ export default function Register() {
                                                         aria-describedby="inputGroupPrepend"
                                                         required
                                                     />
-                                                    <Form.Control.Feedback type="invalid">
-                                                        Please choose a email.
-                                                    </Form.Control.Feedback>
+
                                                 </InputGroup>
                                             </Form.Group>
                                             {/* Username */}
@@ -129,9 +130,7 @@ export default function Register() {
                                                         aria-describedby="inputGroupPrepend"
                                                         required
                                                     />
-                                                    <Form.Control.Feedback type="invalid">
-                                                        Please choose a username.
-                                                    </Form.Control.Feedback>
+
                                                 </InputGroup>
                                             </Form.Group>
                                             {/* Password */}
@@ -151,10 +150,8 @@ export default function Register() {
                                                         aria-describedby="inputGroupPrepend"
                                                         required
                                                     />
-                                                    <Form.Control.Feedback type="invalid">
-                                                        Please choose a username.
-                                                    </Form.Control.Feedback>
-                                                    <button class="btn shadow-none border-top border-bottom border-end" onClick={() => { setisVisible(!isVisible) }}><img src={isVisible ? visible : eye_black}></img></button>
+
+                                                    <button class="btn shadow-none border-top border-bottom border-end" onClick={() => { setisVisible(!isVisible) }}><img width="20px" height="20px" src={isVisible ? visible : invisible}></img></button>
 
                                                 </InputGroup>
                                             </Form.Group>
@@ -169,15 +166,13 @@ export default function Register() {
                                                             })
                                                             console.log(information);
                                                         }}
-                                                        type={isVisible ? "text" : "password"}
+                                                        type={isVisibleConfirmPassword ? "text" : "password"}
                                                         placeholder="Confirm your Password."
                                                         aria-describedby="inputGroupPrepend"
                                                         required
                                                     />
-                                                    <Form.Control.Feedback type="invalid">
-                                                        Confirm your Password.
-                                                    </Form.Control.Feedback>
-                                                    <button class="btn shadow-none border-top border-bottom border-end" onClick={() => { setisVisible(!isVisible) }}><img src={isVisible ? visible : eye_black}></img></button>
+
+                                                    <button class="btn shadow-none border-top border-bottom border-end" onClick={() => { setisVisibleConfirmPassword(!isVisibleConfirmPassword) }}><img width="20px" height="20px" src={isVisible ? visible : invisible}></img></button>
 
                                                 </InputGroup>
                                             </Form.Group>
@@ -205,8 +200,6 @@ export default function Register() {
                                                     </div>
                                                 </div>
                                             </div>
-
-
                                             <div class="d-md-flex justify-content-start align-items-center py-2">
                                                 <h6 class="mb-0 me-4">Gender: </h6>
 
@@ -238,8 +231,6 @@ export default function Register() {
                                                     type="radio"
                                                     id="FemaleGender"
                                                 />
-
-
                                             </div>
                                             <div class="d-md-flex justify-content-start align-items-center py-2">
 
@@ -248,12 +239,13 @@ export default function Register() {
                                                         setinformation({
                                                             ...information, NewCompany: true
                                                         })
+
                                                         setNewCompany(true)
-                                                        console.log(newCompany);
+                                                        //console.log(newCompany);
                                                     }}
                                                     inline
                                                     label="New Company"
-                                                    name="group1"
+                                                    name="group2"
                                                     type="radio"
                                                     id="Company"
                                                 />
@@ -263,44 +255,45 @@ export default function Register() {
                                                             ...information, NewCompany: false
                                                         })
                                                         setNewCompany(false)
-                                                        console.log(newCompany);
+                                                        //console.log(newCompany);
                                                     }}
-
                                                     inline
-                                                    label="Create Company"
-                                                    name="group1"
+                                                    label="Created Company"
+                                                    name="group2"
                                                     type="radio"
-                                                    id="Company" F
+                                                    id="Company"
                                                 />
-
                                             </div>
-
-
-
-
-                                            {newCompany ?
+                                            {!newCompany ?
                                                 <div><div class="d-md-flex mt-1 ">
                                                     <h6 class="  me-2 mt-2">Company name: </h6>
                                                     <div class="  me-2  ">
-                                                        <CustomDropdownButton title={information.Company == "" ? "Company" : information.Company} items={[listCompany.map(ele => ele.Company)]} onClick={(val, index) => {
+                                                        <CustomDropdownButton title={information.Company == "" ? "Company" : information.Company} items={listCompany.map(ele => ele.Company)} onClick={(val, index) => {
                                                             setinformation({
-                                                                ...information, Company: val, Tenant : listCompany[index].Tenant
+                                                                ...information, Company: val, Tenant: listCompany[index].Tenant
                                                             })
                                                         }} />
 
-                                                    </div>
 
-                                                    <h6 class=" me-2 mt-2">Position: </h6>
-                                                    <CustomDropdownButton title={information.Position == "" ? "Position" : information.Position} items={["Manager", "Member"]} onClick={(val) => {
-                                                        setinformation({
-                                                            ...information, Position: val
-                                                        })
-                                                    }} />
+
+
+                                                    </div>
+                                                    <div class="d-md-flex mt-1 ">
+                                                        <h6 class=" me-2 mt-2">Position: </h6>
+                                                        <CustomDropdownButton title={information.Position == "" ? "Position" : information.Position} items={["Manager", "Member"]} onClick={(val) => {
+                                                            setinformation({
+                                                                ...information, Position: val
+                                                            })
+                                                            // console.log(information);
+                                                        }} />
+
+                                                    </div>
 
                                                 </div>
 
                                                 </div>
                                                 : <div>
+
                                                     <Form.Group as={Col} md="12" controlId="validationCustomUsername">
 
                                                         <InputGroup hasValidation>
@@ -310,7 +303,10 @@ export default function Register() {
                                                                     setinformation({
                                                                         ...information, Company: e.target.value
                                                                     })
-                                                                    console.log(information);
+                                                                    setinformation({
+                                                                        ...information, Tenant: e.target.value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replaceAll(' ', '')
+                                                                    })
+                                                                    //console.log(information);
                                                                 }}
 
                                                                 type="text"
@@ -318,9 +314,7 @@ export default function Register() {
                                                                 aria-describedby="inputGroupPrepend"
                                                                 required
                                                             />
-                                                            <Form.Control.Feedback type="invalid">
-                                                                Please choose a username.
-                                                            </Form.Control.Feedback>
+
                                                         </InputGroup>
                                                     </Form.Group>
                                                     <div class="d-md-flex mt-1 ">
@@ -349,7 +343,7 @@ export default function Register() {
                     </div>
                 </div>
             </div>
-            <div style={{height: "100px"}}> </div>
+            <div style={{ height: "100px" }}> </div>
         </section>
     )
 }
