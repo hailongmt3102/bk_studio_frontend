@@ -14,20 +14,20 @@ export default function Drawer(props) {
 	const [projectList, setProjectList] = useState([])
 	const [selectedIndex, setSelectedIndex] = useState(0)
 
-	useEffect(() => {
-		// get all project
-		getListProject()
-			.then(res => {
-				setProjectList(res.data)
-			})
-			.catch(err => {
-				try {
-					if (err.response.status == 403 || err.response.status == 401) navigate("/account/login")
-				} catch {
-					// navigate("/account/login")
-				}
-			})
-	}, [location])
+	// useEffect(() => {
+	// 	// get all project
+	// 	getListProject()
+	// 		.then(res => {
+	// 			setProjectList(res.data)
+	// 		})
+	// 		.catch(err => {
+	// 			try {
+	// 				if (err.response.status == 403 || err.response.status == 401) navigate("/account/login")
+	// 			} catch {
+	// 				// navigate("/account/login")
+	// 			}
+	// 		})
+	// }, [])
 
 	useEffect(() => {
 		// this function call when the url changed
@@ -44,55 +44,73 @@ export default function Drawer(props) {
 				props.setDrawerState("")
 			} else {
 				props.setDrawerState("project")
+				if (/create/.test(url)) {
+					setSelectedIndex(4)
+				} else if (/gallery/.test(url)) {
+					setSelectedIndex(5)
+				} else if (/import/.test(url)) {
+					setSelectedIndex(6)
+				} else if (/templates/.test(url)) {
+					setSelectedIndex(7)
+				}
 			}
 		} else if (personalExp.test(url)) {
 			// launch personal state
 			props.setDrawerState("personal")
+			if (/profile/.test(url)) {
+				setSelectedIndex(8)
+			} else {
+				setSelectedIndex(9)
+			}
+
 		} else if (accountExp.test(url)) {
 			// launch login, signup, forgot password
 			props.setDrawerState("")
 		} else {
 			// launch workspace state
 			props.setDrawerState("workspace")
+			if (/datasources/.test(url)) {
+				setSelectedIndex(1)
+			} else if (/people/.test(url)) {
+				setSelectedIndex(2)
+			} else if (url.length == 1) {
+				setSelectedIndex(0)
+			} else {
+				setSelectedIndex(3)
+			}
 		}
 	}, [location])
 
-	const workspaceState = () => {
-		props.setDrawerState("workspace")
-		navigate("/")
-	}
-
-	const projectState = () => {
-		props.setDrawerState("project")
-		navigate("project/create")
-	}
-
-	const personalState = () => {
-		props.setDrawerState("personal")
-		navigate("personal/profile")
-	}
-
 	return props.state !== "" ? (
-		<div className="col-2 ps-3">
+		<div className="col-2 ps-3 m-0">
 			<ul class="list-group">
-				<a class="list-group-item border-0 p-0" onClick={workspaceState}>
+				<a class="list-group-item border-0 p-0" onClick={() => {
+					navigate("/")
+					// setSelectedIndex(0)
+				}}>
 					<h6 className="p-3 m-0">WORKSPACE</h6>
 				</a>
 				{props.state === "workspace" ? (
-					<Workspace projectList={projectList} selectedIndex={selectedIndex} setSelectedIndex={setSelectedIndex} />
+					<Workspace projectList={projectList} selectedIndex={selectedIndex} />
 				) : null}
-				<a class="list-group-item border-0 p-0" onClick={projectState}>
+				<a class="list-group-item border-0 p-0" onClick={() => {
+					navigate("project/create")
+					// setSelectedIndex(4)
+				}}>
 					<h6 className="p-3 m-0">PROJECT</h6>
 				</a>
 				{props.state === "project" ? (
-					<Project selectedIndex={selectedIndex} setSelectedIndex={setSelectedIndex} />
+					<Project selectedIndex={selectedIndex} />
 				) : null}
-				<a class="list-group-item border-0 p-0" onClick={personalState}>
+				<a class="list-group-item border-0 p-0" onClick={() => {
+					navigate("personal/profile")
+					// setSelectedIndex(8)
+				}}>
 					<h6 className="p-3 m-0">PERSONAL</h6>
 				</a>
 				{
 					props.state === "personal" ? (
-						<Personal selectedIndex={selectedIndex} setSelectedIndex={setSelectedIndex} />
+						<Personal selectedIndex={selectedIndex} />
 					)
 						: null
 				}
