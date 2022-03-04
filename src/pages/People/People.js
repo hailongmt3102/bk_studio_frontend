@@ -12,25 +12,24 @@ export default function People() {
             <div className='rounded-5 bg-white'>
                 <div className='row bg-light'>
                     <div className='col-5 m-4 bg-white'>
-
-                        <h1 className='m-2 ' style={{ fontFamily: Poppins, color: blue_cloud, "font-weight": "bold" }}>Member</h1>
-                        <div className='col-3 m-2 mt-3 ms-3' style={{ "height": "170px", width: "450px", "border-radius": "20px", "backgroundColor": "#FFC107" }}>
+                        <h1 className='m-2 ' style={{ fontFamily: Poppins, color: blue_cloud, "font-weight": "bold" }}>Manager</h1>
+                        <div className='col-3 ms-5 m-2 mt-3 ms-3 mb-5' style={{ "height": "170px", width: "450px", "border-radius": "20px", "backgroundColor": "#FFC107" }}>
                             <div className="row mt-4 pt-4 px-4 ">
                                 <div class="col-2 me-5" style={{ fontFamily: "Roboto" }}>
                                     <img src={avt_people} />
                                 </div>
-                                <div class="col-4 ms-2 " style={{ fontFamily: "Roboto" }}>
+                                <div class="col-4 ms-4 " style={{ fontFamily: "Roboto" }}>
                                     <div class="col-4" style={{ fontFamily: "Roboto" }}>
                                         <h2>Jenifer</h2>
                                     </div>
                                     <div class="col-4" style={{ fontFamily: "Roboto" }}>
-                                        email:aaaaaaaaa
+                                        email:pixsellzpro@gmail.com
                                     </div>
                                     <div class="col-4" style={{ fontFamily: "Roboto" }}>
-                                        email:aaaaaaaaa
+                                        joining
                                     </div>
                                     <div class="col-4" style={{ fontFamily: "Roboto" }}>
-                                        email:aaaaaaaaa
+                                        phonenumber
                                     </div>
 
                                 </div>
@@ -39,8 +38,32 @@ export default function People() {
                         </div>
 
                     </div>
-                    <div className='col-4 m-4 bg-white'>
+                    <div className='col-6 m-4 bg-white'>
+
                         <h1 className='m-2 ' style={{ fontFamily: Poppins, color: blue_cloud, "font-weight": "bold" }}>Member</h1>
+                        <div className='col-3 ms-5 m-2 mt-3 ms-3' style={{ "height": "170px", width: "450px", "border-radius": "20px", "backgroundColor": "#E1F1FF" }}>
+                            <div className="row mt-4 pt-4 px-4 ">
+                                <div class="col-2 me-5" style={{ fontFamily: "Roboto" }}>
+                                    <img src={avt_people} />
+                                </div>
+                                <div class="col-4 ms-4 " style={{ fontFamily: "Roboto" }}>
+                                    <div class="col-4" style={{ fontFamily: "Roboto" }}>
+                                        <h2>Jenifer</h2>
+                                    </div>
+                                    <div class="col-4" style={{ fontFamily: "Roboto" }}>
+                                        email:pixsellzpro@gmail.com
+                                    </div>
+                                    <div class="col-4" style={{ fontFamily: "Roboto" }}>
+                                        joining
+                                    </div>
+                                    <div class="col-4" style={{ fontFamily: "Roboto" }}>
+                                        phonenumber
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
 
                     </div>
 
