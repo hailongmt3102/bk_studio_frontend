@@ -51,7 +51,7 @@ export default function Profile() {
     return (
         <div>
 
-            <h3 class="mt-3 mb-3 ms-5" style={{ fontFamily: Poppins, color: deep_blue_primary, "font-weight": "bold" }}> Profile:</h3>
+            <h3 class="mt-3 mb-3 ms-5" style={{ fontFamily: Poppins, color: deep_blue_primary, "font-weight": "bold",fontSize:"40px" }}> Profile:</h3>
             <div class="row" style={{ height: 750 }}>
                 <div class="col-2 me-5 ms-4">
                     <div class="mb-4 ms-2"><img src={avt} /></div>
