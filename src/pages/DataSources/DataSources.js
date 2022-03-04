@@ -75,7 +75,7 @@ export default function DataSources() {
                 </div>
                 <div className='col-5 m-4 bg-white'>
 
-                    <h1 className='m-2 mt-4' style={{ fontFamily: Poppins, color: blue_cloud, "font-weight": "bold" }}>User Sources</h1>
+                    <h1 className='m-2 mt-4' style={{ fontFamily: Poppins, color: blue_cloud, "font-weight": "bold" }}>Sample</h1>
                     <div className='col-3 ms-4 mt-3 pt-2  mb-5 justify-content-center' style={{ "height": "170px", width: "370px", "border-radius": "20px", "backgroundColor": "#F7F7F7" }}>
                         <div className='row justify-content-end'>
                             <img src={three_dot} style={{ "max-width": "14%" }} />
