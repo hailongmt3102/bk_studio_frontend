@@ -11,7 +11,7 @@ export default function Setting() {
     const [language, setlanguage] = useState("Vietnamese")
     return (
         <div>
-            <h2 class="mt-3 mb-3 ms-4" style={{fontFamily: Poppins, color: deep_blue_primary, "font-weight": "bold"}}> Setting:</h2>
+            <h2 class="mt-3 mb-3 ms-4" style={{fontFamily: Poppins, color: deep_blue_primary, "font-weight": "bold",fontSize:"40px"}}> Setting:</h2>
             <div style={{ backgroundColor: "white", paddingBottom: "25px", height: "700px" }}>
                 <Form.Group as={Row} className="mb-3 mt-3 ms-4 align-items-center" controlId="formPlaintextPassword">
                     <Form.Label column sm="2">
