@@ -8,11 +8,13 @@ import excel_icon from "resources/icons/excel_icon.svg"
 import search from "resources/icons/search.svg"
 import three_dot from "resources/icons/three-dot.svg"
 import { orange } from "../../utils/color"
-
+import ThreeDotButton from 'pages/EditReport/components/ThreeDotButton'
+import CustomDropdownButton from 'pages/EditReport/components/CustomDropdownButton'
 
 const orangeStyle = {
     color: "#FF7F0D",
 }
+const option_list = ["Share","Edit","Download","Delete"]
 
 export default function DataSources() {
     return (
@@ -46,23 +48,23 @@ export default function DataSources() {
             <div className='row bg-light'>
                 <div className='col-6 m-4 bg-white'>
                     <h1 className='m-2 mt-4' style={{ fontFamily: Poppins, color: blue_cloud, "font-weight": "bold" }}>User Sources</h1>
-                    <div className='col-3 ms-4 mt-3 pt-2  mb-5 justify-content-center' style={{ "height": "170px", width: "370px", "border-radius": "20px", "backgroundColor": "#F7F7F7" }}>
-                        <div className='row justify-content-end'>
-                            <img src={three_dot} style={{ "max-width": "14%" }} />
+                    <div className='col-3 ms-4 mt-3 pt-2 mb-5' style={{ "height": "190px", width: "370px", "border-radius": "20px", "backgroundColor": "#F7F7F7" }}>
+                        <div className='row' style={{"paddingLeft": "310px"}}>
+
+                            <ThreeDotButton title={'adđ'} items={option_list} icon={three_dot} onClick={(val) => { }} />
                         </div>
                         <div className="row ms-2">
-
                             <div class="col-2 d-flex me-3 ms-2" style={{ fontFamily: "Roboto" }}>
                                 <img src={excel_icon} />
                             </div>
-                            <div class="col-4 ms-4 text-center" style={{ fontFamily: "Roboto" }}>
+                            <div class="col-5 ms-4 text-center" style={{ fontFamily: "Roboto" }}>
                                 <div class="col-4" style={{ fontFamily: "Roboto", color: blue_cloud }}>
                                     <h2>Iris.csv</h2>
                                 </div>
-                                <div class="col-4 mt-1" style={{ fontFamily: "Roboto" }}>
+                                <div class="col-5 mt-1" style={{ fontFamily: "Roboto" }}>
                                     datecreated:10/10/2021
                                 </div>
-                                <div class="col-4" style={{ fontFamily: "Roboto" }}>
+                                <div class="col-5" style={{ fontFamily: "Roboto" }}>
                                     lastmodified:10/10/2021
                                 </div>
 
@@ -75,24 +77,24 @@ export default function DataSources() {
                 </div>
                 <div className='col-5 m-4 bg-white'>
 
-                    <h1 className='m-2 mt-4' style={{ fontFamily: Poppins, color: blue_cloud, "font-weight": "bold" }}>Sample</h1>
-                    <div className='col-3 ms-4 mt-3 pt-2  mb-5 justify-content-center' style={{ "height": "170px", width: "370px", "border-radius": "20px", "backgroundColor": "#F7F7F7" }}>
-                        <div className='row justify-content-end'>
-                            <img src={three_dot} style={{ "max-width": "14%" }} />
+                <h1 className='m-2 mt-4' style={{ fontFamily: Poppins, color: blue_cloud, "font-weight": "bold" }}>Sample</h1>
+                    <div className='col-3 ms-4 mt-3 pt-2' style={{ "height": "190px", width: "370px", "border-radius": "20px", "backgroundColor": "#F7F7F7" }}>
+                        <div className='row' style={{"paddingLeft": "310px"}}>
+
+                            <ThreeDotButton title={'adđ'} items={option_list} icon={three_dot} onClick={(val) => { }} />
                         </div>
                         <div className="row ms-2">
-
                             <div class="col-2 d-flex me-3 ms-2" style={{ fontFamily: "Roboto" }}>
                                 <img src={excel_icon} />
                             </div>
-                            <div class="col-4 ms-4 text-center" style={{ fontFamily: "Roboto" }}>
+                            <div class="col-5 ms-4 text-center" style={{ fontFamily: "Roboto" }}>
                                 <div class="col-4" style={{ fontFamily: "Roboto", color: blue_cloud }}>
                                     <h2>Iris.csv</h2>
                                 </div>
-                                <div class="col-4 mt-1" style={{ fontFamily: "Roboto" }}>
+                                <div class="col-5 mt-1" style={{ fontFamily: "Roboto" }}>
                                     datecreated:10/10/2021
                                 </div>
-                                <div class="col-4" style={{ fontFamily: "Roboto" }}>
+                                <div class="col-5" style={{ fontFamily: "Roboto" }}>
                                     lastmodified:10/10/2021
                                 </div>
 
