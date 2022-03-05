@@ -13,7 +13,7 @@ export default function People() {
                 <div className='row bg-light'>
                     <div className='col-5 m-4 bg-white'>
                         <h1 className='m-2 ' style={{ fontFamily: Poppins, color: blue_cloud, "font-weight": "bold" }}>Manager</h1>
-                        <div className='col-3 ms-5 m-2 mt-3 ms-3 mb-5' style={{ "height": "170px", width: "450px", "border-radius": "20px", "backgroundColor": "#FFC107" }}>
+                        <div className='col-3 ms-5 m-2 mt-3 ms-3 mb-5' style={{ "height": "170px", width: "450px", "border-radius": "20px", "backgroundColor": "#fff2cb" }}>
                             <div className="row mt-4 pt-4 px-4 ">
                                 <div class="col-2 me-5" style={{ fontFamily: "Roboto" }}>
                                     <img src={avt_people} />
