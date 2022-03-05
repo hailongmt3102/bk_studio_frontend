@@ -16,6 +16,8 @@ export default function People() {
                     <div className='col m-4 bg-white'>
                         <h1 className='m-2' style={{ fontFamily: Poppins, color: blue_cloud, "font-weight": "bold" }}>Manager</h1>
                         <PeopleCard
+                            onClick={() => {
+                            }}
                             name="Pixsellz"
                             avatar={avt_people}
                             email="pixsellzproaaaaaa@gmail.com"
@@ -25,8 +27,10 @@ export default function People() {
                         />
                     </div>
                     <div className='col m-4 bg-white'>
-                    <h1 className='m-2' style={{ fontFamily: Poppins, color: blue_cloud, "font-weight": "bold" }}>Member</h1>
+                        <h1 className='m-2' style={{ fontFamily: Poppins, color: blue_cloud, "font-weight": "bold" }}>Member</h1>
                         <PeopleCard
+                            onClick={() => {
+                            }}
                             name="Pixsellz"
                             avatar={avt_people}
                             email="pixsellzproaaaaaa@gmail.com"
