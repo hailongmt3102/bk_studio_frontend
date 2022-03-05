@@ -15,10 +15,10 @@ export default function PeopleCard(props) {
                         Email: {props.email}
                     </div>
                     <div>
-                        Joining date: {props.joiningDate}
+                        Joining date: {props.birthday}
                     </div>
                     <div>
-                        Phone number: {props.phone}
+                        Phone number: {props.gender}
                     </div>
                 </div>
             </div>
