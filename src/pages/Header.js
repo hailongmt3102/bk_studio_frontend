@@ -12,28 +12,39 @@ export default function Header() {
         let accountExp = /account\/[a-zA-Z]/
         if (accountExp.test(url)) {
             setVisible(false)
-        }else {
+        } else {
             setVisible(true)
         }
     }, [url])
 
     const logout = () => {
         localStorage.removeItem("token")
+        localStorage.removeItem("username")
         nav('account/login')
     }
     return (
         visible ?
-        <div className='d-flex justify-content-end'>
-            {/* <AdjustedDropdown items={["Logout"]} onclick={(item) => {
-                if (item == "Logout") logout()
-            }}/> */}
-            <button className='btn btn-default' onClick={() => {
-                logout()
-            }}> 
-                <h4 className='me-4'>Logout</h4>
-            </button>
-        </div>
-        : null
+            <div className='d-flex justify-content-end me-2'>
+                <AdjustedDropdown items={["Profile", "Logout"]}
+                    onClick={(item) => {
+                        if (item == "Logout") logout()
+                        else if (item == "Profile") nav("personal/profile")
+                    }}
+                    title={
+                        <div className='d-flex align-items-center'>
+                            <div className='bg-primary text-white' style={{ height: "40px", width: "40px", borderRadius: "20px" }}>
+                                <div>
+                                    {localStorage.getItem("username") != null ? localStorage.getItem("username")[0] : ""}
+                                </div>
+                            </div>
+                            <div className='ms-2'>
+                                {localStorage.getItem("username")}
+                            </div>
+                        </div>
+                    }
+                />
+            </div>
+            : null
     );
 
 }

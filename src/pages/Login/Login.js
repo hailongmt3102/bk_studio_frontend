@@ -32,9 +32,8 @@ export default function Login() {
         // send information into server
         LoginApi(information)
             .then((res) => {
-
                 localStorage.setItem("token", res.data.AccessToken)
-
+                localStorage.setItem("username", res.data.UserName)
                 navigate("/")
             })
             .catch((e) => {
