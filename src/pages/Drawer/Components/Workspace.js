@@ -19,7 +19,7 @@ export default function Workspace(props) {
 					child={<DashboardIcon fill={props.selectedIndex == 0 ? colors.drawerActive : colors.drawerToggle} />}
 					title="Dashboard"
 				/>
-				<DrawerItem	
+				<DrawerItem
 					link="/datasources"
 					active={props.selectedIndex == 1 ? true : false}
 					child={<DataSourceIcon fill={props.selectedIndex == 1 ? colors.drawerActive : colors.drawerToggle} />}
@@ -31,8 +31,8 @@ export default function Workspace(props) {
 					child={<PeopleIcon fill={props.selectedIndex == 2 ? colors.drawerActive : colors.drawerToggle} />}
 					title="People"
 				/>
-				
-				<a className="btn d-flex flex-row"
+
+				<a className="btn d-flex flex-row ms-2"
 					onClick={() => {
 						setShowProject(!showProject)
 					}}
@@ -41,19 +41,25 @@ export default function Workspace(props) {
 				</a>
 				{
 					showProject ?
-						<div>
+						<div >
 							{
 								props.projectList.slice(0).reverse().map((ele, index) => {
 									if (index > 2) return
 									return (
-										<Link to={"/pDetail/" + ele.Id} class="list-group-item border-0">
-											{ele.Name}
-										</Link>
+										<div onClick={()=> {
+											props.setSelectedProject(ele.Id)
+										}}>										
+											<DrawerItem
+												link={"/pDetail/" + ele.Id}
+												active={props.selectedProject === ele.Id ? true : false}
+												title={ele.Name}
+											/>
+										</div>
 									)
 								}
 								)
 							}
-							<Link to="/pList" class="list-group-item border-0 text-primary">
+							<Link to="/pList" class="list-group-item border-0 text-primary ms-3">
 								See all
 							</Link>
 						</div>

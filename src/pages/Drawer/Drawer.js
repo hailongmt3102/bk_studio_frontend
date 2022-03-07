@@ -14,20 +14,22 @@ export default function Drawer(props) {
 	const [projectList, setProjectList] = useState([])
 	const [selectedIndex, setSelectedIndex] = useState(0)
 
-	// useEffect(() => {
-	// 	// get all project
-	// 	getListProject()
-	// 		.then(res => {
-	// 			setProjectList(res.data)
-	// 		})
-	// 		.catch(err => {
-	// 			try {
-	// 				if (err.response.status == 403 || err.response.status == 401) navigate("/account/login")
-	// 			} catch {
-	// 				// navigate("/account/login")
-	// 			}
-	// 		})
-	// }, [])
+	const [selectedProject, setSelectedProject] = useState("")
+
+	useEffect(() => {
+		// get all project
+		getListProject()
+			.then(res => {
+				setProjectList(res.data)
+			})
+			.catch(err => {
+				try {
+					if (err.response.status == 403 || err.response.status == 401) navigate("/account/login")
+				} catch {
+					navigate("/account/login")
+				}
+			})
+	}, [])
 
 	useEffect(() => {
 		// this function call when the url changed
@@ -71,10 +73,13 @@ export default function Drawer(props) {
 			props.setDrawerState("workspace")
 			if (/datasources/.test(url)) {
 				setSelectedIndex(1)
+				setSelectedProject(-1)
 			} else if (/people/.test(url)) {
 				setSelectedIndex(2)
+				setSelectedProject(-1)
 			} else if (url.length == 1) {
 				setSelectedIndex(0)
+				setSelectedProject(-1)
 			} else {
 				setSelectedIndex(3)
 			}
@@ -91,13 +96,17 @@ export default function Drawer(props) {
 					<h6 className="p-3 m-0">WORKSPACE</h6>
 				</a>
 				{props.state === "workspace" ? (
-					<Workspace projectList={projectList} selectedIndex={selectedIndex} />
+					<Workspace projectList={projectList} selectedIndex={selectedIndex} setSelectedIndex={setSelectedIndex} selectedProject={selectedProject} setSelectedProject={setSelectedProject} />
 				) : null}
 				<a class="list-group-item border-0 p-0" onClick={() => {
 					navigate("project/create")
 					// setSelectedIndex(4)
 				}}>
-					<h6 className="p-3 m-0">PROJECT</h6>
+					<h6 className="p-3 m-0">PROJECT
+						{
+							// projectList.filter((ele) => ele.Id === selectedProject)[0] !== undefined ? projectList.filter((ele) => ele.Id === selectedProject)[0].Name : ""
+						}
+					</h6>
 				</a>
 				{props.state === "project" ? (
 					<Project selectedIndex={selectedIndex} />
