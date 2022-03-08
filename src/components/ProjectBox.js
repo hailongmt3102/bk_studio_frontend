@@ -1,41 +1,89 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import ClockSvg from 'resources/icons/clock.svg'
 import MemberSvg from 'resources/icons/two_people.svg'
 import ThreeDotSvg from 'resources/icons/threedot.svg'
 import three_dot from "resources/icons/three-dot.svg"
 import ThreeDotButton from 'components/ThreeDotButton'
+import DropdownWithIndex0 from 'components/DropdownWithIndex0'
+import { useNavigate } from 'react-router-dom'
 import delete_icon from 'resources/icons/delete.svg'
 import edit from 'resources/icons/edit.svg'
+import active_icon from 'resources/icons/status/active.svg'
+import closed_icon from 'resources/icons/status/closed.svg'
+import now_icon from 'resources/icons/status/now.svg'
+import CustomDropdownButton from 'pages/EditReport/components/CustomDropdownButton';
+
+import {changeStatus, deleteProject} from 'api/Project'
+
+
 const orangeStyle = {
     color: "#FF7F0D",
     fontWeight: "bold"
 }
 
-const circle = {
-    width: "16px",
-    height: "16px",
-    borderRadius: "8px"
-}
+
+
+
 
 
 const timeCaster = (time) => {
     return time.substring(0, 19).replace('T', " ")
 }
 
-const option_list = ["Rename", "Delete Project"]
 
-const icons_list = [edit, delete_icon]
 export default function ProjectBox(props) {
+    const option_list = ["Rename", "Delete Project"]
+
+    const status_list = ["Active", "Now", "Closed"]
+    const staus_icon_list = [active_icon, now_icon, closed_icon]
+    const icons_list = [edit, delete_icon]
+    const [newProject, setNewProject] = useState({
+        Id: props.data.Id,
+        Status: props.data.Status,
+    })
+    const navigate = useNavigate()
+    const ChangeStatatusSubmit = () => {
+     
+        changeStatus(newProject)
+            .then((res) => {
+
+                alert('Changed Status');
+            })
+            .catch((e) => {
+                alert(e.response.data);
+            })
+
+    }
+    const DeleteProjectSubmit = () => {
+     
+        deleteProject({
+            Id: props.data.Id
+        })
+            .then((res) => {
+                
+                alert('Deleted project ID: ' +props.data.Id );
+            
+            })
+            .catch((e) => {
+                alert(e.response.data);
+            })
+
+    }
     return (
         <div className='shadow pb-2 pt-1 m-3 mb-5 bg-body' style={{ width: "450px", borderRadius: "20px" }}>
-            <div className='m-4'>
-                <div className='d-flex flex-row-reverse'>
-                    <p className='m-3 mt-0'>{props.data.Status}</p>
-                    <div className='bg-success' style={circle}>
+            <div className='mt-1 p-2'>
+                <div className='row justify-content-end pe-3'>
+                    <div className='col-2'>     
+                        <DropdownWithIndex0 title={newProject.Status} items={status_list} icons_list={staus_icon_list} onClick={(val) => {
+                            setNewProject({
+                                ...newProject, Status: val
+                            })
+                            ChangeStatatusSubmit();
+                        }} />
                     </div>
                 </div>
-                <h3 className='d-flex justify-content-center' style={{ color: "#0085FF", fontSize:"36px" }}>
+                <h3 className='d-flex justify-content-center' style={{ color: "#0085FF", fontSize: "36px" }}>
                     {props.data.Name}
                 </h3>
                 <div className='m-2'>
@@ -85,7 +133,11 @@ export default function ProjectBox(props) {
                     </div>
                 </div>
                 <div className='d-flex justify-content-end'>
-                    <ThreeDotButton title={'adđ'} items={option_list} icons_list={icons_list} icon={three_dot} onClick={(val) => { }} />
+                    <ThreeDotButton title={'adđ'} items={option_list} icons_list={icons_list} icon={three_dot} onClick={(val) => { 
+                        if (val == 'delete') 
+                            DeleteProjectSubmit()
+                        
+                    }} />
                 </div>
             </div>
         </div>

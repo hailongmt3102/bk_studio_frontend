@@ -8,7 +8,17 @@ const createNewProject = (data) => {
     return axiosClient.post('/project/new', data)
 }
 
+const changeStatus = (data) => {
+    return axiosClient.post('/project/status', data)
+}
+
+const deleteProject = (data) => {
+    return axiosClient.post('/project/delete', data)
+}
+
 export {
     getListProject,
-    createNewProject
+    createNewProject,
+    changeStatus,
+    deleteProject
 }
