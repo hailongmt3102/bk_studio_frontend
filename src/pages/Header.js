@@ -32,8 +32,8 @@ export default function Header() {
                     }}
                     title={
                         <div className='d-flex align-items-center'>
-                            <div className='bg-primary text-white' style={{ height: "40px", width: "40px", borderRadius: "20px" }}>
-                                <div>
+                            <div className='bg-primary text-white pt-1 ' style={{ height: "40px", width: "40px", borderRadius: "20px" }}>
+                                <div className=''>
                                     {localStorage.getItem("username") != null ? localStorage.getItem("username")[0] : ""}
                                 </div>
                             </div>

@@ -8,8 +8,10 @@ import excel_icon from "resources/icons/excel_icon.svg"
 import search from "resources/icons/search.svg"
 import three_dot from "resources/icons/three-dot.svg"
 import { orange } from "../../utils/color"
-import ThreeDotButton from 'pages/EditReport/components/ThreeDotButton'
+import ThreeDotButton from 'components/ThreeDotButton'
 import CustomDropdownButton from 'pages/EditReport/components/CustomDropdownButton'
+
+
 
 const orangeStyle = {
     color: "#FF7F0D",
