@@ -121,14 +121,13 @@ export default function Login() {
                                                         }}
                                                         type={isVisible ? "text" : "password"}
                                                         placeholder="Enter your password"
-                                                        aria-describedby="inputGroupPrepend"
-                                                        required
                                                     />
+
                                                     <button class="btn shadow-none border-top border-bottom border-end" onClick={() => { setisVisible(!isVisible) }}><img width="20px" height="20px" src={isVisible ? visible : invisible}></img></button>
 
                                                 </InputGroup>
                                             </Form.Group>
-
+                                            
 
 
 

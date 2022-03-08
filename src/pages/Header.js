@@ -50,7 +50,7 @@ export default function Header() {
                             <div className='d-flex align-items-center'>
                                 <div className='bg-primary text-white p-1' style={{ height: "45px", width: "45px", borderRadius: "45px", "fontSize":"26px" }}>
                                     <div className=''>
-                                        {localStorage.getItem("username").toUpperCase() != null ? localStorage.getItem("username")[0].toUpperCase() : ""}
+                                        {localStorage.getItem("username")!= null ? localStorage.getItem("username")[0].toUpperCase() : ""}
                                     </div>
                                 </div>
                                 <div className='ms-2'>
