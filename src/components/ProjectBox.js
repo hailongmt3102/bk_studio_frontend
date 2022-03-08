@@ -134,7 +134,7 @@ export default function ProjectBox(props) {
                 </div>
                 <div className='d-flex justify-content-end'>
                     <ThreeDotButton title={'adđ'} items={option_list} icons_list={icons_list} icon={three_dot} onClick={(val) => { 
-                        if (val == 'delete') 
+                        if (val == 'Delete Project') 
                             DeleteProjectSubmit()
                         
                     }} />
