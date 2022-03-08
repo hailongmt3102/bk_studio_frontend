@@ -48,7 +48,7 @@ export default function ProjectBox(props) {
         changeStatus(newProject)
             .then((res) => {
 
-                alert('Changed Status');
+                // alert('Changed Status');
             })
             .catch((e) => {
                 alert(e.response.data);
