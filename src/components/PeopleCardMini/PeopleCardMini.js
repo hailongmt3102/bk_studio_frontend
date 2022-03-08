@@ -9,10 +9,10 @@ export default function PeopleCardMini(props) {
             <div className='d-flex align-items-center'>
                 <img className='m-2' src={avt_people} width="60px" height="60px" />
                 <div className='ms-4' >
-                    <h5 style={{ fontFamily: Roboto, fontSize: "20px"}}>
+                    <h5 style={{ fontFamily: Roboto, fontSize: "24px", fontWeight:"bold"}}>
                         {props.name}
                     </h5>
-                    <h5 style={{ fontFamily: Roboto, fontSize: "20px"}}>
+                    <h5  style={{ fontFamily: Roboto, fontSize: "20px"}}>
                         {"@"+props.email}
                     </h5>
                 </div>
