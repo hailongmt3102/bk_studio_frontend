@@ -28,7 +28,7 @@ export default function Header() {
     }
     return (
         visible ?
-            <div className='text-center row mt-3 '>
+            <div className='text-center row  row-no-padding mt-3  '>
                 <div className=' col-9 me-5 mb-4' >
                     <InputGroup className=" ms-5 mt-2  " style={{ "boder-radius": "40px" }}>
                         <FormControl
@@ -48,9 +48,9 @@ export default function Header() {
                         }}
                         title={
                             <div className='d-flex align-items-center'>
-                                <div className='bg-primary text-white pt-1 ' style={{ height: "40px", width: "40px", borderRadius: "20px" }}>
+                                <div className='bg-primary text-white p-1' style={{ height: "45px", width: "45px", borderRadius: "45px", "fontSize":"26px" }}>
                                     <div className=''>
-                                        {localStorage.getItem("username") != null ? localStorage.getItem("username")[0] : ""}
+                                        {localStorage.getItem("username").toUpperCase() != null ? localStorage.getItem("username")[0].toUpperCase() : ""}
                                     </div>
                                 </div>
                                 <div className='ms-2'>

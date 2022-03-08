@@ -13,13 +13,15 @@ import active_icon from 'resources/icons/status/active.svg'
 import closed_icon from 'resources/icons/status/closed.svg'
 import now_icon from 'resources/icons/status/now.svg'
 import CustomDropdownButton from 'pages/EditReport/components/CustomDropdownButton';
-
+import { Roboto, Poppins } from "utils/font"
 import {changeStatus, deleteProject} from 'api/Project'
 
 
 const orangeStyle = {
     color: "#FF7F0D",
-    fontWeight: "bold"
+    fontWeight: "bold",
+    fontFamily:Poppins,
+    fontSize: "17px"
 }
 
 
@@ -83,26 +85,26 @@ export default function ProjectBox(props) {
                         }} />
                     </div>
                 </div>
-                <h3 className='d-flex justify-content-center' style={{ color: "#0085FF", fontSize: "36px" }}>
+                <h3 className='d-flex justify-content-center' style={{ color: "#0085FF" , fontFamily: Poppins, fontSize: "45px"}}>
                     {props.data.Name}
                 </h3>
-                <div className='m-2'>
+                <div className='m-4'>
                     <div class="row mt-3">
-                        <div className='col-1'>
-                            <img src={ClockSvg} />
+                        <div className='col-1 '>
+                            <img src={ClockSvg} height="25px" />
                         </div>
-                        <div className='col-5'>
+                        <div className='col-6'  >
                             <div style={orangeStyle}>Created at:</div>
                         </div>
-                        <div className='col'>
+                        <div className='col ' >
                             <div>{timeCaster(props.data.CreateTime)}</div>
                         </div>
                     </div>
                     <div class="row mt-2">
                         <div className='col-1'>
-                            <img src={ClockSvg} />
+                            <img src={ClockSvg} height="25px" />
                         </div>
-                        <div className='col-5'>
+                        <div className='col-6' >
                             <div style={orangeStyle}>Start time :</div>
                         </div>
                         <div className='col'>
@@ -111,20 +113,20 @@ export default function ProjectBox(props) {
                     </div>
                     <div class="row  mt-2">
                         <div className='col-1'>
-                            <img src={ClockSvg} />
+                            <img src={ClockSvg} height="25px"/>
                         </div>
-                        <div className='col-5'>
+                        <div className='col-6'>
                             <div style={orangeStyle}>Estimated End Time:</div>
                         </div>
                         <div className='col'>
                             <div>{timeCaster(props.data.PredictEndtime)}</div>
                         </div>
                     </div>
-                    <div class="row  mt-2">
+                    <div class="row  mt-2 justify-item-center">
                         <div className='col-1'>
-                            <img src={MemberSvg} />
+                            <img src={MemberSvg} height="24px" width="22px" />
                         </div>
-                        <div className='col-5'>
+                        <div className='col-6'>
                             <div style={orangeStyle}>Joined member :</div>
                         </div>
                         <div className='col'>
