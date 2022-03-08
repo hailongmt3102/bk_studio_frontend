@@ -2,12 +2,14 @@ import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
 import { getListProject } from 'api/Project'
+import { getListPeople } from 'api/People'
 import ProjectBox from '../../components/ProjectBox'
-
+import PeopleCardMini from "components/PeopleCardMini/PeopleCardMini"
 export default function Dashboard() {
     const navigate = useNavigate()
 
     const [projectList, setProjectList] = useState([])
+    const [peopleList, setPeopleList] = useState([])
     useEffect(() => {
         // get all project
         getListProject()
@@ -17,6 +19,14 @@ export default function Dashboard() {
             .catch(
                 error => {
                     // if (error.response.status == 403) navigate('/account/login')
+                }
+            )
+        getListPeople()
+            .then(response => {
+                setPeopleList(response.data)
+            })
+            .catch(
+                error => {
                 }
             )
     }, [])
@@ -44,6 +54,18 @@ export default function Dashboard() {
                     </div>
                     <div className='col-4 m-4 bg-white'>
                         <h1 className='m-2 '>People</h1>
+                        <div className='row'>
+                            {
+                                peopleList.slice(0).reverse().map((people, index) => {
+                                    return <div id={index} className="col">
+                                        <PeopleCardMini
+                                            name={people.UserName}
+                                            email={people.Email}
+                                        />
+                                    </div>
+                                })
+                            }
+                        </div>
 
                     </div>
                 </div>
