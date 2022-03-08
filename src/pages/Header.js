@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom'
 import AdjustedDropdown from '../components/AdjustedDropdown'
-
+import { Form, InputGroup, Col, Row, Container, Button, FormControl } from 'react-bootstrap'
+import search from "resources/icons/search.svg"
+const orangeStyle = {
+    color: "#FF7F0D",
+}
 
 export default function Header() {
     var url = useLocation().pathname
@@ -24,26 +28,40 @@ export default function Header() {
     }
     return (
         visible ?
-            <div className='d-flex justify-content-end me-2'>
-                <AdjustedDropdown items={["Profile", "Logout"]}
-                    onClick={(item) => {
-                        if (item == "Logout") logout()
-                        else if (item == "Profile") nav("personal/profile")
-                    }}
-                    title={
-                        <div className='d-flex align-items-center'>
-                            <div className='bg-primary text-white pt-1 ' style={{ height: "40px", width: "40px", borderRadius: "20px" }}>
-                                <div className=''>
-                                    {localStorage.getItem("username") != null ? localStorage.getItem("username")[0] : ""}
+            <div className='text-center row mt-3 '>
+                <div className=' col-9 me-5 mb-4' >
+                    <InputGroup className=" ms-5 mt-2  " style={{ "boder-radius": "40px" }}>
+                        <FormControl
+                            placeholder="Search"
+                        />
+                        <Button variant="outline-secondary" id="button-addon2">
+                            <img src={search} />
+                        </Button>
+                    </InputGroup>
+                </div>
+
+                <div className=' col-2  justify-content-end'>
+                    <AdjustedDropdown items={["Profile", "Logout"]}
+                        onClick={(item) => {
+                            if (item == "Logout") logout()
+                            else if (item == "Profile") nav("personal/profile")
+                        }}
+                        title={
+                            <div className='d-flex align-items-center'>
+                                <div className='bg-primary text-white pt-1 ' style={{ height: "40px", width: "40px", borderRadius: "20px" }}>
+                                    <div className=''>
+                                        {localStorage.getItem("username") != null ? localStorage.getItem("username")[0] : ""}
+                                    </div>
+                                </div>
+                                <div className='ms-2'>
+                                    {localStorage.getItem("username")}
                                 </div>
                             </div>
-                            <div className='ms-2'>
-                                {localStorage.getItem("username")}
-                            </div>
-                        </div>
-                    }
-                />
+                        }
+                    />
+                </div>
             </div>
+
             : null
     );
 

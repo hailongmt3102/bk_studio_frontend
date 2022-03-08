@@ -2,10 +2,10 @@ import React from 'react'
 import { Roboto, Poppins } from "../../utils/font"
 import { blue_cloud } from "../../utils/color"
 import { deep_blue_primary } from "../../utils/color"
-import { Form, InputGroup, Col, Row, Container, Button, FormControl } from 'react-bootstrap'
+
 import avt_people from "resources/icons/avt_people.svg"
 import excel_icon from "resources/icons/excel_icon.svg"
-import search from "resources/icons/search.svg"
+
 import three_dot from "resources/icons/three-dot.svg"
 import { orange } from "../../utils/color"
 import ThreeDotButton from 'components/ThreeDotButton'
@@ -21,17 +21,7 @@ const option_list = ["Share","Edit","Download","Delete"]
 export default function DataSources() {
     return (
         <div>
-            <div className='d-flex' >
-                <InputGroup className="mb-3 ms-5 me-5 " style={{ "boder-radius": "40px" }}>
-                    <FormControl
-                        placeholder="Search"
-                    />
-                    <Button variant="outline-secondary" id="button-addon2">
-                        <img src={search} />
-                    </Button>
-                </InputGroup>
-            </div>
-
+            
 
             <div className='d-flex flex-row pt-2'>
 
