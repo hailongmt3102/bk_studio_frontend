@@ -6,13 +6,13 @@ import avt from "resources/icons/avt.svg"
 import profile from "resources/icons/profile.svg"
 import lock from "resources/icons/lock.svg";
 import CustomDropdownButton from 'pages/EditReport/components/CustomDropdownButton';
-import { GetInformationApi } from "api/Account"
+import { GetInformationApi, updateInformation } from "api/Account"
 import { useNavigate } from 'react-router-dom'
 import { Roboto, Poppins } from "../../utils/font"
 import { deep_blue_primary } from "../../utils/color"
 import "@fontsource/poppins";
 import Drop from 'pages/EditReport/components/Drop';
-
+import moment from 'moment';
 
 export default function Profile() {
 
@@ -22,7 +22,7 @@ export default function Profile() {
         console.log('Chay ham get info ne')
         GetInformationApi()
             .then(response => {
-                console.log(response.data)
+                // console.log(response.data)
                 setinformation(response.data)
             })
             .catch(
@@ -48,10 +48,50 @@ export default function Profile() {
         Position: ""
 
     })
+
+    const submitUpdate = () => {
+        console.log("chạy hàm update")
+        console.log(
+            {
+                "UserName": information.UserName,
+                "RankAccount": information.RankAccount,
+                "Avatar": "",
+                "OverView": information.OverView,
+                "Company": information.Company,
+                "Gender": information.Gender,
+                "Address": information.Address,
+                "Birthday": "2000-12-04"
+            })
+        updateInformation(
+            {
+                "UserName": information.UserName,
+                "RankAccount": information.RankAccount,
+                "Avatar": "",
+                "OverView": information.OverView,
+                "Company": information.Company,
+                "Gender": information.Gender,
+                "Address": information.Address,
+                "Birthday":  moment(information.Birthday).format("YYYY-MM-DD")
+            }
+        )
+            .then((res) => {
+                console.log(res.data)
+                alert('Update informationt thành công');
+            })
+            .catch((e) => {
+                alert(e.response.data);
+            })
+
+    }
+
+
+
+
+    //}
     return (
         <div>
 
-            <h3 class="mt-3 mb-3 ms-5" style={{ fontFamily: Poppins, color: deep_blue_primary, "font-weight": "bold",fontSize:"40px" }}> Profile:</h3>
+            <h3 class="mt-3 mb-3 ms-5" style={{ fontFamily: Poppins, color: deep_blue_primary, "font-weight": "bold", fontSize: "40px" }}> Profile:</h3>
             <div class="row r" style={{ height: 750 }}>
                 <div class="col-2 me-5 ms-4 justify-content-center ">
                     <div class="mb-4 ms-2"><img src={avt} /></div>
@@ -63,7 +103,11 @@ export default function Profile() {
                     <div class=" justify-content-start align-items-center py-2">
                         <Form.Group as={Row} controlId="formPlaintextPassword">
                             <Form.Label style={{ fontFamily: Poppins, fontSize: 14 }} >UserName</Form.Label>
-                            <Col sm="5">
+                            <Col sm="5" onChange={(e) => {
+                                setinformation({
+                                    ...information, UserName: e.target.value
+                                })
+                            }}>
                                 <Form.Control type="text" placeholder={information.UserName} />
                             </Col>
                         </Form.Group>
@@ -71,7 +115,11 @@ export default function Profile() {
                     <div class=" justify-content-start align-items-center py-2">
                         <Form.Group as={Row} controlId="formPlaintextPassword">
                             <Form.Label style={{ fontFamily: Poppins, fontSize: 14 }} >Email</Form.Label>
-                            <Col sm="5">
+                            <Col sm="5" onChange={(e) => {
+                                setinformation({
+                                    ...information, Email: e.target.value
+                                })
+                            }}>
                                 <Form.Control type="text" placeholder={information.Email} />
                             </Col>
                         </Form.Group>
@@ -89,6 +137,7 @@ export default function Profile() {
                             }}
                             inline
                             label="Male"
+                            checked={information.Gender == "Male" ? true : false}
                             name="group1"
                             type="radio"
                             id="MaleGender"
@@ -106,6 +155,7 @@ export default function Profile() {
                             name="group1"
                             type="radio"
                             id="FemaleGender"
+                            checked={information.Gender == "Female" ? true : false}
                         />
                     </div>
                     <div class=" justify-content-start align-items-center py-2">
@@ -116,7 +166,7 @@ export default function Profile() {
                                     <Form.Control
                                         type="date"
                                         name="duedate"
-                                        placeholder={information.Birthday}
+                                        placeholder={moment(information.Birthday).format("YYYY-MM-DD")}
                                         value={date}
                                         onChange={(e) => {
                                             setDate(e.target.value);
@@ -134,7 +184,11 @@ export default function Profile() {
                     <div class=" justify-content-start align-items-center py-2">
                         <Form.Group as={Row} controlId="formPlaintextPassword">
                             <Form.Label style={{ fontFamily: Poppins, fontSize: 14 }} >Company</Form.Label>
-                            <Col sm="5">
+                            <Col sm="5" onChange={(e) => {
+                                setinformation({
+                                    ...information, Company: e.target.value
+                                })
+                            }}>
                                 <Form.Control type="text" placeholder={information.Company} />
                             </Col>
                         </Form.Group>
@@ -142,7 +196,11 @@ export default function Profile() {
                     <div class=" justify-content-start align-items-center py-2">
                         <Form.Group as={Row} controlId="formPlaintextPassword">
                             <Form.Label style={{ fontFamily: Poppins, fontSize: 14 }} >Address</Form.Label>
-                            <Col sm="5">
+                            <Col sm="5" onChange={(e) => {
+                                setinformation({
+                                    ...information, Address: e.target.value
+                                })
+                            }}>
                                 <Form.Control type="text" placeholder={information.Address} />
                             </Col>
                         </Form.Group>
@@ -161,7 +219,9 @@ export default function Profile() {
                             </Col>
                         </Form.Group>
                     </div>
-                    <button class=" btn btn-primary mt-4 ms-5 ms-5" type="button" style={{ backgroundColor: "#034078", borderRadius: "30px ", fontFamily: Poppins, fontSize: 14 }} onClick={() => { }}>Save Changes</button>
+                    <button class=" btn btn-primary mt-4 ms-5 ms-5" type="button" style={{ backgroundColor: "#034078", borderRadius: "30px ", fontFamily: Poppins, fontSize: 14 }} onClick={() => {
+                        submitUpdate()
+                    }}>Save Changes</button>
 
 
                 </div>

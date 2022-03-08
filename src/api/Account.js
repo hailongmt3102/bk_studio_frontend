@@ -24,6 +24,9 @@ const GetInformationApi= () => {
 const GoogleLoginApi = (data) => {
     return axiosClient.post("/account/login/google", data)
 }
+const updateInformation  = (data) => {
+    return axiosClient.post("/user/updateinformation", data)
+}
 
 
 export {
@@ -33,5 +36,6 @@ export {
     ForgotPasswordAPI,
     updatePasswordAPI,
     GetInformationApi,
-    SetNewPasswordAPI 
+    SetNewPasswordAPI,
+    updateInformation
 }
