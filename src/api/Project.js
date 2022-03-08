@@ -16,9 +16,15 @@ const deleteProject = (data) => {
     return axiosClient.post('/project/delete', data)
 }
 
+const renameProject = (data) => {
+    return axiosClient.post('/project/rename', data)
+}
+
+
 export {
     getListProject,
     createNewProject,
     changeStatus,
-    deleteProject
+    deleteProject,
+    renameProject
 }

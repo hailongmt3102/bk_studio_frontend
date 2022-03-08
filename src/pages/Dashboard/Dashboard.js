@@ -55,10 +55,10 @@ export default function Dashboard() {
                     </div>
                     <div className='col-3 mt-4 ms-4 bg-white' style={{"width":"620px"}}>
                         <h1 className='m-2 ps-4'style={{ fontFamily: Poppins, color: deep_blue_primary, "font-weight": "bold", fontSize: "40px" }}>People</h1>
-                        <div className='row p-4'>
+                        <div className='row p-2'>
                             {
                                 peopleList.slice(0).reverse().map((people, index) => {
-                                    return <div id={index} className="col">
+                                    return <div id={index} className="col m-2">
                                         <PeopleCardMini
                                             name={people.UserName}
                                             email={people.Email}
