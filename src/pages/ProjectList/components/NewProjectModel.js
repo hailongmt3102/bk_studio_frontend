@@ -3,13 +3,13 @@ import { Modal, Button, Form } from 'react-bootstrap'
 import ClockSvg from 'resources/icons/clock.svg'
 import MemberSvg from 'resources/icons/two_people.svg'
 
-
+import { Roboto, Poppins } from "utils/font"
 import {createNewProject} from 'api/Project'
 
 
 const orangeStyle = {
-    color: "#FF7F0D",
-    fontWeight: "bold"
+    color: "black",
+    fontFamily:Poppins
 }
 
 export default function NewProjectModel(props) {
@@ -67,14 +67,15 @@ export default function NewProjectModel(props) {
                     }}
                     className="text-primary border-0 mb-2"
                     style={{
-                        fontSize : "30px"
+                        fontSize : "30px",
+                        fontFamily: Poppins
                     }}
                     />
 
                     <Form.Group controlId="duedate" className='mt-4'>
                         <Form.Label> 
                             <div className='d-flex flex-row'>
-                                <img src={ClockSvg} width="30px" height="30px"/>
+                                <img src={ClockSvg} width="30px" height="30px" color='black'/>
                                 <div style={orangeStyle} className="ms-4">
                                     Start time: <strong className='text-danger'>*</strong>
                                 </div>
@@ -120,7 +121,7 @@ export default function NewProjectModel(props) {
                     <Form.Group controlId="duedate" className='mt-4'>
                         <Form.Label> 
                             <div className='d-flex flex-row'>
-                                <img src={MemberSvg} width="30px" height="30px"/>
+                                <img src={MemberSvg} width="30px" height="20px"/>
                                 <div style={orangeStyle} className="ms-4">
                                     Num of member: <strong className='text-danger'>*</strong>
                                 </div>
