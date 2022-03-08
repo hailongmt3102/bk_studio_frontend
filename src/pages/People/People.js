@@ -8,6 +8,10 @@ import tick from "resources/icons/tick.svg"
 
 import PeopleCard from "components/PeopleCard/PeopleCard"
 import {getListPeople} from '../../api/People'
+
+const textStyle = {
+    fontFamily: Roboto,
+}
 export default function People() {
     const [people, setPeople] = useState([])
     useEffect(() => {
