@@ -4,6 +4,8 @@ import ProjectBox from '../../components/ProjectBox'
 import NewProjectModel from './components/NewProjectModel'
 import { Roboto, Poppins } from "utils/font"
 import { deep_blue_primary } from "../../utils/color"
+import add_round from "resources/icons/add_round.svg"
+
 const orangeStyle = {
     color: "#FF7F0D",
 }
@@ -32,15 +34,15 @@ export default function ProjectList() {
         <div>
             <div className='d-flex flex-row pt-2'>
 
-                <h1 className='m-2 ps-4 pe-3 mt-3' style={{ fontFamily: Poppins, color: deep_blue_primary, fontWeight: "bold", fontSize: "40px" }}>Project</h1>
+            <h2 class="ms-4 mt-1" style={{ fontFamily: Poppins, color: deep_blue_primary, "font-weight": "bold", fontSize: "40px" }}> Project List</h2>
                 <div className='d-flex flex-row pt-1'>
 
-                    <button className='btn btn-default shadow bg-body rounded pl-2 pr-2 mt-1'
+                    <button className='btn btn-default btn-lg ms-3 p-0'
                         onClick={() => {
                             setShowPModel(true)
                         }}
                     >
-                        <h1 className='m-0 p-0' style={orangeStyle}>+</h1>
+                        <img src={add_round} width="40px" height="40px" />
                     </button>
 
                     <NewProjectModel

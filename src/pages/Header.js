@@ -3,6 +3,8 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import AdjustedDropdown from '../components/AdjustedDropdown'
 import { Form, InputGroup, Col, Row, Container, Button, FormControl } from 'react-bootstrap'
 import search from "resources/icons/search.svg"
+import profile from "resources/icons/profile.svg"
+import logout_icon from "resources/icons/logout_icon.svg"
 const orangeStyle = {
     color: "#FF7F0D",
 }
@@ -44,7 +46,7 @@ export default function Header() {
                 </div>
 
                 <div className='col-2 m-0 p-0 mt-2 d-flex justify-content-end' >
-                    <AdjustedDropdown className="" items={["Profile", "Logout"]}
+                    <AdjustedDropdown className="" items={["Profile", "Logout"]} icons_list={[profile,logout_icon]}
                         onClick={(item) => {
                             if (item == "Logout") logout()
                             else if (item == "Profile") nav("personal/profile")

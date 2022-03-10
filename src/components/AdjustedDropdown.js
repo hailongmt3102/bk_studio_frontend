@@ -25,13 +25,26 @@ export default function AdjustedDropdown(props) {
                         props.icon != null ? <img src={props.icon}></img> : null
                     }
                     <p className="p-0 m-auto">{props.title}</p>
+
                 </div>
             </Dropdown.Toggle>
             <Dropdown.Menu>
                 {
                     props.items.map((item, index) => {
                         return (
-                            <Dropdown.Item eventKey={index} onClick={() => { props.onClick(item, index) }}>{item}</Dropdown.Item>
+                            <div>
+                                <Dropdown.Item eventKey={index} onClick={() => { props.onClick(item, index) }}>{
+                                    <div className='row'>
+                                        <div className='col-2 text-center me-1'>
+                                            <img src={props.icons_list[index]} width="20px" height="20px" />
+                                        </div>
+                                        <div className='col-9' style={{fontSize: "20px"}}>
+                                            {item}
+                                        </div>
+                                    </div>
+                                }</Dropdown.Item>
+                            </div>
+
                         )
                     })
                 }

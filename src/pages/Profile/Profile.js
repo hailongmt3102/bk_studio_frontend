@@ -71,7 +71,7 @@ export default function Profile() {
                 "Company": information.Company,
                 "Gender": information.Gender,
                 "Address": information.Address,
-                "Birthday":  moment(information.Birthday).format("YYYY-MM-DD")
+                "Birthday": moment(information.Birthday).format("YYYY-MM-DD")
             }
         )
             .then((res) => {
@@ -104,7 +104,7 @@ export default function Profile() {
                 <div class="ms-5 col-8">
                     <div class=" justify-content-start align-items-center py-2">
                         <Form.Group as={Row} controlId="formPlaintextPassword">
-                            <Form.Label style={{ fontFamily: Poppins, fontSize: 14 }} >UserName</Form.Label>
+                            <Form.Label style={{ fontFamily: Poppins, fontSize: 14 }} >User name</Form.Label>
                             <Col sm="5" onChange={(e) => {
                                 setinformation({
                                     ...information, UserName: e.target.value
@@ -112,7 +112,7 @@ export default function Profile() {
                             }}>
                                 <Form.Control type="text" value={information.UserName} />
                             </Col>
-                        </Form.Group> 
+                        </Form.Group>
                     </div>
                     <div class=" justify-content-start align-items-center py-2">
                         <Form.Group as={Row} controlId="formPlaintextPassword">
@@ -204,19 +204,22 @@ export default function Profile() {
                             </Col>
                         </Form.Group>
                     </div>
-                    <div class=" justify-content-start align-items-center py-2">
+                    <div class=" justify-content-start align-content-center py-2">
                         <Form.Group as={Row} c controlId="formPlaintextPassword">
                             <Form.Label column sm="1" style={{ fontFamily: Poppins, fontSize: 14 }}>
-                                Position
+                                Position:
                             </Form.Label>
-                            <Col sm="5" style={{ fontFamily: Poppins, fontSize: 10 }}>
-                                <h5>{information.Position}</h5>
+                            <Col className='mt-2' sm="5" >
+                                <h5 style={{ fontSize: "15px", fontFamily: Poppins }}>{information.Position}</h5>
                             </Col>
                         </Form.Group>
                     </div>
-                    <button class=" btn btn-primary mt-4 ms-5 ms-5" type="button" style={{ backgroundColor: "#034078", borderRadius: "30px ", fontFamily: Poppins, fontSize: 14 }} onClick={() => {
-                        submitUpdate()
-                    }}>Save Changes</button>
+                    <div className='d-flex align-items-center justify-content-between ms-5'>
+                        <button class=" btn btn-primary p- btn-lg mt-4 ms-5 ms-5" type="button" style={{ backgroundColor: "#034078", borderRadius: "30px ", fontFamily: Poppins, fontSize: 14 }} onClick={() => {
+                            submitUpdate()
+                        }}>Save Changes</button>
+                    </div>
+
 
 
                 </div>

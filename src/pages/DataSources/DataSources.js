@@ -3,7 +3,7 @@ import { Roboto, Poppins } from "../../utils/font"
 import { blue_cloud } from "../../utils/color"
 import { deep_blue_primary } from "../../utils/color"
 
-import avt_people from "resources/icons/avt_people.svg"
+import add_round from "resources/icons/add_round.svg"
 import excel_icon from "resources/icons/excel_icon.svg"
 
 import three_dot from "resources/icons/three-dot.svg"
@@ -22,17 +22,18 @@ export default function DataSources() {
     return (
         <div>
             
-
+           
             <div className='d-flex flex-row pt-2'>
 
                 <h2 class="ms-4 mt-1" style={{ fontFamily: Poppins, color: deep_blue_primary, "font-weight": "bold", fontSize: "40px" }}> Data Sources:</h2>
-                <button className='btn btn-default shadow bg-body rounded ms-3 p-0' style={{"width":"58px", "height":"58px"}}
+                <button className='btn btn-default btn-lg ms-3 p-0' 
                     onClick={() => {
                         //setShowPModel(true)
                     }}
                 >
-                    <h1 className='m-0 p-0'  style={orangeStyle}>+</h1>
+                     <img src={add_round} width="40px" height="40px" />
                 </button>
+              
 
 
             </div>
