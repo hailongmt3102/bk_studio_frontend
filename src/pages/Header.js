@@ -28,9 +28,12 @@ export default function Header() {
     }
     return (
         visible ?
-            <div className='text-center row  row-no-padding mt-3  '>
-                <div className=' col-9 me-5 mb-4' >
-                    <InputGroup className=" ms-5 mt-2  " style={{ "boder-radius": "40px" }}>
+            <div className='text-center row m-0 p-0'>
+                <div className='col-2 m-0 p-0' >
+
+                </div>
+                <div className='col-8 m-0 p-0 mt-3'  >
+                    <InputGroup>
                         <FormControl
                             placeholder="Search"
                         />
@@ -40,8 +43,8 @@ export default function Header() {
                     </InputGroup>
                 </div>
 
-                <div className=' col-2  justify-content-end'>
-                    <AdjustedDropdown items={["Profile", "Logout"]}
+                <div className='col-2 m-0 p-0 mt-2 d-flex justify-content-end' >
+                    <AdjustedDropdown className="" items={["Profile", "Logout"]}
                         onClick={(item) => {
                             if (item == "Logout") logout()
                             else if (item == "Profile") nav("personal/profile")
@@ -53,8 +56,8 @@ export default function Header() {
                                         {localStorage.getItem("username")!= null ? localStorage.getItem("username")[0].toUpperCase() : ""}
                                     </div>
                                 </div>
-                                <div className='ms-2'>
-                                    {localStorage.getItem("username")}
+                                <div className='ms-2 me-3'>
+                                    {localStorage.getItem("username")== null? "" :  localStorage.getItem("username").substring(0,10)}
                                 </div>
                             </div>
                         }

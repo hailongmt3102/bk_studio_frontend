@@ -91,17 +91,24 @@ export default function ProjectBox(props) {
 
     }
     return (
-        <div className='shadow pb-2 pt-1 m-3 mb-5 bg-body' style={{ width: "450px", borderRadius: "20px" }}>
+        <div className='shadow pb-2 pt-1 m-3 mb-5 bg-body' style={{ maxWidth: "450px", minWidth: "200px", borderRadius: "20px" }}>
             <div className='mt-1 p-2'>
-                <div className='row justify-content-end pe-3'>
-                    <div className='col-2'>
-                        <DropdownWithIndex0 title={newProject.Status} items={status_list} icons_list={staus_icon_list} onClick={(val) => {
-                            setNewProject({
-                                ...newProject, Status: val
-                            })
-                            ChangeStatatusSubmit();
-                        }} />
-                    </div>
+                <div className='d-flex justify-content-between'>
+                    <ThreeDotButton title={'adđ'} items={option_list} icons_list={icons_list} icon={three_dot} onClick={(val) => {
+                        if (val == 'Delete Project')
+                            DeleteProjectSubmit()
+                        else {
+                            setPressRename(true)
+                            RenameProjectSubmit()
+                        }
+                    }} />
+                    <DropdownWithIndex0 title={newProject.Status} items={status_list} icons_list={staus_icon_list} onClick={(val) => {
+                        setNewProject({
+                            ...newProject, Status: val
+                        })
+                        ChangeStatatusSubmit();
+                    }} />
+
                 </div>
                 {
                     pressRename == false ?
@@ -112,7 +119,7 @@ export default function ProjectBox(props) {
                             <Form.Group as={Col} md="8" controlId="validationCustomUsername">
                                 <InputGroup hasValidation>
                                     <InputGroup.Text id="inputGroupPrepend" onClick={(val) => {
-                                       RenameProjectSubmit();
+                                        RenameProjectSubmit();
                                     }}><img src={save_icon}></img></InputGroup.Text>
                                     <Form.Control
                                         onChange={(e) => {
@@ -175,19 +182,7 @@ export default function ProjectBox(props) {
                         </div>
                     </div>
                 </div>
-                <div className='d-flex justify-content-end'>
-                    <ThreeDotButton title={'adđ'} items={option_list} icons_list={icons_list} icon={three_dot} onClick={(val) => {
-                        if (val == 'Delete Project')
-                            DeleteProjectSubmit()
-                        else {
-                            setPressRename(true)
-                            RenameProjectSubmit()
-                        }
 
-
-
-                    }} />
-                </div>
             </div>
         </div>
     );

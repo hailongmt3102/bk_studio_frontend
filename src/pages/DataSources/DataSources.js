@@ -26,12 +26,12 @@ export default function DataSources() {
             <div className='d-flex flex-row pt-2'>
 
                 <h2 class="ms-4 mt-1" style={{ fontFamily: Poppins, color: deep_blue_primary, "font-weight": "bold", fontSize: "40px" }}> Data Sources:</h2>
-                <button className='btn btn-default shadow bg-body rounded pl-2 pr-2 ms-3'
+                <button className='btn btn-default shadow bg-body rounded ms-3 p-0' style={{"width":"58px", "height":"58px"}}
                     onClick={() => {
                         //setShowPModel(true)
                     }}
                 >
-                    <h1 className='m-0 pb-1 p-0' style={orangeStyle}>+</h1>
+                    <h1 className='m-0 p-0'  style={orangeStyle}>+</h1>
                 </button>
 
 
