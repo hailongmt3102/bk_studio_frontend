@@ -108,9 +108,9 @@ export default function Login() {
                                                     />
                                                 </InputGroup>
                                             </Form.Group>
-                                            <Form.Group as={Col} md="12" controlId="validationCustomUsername">
+                                            <Form.Group md="12">
                                                 <Form.Label>Password</Form.Label>
-                                                <InputGroup hasValidation>
+                                                <InputGroup>
                                                     <InputGroup.Text id="inputGroupPrepend "><img src={lock}></img></InputGroup.Text>
                                                     <Form.Control
                                                         onChange={(e) => {
@@ -122,18 +122,9 @@ export default function Login() {
                                                         type={isVisible ? "text" : "password"}
                                                         placeholder="Enter your password"
                                                     />
-
                                                     <button class="btn shadow-none border-top border-bottom border-end" onClick={() => { setisVisible(!isVisible) }}><img width="20px" height="20px" src={isVisible ? visible : invisible}></img></button>
-
                                                 </InputGroup>
-                                            </Form.Group>
-                                            
-
-
-
-
-
-
+                                            </Form.Group>  
                                         </form>
                                         <div className="row ml-auto ms-4 mt-3 mb-5">
                                             <div class="form-check  col-7">

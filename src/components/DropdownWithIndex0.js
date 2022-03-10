@@ -22,7 +22,8 @@ export default function DropdownWithIndex0(props) {
             <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components-Secondary">
                 <div>
                     {
-                        props.icon != null ? <img src={props.icon}></img> : null
+                        props.items.map((ele, index) => ele == props.title ? <img src={props.icons_list[index]}></img> : null)
+                        // props.icon != null ? <img src={props.icon}></img> : null
                     }
                     <p className="p-0 m-auto">{props.title}</p>
                 </div>

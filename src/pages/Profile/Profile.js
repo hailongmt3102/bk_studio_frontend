@@ -76,6 +76,8 @@ export default function Profile() {
         )
             .then((res) => {
                 console.log(res.data)
+                window.location.reload()
+                localStorage.setItem("username", information.UserName)
                 alert('Update informationt thành công');
             })
             .catch((e) => {
@@ -108,9 +110,9 @@ export default function Profile() {
                                     ...information, UserName: e.target.value
                                 })
                             }}>
-                                <Form.Control type="text" placeholder={information.UserName} />
+                                <Form.Control type="text" value={information.UserName} />
                             </Col>
-                        </Form.Group>
+                        </Form.Group> 
                     </div>
                     <div class=" justify-content-start align-items-center py-2">
                         <Form.Group as={Row} controlId="formPlaintextPassword">
@@ -120,7 +122,7 @@ export default function Profile() {
                                     ...information, Email: e.target.value
                                 })
                             }}>
-                                <Form.Control type="text" placeholder={information.Email} />
+                                <Form.Control type="text" value={information.Email} />
                             </Col>
                         </Form.Group>
                     </div>
@@ -166,14 +168,11 @@ export default function Profile() {
                                     <Form.Control
                                         type="date"
                                         name="duedate"
-                                        placeholder={moment(information.Birthday).format("YYYY-MM-DD")}
-                                        value={date}
+                                        value={moment(information.Birthday).format("YYYY-MM-DD")}
                                         onChange={(e) => {
-                                            setDate(e.target.value);
                                             setinformation({
                                                 ...information, Birthday: e.target.value
                                             })
-                                            console.log(information);
                                         }}
                                     />
                                 </Form.Group>
@@ -189,7 +188,7 @@ export default function Profile() {
                                     ...information, Company: e.target.value
                                 })
                             }}>
-                                <Form.Control type="text" placeholder={information.Company} />
+                                <Form.Control type="text" value={information.Company} />
                             </Col>
                         </Form.Group>
                     </div>
@@ -201,7 +200,7 @@ export default function Profile() {
                                     ...information, Address: e.target.value
                                 })
                             }}>
-                                <Form.Control type="text" placeholder={information.Address} />
+                                <Form.Control type="text" value={information.Address} />
                             </Col>
                         </Form.Group>
                     </div>
@@ -211,11 +210,7 @@ export default function Profile() {
                                 Position
                             </Form.Label>
                             <Col sm="5" style={{ fontFamily: Poppins, fontSize: 10 }}>
-                                <CustomDropdownButton title={information.Position == "" ? "Position" : information.Position} items={["Manager", "Member"]} onClick={(val) => {
-                                    setinformation({
-                                        ...information, Position: val
-                                    })
-                                }} />
+                                <h5>{information.Position}</h5>
                             </Col>
                         </Form.Group>
                     </div>
