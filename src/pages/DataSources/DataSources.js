@@ -4,6 +4,10 @@ import { blue_cloud } from "../../utils/color"
 import { deep_blue_primary } from "../../utils/color"
 
 import add_round from "resources/icons/add_round.svg"
+import edit from "resources/icons/edit.svg"
+import delete_icon from "resources/icons/delete.svg"
+import download_blue from "resources/icons/download_blue.svg"
+import share_blue from "resources/icons/share_blue.svg"
 import excel_icon from "resources/icons/excel_icon.svg"
 
 import three_dot from "resources/icons/three-dot.svg"
@@ -44,7 +48,7 @@ export default function DataSources() {
                     <div className='col-3 ms-4 mt-3 pt-2 mb-5' style={{ "height": "190px", width: "370px", "border-radius": "20px", "backgroundColor": "#F7F7F7" }}>
                         <div className='row' style={{"paddingLeft": "310px"}}>
 
-                            <ThreeDotButton title={'adđ'} items={option_list} icon={three_dot} onClick={(val) => { }} />
+                            <ThreeDotButton title={'adđ'} items={option_list} icon={three_dot} icons_list={[share_blue, edit,download_blue, delete_icon]} onClick={(val) => { }} />
                         </div>
                         <div className="row ms-2">
                             <div class="col-2 d-flex me-3 ms-2" style={{ fontFamily: "Roboto" }}>

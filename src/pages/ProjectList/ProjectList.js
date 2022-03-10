@@ -34,7 +34,7 @@ export default function ProjectList() {
         <div>
             <div className='d-flex flex-row pt-2'>
 
-            <h2 class="ms-4 mt-1" style={{ fontFamily: Poppins, color: deep_blue_primary, "font-weight": "bold", fontSize: "40px" }}> Project List</h2>
+            <h2 class="ms-4 mt-1" style={{ fontFamily: Poppins, color: deep_blue_primary, "font-weight": "bold", fontSize: "40px" }}> Project list</h2>
                 <div className='d-flex flex-row pt-1'>
 
                     <button className='btn btn-default btn-lg ms-3 p-0'

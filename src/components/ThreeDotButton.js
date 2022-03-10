@@ -35,7 +35,7 @@ export default function ThreeDotButton(props) {
                                 <div>
                                     {
                                         props.icons_list != undefined ?
-                                            <div className='row'>
+                                            <div className='row p-1'>
                                                 <div className='col-2 text-center me-1'>
                                                     <img src={props.icons_list[index]} width="17px" height="17px" />
                                                 </div>
