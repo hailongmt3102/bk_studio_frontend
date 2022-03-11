@@ -22,7 +22,7 @@ export default function PeoplePopup(props) {
     const [people, setPeople] = useState([])
     var location = useLocation()
     const array = location.pathname.split("/");
-    const [check, setCheck] = useState(false)
+    
     var project_id = array[array.length - 1]
     useEffect(() => {
 
@@ -68,8 +68,8 @@ export default function PeoplePopup(props) {
                                         console.log("true nè")
                                         if (!listpeopleToAdd.includes(ele.UserName)) {
                                             listpeopleToAdd.push(ele.UserName)
-                                            console.log(ele.name)
-                                            console.log(listpeopleToAdd)
+                                            // console.log(ele.name)
+                                            // console.log(listpeopleToAdd)
                                         }
                                     }
                                     else if (e.target.checked == false) {
@@ -81,7 +81,7 @@ export default function PeoplePopup(props) {
                                                     listpeopleToAdd.splice(i, 1);
                                                 }
                                                }
-                                            console.log(listpeopleToAdd)
+                                            // console.log(listpeopleToAdd)
                                         }
                                     }
                                     // console.log(ele.name)

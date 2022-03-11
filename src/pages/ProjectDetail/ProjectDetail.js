@@ -23,7 +23,7 @@ export default function ProjectDetail() {
     useEffect(() => {
         getListPeopleByProjectID(project_id)
             .then(response => {
-                console.log(response.data)
+                // console.log(response.data)
                 setPeopleListInProject(response.data)
             })
             .catch(
@@ -31,18 +31,7 @@ export default function ProjectDetail() {
                 }
             )
     }, [appendPeopleList])
-    const inviteMemberSubmit = () => {
-
-        inviteMember(project_id)
-            .then((res) => {
-
-                // alert('Changed Status');
-            })
-            .catch((e) => {
-                alert(e.response.data);
-            })
-
-    }
+    
 
     return <div>
         <div>
