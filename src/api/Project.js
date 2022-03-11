@@ -19,8 +19,8 @@ const deleteProject = (data) => {
 const renameProject = (data) => {
     return axiosClient.post('/project/rename', data)
 }
-const inviteMember = (id) => {
-    return axiosClient.post('/project/'+id+'/invite')
+const inviteMember = (id, data) => {
+    return axiosClient.post('/project/'+id+'/invite', data)
 }
 
 

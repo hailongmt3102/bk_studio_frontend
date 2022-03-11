@@ -7,7 +7,7 @@ import '../PeopleCard/peopleCard.css'
 import people_default from "resources/icons/people_default.svg"
 export default function PeopleCardMini(props) {
     return (
-        <div onClick={props.onClick}>
+        <div>
             <div className='d-flex align-items-center'>
                 {props.avatar == "" ?
                     <img src={people_default} height="40px" width="40px" />

@@ -160,7 +160,7 @@ export default function Login() {
                                                     class="form-check-input me-2"
                                                     type="checkbox"
                                                     id="form2Example3c"
-                                                    onChange={(e) => { setRemember(e.target.checked) }}
+                                                    onClick={(e) => { setRemember(e.target.checked) }}
                                                 />
                                                 <label class="form-check-label" style={{ fontFamily: Poppins, fontSize: 14 }}>
                                                     Remember me
