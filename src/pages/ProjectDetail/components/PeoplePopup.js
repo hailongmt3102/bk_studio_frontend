@@ -66,18 +66,18 @@ export default function PeoplePopup(props) {
                                 onClick={(e) => {
                                     if (e.target.checked == true) {
                                         console.log("true nè")
-                                        if (!listpeopleToAdd.includes(ele.UserName)) {
-                                            listpeopleToAdd.push(ele.UserName)
+                                        if (!listpeopleToAdd.includes(ele.Email)) {
+                                            listpeopleToAdd.push(ele.Email)
                                             // console.log(ele.name)
                                             // console.log(listpeopleToAdd)
                                         }
                                     }
                                     else if (e.target.checked == false) {
                                        
-                                        if (listpeopleToAdd.includes(ele.UserName)) {
+                                        if (listpeopleToAdd.includes(ele.Email)) {
                                             console.log("false nè xóa nó nha")
                                             for (var i = listpeopleToAdd.length - 1; i >= 0; i--) {
-                                                if (listpeopleToAdd[i] === ele.UserName) {
+                                                if (listpeopleToAdd[i] === ele.Email) {
                                                     listpeopleToAdd.splice(i, 1);
                                                 }
                                                }
