@@ -52,14 +52,14 @@ export default function Dashboard() {
 
 
                 <div className='row bg-light  m-0 p-0 '>
-                    <div className='col-8 m-0 p-0'>
+                    <div className='col-7 m-0 p-0'>
                         <div className='me-4 mt-4 p-4 bg-white'>
                             <h1 className='' style={{ fontFamily: Poppins, color: deep_blue_primary, "font-weight": "bold", fontSize: "40px" }}>Templates</h1>
                             <p className=''>Variety template for your choice</p>
                         </div>
 
                     </div>
-                    <div className='col-4 m-0 p-0'>
+                    <div className='col-5 m-0 p-0'>
                         <div className=' mt-4 p-4 bg-white'>
                             <h1 className='' style={{ fontFamily: Poppins, color: deep_blue_primary, "font-weight": "bold", fontSize: "40px" }}>People</h1>
                             <div className='row'>
@@ -69,6 +69,7 @@ export default function Dashboard() {
                                             <PeopleCardMini
                                                 name={people.UserName}
                                                 email={people.Email}
+                                                avatar={people.Avatar}
                                             />
                                         </div>
                                     })

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Form, InputGroup, Col, Button, FormControl } from 'react-bootstrap'
 import ClockSvg from 'resources/icons/clock.svg'
 import MemberSvg from 'resources/icons/two_people.svg'
-import ThreeDotSvg from 'resources/icons/threedot.svg'
+
 import three_dot from "resources/icons/three-dot.svg"
 import ThreeDotButton from 'components/ThreeDotButton'
 import DropdownWithIndex0 from 'components/DropdownWithIndex0'

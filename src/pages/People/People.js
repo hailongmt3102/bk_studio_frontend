@@ -41,7 +41,9 @@ export default function People() {
 
                                     }}
                                     name={ele.UserName}
-                                    avatar={avt_people}
+                                    email={ele.Email}
+                                    avatar={ele.Avatar}
+                                    rank={ele.RankAccount}
                                     birthday={ele.Birthday.substring(0,10).split('-').reverse().join('-')}
                                     gender={ele.Gender}
                                     isManager={true}
@@ -59,7 +61,9 @@ export default function People() {
 
                                     }}
                                     name={ele.UserName}
-                                    avatar={avt_people}
+                                    email={ele.Email}
+                                    rank={ele.RankAccount}  
+                                    avatar={ele.Avatar}
                                     birthday={ele.Birthday.substring(0,10).split('-').reverse().join('-')}
                                     gender={ele.Gender}
                                     isManager={false}
