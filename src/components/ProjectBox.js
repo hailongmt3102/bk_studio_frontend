@@ -38,8 +38,8 @@ const timeCaster = (time) => {
 export default function ProjectBox(props) {
     const option_list = ["Rename", "Delete Project"]
 
-    const status_list = ["Active", "Now", "Closed"]
-    const staus_icon_list = [active_icon, now_icon, closed_icon]
+    const status_list = ["Draft","Active", "Closed"]
+    const staus_icon_list = [now_icon,active_icon, closed_icon]
     const icons_list = [edit, delete_icon]
     const [newProject, setNewProject] = useState({
         Id: props.data.Id,

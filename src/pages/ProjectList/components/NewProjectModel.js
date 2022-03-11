@@ -21,7 +21,7 @@ export default function NewProjectModel(props) {
         PredictEndtime: "",
         NumOfMember: 1,
         Description: "",
-        Status: "new"
+        Status: "Draft"
     })
     const [date, setDate] = useState(new Date());
     const [date1, setDate1] = useState(new Date());
