@@ -18,6 +18,7 @@ export default function Register() {
 
     const navigate = useNavigate()
     const [newCompany, setNewCompany] = useState(true)
+    const [confirmPassword, setConfirmPassword] = useState("")
     const [listCompany, setlistCompany] = useState([])
     const [isVisible, setisVisible] = useState(false)
 
@@ -51,10 +52,29 @@ export default function Register() {
                 }
             )
     }, [])
-
+    function ValidateEmail(mail) {
+        if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail)) {
+            return (true)
+        }
+        
+        return (false)
+    }
+    
     const onSubmitHandler = () => {
         console.log(information);
-
+        if (!ValidateEmail(information.Email)) {
+            alert("You have entered an invalid email address!")
+            return 
+        }
+        if (information.Password.length <8) {
+            alert("Password have to more than 8 digit")
+            return 
+        }
+        if (information.Password != confirmPassword )
+        {
+            alert("Password and confirm password don't match")
+            return 
+        }
         RegisterApi(information)
             .then((res) => {
 
@@ -161,9 +181,7 @@ export default function Register() {
                                                     <InputGroup.Text id="inputGroupPrepend "><img src={lock}></img></InputGroup.Text>
                                                     <Form.Control
                                                         onChange={(e) => {
-                                                            setinformation({
-                                                                ...information, Password: e.target.value
-                                                            })
+                                                            setConfirmPassword(e.target.value)
                                                             console.log(information);
                                                         }}
                                                         type={isVisibleConfirmPassword ? "text" : "password"}

@@ -23,13 +23,28 @@ export default function Login() {
     })
     const [remember, setRemember] = useState(false)
     const navigate = useNavigate()
+    function ValidateEmail(mail) {
+        if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail)) {
+            return (true)
+        }
+        
+        return (false)
+    }
     const onSubmitHandler = () => {
         // check email and password
         if ([information.Email.length, information.Password.length].includes(0)) {
             alert("login fail")
             return
         }
+        if (information.Password.length <8) {
+            alert("Password have to more than 8 digit")
+            return
+        }
+        if (!ValidateEmail(information.Email)) {
+            alert("You have entered an invalid email address!")
 
+            return
+        }
         // send information into server
         LoginApi(information)
             .then((res) => {
