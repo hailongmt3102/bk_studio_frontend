@@ -45,6 +45,7 @@ export default function PeoplePopup(props) {
             .then(res => {
                 props.handleClose()
                 alert("Đã thêm member thành công")
+                window.location.reload()
                 setPeopleListToAdd([])
                 props.onComplete()
             })

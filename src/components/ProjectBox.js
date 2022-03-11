@@ -70,7 +70,7 @@ export default function ProjectBox(props) {
             Id: props.data.Id
         })
             .then((res) => {
-
+                window.location.reload()
                 alert('Deleted project ID: ' + props.data.Id);
 
             })
