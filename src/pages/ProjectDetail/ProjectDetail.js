@@ -98,7 +98,7 @@ export default function ProjectDetail() {
                                     rank={ele.RankAccount}
                                     birthday={ele.Birthday.substring(0, 10).split('-').reverse().join('-')}
                                     gender={ele.Gender}
-                                    isManager={true}
+                                    isManager={false}
                                 />
                             })
                         }
