@@ -89,6 +89,7 @@ export default function ProjectBox(props) {
             PredictEndtime: projectInformation.PredictEndtime.substring(0,10)
         })
             .then((res) => {
+                window.location.reload()
                 alert("Edit thanh cong")
             })
             .catch((e) => {
