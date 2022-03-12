@@ -1,4 +1,4 @@
-import React, { useEffect, useState, } from "react";
+import React, { useCallback, useEffect, useState, } from "react";
 import { useLocation, useNavigate } from 'react-router-dom'
 import Project from "./Components/Project";
 import Workspace from "./Components/Workspace";
@@ -112,9 +112,6 @@ export default function Drawer(props) {
 						// setSelectedIndex(4)
 					}}>
 						<h6 className="p-3 m-0">PROJECT
-							{
-								// projectList.filter((ele) => ele.Id === selectedProject)[0] !== undefined ? projectList.filter((ele) => ele.Id === selectedProject)[0].Name : ""
-							}
 						</h6>
 					</a>
 					{props.state === "project" ? (
