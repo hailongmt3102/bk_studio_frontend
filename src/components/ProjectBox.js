@@ -15,7 +15,7 @@ import closed_icon from 'resources/icons/status/closed.svg'
 import now_icon from 'resources/icons/status/now.svg'
 import CustomDropdownButton from 'pages/EditReport/components/CustomDropdownButton';
 import { Roboto, Poppins } from "utils/font"
-import { changeStatus, deleteProject, renameProject } from 'api/Project'
+import { changeStatus, deleteProject, editProject } from 'api/Project'
 
 import moment from 'moment';
 
@@ -52,6 +52,7 @@ export default function ProjectBox(props) {
         StartTime: props.data.StartTime,
         PredictEndtime: props.data.PredictEndtime,
         NumOfMember: props.data.NumOfMember,
+        Description:  props.data.Description
     })
 
     const navigate = useNavigate()
@@ -82,17 +83,21 @@ export default function ProjectBox(props) {
             })
 
     }
-    // const RenameProjectSubmit = () => {
+    const EditProjectSubmit = () => {
+        editProject(props.data.Id, {...projectInformation , 
+            StartTime : projectInformation.StartTime.substring(0,10), 
+            PredictEndtime: projectInformation.PredictEndtime.substring(0,10)
+        })
+            .then((res) => {
+                alert("Edit thanh cong")
+            })
+            .catch((e) => {
+                console.log(e.response)
+                // alert(e.response.data);
+            })
 
-    //     renameProject(projectInformation)
-    //         .then((res) => {
-    //         })
-    //         .catch((e) => {
-    //             alert(e.response.data);
-    //         })
 
-
-    // }
+    }
     return (
         <div className='shadow pb-2 pt-1 mb-5 bg-body' style={{ width: "430px", borderRadius: "20px" }}>
             <div className='mt-1 p-2'>
@@ -191,31 +196,7 @@ export default function ProjectBox(props) {
                                     fontFamily: Poppins
                                 }}
                             />
-                            <div className='m-3 m-0 p-0'>
-                                <div class=" row text-center m-0 p-0">
-                                    <div className='col-1  m-0 p-0'>
-                                        <img src={ClockSvg} height="25px" />
-                                    </div>
-                                    <div className='col-6 m-0 p-0' style={{ "text-align": "left" }} >
-                                        <div className='ms-2'>
-                                            <div style={orangeStyle}>  Created at:</div>
-                                        </div>
-                                    </div>
-                                    <div className='col-5  m-0 p-0' >
-                                        <Form.Group controlId="duedate">
-                                            <Form.Control
-                                                type="date"
-                                                name="duedate"
-                                                placeholder=""
-                                                value={moment(projectInformation.CreateTime).format("YYYY-MM-DD")}
-                                                onChange={(e) => {
-                                                    setprojectInformation({ ...projectInformation, CreateTime: e.target.value })
-                                                }}
-                                            />
-                                        </Form.Group>
-                                    </div>
-                                </div>
-                            </div>
+                           
                             <div className='m-3 m-0 p-0'>
                                 <div class=" row text-center m-0 p-0">
                                     <div className='col-1  m-0 p-0'>
@@ -234,7 +215,7 @@ export default function ProjectBox(props) {
                                                 placeholder=""
                                                 value={moment(projectInformation.StartTime).format("YYYY-MM-DD")}
                                                 onChange={(e) => {
-                                                    setprojectInformation({ ...projectInformation, StartTime: e.target.value })
+                                                    setprojectInformation({ ...projectInformation, StartTime: e.target.value.substring(0, 10) })
                                                 }}
                                             />
                                         </Form.Group>
@@ -259,7 +240,7 @@ export default function ProjectBox(props) {
                                                 placeholder=""
                                                 value={moment(projectInformation.PredictEndtime).format("YYYY-MM-DD")}
                                                 onChange={(e) => {
-                                                    setprojectInformation({ ...projectInformation, PredictEndtime: e.target.value })
+                                                    setprojectInformation({ ...projectInformation, PredictEndtime: e.target.value.substring(0, 10) })
                                                 }}
                                             />
                                         </Form.Group>
@@ -277,13 +258,14 @@ export default function ProjectBox(props) {
                                         </div>
                                     </div>
                                     <div className='col-5  m-0 p-0' >
-                                        <Form.Control type="text" value={projectInformation.Name} onChange={(event) => {
-                                            setprojectInformation({ ...projectInformation, Name: event.target.value })
+                                        <Form.Control type="text" value={projectInformation.NumOfMember} onChange={(event) => {
+                                            setprojectInformation({ ...projectInformation, NumOfMember: event.target.value })
                                         }}
                                         />
                                     </div>
                                 </div>
                             </div>
+                            <div className='d-flex justify-content-center'><button onClick={() => {EditProjectSubmit()}} type="button" class="btn btn-primary btn-lg">Save</button></div>
                         </div>
                 }
 
