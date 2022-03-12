@@ -52,10 +52,9 @@ export default function Workspace(props) {
 								props.projectList.slice(0).reverse().map((ele, index) => {
 									if (index > 2) return
 									return (
-										<div onClick={() => {
+										<div key={index} onClick={() => {
 											props.setSelectedProject(ele.Id)
 										}}>
-											{/* e5e5e5 */}
 											<DrawerItem
 												link={"/pDetail/" + ele.Id}
 												active={false}
