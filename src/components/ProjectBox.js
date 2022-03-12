@@ -36,7 +36,7 @@ const timeCaster = (time) => {
 
 
 export default function ProjectBox(props) {
-    const option_list = ["Rename", "Delete Project"]
+    const option_list = ["Edit Project", "Delete Project"]
 
     const status_list = ["Draft", "Active", "Closed"]
     const staus_icon_list = [now_icon, active_icon, closed_icon]
@@ -45,10 +45,12 @@ export default function ProjectBox(props) {
         Id: props.data.Id,
         Status: props.data.Status,
     })
-    const [pressRename, setPressRename] = useState(false)
-    const [newName, setNewName] = useState({
-        Id: props.data.Id,
+    const [pressEdit, setpressEdit] = useState(false)
+    const [projectInformation, setprojectInformation] = useState({
         Name: props.data.Name,
+        StartTime: props.data.StartTime,
+        PredictEndtime: props.data.PredictEndtime,
+        NumOfMember: props.data.NumOfMember,
     })
 
     const navigate = useNavigate()
@@ -79,17 +81,17 @@ export default function ProjectBox(props) {
             })
 
     }
-    const RenameProjectSubmit = () => {
+    // const RenameProjectSubmit = () => {
 
-        renameProject(newName)
-            .then((res) => {
-            })
-            .catch((e) => {
-                alert(e.response.data);
-            })
+    //     renameProject(projectInformation)
+    //         .then((res) => {
+    //         })
+    //         .catch((e) => {
+    //             alert(e.response.data);
+    //         })
 
 
-    }
+    // }
     return (
         <div className='shadow pb-2 pt-1 mb-5 bg-body' style={{ width: "430px", borderRadius: "20px" }}>
             <div className='mt-1 p-2'>
@@ -98,8 +100,8 @@ export default function ProjectBox(props) {
                         if (val === 'Delete Project')
                             DeleteProjectSubmit()
                         else {
-                            setPressRename(true)
-                            RenameProjectSubmit()
+                            setpressEdit(true)
+                            //RenameProjectSubmit()
                         }
                     }} />
                     <DropdownWithIndex0 title={newProject.Status} items={status_list} icons_list={staus_icon_list} onClick={(val) => {
@@ -111,20 +113,29 @@ export default function ProjectBox(props) {
 
                 </div>
                 {
-                    pressRename === false ?
+                    pressEdit === false ?
                         <h3 className='d-flex justify-content-center' style={{ color: "#0085FF", fontFamily: Poppins, fontSize: "45px" }}>
                             {props.data.Name}
                         </h3>
                         : <div className='text-center  justify-content-center align-item-center d-flex'>
-                            <Form.Group as={Col} md="8" controlId="validationCustomUsername">
+                            <Form.Control type="text" value={projectInformation.Name} onChange={(event) => {
+                                setprojectInformation({ ...projectInformation, Name: event.target.value })
+                            }}
+                                className="text-primary border-0 mb-2"
+                                style={{
+                                    fontSize: "30px",
+                                    fontFamily: Poppins
+                                }}
+                            />
+                            {/* <Form.Group as={Col} md="8" controlId="validationCustomUsername">
                                 <InputGroup hasValidation>
                                     <InputGroup.Text id="inputGroupPrepend" onClick={(val) => {
                                         RenameProjectSubmit();
                                     }}><img src={save_icon}></img></InputGroup.Text>
                                     <Form.Control
                                         onChange={(e) => {
-                                            setNewName({
-                                                ...newName, Name: e.target.value
+                                            setprojectInformation({
+                                                ...projectInformation, Name: e.target.value
                                             })
                                         }}
                                         placeholder={props.data.Name}
@@ -132,7 +143,7 @@ export default function ProjectBox(props) {
                                         required
                                     />
                                 </InputGroup>
-                            </Form.Group>
+                            </Form.Group> */}
                         </div>
                 }
 
@@ -162,7 +173,7 @@ export default function ProjectBox(props) {
                             </div>
                         </div>
                         <div className='col-4  m-0 p-0' >
-                            <div>{timeCaster(props.data.StartTime).substring(0,10)}</div>
+                            <div>{timeCaster(props.data.StartTime).substring(0, 10)}</div>
                         </div>
                     </div>
                 </div>
@@ -177,7 +188,7 @@ export default function ProjectBox(props) {
                             </div>
                         </div>
                         <div className='col-4  m-0 p-0' >
-                            <div>{timeCaster(props.data.PredictEndtime).substring(0,10)}</div>
+                            <div>{timeCaster(props.data.PredictEndtime).substring(0, 10)}</div>
                         </div>
                     </div>
                 </div>
@@ -197,8 +208,8 @@ export default function ProjectBox(props) {
                     </div>
                 </div>
 
-                
-                
+
+
 
 
 
