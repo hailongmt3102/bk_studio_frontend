@@ -7,6 +7,8 @@ import { ReactComponent as DashboardIcon } from "resources/icons/drawerIcons/das
 import { ReactComponent as DataSourceIcon } from "resources/icons/drawerIcons/dataSource.svg"
 import { ReactComponent as PeopleIcon } from "resources/icons/drawerIcons/people.svg"
 
+import { ReactComponent as YourProjectIcon } from 'resources/icons/drawerIcons/cart.svg'
+
 
 export default function Workspace(props) {
 	const [showProject, setShowProject] = useState(false)
@@ -32,13 +34,17 @@ export default function Workspace(props) {
 					title="People"
 				/>
 
-				<a className="btn d-flex flex-row ms-2"
+				<div className="d-flex justify-content-start p-2 ps-4" style={{ textDecoration: "none", backgroundColor: props.selectedIndex === 3 ? colors.drawerBackgroundActive : colors.drawerBackgroundToggle }}
 					onClick={() => {
 						setShowProject(!showProject)
+						props.setSelectedIndex(3)
 					}}
 				>
-					Your projects
-				</a>
+					<YourProjectIcon fill={props.selectedIndex == 3 ? colors.drawerActive : colors.drawerToggle} />
+					<p className="ms-2 mb-0" style={{ color: props.selectedIndex === 3 ? colors.drawerActive : colors.drawerToggle }}>
+						Your projects
+					</p>
+				</div>
 				{
 					showProject ?
 						<div >
@@ -46,13 +52,15 @@ export default function Workspace(props) {
 								props.projectList.slice(0).reverse().map((ele, index) => {
 									if (index > 2) return
 									return (
-										<div onClick={()=> {
+										<div onClick={() => {
 											props.setSelectedProject(ele.Id)
-										}}>										
+										}}>
+											{/* e5e5e5 */}
 											<DrawerItem
 												link={"/pDetail/" + ele.Id}
-												active={props.selectedProject === ele.Id ? true : false}
+												active={false}
 												title={ele.Name}
+												customBackgroundColor={props.selectedProject === ele.Id ? "#e5e5e5" : false}
 											/>
 										</div>
 									)
