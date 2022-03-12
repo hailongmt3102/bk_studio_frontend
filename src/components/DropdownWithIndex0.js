@@ -22,7 +22,7 @@ export default function DropdownWithIndex0(props) {
             <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components-Secondary">
                 <div className='row '>
 
-                    {props.items.map((ele, index) => ele == props.title ? <div className='col-1'><img src={props.icons_list[index]} width="15px" height="15px"></img> </div>: null)}
+                    {props.items.map((ele, index) => ele === props.title ? <div className='col-1'><img src={props.icons_list[index]} width="15px" height="15px"></img> </div>: null)}
                        
 
                     <div className="col-1 ms-2 p-0 m-auto">{props.title}</div>
@@ -35,7 +35,7 @@ export default function DropdownWithIndex0(props) {
                             <Dropdown.Item style={{ "width": "200" }} key={index} eventKey={index} onClick={() => { props.onClick(item, index) }}>
                                 <div>
                                     {
-                                        props.icons_list != undefined ?
+                                        props.icons_list !== undefined ?
                                             <div className='row'>
                                                 <div className='col-2 text-center me-1'>
                                                     <img src={props.icons_list[index]} width="17px" height="17px" />

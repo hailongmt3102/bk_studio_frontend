@@ -14,7 +14,7 @@ export default function ForgetPassword() {
     const navigate = useNavigate()
     const onSubmitHandler = () => {
         console.log("da nhan send")
-        if (Email==""){
+        if (Email===""){
             alert("Please fill in your email");
         }
         else{

@@ -65,7 +65,7 @@ export default function PeoplePopup(props) {
                                 type="checkbox"
                                 id="form2Example3c"
                                 onClick={(e) => {
-                                    if (e.target.checked == true) {
+                                    if (e.target.checked === true) {
                                         console.log("true nè")
                                         if (!listpeopleToAdd.includes(ele.Email)) {
                                             listpeopleToAdd.push(ele.Email)
@@ -73,7 +73,7 @@ export default function PeoplePopup(props) {
                                             // console.log(listpeopleToAdd)
                                         }
                                     }
-                                    else if (e.target.checked == false) {
+                                    else if (e.target.checked === false) {
                                        
                                         if (listpeopleToAdd.includes(ele.Email)) {
                                             console.log("false nè xóa nó nha")

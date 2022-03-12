@@ -33,7 +33,7 @@ export default function NewProjectModel(props) {
         if ([projectInfo.Name, projectInfo.StartTime, projectInfo.PredictEndtime].includes("") || isNaN(projectInfo.NumOfMember)){
             alert("Some field is required")
             return
-        }else if (projectInfo.Name == "Project name"){
+        }else if (projectInfo.Name === "Project name"){
             alert("Please write new project name")
             return
         }else if (projectInfo.NumOfMember < 0) {

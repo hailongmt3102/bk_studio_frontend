@@ -22,7 +22,7 @@ export default function ThreeDotButton(props) {
             <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components-Secondary">
                 <div>
                     {
-                        props.icon != null ? <img src={props.icon}></img> : null
+                        props.icon !== null ? <img src={props.icon}></img> : null
                     }
                     <p className="p-0 m-auto"></p>
                 </div>
@@ -34,7 +34,7 @@ export default function ThreeDotButton(props) {
                             <Dropdown.Item style={{ "width": "200" }} key={index} eventKey={index} onClick={() => { props.onClick(item, index) }}>
                                 <div>
                                     {
-                                        props.icons_list != undefined ?
+                                        props.icons_list !== undefined ?
                                             <div className='row p-1'>
                                                 <div className='col-2 text-center me-1'>
                                                     <img src={props.icons_list[index]} width="17px" height="17px" />

@@ -15,20 +15,20 @@ export default function Workspace(props) {
 			<ul class="list-group">
 				<DrawerItem
 					link="/"
-					active={props.selectedIndex == 0 ? true : false}
-					child={<DashboardIcon fill={props.selectedIndex == 0 ? colors.drawerActive : colors.drawerToggle} />}
+					active={props.selectedIndex === 0 ? true : false}
+					child={<DashboardIcon fill={props.selectedIndex === 0 ? colors.drawerActive : colors.drawerToggle} />}
 					title="Dashboard"
 				/>
 				<DrawerItem
 					link="/datasources"
-					active={props.selectedIndex == 1 ? true : false}
-					child={<DataSourceIcon fill={props.selectedIndex == 1 ? colors.drawerActive : colors.drawerToggle} />}
+					active={props.selectedIndex === 1 ? true : false}
+					child={<DataSourceIcon fill={props.selectedIndex === 1 ? colors.drawerActive : colors.drawerToggle} />}
 					title="DataSource"
 				/>
 				<DrawerItem
 					link="/people"
-					active={props.selectedIndex == 2 ? true : false}
-					child={<PeopleIcon fill={props.selectedIndex == 2 ? colors.drawerActive : colors.drawerToggle} />}
+					active={props.selectedIndex === 2 ? true : false}
+					child={<PeopleIcon fill={props.selectedIndex === 2 ? colors.drawerActive : colors.drawerToggle} />}
 					title="People"
 				/>
 

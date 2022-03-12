@@ -22,7 +22,7 @@ export default function AdjustedDropdown(props) {
             <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components">
                 <div>
                     {
-                        props.icon != null ? <img src={props.icon}></img> : null
+                        props.icon !== null ? <img src={props.icon}></img> : null
                     }
                     <p className="p-0 m-auto">{props.title}</p>
 

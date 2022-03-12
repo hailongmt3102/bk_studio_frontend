@@ -11,14 +11,14 @@ export default function Personal(props) {
             <ul class="list-group">
                 <DrawerItem
                     link="/personal/profile"
-                    active={props.selectedIndex == 8 ? true : false}
-                    child={<ProfileIcon fill={props.selectedIndex == 8 ? colors.drawerActive : colors.drawerToggle} />}
+                    active={props.selectedIndex === 8 ? true : false}
+                    child={<ProfileIcon fill={props.selectedIndex === 8 ? colors.drawerActive : colors.drawerToggle} />}
                     title="Profile"
                 />
                 <DrawerItem
                     link="/personal/setting"
-                    active={props.selectedIndex == 9 ? true : false}
-                    child={<SettingIcon fill={props.selectedIndex == 9 ? colors.drawerActive : colors.drawerToggle} />}
+                    active={props.selectedIndex === 9 ? true : false}
+                    child={<SettingIcon fill={props.selectedIndex === 9 ? colors.drawerActive : colors.drawerToggle} />}
                     title="Setting"
                 />
             </ul>

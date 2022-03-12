@@ -19,7 +19,7 @@ export default function Dashboard() {
             })
             .catch(
                 error => {
-                    // if (error.response.status == 403) navigate('/account/login')
+                    // if (error.response.status === 403) navigate('/account/login')
                 }
             )
         getListPeople()

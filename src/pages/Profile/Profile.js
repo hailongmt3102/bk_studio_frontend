@@ -139,7 +139,7 @@ export default function Profile() {
                             }}
                             inline
                             label="Male"
-                            checked={information.Gender == "Male" ? true : false}
+                            checked={information.Gender === "Male" ? true : false}
                             name="group1"
                             type="radio"
                             id="MaleGender"
@@ -157,7 +157,7 @@ export default function Profile() {
                             name="group1"
                             type="radio"
                             id="FemaleGender"
-                            checked={information.Gender == "Female" ? true : false}
+                            checked={information.Gender === "Female" ? true : false}
                         />
                     </div>
                     <div class=" justify-content-start align-items-center py-2">

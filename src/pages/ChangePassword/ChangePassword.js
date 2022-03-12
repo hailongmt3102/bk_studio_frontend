@@ -19,7 +19,7 @@ export default function ChangePassword() {
     const navigate = useNavigate()
     const onSubmitHandler = () => {
         console.log("da nhan Change")
-        if ( information.NewPassword == "") {
+        if ( information.NewPassword === "") {
             alert("Please fill in password");
         }
         else {

@@ -22,7 +22,7 @@ export default function Drop(props) {
             <Dropdown.Toggle  as={CustomToggle} id="dropdown-basic">
                 <div>
                     {
-                        props.icon != null ? <img src={props.icon}></img> : null
+                        props.icon !== null ? <img src={props.icon}></img> : null
                     }
                     <p className="p-0 m-auto">{props.title}</p>
                 </div>

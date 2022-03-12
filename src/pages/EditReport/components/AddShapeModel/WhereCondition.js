@@ -15,7 +15,7 @@ export default function WhereCondition(props) {
         ])
     }
     const subCriteria = (value) => {
-        setCriteria(criteria.filter(val => val != value))
+        setCriteria(criteria.filter(val => val !== value))
     }
     // trigger when criteria changed
     useEffect(() => {

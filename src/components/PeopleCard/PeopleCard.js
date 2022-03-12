@@ -28,7 +28,7 @@ export default function PeopleCard(props) {
 
             <div className='d-flex p-2'>
                 <div className='d-flex align-items-center'>
-                    {props.avatar == "" ?
+                    {props.avatar === "" ?
                         <img src={people_default} height="100px" width="100px" />
                         : <img src={props.avatar} height="100px" width="100px" style={{ "border-radius": "50%" }} />}
                 </div>
@@ -49,7 +49,7 @@ export default function PeopleCard(props) {
                     </div>
                 </div>
                 <div className='d-flex m-0 p-0 align-items-start'><ThreeDotButton title={'adđ'} items={option_list} icons_list={icons_list} icon={three_dot} onClick={(val) => {
-                    // if (val == 'Delete Project')
+                    // if (val === 'Delete Project')
                     //     DeleteProjectSubmit()
                     // else {
                     //     setPressRename(true)

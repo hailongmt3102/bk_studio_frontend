@@ -91,11 +91,11 @@ export default function ProjectBox(props) {
 
     }
     return (
-        <div className='shadow pb-2 pt-1 m-3 mb-5 bg-body' style={{ maxWidth: "450px", minWidth: "200px", borderRadius: "20px" }}>
+        <div className='shadow pb-2 pt-1 mb-5 bg-body' style={{ width:"430px", borderRadius: "20px" }}>
             <div className='mt-1 p-2'>
                 <div className='d-flex justify-content-between'>
                     <ThreeDotButton title={'adđ'} items={option_list} icons_list={icons_list} icon={three_dot} onClick={(val) => {
-                        if (val == 'Delete Project')
+                        if (val === 'Delete Project')
                             DeleteProjectSubmit()
                         else {
                             setPressRename(true)
@@ -111,7 +111,7 @@ export default function ProjectBox(props) {
 
                 </div>
                 {
-                    pressRename == false ?
+                    pressRename === false ?
                         <h3 className='d-flex justify-content-center' style={{ color: "#0085FF", fontFamily: Poppins, fontSize: "45px" }}>
                             {props.data.Name}
                         </h3>
@@ -136,27 +136,27 @@ export default function ProjectBox(props) {
                         </div>
                 }
 
-                <div className='m-4'>
-                    <div class="row mt-3">
+                <div className='m-3 m-0 p-0'>
+                    <div class=" d-flex mt-3">
                         <div className='col-1 '>
                             <img src={ClockSvg} height="25px" />
                         </div>
                         <div className='col-6'  >
                             <div style={orangeStyle}>Created at:</div>
                         </div>
-                        <div className='col ' >
-                            <div>{timeCaster(props.data.CreateTime)}</div>
+                        <div className='col' >
+                            <div>{timeCaster(props.data.CreateTime).substring(0,10)}</div>
                         </div>
                     </div>
-                    <div class="row mt-2">
-                        <div className='col-1'>
+                    {/* <div class="row mt-2 ">
+                        <div className='col-1 m-0 p-0'>
                             <img src={ClockSvg} height="25px" />
                         </div>
                         <div className='col-6' >
                             <div style={orangeStyle}>Start time :</div>
                         </div>
-                        <div className='col'>
-                            <div>{timeCaster(props.data.StartTime)}</div>
+                        <div className='col-4'>
+                            <div>{timeCaster(props.data.StartTime).substring(0,10)}</div>
                         </div>
                     </div>
                     <div class="row  mt-2">
@@ -167,7 +167,7 @@ export default function ProjectBox(props) {
                             <div style={orangeStyle}>Estimated End Time:</div>
                         </div>
                         <div className='col'>
-                            <div>{timeCaster(props.data.PredictEndtime)}</div>
+                            <div>{timeCaster(props.data.PredictEndtime).substring(0,10)}</div>
                         </div>
                     </div>
                     <div class="row  mt-2 justify-item-center">
@@ -180,7 +180,7 @@ export default function ProjectBox(props) {
                         <div className='col'>
                             <div>{props.data.NumOfMember}</div>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
 
             </div>

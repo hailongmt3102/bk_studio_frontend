@@ -23,7 +23,7 @@ export default function UpdatePassword() {
     const navigate = useNavigate()
     const onSubmitHandler = () => {
         console.log("da nhan Change")
-        if (information.Code == null || information.NewPassword == "") {
+        if (information.Code === null || information.NewPassword === "") {
             alert("Please fill in code or new password");
         }
         else {

@@ -24,7 +24,7 @@ export default function Drawer(props) {
 			})
 			.catch(err => {
 				try {
-					if (err.response.status == 403 || err.response.status == 401) navigate("/account/login")
+					if (err.response.status === 403 || err.response.status === 401) navigate("/account/login")
 				} catch {
 					navigate("/account/login")
 				}
@@ -77,7 +77,7 @@ export default function Drawer(props) {
 			} else if (/people/.test(url)) {
 				setSelectedIndex(2)
 				setSelectedProject(-1)
-			} else if (url.length == 1) {
+			} else if (url.length === 1) {
 				setSelectedIndex(0)
 				setSelectedProject(-1)
 			} else {

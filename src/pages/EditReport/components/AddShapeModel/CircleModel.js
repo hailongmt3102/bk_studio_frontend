@@ -100,7 +100,7 @@ export default function CircleModel(props) {
                                             <li className='list-group-item border-0 m-0 p-0'>
 
                                                 <button className="list-group-item btn btn-default border-0" onClick={() => {
-                                                    setSelectedTable(selectedTable.filter(val => val != table))
+                                                    setSelectedTable(selectedTable.filter(val => val !== table))
                                                 }}>
                                                     {table}
                                                 </button>
@@ -269,7 +269,7 @@ export default function CircleModel(props) {
             </Modal.Body>
             <Modal.Footer>
                 <Button onClick={() => {
-                    if (step != 1)
+                    if (step !== 1)
                         setStep(step - 1)
                 }}>
                     Back

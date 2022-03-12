@@ -7,7 +7,7 @@ export default function SelectData(props) {
 
     const executeStringResult = (result) => {
         let data = []
-        let dataSheet = result.split('\n').length == 2 ? result.split('\r') : result.split('\n')
+        let dataSheet = result.split('\n').length === 2 ? result.split('\r') : result.split('\n')
         if (dataSheet.length ===  0) return
         // find the sign to split string
         let divider = dataSheet[0].includes(',') ? ',' : ';'
@@ -17,7 +17,7 @@ export default function SelectData(props) {
         console.log(keys)
         dataSheet.map((row, index) => {
             if (row.includes(divider)) {
-                if (index != 0){
+                if (index !== 0){
                     let rows = {}
                     row.split(divider).map((ele, index) => {
                         rows[keys[index]] = ele.includes('\"')? ele.substring(1, ele.length - 1) : ele

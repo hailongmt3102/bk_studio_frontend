@@ -36,13 +36,8 @@ export default function Login() {
             alert("login fail")
             return
         }
-        if (information.Password.length <8) {
-            alert("Password have to more than 8 digit")
-            return
-        }
         if (!ValidateEmail(information.Email)) {
             alert("You have entered an invalid email address!")
-
             return
         }
         // send information into server
@@ -71,15 +66,15 @@ export default function Login() {
         let getusername = localStorage.getItem("email")
         let getpassword = localStorage.getItem("password")
         let getremember = localStorage.getItem("remember")
-        if (getusername != null) {
+        if (getusername !== null) {
             setinformation({ ...information, Email: getusername })
         }
 
-        if (getpassword != null) {
+        if (getpassword !== null) {
             setinformation({ ...information, Password: getpassword })
         }
 
-        if (getremember != null) {
+        if (getremember !== null) {
             setRemember(getremember)
         }
 

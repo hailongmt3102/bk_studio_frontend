@@ -48,18 +48,18 @@ export default function Header() {
                 <div className='col-2 m-0 p-0 mt-2 d-flex justify-content-end' >
                     <AdjustedDropdown className="" items={["Profile", "Logout"]} icons_list={[profile,logout_icon]}
                         onClick={(item) => {
-                            if (item == "Logout") logout()
-                            else if (item == "Profile") nav("personal/profile")
+                            if (item === "Logout") logout()
+                            else if (item === "Profile") nav("personal/profile")
                         }}
                         title={
                             <div className='d-flex align-items-center'>
                                 <div className='bg-primary text-white p-1' style={{ height: "45px", width: "45px", borderRadius: "45px", "fontSize":"26px" }}>
                                     <div className=''>
-                                        {localStorage.getItem("username")!= null ? localStorage.getItem("username")[0].toUpperCase() : ""}
+                                        {localStorage.getItem("username")!== null ? localStorage.getItem("username")[0].toUpperCase() : ""}
                                     </div>
                                 </div>
                                 <div className='ms-2 me-3'>
-                                    {localStorage.getItem("username")== null? "" :  localStorage.getItem("username").substring(0,10)}
+                                    {localStorage.getItem("username")=== null? "" :  localStorage.getItem("username").substring(0,10)}
                                 </div>
                             </div>
                         }

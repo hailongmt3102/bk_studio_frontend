@@ -9,7 +9,7 @@ export default function PeopleCardMini(props) {
     return (
         <div>
             <div className='d-flex align-items-center'>
-                {props.avatar == "" ?
+                {props.avatar === "" ?
                     <img src={people_default} height="40px" width="40px" />
                     : <img src={props.avatar} height="40px" width="40px" style={{ "border-radius": "50%" }} />}
                 <div className='ms-4' >

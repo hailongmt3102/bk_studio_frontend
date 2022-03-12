@@ -11,7 +11,7 @@ const axiosClient = axios.create({
 axiosClient.interceptors.request.use(
     request => {
         var token = localStorage.getItem("token")
-        if (token != null)
+        if (token !== null)
             request.headers.authorization =`Bearer ${token}`
 
         return new Promise((resolve, reject) => {
@@ -32,7 +32,7 @@ axiosClient.interceptors.response.use(
         })
     },
     error => {
-        if (error.data.status == 401 || error.data.status == 403) {
+        if (error.data.status === 401 || error.data.status === 403) {
             // remove username in local storage
             localStorage.removeItem("username")
         }
