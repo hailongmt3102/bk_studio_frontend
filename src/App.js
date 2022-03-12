@@ -31,61 +31,59 @@ function App() {
     const [drawerState, setDrawerState] = useState("workspace");
     return (
         <Router>
-            <div className="row">
-                <Drawer state={drawerState} setDrawerState={setDrawerState} />
-                <div className="col bg-light">
-                    <Header/>
-                    <Routes>
-                        <Route path="/" exact element={<Dashboard />} >
-                        </Route>
-                        <Route path="/pList" element={<ProjectList/>}/>
-                        <Route path="/pDetail/:id" element={<ProjectDetail/>}/>
+            <Drawer state={drawerState} setDrawerState={setDrawerState} />
+            <div className="bg-light">
+                <Header />
+                <Routes>
+                    <Route path="/" exact element={<Dashboard />} >
+                    </Route>
+                    <Route path="/pList" element={<ProjectList />} />
+                    <Route path="/pDetail/:id" element={<ProjectDetail />} />
 
-                        <Route path="/datasources" element={<DataSources />} />
-                        <Route path="/people" element={<People />} />
-                        <Route path="/account/login" element={<Login />} />
+                    <Route path="/datasources" element={<DataSources />} />
+                    <Route path="/people" element={<People />} />
+                    <Route path="/account/login" element={<Login />} />
 
-                        <Route path="/account/forgetPassword" element={<ForgetPassword />} />
-                        <Route path="/account/register" element={<Register />} />
-                        <Route path="/account/changePassword" element={<ChangePassword />} />
-                        <Route path="/account/updatePassword" element={<UpdatePassword />} />
+                    <Route path="/account/forgetPassword" element={<ForgetPassword />} />
+                    <Route path="/account/register" element={<Register />} />
+                    <Route path="/account/changePassword" element={<ChangePassword />} />
+                    <Route path="/account/updatePassword" element={<UpdatePassword />} />
 
-                        <Route
-                            path="/project/create"
-                            element={<CreateReport />}
-                        />
-                        <Route path="/project/import" element={<ImportData />} />
-                        <Route
-                            path="/project/gallery"
-                            exact
-                            element={<Gallery />}
-                        />
-                        <Route path="/project/templates" element={<Templates />} />
+                    <Route
+                        path="/project/create"
+                        element={<CreateReport />}
+                    />
+                    <Route path="/project/import" element={<ImportData />} />
+                    <Route
+                        path="/project/gallery"
+                        exact
+                        element={<Gallery />}
+                    />
+                    <Route path="/project/templates" element={<Templates />} />
 
-                        <Route
-                            path="/project/gallery/:id"
-                            exact
-                            element={<EditReport isEdit={false} />}
-                        />
-                        <Route
-                            path="/project/gallery/:id/edit"
-                            element={<EditReport isEdit={true} />}
-                        />
+                    <Route
+                        path="/project/gallery/:id"
+                        exact
+                        element={<EditReport isEdit={false} />}
+                    />
+                    <Route
+                        path="/project/gallery/:id/edit"
+                        element={<EditReport isEdit={true} />}
+                    />
 
-                        <Route path="/personal/profile" element={<Profile />} />
-                        <Route path="/personal/setting" element={<Setting />} />
+                    <Route path="/personal/profile" element={<Profile />} />
+                    <Route path="/personal/setting" element={<Setting />} />
 
-                        <Route
-                            path="*"
-                            element={
-                                <div className="m-4">
-                                    <h1>404 not found</h1>
-                                    <p>Please check the correct link when browsing</p>
-                                </div>
-                            }
-                        />
-                    </Routes>
-                </div>
+                    <Route
+                        path="*"
+                        element={
+                            <div className="m-4">
+                                <h1>404 not found</h1>
+                                <p>Please check the correct link when browsing</p>
+                            </div>
+                        }
+                    />
+                </Routes>
             </div>
         </Router>
     );
