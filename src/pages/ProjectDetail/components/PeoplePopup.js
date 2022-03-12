@@ -11,7 +11,7 @@ import { Roboto, Poppins } from "utils/font"
 import { createNewProject } from 'api/Project'
 import PeopleCardMini from 'components/PeopleCardMini/PeopleCardMini'
 
-
+import { getListPeopleByProjectID } from '../../../api/People'
 const orangeStyle = {
     color: "black",
     fontFamily: Poppins
@@ -22,8 +22,10 @@ export default function PeoplePopup(props) {
     const [people, setPeople] = useState([])
     var location = useLocation()
     const array = location.pathname.split("/");
-    
+    const [peopleInProject, setPeopleListInProject] = useState([])
     var project_id = array[array.length - 1]
+
+    const [filterPeople, setFilterPeople] = useState([])
     useEffect(() => {
 
         getListPeople()
@@ -34,14 +36,38 @@ export default function PeoplePopup(props) {
             .catch(err => {
                 console.log(err)
             })
+        getListPeopleByProjectID(project_id)
+            .then(response => {
+                // console.log(response.data)
+                setPeopleListInProject(response.data)
+            })
+            .catch(
+                error => {
+                }
+            )
+        //if email trong people thuộc email trong project thì people loại thằng đó ra 
+
+        //list People 
+        //List People trong project 
+        // cần lọc lại cái list people 
 
     }, [])
+
+    useEffect(() => {
+        console.log(peopleInProject)
+        let EmailInPro = peopleInProject.map(ele => ele.Email)
+        let fittedpeople = people.filter(
+            (ele) => EmailInPro.includes(ele.Email) ? false : true
+        )
+        console.log(fittedpeople)
+        setFilterPeople(fittedpeople)
+    }, [people, peopleInProject])
     // when click submit button
     const onsubmit = () => {
-      
-       
+
+
         //console.log(listpeopleToAdd)
-        inviteMember(project_id,{"NewUsers":listpeopleToAdd})
+        inviteMember(project_id, { "NewUsers": listpeopleToAdd })
             .then(res => {
                 props.handleClose()
                 alert("Đã thêm member thành công")
@@ -58,7 +84,7 @@ export default function PeoplePopup(props) {
         return (
             <div>
                 {
-                    people.map((ele, index) => {
+                    filterPeople.map((ele, index) => {
                         return <div className='d-flex align-items-center mb-3'>
                             <input
                                 class="form-check-input me-2"
@@ -74,14 +100,14 @@ export default function PeoplePopup(props) {
                                         }
                                     }
                                     else if (e.target.checked === false) {
-                                       
+
                                         if (listpeopleToAdd.includes(ele.Email)) {
                                             console.log("false nè xóa nó nha")
                                             for (var i = listpeopleToAdd.length - 1; i >= 0; i--) {
                                                 if (listpeopleToAdd[i] === ele.Email) {
                                                     listpeopleToAdd.splice(i, 1);
                                                 }
-                                               }
+                                            }
                                             // console.log(listpeopleToAdd)
                                         }
                                     }
@@ -96,6 +122,7 @@ export default function PeoplePopup(props) {
                                 email={ele.Email}
                                 avatar={ele.Avatar}
                                 haveRadioCheck={true}
+                                isManager={true}
                             /></div>
                         </div>
                     })
