@@ -90,51 +90,50 @@ export default function Drawer(props) {
 	}, [location])
 
 	return props.state !== "" ? (
-		<div className="drawer">
+		<div className="">
 			<div className="m-2 drawer-button" onClick={() => {
 				setToggle(!toggle)
 			}}>
 				<img src={MenuIcon} width="40px" height="40px" />
 			</div>
-			{
-				toggle ? null :
-					<ul class="list-group drawer-content">
-						<a class="list-group-item border-0 p-0" onClick={() => {
-							navigate("/")
-							// setSelectedIndex(0)
-						}}>
-							<h6 className="p-3 m-0">WORKSPACE</h6>
-						</a>
-						{props.state === "workspace" ? (
-							<Workspace projectList={projectList} selectedIndex={selectedIndex} setSelectedIndex={setSelectedIndex} selectedProject={selectedProject} setSelectedProject={setSelectedProject} />
-						) : null}
-						<a class="list-group-item border-0 p-0" onClick={() => {
-							navigate("project/create")
-							// setSelectedIndex(4)
-						}}>
-							<h6 className="p-3 m-0">PROJECT
-								{
-									// projectList.filter((ele) => ele.Id === selectedProject)[0] !== undefined ? projectList.filter((ele) => ele.Id === selectedProject)[0].Name : ""
-								}
-							</h6>
-						</a>
-						{props.state === "project" ? (
-							<Project selectedIndex={selectedIndex} />
-						) : null}
-						<a class="list-group-item border-0 p-0" onClick={() => {
-							navigate("personal/profile")
-							// setSelectedIndex(8)
-						}}>
-							<h6 className="p-3 m-0">PERSONAL</h6>
-						</a>
-						{
-							props.state === "personal" ? (
-								<Personal selectedIndex={selectedIndex} />
-							)
-								: null
-						}
-					</ul>
-			}
+			<div className={`drawer ${toggle ? "enter" : "exit"}`}>
+				<ul class="list-group">
+					<a class="list-group-item border-0 p-0" onClick={() => {
+						navigate("/")
+						// setSelectedIndex(0)
+					}}>
+						<h6 className="p-3 m-0">WORKSPACE</h6>
+					</a>
+					{props.state === "workspace" ? (
+						<Workspace projectList={projectList} selectedIndex={selectedIndex} setSelectedIndex={setSelectedIndex} selectedProject={selectedProject} setSelectedProject={setSelectedProject} />
+					) : null}
+					<a class="list-group-item border-0 p-0" onClick={() => {
+						navigate("project/create")
+						// setSelectedIndex(4)
+					}}>
+						<h6 className="p-3 m-0">PROJECT
+							{
+								// projectList.filter((ele) => ele.Id === selectedProject)[0] !== undefined ? projectList.filter((ele) => ele.Id === selectedProject)[0].Name : ""
+							}
+						</h6>
+					</a>
+					{props.state === "project" ? (
+						<Project selectedIndex={selectedIndex} />
+					) : null}
+					<a class="list-group-item border-0 p-0" onClick={() => {
+						navigate("personal/profile")
+						// setSelectedIndex(8)
+					}}>
+						<h6 className="p-3 m-0">PERSONAL</h6>
+					</a>
+					{
+						props.state === "personal" ? (
+							<Personal selectedIndex={selectedIndex} />
+						)
+							: null
+					}
+				</ul>
+			</div>
 		</div>
 	) : null;
 }
