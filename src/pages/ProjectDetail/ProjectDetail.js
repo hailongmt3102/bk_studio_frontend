@@ -17,8 +17,9 @@ export default function ProjectDetail() {
     const array = location.pathname.split("/");
     var project_id = array[array.length - 1]
     const [peopleInProject, setPeopleListInProject] = useState([])
-    const [showPModel, setShowPModel] = useState(false)
+    const [showPeoplePopUp, setshowPeoplePopUp] = useState(false)
     const [appendPeopleList, setAppendPeopleList] = useState(0)
+    const [showRolePopUp, setshowRolePopUp] = useState(false)
 
     useEffect(() => {
         getListPeopleByProjectID(project_id)
@@ -36,9 +37,9 @@ export default function ProjectDetail() {
     return <div>
         <div>
             <PeoplePopup
-                show={showPModel}
+                show={showPeoplePopUp}
                 handleClose={() => {
-                    setShowPModel(false)
+                    setshowPeoplePopUp(false)
                 }}
                 onComplete={() => {
                     setAppendPeopleList(appendPeopleList + 1)
@@ -50,7 +51,7 @@ export default function ProjectDetail() {
                 </h2>
                 <div className='col-2 ml-auto m-0 p-0 text-right align-self-end'>
                     <button class=" btn p-3 ms-5 " type="button" style={{ color: "white", backgroundColor: deep_blue_primary, borderRadius: "30px ", fontFamily: Poppins, fontSize: 16 }} onClick={() => {
-                        setShowPModel(true)
+                        setshowPeoplePopUp(true)
                         //inviteMemberSubmit()
                     }}><div className='d-flex'>
                             <div className='d-flex justify-content-center me-2' style={{ color: "white", fontFamily: Poppins, fontSize: 17 }}>Invite People</div>
@@ -90,6 +91,7 @@ export default function ProjectDetail() {
                                 if (ele.Position !== "Member") return null
                                 return <PeopleCard
                                     onClick={() => {
+
 
                                     }}
                                     name={ele.UserName}
