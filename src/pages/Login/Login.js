@@ -58,26 +58,18 @@ export default function Login() {
                 navigate("/")
             })
             .catch((e) => {
-                alert(e.response.data);
+                alert("Login Fail");
+                //alert(e.response.data);
             })
     }
 
     useEffect(() => {
-        let getusername = localStorage.getItem("email")
-        let getpassword = localStorage.getItem("password")
-        let getremember = localStorage.getItem("remember")
-        if (getusername !== null) {
-            setinformation({ ...information, Email: getusername })
-        }
-
-        if (getpassword !== null) {
-            setinformation({ ...information, Password: getpassword })
-        }
-
-        if (getremember !== null) {
-            setRemember(getremember)
-        }
-
+        let getusername = localStorage.getItem("email") ?? ""
+        let getpassword = localStorage.getItem("password") ?? ""
+        let getremember = localStorage.getItem("remember") ?? false
+        setinformation({ ...information, Email: "getusername" })
+        setinformation({ Email : getusername, Password: getpassword})
+        setRemember(getremember)
     }, [])
 
     const responseGoogle = (res) => {
@@ -89,6 +81,9 @@ export default function Login() {
                 .then((res) => {
                     // login successful
                     localStorage.setItem("token", res.data.AccessToken)
+
+                    localStorage.setItem("username", res.data.UserName)
+                    navigate("/")
                 })
                 .catch((err) => {
                     // login fail
@@ -155,10 +150,10 @@ export default function Login() {
                                                             setinformation({
                                                                 ...information, Password: e.target.value
                                                             })
-                                                            console.log(information);
                                                         }}
                                                         type={isVisible ? "text" : "password"}
                                                         placeholder="Enter your password"
+                                                        value={information.Password}
                                                     />
                                                     <a class="btn shadow-none border-top border-bottom border-end" onClick={() => { setisVisible(!isVisible) }}><img width="20px" height="20px" src={isVisible ? visible : invisible}></img></a>
                                                 </InputGroup>
@@ -171,6 +166,7 @@ export default function Login() {
                                                     type="checkbox"
                                                     id="form2Example3c"
                                                     onClick={(e) => { setRemember(e.target.checked) }}
+                                                    checked={remember}
                                                 />
                                                 <label class="form-check-label" style={{ fontFamily: Poppins, fontSize: 14 }}>
                                                     Remember me

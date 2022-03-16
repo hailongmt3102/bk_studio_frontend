@@ -25,30 +25,8 @@ export default function PeopleCard(props) {
     // })
     return (
         <div className={props.isManager ? "m-4 peoplecard manager" : "m-4 peoplecard member"} onClick={props.onClick}>
-
-            <div className='d-flex p-2'>
-                <div className='d-flex align-items-center'>
-                    {props.avatar === "" ?
-                        <img src={people_default} height="100px" width="100px" />
-                        : <img src={props.avatar} height="100px" width="100px" style={{ "border-radius": "50%" }} />}
-                </div>
-
-
-                <div className='ms-4 mt-2'>
-                    <h2 style={{ textStyle, "fontWeight": "bold", fontSize: "30px" }}>
-                        {props.name}
-                    </h2>
-                    <div style={{ textStyle }}>
-                        Email: {props.email}
-                    </div>
-                    <div style={{ textStyle }}>
-                        Rank: {props.rank}
-                    </div>
-                    <div style={{ textStyle }}>
-                        Online: 6 hour later
-                    </div>
-                </div>
-                <div className='d-flex m-0 p-0 align-items-start'><ThreeDotButton title={'adđ'} items={option_list} icons_list={icons_list} icon={three_dot} onClick={(val) => {
+            <div className='row  m-0'>
+                <div className='d-flex m-0 p-0 justify-content-end'><ThreeDotButton title={'adđ'} items={option_list} icons_list={icons_list} icon={three_dot} onClick={(val) => {
                     // if (val === 'Delete Project')
                     //     DeleteProjectSubmit()
                     // else {
@@ -56,6 +34,33 @@ export default function PeopleCard(props) {
                     //     RenameProjectSubmit()
                     //}
                 }} />
+                </div>
+                <div className='row p-2 m-0 p-0'>
+                    <div className='col-3 align-items-center'>
+                        {props.avatar === "" ?
+                            <img src={people_default} height="100px" width="100px" />
+                            : <img src={props.avatar} height="100px" width="100px" style={{ "border-radius": "50%" }} />}
+                    </div>
+
+
+                    <div className='col-9'>
+                        <div className='ms-5 mb-3'>
+                            <h2 style={{ textStyle, "fontWeight": "bold", fontSize: "30px" }}>
+                                {props.name}
+                            </h2>
+                            <div style={{ textStyle }}>
+                                Email: {props.email}
+                            </div>
+                            <div style={{ textStyle }}>
+                                Rank: {props.rank}
+                            </div>
+                            <div style={{ textStyle }}>
+                                Online: 6 hour later
+                            </div>
+                        </div>
+
+                    </div>
+
                 </div>
             </div>
         </div>

@@ -17,7 +17,7 @@ export default function Drawer(props) {
 
 	const [selectedProject, setSelectedProject] = useState("")
 
-	const [toggle, setToggle] = useState(true)
+	const [toggle, setToggle] = useState(false)
 
 	useEffect(() => {
 		// get all project

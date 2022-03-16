@@ -34,7 +34,7 @@ export default function Header() {
                 <div className='col-2 m-0 p-0' >
 
                 </div>
-                <div className='col-8 m-0 p-0 mt-3'  >
+                <div className='col-8 m-0 p-0 mt-4'  >
                     <InputGroup>
                         <FormControl
                             placeholder="Search"
@@ -45,8 +45,8 @@ export default function Header() {
                     </InputGroup>
                 </div>
 
-                <div className='col-2 m-0 p-0 mt-2 d-flex justify-content-end' >
-                    <AdjustedDropdown className="" items={["Profile", "Logout"]} icons_list={[profile,logout_icon]}
+                <div className='col-2 mt-3' >
+                    <AdjustedDropdown className="text-center" style={{"justify-content": "center", "align-items":"center"}} items={["Profile", "Logout"]} icons_list={[profile,logout_icon]}
                         onClick={(item) => {
                             if (item === "Logout") logout()
                             else if (item === "Profile") nav("personal/profile")
