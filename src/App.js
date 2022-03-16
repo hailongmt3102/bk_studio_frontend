@@ -27,7 +27,7 @@ import Drawer from "./pages/Drawer/Drawer";
 import Header from "pages/Header";
 import UpdatePassword from "pages/UpdatePassword/UpdatePassword";
 
-import ReactNotifications from 'react-notifications-component';
+import {ReactNotifications} from 'react-notifications-component';
 import 'react-notifications-component/dist/theme.css';
 
 function App() {

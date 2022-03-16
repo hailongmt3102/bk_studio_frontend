@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { Form, InputGroup, Col, Button, FormControl } from 'react-bootstrap'
 import ClockSvg from 'resources/icons/clock.svg'
 import MemberSvg from 'resources/icons/two_people.svg'
@@ -52,21 +52,22 @@ export default function ProjectBox(props) {
         StartTime: props.data.StartTime,
         PredictEndtime: props.data.PredictEndtime,
         NumOfMember: props.data.NumOfMember,
-        Description:  props.data.Description
+        Description: props.data.Description
     })
 
     const navigate = useNavigate()
-    const ChangeStatatusSubmit = () => {
 
-        updateStatus(props.data.Id,{Status: newProject.Status})
-            .then((res) => {
-                 alert('Changed Status');
-            })
-            .catch((e) => {
-                alert(e.response.data);
-            })
+    useEffect(() => {
+        console.log("dô useEffect")
+        // get all project
+            updateStatus(props.data.Id, { Status: newProject.Status })
+                .then((res) => { 
+                })
+                .catch((e) => {
+                    alert(e.response.data);
+                })
+    }, [newProject.Status])
 
-    }
     const DeleteProjectSubmit = () => {
 
         deleteProject(props.data.Id)
@@ -81,9 +82,10 @@ export default function ProjectBox(props) {
 
     }
     const EditProjectSubmit = () => {
-        editProject(props.data.Id, {...projectInformation , 
-            StartTime : projectInformation.StartTime.substring(0,10), 
-            PredictEndtime: projectInformation.PredictEndtime.substring(0,10)
+        editProject(props.data.Id, {
+            ...projectInformation,
+            StartTime: projectInformation.StartTime.substring(0, 10),
+            PredictEndtime: projectInformation.PredictEndtime.substring(0, 10)
         })
             .then((res) => {
                 window.location.reload()
@@ -112,7 +114,7 @@ export default function ProjectBox(props) {
                         setNewProject({
                             ...newProject, Status: val
                         })
-                        ChangeStatatusSubmit();
+                        //ChangeStatatusSubmit();
                     }} />
 
                 </div>
@@ -194,7 +196,7 @@ export default function ProjectBox(props) {
                                     fontFamily: Poppins
                                 }}
                             />
-                           
+
                             <div className='m-3 m-0 p-0'>
                                 <div class=" row text-center m-0 p-0">
                                     <div className='col-1  m-0 p-0'>
@@ -263,7 +265,7 @@ export default function ProjectBox(props) {
                                     </div>
                                 </div>
                             </div>
-                            <div className='d-flex justify-content-center'><button onClick={() => {EditProjectSubmit()}} type="button" class="btn btn-primary btn-lg">Save</button></div>
+                            <div className='d-flex justify-content-center'><button onClick={() => { EditProjectSubmit() }} type="button" class="btn btn-primary btn-lg">Save</button></div>
                         </div>
                 }
 
