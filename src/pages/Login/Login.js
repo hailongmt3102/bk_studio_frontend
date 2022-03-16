@@ -14,6 +14,9 @@ import { Roboto, Poppins } from "../../utils/font"
 import GoogleLogin from 'react-google-login';
 import "@fontsource/poppins";
 
+import {Store} from 'react-notifications-component'
+import {content} from "../../utils/notification"
+
 
 export default function Login() {
     const [isVisible, setisVisible] = useState(false)
@@ -33,7 +36,7 @@ export default function Login() {
     const onSubmitHandler = () => {
         // check email and password
         if ([information.Email.length, information.Password.length].includes(0)) {
-            alert("login fail")
+            Store.addNotification(content("Warning", "Login Fail", "danger"))
             return
         }
         if (!ValidateEmail(information.Email)) {

@@ -27,10 +27,14 @@ import Drawer from "./pages/Drawer/Drawer";
 import Header from "pages/Header";
 import UpdatePassword from "pages/UpdatePassword/UpdatePassword";
 
+import ReactNotifications from 'react-notifications-component';
+import 'react-notifications-component/dist/theme.css';
+
 function App() {
     const [drawerState, setDrawerState] = useState("workspace");
     return (
         <Router>
+            <ReactNotifications/>
             <Drawer state={drawerState} setDrawerState={setDrawerState} />
             <div className="bg-light">
                 <Header />
