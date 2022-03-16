@@ -8,12 +8,12 @@ const createNewProject = (data) => {
     return axiosClient.post('/project/new', data)
 }
 
-const changeStatus = (data) => {
-    return axiosClient.post('/project/status', data)
+const updateStatus = (id, data) => {
+    return axiosClient.post('/project/'+id+'/status', data)
 }
 
-const deleteProject = (data) => {
-    return axiosClient.post('/project/delete', data)
+const deleteProject = (id) => {
+    return axiosClient.get('/project/'+id+'/delete')
 }
 
 const editProject = (id, data) => {
@@ -28,7 +28,7 @@ const inviteMember = (id, data) => {
 export {
     getListProject,
     createNewProject,
-    changeStatus,
+    updateStatus,
     deleteProject,
     editProject,
     inviteMember

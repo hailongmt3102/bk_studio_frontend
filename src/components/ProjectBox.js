@@ -15,7 +15,7 @@ import closed_icon from 'resources/icons/status/closed.svg'
 import now_icon from 'resources/icons/status/now.svg'
 import CustomDropdownButton from 'pages/EditReport/components/CustomDropdownButton';
 import { Roboto, Poppins } from "utils/font"
-import { changeStatus, deleteProject, editProject } from 'api/Project'
+import { updateStatus, deleteProject, editProject } from 'api/Project'
 
 import moment from 'moment';
 
@@ -58,10 +58,9 @@ export default function ProjectBox(props) {
     const navigate = useNavigate()
     const ChangeStatatusSubmit = () => {
 
-        changeStatus(newProject)
+        updateStatus(props.data.Id,{Status: newProject.Status})
             .then((res) => {
-
-                // alert('Changed Status');
+                 alert('Changed Status');
             })
             .catch((e) => {
                 alert(e.response.data);
@@ -70,9 +69,7 @@ export default function ProjectBox(props) {
     }
     const DeleteProjectSubmit = () => {
 
-        deleteProject({
-            Id: props.data.Id
-        })
+        deleteProject(props.data.Id)
             .then((res) => {
                 window.location.reload()
                 alert('Deleted project ID: ' + props.data.Id);

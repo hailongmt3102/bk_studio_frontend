@@ -96,8 +96,9 @@ export default function Profile() {
             <h3 class="mt-3 mb-3 ms-5" style={{ fontFamily: Poppins, color: deep_blue_primary, "font-weight": "bold", fontSize: "40px" }}> Profile:</h3>
             <div class="row r" style={{ height: 750 }}>
                 <div class="col-2 me-5 ms-4 justify-content-center ">
-                    <div class="mb-4 ms-2"><img src={information.Avatar} alt={avt} /></div>
-                    <div class="mt-2 ms-4 ">
+                    <div class="mb-4 ms-5 mt-3">
+                        <img src={information.Avatar} height="200px" width="200px" style={{ "border-radius": "50%" }} alt={avt} /></div>
+                    <div class="mt-2 ms-5 ">
                         <button class=" btn sm ms-4 p-3" type="button" style={{ color: "white", backgroundColor: "#FF7F0D", borderRadius: "30px ", fontFamily: Poppins, fontSize: 14 }} onClick={() => navigate("/account/changePassword")}>Change Password</button>
                     </div>
                 </div>
