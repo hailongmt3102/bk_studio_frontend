@@ -32,7 +32,7 @@ axiosClient.interceptors.response.use(
         })
     },
     error => {
-        if (error.data.status === 401 || error.data.status === 403) {
+        if (error.response.status === 401 || error.response.status === 403) {
             // remove username in local storage
             localStorage.removeItem("username")
         }
