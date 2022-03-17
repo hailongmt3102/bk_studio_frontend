@@ -61,7 +61,7 @@ export default function Dashboard() {
                     </div>
                     <div className='col-5 m-0 p-0'>
                         <div className=' mt-4 p-4 bg-white'>
-                            <h1 className='' style={{ fontFamily: Poppins, color: deep_blue_primary, "font-weight": "bold", fontSize: "40px" }}>People</h1>
+                            <h1 style={{ fontFamily: Poppins, color: deep_blue_primary, "font-weight": "bold", fontSize: "40px" }}>People</h1>
                             <div className='row'>
                                 {
                                     peopleList.slice(0).reverse().map((people, index) => {

@@ -7,7 +7,7 @@ import avt_people from "resources/icons/avt_people.svg"
 import tick from "resources/icons/tick.svg"
 
 import PeopleCard from "components/PeopleCard/PeopleCard"
-import {getListPeople} from '../../api/People'
+import { getListPeople } from '../../api/People'
 
 const textStyle = {
     fontFamily: Roboto,
@@ -17,59 +17,69 @@ export default function People() {
     useEffect(() => {
         // get list people
         getListPeople()
-        .then(res => {
-            setPeople(res.data)
-            console.log(res.data)
-        })
-        .catch(err => {
-            console.log(err)
-        })
+            .then(res => {
+                setPeople(res.data)
+                console.log(res.data)
+            })
+            .catch(err => {
+                console.log(err)
+            })
 
     }, [])
     return (
         <div>
             <h2 class="ms-4" style={{ fontFamily: Poppins, color: deep_blue_primary, "font-weight": "bold", fontSize: "40px" }}> People:</h2>
             <div className='rounded-5 bg-white'>
-                <div className='row bg-light'>
-                    <div className='col m-4 bg-white'>
-                        <h1 className='m-2' style={{ fontFamily: Poppins, color: blue_cloud, "font-weight": "bold" }}>Manager</h1>
-                        {
-                            people.map((ele, index) => {
-                                if (ele.Position !== "Manager") return null
-                                return <PeopleCard
-                                    onClick={() => {
+                <div className='row m-0 p-0 bg-light'>
+                    <div className='col-4 m-0 p-0 '>
+                        <div className='m-4 p-4 bg-white' style={{height : "100%"}}>
+                            <h1 className='row ' style={{ fontFamily: Poppins, color: blue_cloud, "font-weight": "bold" }}>Manager</h1>
+                            <div class="p-2"> {
+                                people.map((ele, index) => {
+                                    if (ele.Position !== "Manager") return null
+                                    return <div class="d-flex p-2"> <PeopleCard
+                                        onClick={() => {
 
-                                    }}
-                                    name={ele.UserName}
-                                    email={ele.Email}
-                                    avatar={ele.Avatar}
-                                    rank={ele.RankAccount}
-                                    birthday={ele.Birthday.substring(0,10).split('-').reverse().join('-')}
-                                    gender={ele.Gender}
-                                    isManager={true}
-                                />
-                            })
-                        }
+                                        }}
+                                        name={ele.UserName}
+                                        email={ele.Email}
+                                        avatar={ele.Avatar}
+                                        rank={ele.RankAccount}
+                                        birthday={ele.Birthday.substring(0, 10).split('-').reverse().join('-')}
+                                        gender={ele.Gender}
+                                        isManager={true}
+                                    />
+                                    </div>
+                                })
+                            }
+                            </div>
+                        </div>
+
                     </div>
-                    <div className='col m-4 bg-white'>
-                        <h1 className='m-2' style={{ fontFamily: Poppins, color: blue_cloud, "font-weight": "bold" }}>Member</h1>
-                        {
-                            people.map((ele, index) => {
-                                if (ele.Position !== "Member") return null
-                                return <PeopleCard
-                                    onClick={() => {
+                    <div className='col-8 m-0 p-0' >
+                        <div className='m-4 p-4 bg-white' style={{height : "100%"}}>
+                            <h1 style={{ fontFamily: Poppins, color: blue_cloud, "font-weight": "bold" }}>Member</h1>
+                            <div className='row ms-3'>{
+                                people.map((ele, index) => {
+                                    if (ele.Position !== "Member") return null
+                                    return <PeopleCard
+                                        className="col"
+                                        onClick={() => {
 
-                                    }}
-                                    name={ele.UserName}
-                                    email={ele.Email}
-                                    rank={ele.RankAccount}  
-                                    avatar={ele.Avatar}
-                                    birthday={ele.Birthday.substring(0,10).split('-').reverse().join('-')}
-                                    gender={ele.Gender}
-                                    isManager={false}
-                                />
-                            })
-                        }
+                                        }}
+                                        name={ele.UserName}
+                                        email={ele.Email}
+                                        rank={ele.RankAccount}
+                                        avatar={ele.Avatar}
+                                        birthday={ele.Birthday.substring(0, 10).split('-').reverse().join('-')}
+                                        gender={ele.Gender}
+                                        isManager={false}
+                                    />
+                                })
+                            }
+                            </div>
+                        </div>
+
                     </div>
 
                 </div>
