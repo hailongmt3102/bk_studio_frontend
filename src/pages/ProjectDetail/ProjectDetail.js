@@ -55,55 +55,63 @@ export default function ProjectDetail() {
                         //inviteMemberSubmit()
                     }}><div className='d-flex'>
                             <div className='d-flex justify-content-center me-2' style={{ color: "white", fontFamily: Poppins, fontSize: 17 }}>Invite People</div>
-                            <div className='d-flex justify-content-center'><img src={add_people}  height="20px" width="20px"/></div>
+                            <div className='d-flex justify-content-center'><img src={add_people} height="20px" width="20px" /></div>
                         </div>
                     </button>
                 </div>
             </div>
 
             <div className='rounded-5 bg-white'>
-                <div className='row bg-light'>
-                    <div className='col m-4 bg-white'>
+                <div className='row m-0 p-0 bg-light'>
+                    <div className='col-4 m-0 p-0 '>
+                        <div className='m-4 p-4 bg-white' style={{ height: "100%" }}>
+                            <h1 className='row ' style={{ fontFamily: Poppins, color: blue_cloud, "font-weight": "bold" }}>Manager</h1>
+                            <div class="p-2"> {
+                                peopleInProject.map((ele, index) => {
+                                    if (ele.Position !== "Manager") return null
+                                    return <div class="d-flex p-2"> <PeopleCard
+                                        onClick={() => {
 
-                        <h1 className='m-2' style={{ fontFamily: Poppins, color: blue_cloud, "font-weight": "bold" }}>Manager</h1>
-                        {
-                            peopleInProject.map((ele, index) => {
-                                if (ele.Position !== "Manager") return null
-                                return <PeopleCard
-                                    onClick={() => {
+                                        }}
+                                        name={ele.UserName}
+                                        email={ele.Email}
+                                        avatar={ele.Avatar}
+                                        rank={ele.RankAccount}
+                                        birthday={ele.Birthday.substring(0, 10).split('-').reverse().join('-')}
+                                        gender={ele.Gender}
+                                        isManager={true}
+                                    />
+                                    </div>
+                                })
+                            }
+                            </div>
+                        </div>
 
-                                    }}
-                                    name={ele.UserName}
-                                    email={ele.Email}
-                                    avatar={ele.Avatar}
-                                    rank={ele.RankAccount}
-                                    birthday={ele.Birthday.substring(0, 10).split('-').reverse().join('-')}
-                                    gender={ele.Gender}
-                                    isManager={true}
-                                />
-                            })
-                        }
                     </div>
-                    <div className='col m-4 bg-white'>
-                        <h1 className='m-2' style={{ fontFamily: Poppins, color: blue_cloud, "font-weight": "bold" }}>Member</h1>
-                        {
-                            peopleInProject.map((ele, index) => {
-                                if (ele.Position !== "Member") return null
-                                return <PeopleCard
-                                    onClick={() => {
+                    <div className='col-8 m-0 p-0' >
+                        <div className='m-4 p-4 bg-white' style={{ height: "100%" }}>
+                            <h1 style={{ fontFamily: Poppins, color: blue_cloud, "font-weight": "bold" }}>Member</h1>
+                            <div className='row ms-3'>{
+                                peopleInProject.map((ele, index) => {
+                                    if (ele.Position !== "Member") return null
+                                    return <PeopleCard
+                                        className="col"
+                                        onClick={() => {
 
+                                        }}
+                                        name={ele.UserName}
+                                        email={ele.Email}
+                                        rank={ele.RankAccount}
+                                        avatar={ele.Avatar}
+                                        birthday={ele.Birthday.substring(0, 10).split('-').reverse().join('-')}
+                                        gender={ele.Gender}
+                                        isManager={false}
+                                    />
+                                })
+                            }
+                            </div>
+                        </div>
 
-                                    }}
-                                    name={ele.UserName}
-                                    email={ele.Email}
-                                    avatar={ele.Avatar}
-                                    rank={ele.RankAccount}
-                                    birthday={ele.Birthday.substring(0, 10).split('-').reverse().join('-')}
-                                    gender={ele.Gender}
-                                    isManager={false}
-                                />
-                            })
-                        }
                     </div>
 
                 </div>
