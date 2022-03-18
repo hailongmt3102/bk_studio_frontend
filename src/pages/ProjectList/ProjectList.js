@@ -5,7 +5,7 @@ import NewProjectModel from './components/NewProjectModel'
 import { Roboto, Poppins } from "utils/font"
 import { deep_blue_primary } from "../../utils/color"
 import add_round from "resources/icons/add_round.svg"
-
+import { useNavigate } from 'react-router-dom'
 const orangeStyle = {
     color: "#FF7F0D",
 }
@@ -17,12 +17,13 @@ export default function ProjectList() {
     const [projectList, setProjectList] = useState([])
 
     const [appendProject, setAppendProject] = useState(0)
-
+    const navigate = useNavigate()
     useEffect(() => {
         // get all project
         getListProject()
             .then(response => {
                 setProjectList(response.data)
+                console.log(response.data)
             })
             .catch(
                 error => {
@@ -60,12 +61,13 @@ export default function ProjectList() {
 
             <div className='p-4 m-4 rounded-5 bg-white'>
 
-                <div className='row m-4'>
+                <div className='row m-4'  >
                     {
                         projectList.slice(0).reverse().map((project, index) => {
-                            return <div id={index} className="col">
+                            return <div id={index} className="col" onClick={()=>{navigate("/pDetail/"+project.Id)}}>
                                 <ProjectBox
                                     data={project}
+                                   
                                 />
                             </div>
                         })
