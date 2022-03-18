@@ -4,8 +4,8 @@ import MenuBar from "./components/MenuBar";
 import ToolBar from "./components/ToolBar";
 import "./EditReport.css";
 import { Tabs, Tab, Sonnet } from 'react-bootstrap-tabs';
-
-
+import { Form, InputGroup, Col, Button, FormControl } from 'react-bootstrap'
+import back from "resources/icons/back_round_deep_blue.svg"
 import { GetTableColumns, QueryData } from "api/DataSources"
 
 
@@ -89,15 +89,39 @@ export default function EditReport() {
     return (
         <div>
             <div className="row">
+
                 <div className="col-2 ">
                     <Tabs activeKey={key} onSelect={(k) => setKey(k)}>
-                        <Tab  eventKey="Data" label="Data">Tab 1 content</Tab>
-                        <Tab eventKey="Format"  label="Format">Tab 2 content</Tab>
+                        <Tab eventKey="Data" label="Data">Tab 1 content</Tab>
+                        <Tab eventKey="Format" label="Format">Tab 2 content</Tab>
                     </Tabs>
                 </div>
                 <div className="col-10 h-200">
                     <div className="rightColumn p-3">
-                        <h2>My report1</h2>
+                        <div className="row m-0 p-0">
+                            <div className="col-7 m-0 p-0">
+                                <div className="row" >
+                                    <div className="col-1 mt-1">
+                                        <button type="button" class="btn btn-sm">
+                                            <img src={back} />
+                                        </button>
+                                    </div>
+                                    <div className="col-6" >
+                                        <Form.Control type="text" value="My report" onChange={(event) => {
+                                            // setprojectInformation({ ...projectInformation, Name: event.target.value })
+                                        }}
+                                            className="text-primary border-0 mb-2"
+                                            style={{
+                                                fontSize: "32px",
+                                                backgroundColor:"#F7F7F7"
+                                            }}
+                                        />
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
                         <MenuBar />
                         <ToolBar />
                         <div className="m-2 content">

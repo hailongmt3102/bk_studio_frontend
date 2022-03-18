@@ -32,7 +32,6 @@ export default function Header() {
         visible ?
             <div className='text-center row m-0 p-0'>
                 <div className='col-2 m-0 p-0' >
-
                 </div>
                 <div className='col-8 m-0 p-0 mt-4'  >
                     <InputGroup>
