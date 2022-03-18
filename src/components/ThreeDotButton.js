@@ -23,7 +23,7 @@ export default function ThreeDotButton(props) {
                 <div>
                     {
                         //chon giua title va icon
-                        props.icon !== undefined ? <img src={props.icon}></img> : <p className="p-0 m-auto">{props.title}</p> 
+                        props.icon !== undefined ? <img src={props.icon} height="20px" width="20px" />  : <p className="p-0 m-auto">{props.title}</p> 
                     }
                 </div>
             </Dropdown.Toggle>
@@ -35,11 +35,11 @@ export default function ThreeDotButton(props) {
                                 <div>
                                     {
                                         props.icons_list !== undefined ?
-                                            <div className='row p-1'>
-                                                <div className='col-2 text-center me-1'>
-                                                    <img src={props.icons_list[index]} width="17px" height="17px" />
+                                            <div className='row text-center p-1'>
+                                                <div className='col-2 text-center  me-1'>
+                                                    <img src={props.icons_list[index]} width="20px" height="20px" />
                                                 </div>
-                                                <div className='col-9'>
+                                                <div className='col-9 text-center '>
                                                     {item}
                                                 </div>
                                             </div>

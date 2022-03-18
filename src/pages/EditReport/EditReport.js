@@ -8,7 +8,7 @@ import { Form, InputGroup, Col, Button, FormControl } from 'react-bootstrap'
 import back from "resources/icons/back_round_deep_blue.svg"
 import { GetTableColumns, QueryData } from "api/DataSources"
 
-
+import { Roboto, Poppins } from "../../utils/font"
 
 export default function EditReport() {
     // this function will be call when loaded page
@@ -91,9 +91,9 @@ export default function EditReport() {
             <div className="row">
 
                 <div className="col-2 ">
-                    <Tabs activeKey={key} onSelect={(k) => setKey(k)}>
-                        <Tab eventKey="Data" label="Data">Tab 1 content</Tab>
-                        <Tab eventKey="Format" label="Format">Tab 2 content</Tab>
+                    <Tabs className="p-2" activeKey={key} onSelect={(k) => setKey(k)}>
+                        <Tab className="p-4" eventKey="Data" label="Data">Tab 1 content</Tab>
+                        <Tab className="p-4" eventKey="Format" label="Style">Tab 2 content</Tab>
                     </Tabs>
                 </div>
                 <div className="col-10 h-200">
@@ -113,7 +113,8 @@ export default function EditReport() {
                                             className="text-primary border-0 mb-2"
                                             style={{
                                                 fontSize: "32px",
-                                                backgroundColor:"#F7F7F7"
+                                                backgroundColor:"#F7F7F7", 
+                                                fontFamily: "Poppins"
                                             }}
                                         />
                                     </div>
