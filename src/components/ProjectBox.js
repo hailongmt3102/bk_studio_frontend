@@ -13,7 +13,7 @@ import edit from 'resources/icons/edit.svg'
 import active_icon from 'resources/icons/status/active.svg'
 import closed_icon from 'resources/icons/status/closed.svg'
 import now_icon from 'resources/icons/status/now.svg'
-import CustomDropdownButton from 'pages/EditReport/components/CustomDropdownButton';
+
 import { Roboto, Poppins } from "utils/font"
 import { updateStatus, deleteProject, editProject } from 'api/Project'
 
@@ -102,13 +102,8 @@ export default function ProjectBox(props) {
         <div className='shadow pb-2 pt-1 mb-5 bg-body' style={{ width: "430px", borderRadius: "20px" }}>
             <div className='mt-1 p-2'>
                 <div className='d-flex justify-content-between'>
-                    <ThreeDotButton title={'adđ'} items={option_list} icons_list={icons_list} icon={three_dot} onClick={(val) => {
-                        if (val === 'Delete Project')
-                            DeleteProjectSubmit()
-                        else {
-                            setpressEdit(true)
-                            //RenameProjectSubmit()
-                        }
+                    <ThreeDotButton  items={option_list} icons_list={icons_list} icon={three_dot} onClick={(val) => {
+                       
                     }} />
                     <DropdownWithIndex0 title={newProject.Status} items={status_list} icons_list={staus_icon_list} onClick={(val) => {
                         setNewProject({

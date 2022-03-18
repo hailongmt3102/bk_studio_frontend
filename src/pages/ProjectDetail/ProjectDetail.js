@@ -24,7 +24,7 @@ export default function ProjectDetail() {
     useEffect(() => {
         getListPeopleByProjectID(project_id)
             .then(response => {
-                // console.log(response.data)
+                console.log(response.data)
                 setPeopleListInProject(response.data)
             })
             .catch(

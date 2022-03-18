@@ -22,9 +22,9 @@ export default function ThreeDotButton(props) {
             <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components-Secondary">
                 <div>
                     {
-                        props.icon !== null ? <img src={props.icon}></img> : null
+                        //chon giua title va icon
+                        props.icon !== undefined ? <img src={props.icon}></img> : <p className="p-0 m-auto">{props.title}</p> 
                     }
-                    <p className="p-0 m-auto"></p>
                 </div>
             </Dropdown.Toggle>
             <Dropdown.Menu>
