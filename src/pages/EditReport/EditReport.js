@@ -3,11 +3,11 @@ import Content from "./components/Content";
 import MenuBar from "./components/MenuBar";
 import ToolBar from "./components/ToolBar";
 import "./EditReport.css";
-import { Tabs, Tab, Sonnet } from 'react-bootstrap-tabs';
+import { Tabs, Tab } from 'react-bootstrap-tabs';
 import { Form, InputGroup, Col, Button, FormControl } from 'react-bootstrap'
 import back from "resources/icons/back_round_deep_blue.svg"
 import { GetTableColumns, QueryData } from "api/DataSources"
-
+import BootstrapSelect from 'react-bootstrap-select-dropdown';
 import { Roboto, Poppins } from "../../utils/font"
 
 export default function EditReport() {
@@ -85,6 +85,22 @@ export default function EditReport() {
     }
     const [key, setKey] = useState('Data');
 
+
+
+    const [options, setOptions] = useState([
+        {
+            "labelKey": "optionItem1",
+            "value": "Option item 1"
+        },
+        {
+            "labelKey": "optionItem2",
+            "value": "Option item 2"
+        }
+    ])
+    const handleChange = (selectedOptions) => {
+        console.log(selectedOptions);
+    }
+
     // render components
     return (
         <div>
@@ -92,7 +108,9 @@ export default function EditReport() {
 
                 <div className="col-2 ">
                     <Tabs className="p-2" activeKey={key} onSelect={(k) => setKey(k)}>
-                        <Tab className="p-4" eventKey="Data" label="Data">Tab 1 content</Tab>
+                        <Tab className="p-4" eventKey="Data" label="Data">
+                            <BootstrapSelect options={options} onChange={handleChange} />
+                        </Tab>
                         <Tab className="p-4" eventKey="Format" label="Style">Tab 2 content</Tab>
                     </Tabs>
                 </div>
@@ -113,7 +131,7 @@ export default function EditReport() {
                                             className="text-primary border-0 mb-2"
                                             style={{
                                                 fontSize: "32px",
-                                                backgroundColor:"#F7F7F7", 
+                                                backgroundColor: "#F7F7F7",
                                                 fontFamily: "Poppins"
                                             }}
                                         />

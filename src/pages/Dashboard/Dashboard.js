@@ -40,7 +40,7 @@ export default function Dashboard() {
                         {
                             projectList.slice(0).reverse().map((project, index) => {
                                 if (index >= 3) return null
-                                return <div id={index} className="col" onClick={()=>{navigate("/pDetail/"+project.Id)}}>
+                                return <div id={index} className="col">
                                     <ProjectBox
                                         data={project}
                                     />

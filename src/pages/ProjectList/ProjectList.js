@@ -64,7 +64,7 @@ export default function ProjectList() {
                 <div className='row m-4'  >
                     {
                         projectList.slice(0).reverse().map((project, index) => {
-                            return <div id={index} className="col" onClick={()=>{navigate("/pDetail/"+project.Id)}}>
+                            return <div id={index} className="col">
                                 <ProjectBox
                                     data={project}
                                    

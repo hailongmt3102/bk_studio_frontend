@@ -100,7 +100,7 @@ export default function ProjectBox(props) {
     }
     return (
         <div className='shadow pb-2 pt-1 mb-5 bg-body' style={{ width: "430px", borderRadius: "20px" }}>
-            <div className='mt-1 p-2'>
+            <div className='mt-1 p-2'  onClick={()=>{navigate("/pDetail/"+props.data.Id)}}>
                 <div className='d-flex justify-content-between'>
                     <ThreeDotButton  items={option_list} icons_list={icons_list} icon={three_dot} onClick={(val) => {
                        
