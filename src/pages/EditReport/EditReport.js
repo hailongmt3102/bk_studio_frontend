@@ -152,8 +152,6 @@ export default function EditReport() {
                                     />
                                 </div>
                             </div>
-
-
                             <div className="row m-2 m-0 p-0 mt-2  h-100  align-items-center">
                                 <div className="col-1 m-0 p-0 text-center" >
                                     <button type="button" class="btn btn-sm ms-2 p-2" onClick={() => { }}><img src={bold} height="15px" width="15px" /></button>
