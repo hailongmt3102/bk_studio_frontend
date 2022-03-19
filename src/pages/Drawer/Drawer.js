@@ -89,6 +89,10 @@ export default function Drawer(props) {
 		}
 	}, [location])
 
+	const swapDrawerVisible = () => {
+		setToggle(!toggle)
+	}
+
 	return props.state !== "" ? (
 		<div className="">
 			<div className="m-2 drawer-button" onClick={() => {
@@ -105,7 +109,7 @@ export default function Drawer(props) {
 						<h6 className="p-3 m-0">WORKSPACE</h6>
 					</a>
 					{props.state === "workspace" ? (
-						<Workspace projectList={projectList} selectedIndex={selectedIndex} setSelectedIndex={setSelectedIndex} selectedProject={selectedProject} setSelectedProject={setSelectedProject} />
+						<Workspace projectList={projectList} selectedIndex={selectedIndex} setSelectedIndex={setSelectedIndex} selectedProject={selectedProject} setSelectedProject={setSelectedProject} swapDrawerVisible={swapDrawerVisible}/>
 					) : null}
 					<a class="list-group-item border-0 p-0" onClick={() => {
 						navigate("project/create")
@@ -115,7 +119,7 @@ export default function Drawer(props) {
 						</h6>
 					</a>
 					{props.state === "project" ? (
-						<Project selectedIndex={selectedIndex} />
+						<Project selectedIndex={selectedIndex} swapDrawerVisible={swapDrawerVisible}/>
 					) : null}
 					<a class="list-group-item border-0 p-0" onClick={() => {
 						navigate("personal/profile")
@@ -125,7 +129,7 @@ export default function Drawer(props) {
 					</a>
 					{
 						props.state === "personal" ? (
-							<Personal selectedIndex={selectedIndex} />
+							<Personal selectedIndex={selectedIndex} swapDrawerVisible={swapDrawerVisible}/>
 						)
 							: null
 					}

@@ -20,18 +20,21 @@ export default function Workspace(props) {
 					active={props.selectedIndex === 0 ? true : false}
 					child={<DashboardIcon fill={props.selectedIndex === 0 ? colors.drawerActive : colors.drawerToggle} />}
 					title="Dashboard"
+					onClick={props.swapDrawerVisible}
 				/>
 				<DrawerItem
 					link="/datasources"
 					active={props.selectedIndex === 1 ? true : false}
 					child={<DataSourceIcon fill={props.selectedIndex === 1 ? colors.drawerActive : colors.drawerToggle} />}
 					title="DataSource"
+					onClick={props.swapDrawerVisible}
 				/>
 				<DrawerItem
 					link="/people"
 					active={props.selectedIndex === 2 ? true : false}
 					child={<PeopleIcon fill={props.selectedIndex === 2 ? colors.drawerActive : colors.drawerToggle} />}
 					title="People"
+					onClick={props.swapDrawerVisible}
 				/>
 
 				<div className="d-flex justify-content-start p-2 ps-4" style={{ textDecoration: "none", backgroundColor: props.selectedIndex === 3 ? colors.drawerBackgroundActive : colors.drawerBackgroundToggle }}
@@ -60,6 +63,7 @@ export default function Workspace(props) {
 												active={false}
 												title={ele.Name}
 												customBackgroundColor={props.selectedProject === ele.Id ? "#e5e5e5" : false}
+												onClick={props.swapDrawerVisible}
 											/>
 										</div>
 									)
