@@ -135,6 +135,7 @@ export default function PeoplePopup(props) {
         <Modal
             show={props.show}
             onHide={props.handleClose}
+            backdrop="static"
             // fullscreen={true}
             size="lg"
         >

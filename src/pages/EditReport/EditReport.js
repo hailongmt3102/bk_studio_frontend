@@ -18,6 +18,7 @@ import Autocomplete from '@mui/material/Autocomplete';
 import { GetTableColumns, QueryData } from "api/DataSources"
 import BootstrapSelect from 'react-bootstrap-select-dropdown';
 import { Roboto, Poppins } from "../../utils/font"
+import SqlPopUp from "./components/SqlPopUp";
 
 
 
@@ -100,10 +101,29 @@ export default function EditReport() {
 
     const fonts = ['Roboto', 'Poppins'];
     const size = ['14', '16', "32", '45'];
-
+    const [showSqlPopUp, setshowSqlPopUp] = useState(false)
+    const [popUpType, setPopUpType] = useState("")
+    
+    
+    const showSqlPopUpFunction = (type) => {
+        setshowSqlPopUp(true)
+        setPopUpType(type)
+    }
     // render components
+
     return (
         <div>
+            <SqlPopUp 
+                type={popUpType}
+                show={showSqlPopUp}
+                handleClose={() => {
+                    setshowSqlPopUp(false)
+                }}
+                onComplete={(sql) => {
+                    console.log(sql)
+                    // setAppendPeopleList(appendPeopleList + 1)
+                }}
+            />
             <div className="row">
 
                 <div className="col-2 ">
@@ -233,7 +253,7 @@ export default function EditReport() {
 
                             </div>
                         </div>
-                        <MenuBar />
+                        <MenuBar showSqlPopUpFunction={showSqlPopUpFunction}/>
                         <ToolBar />
                         <div className="m-2 content">
                             {/* <Content reports = {reports}/> */}
