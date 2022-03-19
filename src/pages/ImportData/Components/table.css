@@ -1,0 +1,21 @@
+.custom-table{
+    overflow: scroll;
+    /* width: 100%; */
+}
+
+td {
+    border: 1px solid #000;
+}
+
+tr td:last-child {
+    width: 1%;
+    white-space: nowrap;
+}
+
+
+.custom-table td, .custom-table thead th, .custom-table tbody td{
+    overflow: hidden;
+    padding: 10px;
+    min-width: 40px;
+    width: auto;
+}
