@@ -16,11 +16,12 @@ import shareWith from "resources/icons/addPeople.svg";
 
 import CircleModel from './AddShapeModel/CircleModel';
 import TableModel from './AddShapeModel/TableModel';
+
+import './css/toolbar.css'
 export default function ToolBar() {
     return (
         <div>
-            <div className="m-auto row" style={{ "maxWidth": "1230px", backgroundColor: "#F7F7F7", borderTopLeftRadius: "20px", borderTopRightRadius: "20px" }}>
-
+            <div className="m-auto row toolbar-container">
                 <button className="col m-0 p-0 btn" style={{ "minHeight": "50px" }}>
                     <img src={plus} width="20px" height="20px" />
                     <p className="p-0 m-0 text-center">add data</p>
@@ -72,7 +73,6 @@ export default function ToolBar() {
                     <img src={shareWith} width="20px" height="20px" />
                     <p className="p-0 m-0">share with</p>
                 </button>
-               
             </div>
         </div>
     )
