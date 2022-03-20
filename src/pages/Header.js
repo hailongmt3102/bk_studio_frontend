@@ -50,7 +50,7 @@ export default function Header() {
                                                 
                                             }}
                                             // type={isVisible ? "text" : "password"}
-                                            placeholder="Enter your password"
+                                            placeholder="Search"
                                             // value={information.Password}
                                         />
                                     </InputGroup>
