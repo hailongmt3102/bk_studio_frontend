@@ -46,7 +46,7 @@ export default function SqlPopUp(props) {
     const order_by_list = [
         { title: 'ASC', year: 1994 },
         { title: 'DESC', year: 1972 },
-        
+
     ];
 
     return (
@@ -86,35 +86,41 @@ export default function SqlPopUp(props) {
                                             <TextField
                                                 {...params}
                                                 variant="standard"
-                                                label="Multiple values"
+                                                // label="Multiple values"
                                                 placeholder="Favorites"
                                             />
                                         )}
                                     />
                                 </div>
-
                             </div>
-                        
-                            <div className='row mt-'>
-                                <div className='col'>
+                            <div className='row mt-4'>
+                                <div className='row'>
                                     <div>SELECT</div>
                                 </div>
-                                <div className='row'>
-                                    <div className='col'>
-                                        <input
-                                            class="form-check-input me-2"
-                                            type="checkbox"
-                                            id="form2Example3c"
-                                            onClick={(e) => {
-                                            }}
-                                        />
+                                <div className='row m-0 p-0 mt-3'>
+                                    <div className='col-1 m-auto p-0'>
+                                        <div className='row m-0 p-0 '>
+                                            <div className='col m-0 p-0 '>
+                                                <input 
+                                                    class="form-check-input ms-3"
+                                                    type="checkbox"
+                                                    id="form2Example3c"
+                                                    onClick={(e) => {
+                                                    }}
+                                                />
+                                            </div>
+                                            <div className='col m-0 p-0'>
+                                                <div className='col-1  m-auto p-0' >
+                                                    <div>Field</div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                   
-                                    <div className='col'>
-                                        <div>Field</div>
-                                    </div>
-                                    <div className='col'>
+
+
+                                    <div className='col-11 m-auto'>
                                         <Autocomplete
+                                        className='ms-4'
                                             multiple
                                             id="tags-standard"
                                             options={top100Films}
@@ -124,7 +130,7 @@ export default function SqlPopUp(props) {
                                                 <TextField
                                                     {...params}
                                                     variant="standard"
-                                                    label="Multiple values"
+                                                    // label="Multiple values"
                                                     placeholder="Favorites"
                                                 />
                                             )}
@@ -133,8 +139,8 @@ export default function SqlPopUp(props) {
 
                                 </div>
                             </div>
-                            
-                            <div className='row'>
+
+                            <div className='row mt-5'>
                                 <div className='row'>
                                     <div className='col'>
                                         <input
@@ -185,7 +191,7 @@ export default function SqlPopUp(props) {
 
                                 </div>
                             </div>
-                            <div className='row'>
+                            <div className='row  mt-5'>
                                 <div className='row'>
                                     <div className='col'>
                                         <input
@@ -203,7 +209,7 @@ export default function SqlPopUp(props) {
 
                                 </div>
                             </div>
-                            <div className='row'>
+                            <div className='row  mt-5'>
                                 <div className='col'>
                                     <div>WHERE</div>
                                 </div>
@@ -260,7 +266,7 @@ export default function SqlPopUp(props) {
                                 </div>
 
                             </div>
-                            <div className='row'>
+                            <div className='row  mt-5'>
                                 <div className='col'>
                                     <div>HAVING BY</div>
                                 </div>
@@ -317,7 +323,7 @@ export default function SqlPopUp(props) {
                                 </div>
 
                             </div>
-                            <div className='row'>
+                            <div className='row  mt-5'>
                                 <div className='col'>
                                     <div>GROUP BY</div>
                                 </div>
@@ -340,7 +346,7 @@ export default function SqlPopUp(props) {
                                 </div>
 
                             </div>
-                            <div className='row'>
+                            <div className='row  mt-5'>
                                 <div className='col'>
                                     <div>ORDER BY</div>
                                 </div>
