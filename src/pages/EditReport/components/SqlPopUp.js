@@ -3,7 +3,7 @@ import { Modal, Button, Form } from 'react-bootstrap'
 import NestedDropDown from 'components/NestedDropDown'
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
-
+import add_grey from 'resources/icons/add_grey.svg'
 export default function SqlPopUp(props) {
     const [step, setStep] = useState(1)
     const [selectComponent, setSelectComponent] = useState([])
@@ -11,21 +11,6 @@ export default function SqlPopUp(props) {
     const top100Films = [
         { title: 'The Shawshank Redemption', year: 1994 },
         { title: 'The Godfather', year: 1972 },
-        { title: 'The Godfather: Part II', year: 1974 },
-        { title: 'The Dark Knight', year: 2008 },
-        { title: '12 Angry Men', year: 1957 },
-        { title: "Schindler's List", year: 1993 },
-        { title: 'Pulp Fiction', year: 1994 },
-        {
-            title: 'The Lord of the Rings: The Return of the King',
-            year: 2003,
-        },
-        { title: 'The Good, the Bad and the Ugly', year: 1966 },
-        { title: 'Fight Club', year: 1999 },
-        {
-            title: 'The Lord of the Rings: The Fellowship of the Ring',
-            year: 2001,
-        },
         { title: 'Monty Python and the Holy Grail', year: 1975 },
     ];
     const function_list = [
@@ -71,12 +56,13 @@ export default function SqlPopUp(props) {
                     step == 1 ?
                         <div>Select table</div>
                         : <div>
-                            <div className='row'>
-                                <div className='col-2'>
+                            <div className='row m-auto'>
+                                <div className='col-1 m-auto'>
                                     <div>From</div>
                                 </div>
-                                <div className='col-9'>
+                                <div className='col-11 '>
                                     <Autocomplete
+                                        className='ms-5 me-5'
                                         multiple
                                         id="tags-standard"
                                         options={data_source}
@@ -87,7 +73,7 @@ export default function SqlPopUp(props) {
                                                 {...params}
                                                 variant="standard"
                                                 // label="Multiple values"
-                                                placeholder="Favorites"
+                                                placeholder="Data sources"
                                             />
                                         )}
                                     />
@@ -97,11 +83,11 @@ export default function SqlPopUp(props) {
                                 <div className='row'>
                                     <div>SELECT</div>
                                 </div>
-                                <div className='row m-0 p-0 mt-3'>
+                                <div className='row m-0 p-0 p-4'>
                                     <div className='col-1 m-auto p-0'>
                                         <div className='row m-0 p-0 '>
                                             <div className='col m-0 p-0 '>
-                                                <input 
+                                                <input
                                                     class="form-check-input ms-3"
                                                     type="checkbox"
                                                     id="form2Example3c"
@@ -116,11 +102,9 @@ export default function SqlPopUp(props) {
                                             </div>
                                         </div>
                                     </div>
-
-
                                     <div className='col-11 m-auto'>
                                         <Autocomplete
-                                        className='ms-4'
+                                            className='ms-5 me-5'
                                             multiple
                                             id="tags-standard"
                                             options={top100Films}
@@ -141,194 +125,45 @@ export default function SqlPopUp(props) {
                             </div>
 
                             <div className='row mt-5'>
-                                <div className='row'>
-                                    <div className='col'>
-                                        <input
-                                            class="form-check-input me-2"
-                                            type="checkbox"
-                                            id="form2Example3c"
-                                            onClick={(e) => {
-                                            }}
-                                        />
+                                <div className='col-1 m-auto p-0'>
+                                    <div className='row m-0 p-0 '>
+                                        <div className='col m-0 p-0 '>
+                                            <input
+                                                class="form-check-input ms-3"
+                                                type="checkbox"
+                                                id="form2Example3c"
+                                                onClick={(e) => {
+                                                }}
+                                            />
+                                        </div>
+                                        <div className='col m-0 p-0'>
+                                            <div className='col-1  m-auto p-0' >
+                                                <div>Function</div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div className='col'>
-                                        <div>Function</div>
-                                    </div>
-                                    <div className='col'>
-                                        <Autocomplete
-                                            multiple
-                                            id="tags-standard"
-                                            options={function_list}
-                                            getOptionLabel={(option) => option.title}
-                                            //defaultValue={[top100Films[13]]}
-                                            renderInput={(params) => (
-                                                <TextField
-                                                    {...params}
-                                                    variant="standard"
-                                                    label="Multiple values"
-                                                    placeholder="Favorites"
-                                                />
-                                            )}
-                                        />
-                                    </div>
-                                    <div className='col'>
-                                        <Autocomplete
-                                            multiple
-                                            id="tags-standard"
-                                            options={function_list}
-                                            getOptionLabel={(option) => option.title}
-                                            //defaultValue={[top100Films[13]]}
-                                            renderInput={(params) => (
-                                                <TextField
-                                                    {...params}
-                                                    variant="standard"
-                                                    label="Multiple values"
-                                                    placeholder="Favorites"
-                                                />
-                                            )}
-                                        />
-                                    </div>
-
                                 </div>
-                            </div>
-                            <div className='row  mt-5'>
-                                <div className='row'>
-                                    <div className='col'>
-                                        <input
-                                            class="form-check-input me-2"
-                                            type="checkbox"
-                                            id="form2Example3c"
-                                            onClick={(e) => {
-                                            }}
-                                        />
-                                    </div>
-                                    <div className='col'>
-                                        <div>All</div>
-                                    </div>
-
-
-                                </div>
-                            </div>
-                            <div className='row  mt-5'>
-                                <div className='col'>
-                                    <div>WHERE</div>
-                                </div>
-                                <div className='col'>
+                                <div className='col-5 m-auto'>
                                     <Autocomplete
+                                        className='ms-5 me-5'
                                         multiple
                                         id="tags-standard"
-                                        options={data_source}
+                                        options={function_list}
                                         getOptionLabel={(option) => option.title}
                                         //defaultValue={[top100Films[13]]}
                                         renderInput={(params) => (
                                             <TextField
                                                 {...params}
                                                 variant="standard"
-                                                label="Multiple values"
+                                                // label="Multiple values"
                                                 placeholder="Favorites"
                                             />
                                         )}
                                     />
                                 </div>
-                                <div className='col'>
+                                <div className='col-5 m-auto'>
                                     <Autocomplete
-                                        multiple
-                                        id="tags-standard"
-                                        options={data_source}
-                                        getOptionLabel={(option) => option.title}
-                                        //defaultValue={[top100Films[13]]}
-                                        renderInput={(params) => (
-                                            <TextField
-                                                {...params}
-                                                variant="standard"
-                                                label="Multiple values"
-                                                placeholder="Favorites"
-                                            />
-                                        )}
-                                    />
-                                </div>
-                                <div className='col'>
-                                    <Autocomplete
-                                        multiple
-                                        id="tags-standard"
-                                        options={data_source}
-                                        getOptionLabel={(option) => option.title}
-                                        //defaultValue={[top100Films[13]]}
-                                        renderInput={(params) => (
-                                            <TextField
-                                                {...params}
-                                                variant="standard"
-                                                label="Multiple values"
-                                                placeholder="Favorites"
-                                            />
-                                        )}
-                                    />
-                                </div>
-
-                            </div>
-                            <div className='row  mt-5'>
-                                <div className='col'>
-                                    <div>HAVING BY</div>
-                                </div>
-                                <div className='col'>
-                                    <Autocomplete
-                                        multiple
-                                        id="tags-standard"
-                                        options={data_source}
-                                        getOptionLabel={(option) => option.title}
-                                        //defaultValue={[top100Films[13]]}
-                                        renderInput={(params) => (
-                                            <TextField
-                                                {...params}
-                                                variant="standard"
-                                                label="Multiple values"
-                                                placeholder="Favorites"
-                                            />
-                                        )}
-                                    />
-                                </div>
-                                <div className='col'>
-                                    <Autocomplete
-                                        multiple
-                                        id="tags-standard"
-                                        options={data_source}
-                                        getOptionLabel={(option) => option.title}
-                                        //defaultValue={[top100Films[13]]}
-                                        renderInput={(params) => (
-                                            <TextField
-                                                {...params}
-                                                variant="standard"
-                                                label="Multiple values"
-                                                placeholder="Favorites"
-                                            />
-                                        )}
-                                    />
-                                </div>
-                                <div className='col'>
-                                    <Autocomplete
-                                        multiple
-                                        id="tags-standard"
-                                        options={data_source}
-                                        getOptionLabel={(option) => option.title}
-                                        //defaultValue={[top100Films[13]]}
-                                        renderInput={(params) => (
-                                            <TextField
-                                                {...params}
-                                                variant="standard"
-                                                label="Multiple values"
-                                                placeholder="Favorites"
-                                            />
-                                        )}
-                                    />
-                                </div>
-
-                            </div>
-                            <div className='row  mt-5'>
-                                <div className='col'>
-                                    <div>GROUP BY</div>
-                                </div>
-                                <div className='col'>
-                                    <Autocomplete
+                                        className='ms-5 me-5'
                                         multiple
                                         id="tags-standard"
                                         options={top100Films}
@@ -338,65 +173,245 @@ export default function SqlPopUp(props) {
                                             <TextField
                                                 {...params}
                                                 variant="standard"
-                                                label="Multiple values"
+                                                // label="Multiple values"
                                                 placeholder="Favorites"
                                             />
                                         )}
                                     />
                                 </div>
+                                <div className='col-1'>
+                                    <button type="button" class="btn btn-sm ms-2 p-2" onClick={() => { }}><img src={add_grey} height="30px" width="30px" /></button>
+                                </div>
 
+                            </div>
+                            <div className='row mt-5'>
+                                <div className='col-1 m-auto p-0'>
+                                    <div className='row m-0 p-0 '>
+                                        <div className='col m-0 p-0 '>
+                                            <input
+                                                class="form-check-input ms-3"
+                                                type="checkbox"
+                                                id="form2Example3c"
+                                                onClick={(e) => {
+                                                }}
+                                            />
+                                        </div>
+                                        <div className='col m-0 p-0'>
+                                            <div className='col-1  m-auto p-0' >
+                                                <div>All</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className='col-11'>
+
+                                </div>
+                            </div>
+                            <div className='row  mt-5'>
+                                <div className='col'>
+                                    <div>WHERE</div>
+                                </div>
+                                <div className='row'>
+                                    <div className='col'>
+                                        <Autocomplete
+                                            multiple
+                                            id="tags-standard"
+                                            options={data_source}
+                                            getOptionLabel={(option) => option.title}
+                                            //defaultValue={[top100Films[13]]}
+                                            renderInput={(params) => (
+                                                <TextField
+                                                    {...params}
+                                                    variant="standard"
+                                                    label="Multiple values"
+                                                    placeholder="Favorites"
+                                                />
+                                            )}
+                                        />
+                                    </div>
+                                    <div className='col'>
+                                        <Autocomplete
+                                            multiple
+                                            id="tags-standard"
+                                            options={data_source}
+                                            getOptionLabel={(option) => option.title}
+                                            //defaultValue={[top100Films[13]]}
+                                            renderInput={(params) => (
+                                                <TextField
+                                                    {...params}
+                                                    variant="standard"
+                                                    label="Multiple values"
+                                                    placeholder="Favorites"
+                                                />
+                                            )}
+                                        />
+                                    </div>
+                                    <div className='col'>
+                                        <Autocomplete
+                                            multiple
+                                            id="tags-standard"
+                                            options={data_source}
+                                            getOptionLabel={(option) => option.title}
+                                            //defaultValue={[top100Films[13]]}
+                                            renderInput={(params) => (
+                                                <TextField
+                                                    {...params}
+                                                    variant="standard"
+                                                    label="Multiple values"
+                                                    placeholder="Favorites"
+                                                />
+                                            )}
+                                        />
+                                    </div>
+                                    <div className='col'>
+                                        <button type="button" class="btn btn-sm ms-2 p-2" onClick={() => { }}><img src={add_grey} height="30px" width="30px" /></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className='row  mt-5'>
+                                <div className='col'>
+                                    <div>HAVING BY</div>
+                                </div>
+                                <div className='row'>
+                                    <div className='col'>
+                                        <Autocomplete
+                                            multiple
+                                            id="tags-standard"
+                                            options={data_source}
+                                            getOptionLabel={(option) => option.title}
+                                            //defaultValue={[top100Films[13]]}
+                                            renderInput={(params) => (
+                                                <TextField
+                                                    {...params}
+                                                    variant="standard"
+                                                    label="Multiple values"
+                                                    placeholder="Favorites"
+                                                />
+                                            )}
+                                        />
+                                    </div>
+                                    <div className='col'>
+                                        <Autocomplete
+                                            multiple
+                                            id="tags-standard"
+                                            options={data_source}
+                                            getOptionLabel={(option) => option.title}
+                                            //defaultValue={[top100Films[13]]}
+                                            renderInput={(params) => (
+                                                <TextField
+                                                    {...params}
+                                                    variant="standard"
+                                                    label="Multiple values"
+                                                    placeholder="Favorites"
+                                                />
+                                            )}
+                                        />
+                                    </div>
+                                    <div className='col'>
+                                        <Autocomplete
+                                            multiple
+                                            id="tags-standard"
+                                            options={data_source}
+                                            getOptionLabel={(option) => option.title}
+                                            //defaultValue={[top100Films[13]]}
+                                            renderInput={(params) => (
+                                                <TextField
+                                                    {...params}
+                                                    variant="standard"
+                                                    label="Multiple values"
+                                                    placeholder="Favorites"
+                                                />
+                                            )}
+                                        />
+                                    </div>
+                                    <div className='col'>
+                                        <button type="button" class="btn btn-sm ms-2 p-2" onClick={() => { }}><img src={add_grey} height="30px" width="30px" /></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className='row  mt-5'>
+                                <div className='col'>
+                                    <div>GROUP BY</div>
+                                </div>
+                                <div className='row'>
+                                    <div className='col'>
+                                        <Autocomplete
+                                            multiple
+                                            id="tags-standard"
+                                            options={top100Films}
+                                            getOptionLabel={(option) => option.title}
+                                            //defaultValue={[top100Films[13]]}
+                                            renderInput={(params) => (
+                                                <TextField
+                                                    {...params}
+                                                    variant="standard"
+                                                    label="Multiple values"
+                                                    placeholder="Favorites"
+                                                />
+                                            )}
+                                        />
+                                    </div>
+                                </div>
                             </div>
                             <div className='row  mt-5'>
                                 <div className='col'>
                                     <div>ORDER BY</div>
                                 </div>
-                                <div className='col'>
-                                    <Autocomplete
-                                        multiple
-                                        id="tags-standard"
-                                        options={order_by_list}
-                                        getOptionLabel={(option) => option.title}
-                                        //defaultValue={[top100Films[13]]}
-                                        renderInput={(params) => (
-                                            <TextField
-                                                {...params}
-                                                variant="standard"
-                                                label="Multiple values"
-                                                placeholder="Favorites"
-                                            />
-                                        )}
-                                    />
-                                </div>
-                                <div className='col'>
-                                    <Autocomplete
-                                        multiple
-                                        id="tags-standard"
-                                        options={data_source}
-                                        getOptionLabel={(option) => option.title}
-                                        //defaultValue={[top100Films[13]]}
-                                        renderInput={(params) => (
-                                            <TextField
-                                                {...params}
-                                                variant="standard"
-                                                label="Multiple values"
-                                                placeholder="Favorites"
-                                            />
-                                        )}
-                                    />
+                                <div className='row'>
+                                    <div className='col'>
+                                        <Autocomplete
+                                            multiple
+                                            id="tags-standard"
+                                            options={order_by_list}
+                                            getOptionLabel={(option) => option.title}
+                                            //defaultValue={[top100Films[13]]}
+                                            renderInput={(params) => (
+                                                <TextField
+                                                    {...params}
+                                                    variant="standard"
+                                                    label="Multiple values"
+                                                    placeholder="Favorites"
+                                                />
+                                            )}
+                                        />
+                                    </div>
+                                    <div className='col'>
+                                        <Autocomplete
+                                            multiple
+                                            id="tags-standard"
+                                            options={data_source}
+                                            getOptionLabel={(option) => option.title}
+                                            //defaultValue={[top100Films[13]]}
+                                            renderInput={(params) => (
+                                                <TextField
+                                                    {...params}
+                                                    variant="standard"
+                                                    label="Multiple values"
+                                                    placeholder="Favorites"
+                                                />
+                                            )}
+                                        />
+                                    </div>
                                 </div>
 
                             </div>
-
-
-
                             {/* <NestedDropDown setSelectComponent={setSelectComponent} fieldAdd={fieldAdd} /> */}
-
-
-
                         </div>
                 }
             </Modal.Body>
             <Modal.Footer>
+                {
+                    step == 1 ?
+                        null
+                        :
+                        <Button onClick={() => {
+                            setStep(1)
+                        }}>
+                            Back to step 1
+                        </Button>
+
+
+                }
                 {
                     step == 1 ?
                         <Button onClick={() => {
@@ -410,7 +425,10 @@ export default function SqlPopUp(props) {
                         }}>
                             Done
                         </Button>
+
+
                 }
+
             </Modal.Footer>
         </Modal>
     )
