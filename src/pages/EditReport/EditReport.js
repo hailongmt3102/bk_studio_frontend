@@ -103,8 +103,8 @@ export default function EditReport() {
     const size = ['14', '16', "32", '45'];
     const [showSqlPopUp, setshowSqlPopUp] = useState(false)
     const [popUpType, setPopUpType] = useState("")
-    
-    
+
+
     const showSqlPopUpFunction = (type) => {
         setshowSqlPopUp(true)
         setPopUpType(type)
@@ -113,7 +113,7 @@ export default function EditReport() {
 
     return (
         <div>
-            <SqlPopUp 
+            <SqlPopUp
                 type={popUpType}
                 show={showSqlPopUp}
                 handleClose={() => {
@@ -201,25 +201,19 @@ export default function EditReport() {
 
                             </div>
                             <div>Fill</div>
-                            <Autocomplete
-                                id="custom-input-demo"
-                                options={size}
-                                renderInput={(params) => (
-                                    <div ref={params.InputProps.ref}>
-                                        <input type="text" {...params.inputProps} />
-                                    </div>
-                                )}
+                            <Form.Control
+                                type="color"
+                                id="exampleColorInput"
+                                defaultValue="#563d7c"
+                                title="Choose your color"
                             />
 
                             <div>Stroke</div>
-                            <Autocomplete
-                                id="custom-input-demo"
-                                options={size}
-                                renderInput={(params) => (
-                                    <div ref={params.InputProps.ref}>
-                                        <input type="text" {...params.inputProps} />
-                                    </div>
-                                )}
+                            <Form.Control
+                                type="color"
+                                id="exampleColorInput"
+                                defaultValue="#563d7c"
+                                title="Choose your color"
                             />
 
                         </Tab>
@@ -253,7 +247,7 @@ export default function EditReport() {
 
                             </div>
                         </div>
-                        <MenuBar showSqlPopUpFunction={showSqlPopUpFunction}/>
+                        <MenuBar showSqlPopUpFunction={showSqlPopUpFunction} />
                         <ToolBar />
                         <div className="m-2 content">
                             {/* <Content reports = {reports}/> */}

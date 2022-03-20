@@ -54,8 +54,9 @@ export default function SqlPopUp(props) {
             show={props.show}
             onHide={props.handleClose}
             backdrop="static"
-            // fullscreen={true}
-            size="lg"
+            //fullscreen={true} 
+            size="xl"
+            aria-labelledby="example-modal-sizes-title-lg"
         >
             <Modal.Header closeButton>
                 <Modal.Title>
@@ -71,10 +72,10 @@ export default function SqlPopUp(props) {
                         <div>Select table</div>
                         : <div>
                             <div className='row'>
-                                <div className='col'>
+                                <div className='col-2'>
                                     <div>From</div>
                                 </div>
-                                <div className='col'>
+                                <div className='col-9'>
                                     <Autocomplete
                                         multiple
                                         id="tags-standard"
@@ -93,7 +94,8 @@ export default function SqlPopUp(props) {
                                 </div>
 
                             </div>
-                            <div className='row'>
+                        
+                            <div className='row mt-'>
                                 <div className='col'>
                                     <div>SELECT</div>
                                 </div>
@@ -107,6 +109,7 @@ export default function SqlPopUp(props) {
                                             }}
                                         />
                                     </div>
+                                   
                                     <div className='col'>
                                         <div>Field</div>
                                     </div>
@@ -130,6 +133,7 @@ export default function SqlPopUp(props) {
 
                                 </div>
                             </div>
+                            
                             <div className='row'>
                                 <div className='row'>
                                     <div className='col'>
