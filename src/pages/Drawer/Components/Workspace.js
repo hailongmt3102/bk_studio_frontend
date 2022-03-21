@@ -6,8 +6,10 @@ import DrawerItem from "./Item"
 import { ReactComponent as DashboardIcon } from "resources/icons/drawerIcons/dashboard.svg"
 import { ReactComponent as DataSourceIcon } from "resources/icons/drawerIcons/dataSource.svg"
 import { ReactComponent as PeopleIcon } from "resources/icons/drawerIcons/people.svg"
-
 import { ReactComponent as YourProjectIcon } from 'resources/icons/drawerIcons/cart.svg'
+
+import SwitchSvg from 'resources/icons/drawerIcons/switch.svg'
+import CheckedSvg from 'resources/icons/drawerIcons/checked.svg'
 
 
 export default function Workspace(props) {
@@ -52,12 +54,13 @@ export default function Workspace(props) {
 					showProject ?
 						<div >
 							{
-								props.projectList.slice(0).reverse().map((ele, index) => {
+								props.projectList.reverse().map((ele, index) => {
 									if (index > 2) return
 									return (
-										<div key={index} onClick={() => {
+										<div className="row" key={index} onClick={() => {
 											props.setSelectedProject(ele.Id)
 										}}>
+											<div className="col-10">
 											<DrawerItem
 												link={"/pDetail/" + ele.Id}
 												active={false}
@@ -65,12 +68,18 @@ export default function Workspace(props) {
 												customBackgroundColor={props.selectedProject === ele.Id ? "#e5e5e5" : false}
 												onClick={props.swapDrawerVisible}
 											/>
+											</div>
+											<div className="col-2 m-auto" onClick={() => {
+												if (props.currentProject != ele.Id) props.setCurrentProject(ele.Id)
+											}}>
+												<img width="20px" height="20px" src={props.currentProject == ele.Id ? CheckedSvg : SwitchSvg}/>	
+											</div>
 										</div>
 									)
 								}
 								)
 							}
-							<Link to="/pList" class="list-group-item border-0 text-primary ms-3">
+							<Link to="/pList" class="list-group-item border-0 text-primary ms-3" onClick={props.swapDrawerVisible}>
 								See all
 							</Link>
 						</div>
