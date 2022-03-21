@@ -1,0 +1,28 @@
+.component-table{
+    overflow: scroll;
+}
+
+td {
+    border: 1px solid #000;
+}
+
+tr td:last-child {
+    width: 1%;
+    white-space: nowrap;
+}
+
+
+.component-table td, .component-table thead th, .component-table tbody td{
+    overflow: hidden;
+    padding: 10px;
+    min-width: 100px;
+    width: auto;
+}
+
+.component-table {
+    overflow: scroll;
+}
+.component-container{
+    margin: auto;
+    overflow: scroll;
+}

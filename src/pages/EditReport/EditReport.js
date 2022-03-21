@@ -20,17 +20,28 @@ import BootstrapSelect from 'react-bootstrap-select-dropdown';
 import { Roboto, Poppins } from "../../utils/font"
 import SqlPopUp from "./components/SqlPopUp";
 
+import {getAllComponent} from 'api/Report'
+import { useLocation } from "react-router-dom";
 
 
 
-
-export default function EditReport() {
+export default function EditReport(props) {
+    const [components, setComponents] = useState([])
+    const location = useLocation().pathname
     // this function will be call when loaded page
     useEffect(() => {
-        // get data source
-        // GetTableColumns()
-        // .then(res => console.log(res))  
-        // .catch(err => console.log(err))
+        let currentProject = localStorage.getItem("currentProject")
+        if (currentProject != null) {
+            let RId = location.split('/')[3]
+            console.log(RId)
+            getAllComponent(currentProject, RId)
+                .then(res => {
+                    setComponents(res.data)
+                })
+                .catch(res => {
+                    alert(res.response.data)
+                })
+        }
     }, [])
     // define some color template
     const colorTemplate = ['rgb(255, 99, 132)',
@@ -250,7 +261,7 @@ export default function EditReport() {
                         <MenuBar showSqlPopUpFunction={showSqlPopUpFunction} />
                         <ToolBar />
                         <div className="m-2 content">
-                            {/* <Content reports = {reports}/> */}
+                            <Content components={components}/>
                         </div>
                     </div>
                 </div>

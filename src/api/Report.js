@@ -8,7 +8,12 @@ const getAllReport = (PId) => {
     return axiosClient.get(`/project/${PId}/reports`)
 }
 
+const getAllComponent = (PId, RId) => {
+    return axiosClient.get(`/project/${PId}/${RId}/components`)
+}
+
 export {
     createNewReport,
-    getAllReport
+    getAllReport,
+    getAllComponent
 }
