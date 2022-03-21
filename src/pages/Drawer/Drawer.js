@@ -19,11 +19,20 @@ export default function Drawer(props) {
 
 	const [toggle, setToggle] = useState(false)
 
+	const [currentProject, setCurrentProject] = useState(null)
+
 	useEffect(() => {
+		let cProject = localStorage.getItem("currentProject")
+		if (cProject != null) setCurrentProject(cProject)
 		// get all project
 		getListProject()
 			.then(res => {
 				setProjectList(res.data)
+				if (cProject == null && res.data.length > 0) {
+					setProjectToWork(res.data[0].Id)
+				}else if (res.data.length == 0) {
+					setProjectToWork(-1)
+				}
 			})
 			.catch(err => {
 				try {
@@ -93,6 +102,11 @@ export default function Drawer(props) {
 		setToggle(!toggle)
 	}
 
+	const setProjectToWork = (Id) => {
+		setCurrentProject(Id)
+		localStorage.setItem("currentProject", Id)
+	}
+
 	return props.state !== "" ? (
 		<div className="">
 			<div className="m-2 drawer-button" onClick={() => {
@@ -109,17 +123,28 @@ export default function Drawer(props) {
 						<h6 className="p-3 m-0">WORKSPACE</h6>
 					</a>
 					{props.state === "workspace" ? (
-						<Workspace projectList={projectList} selectedIndex={selectedIndex} setSelectedIndex={setSelectedIndex} selectedProject={selectedProject} setSelectedProject={setSelectedProject} swapDrawerVisible={swapDrawerVisible}/>
+						<Workspace
+							projectList={projectList}
+							selectedIndex={selectedIndex}
+							setSelectedIndex={setSelectedIndex}
+							selectedProject={selectedProject}
+							setSelectedProject={setSelectedProject}
+							swapDrawerVisible={swapDrawerVisible}
+							currentProject={currentProject}
+							setCurrentProject={setProjectToWork}
+						/>
 					) : null}
 					<a class="list-group-item border-0 p-0" onClick={() => {
 						navigate("project/create")
 						// setSelectedIndex(4)
 					}}>
-						<h6 className="p-3 m-0">PROJECT
+						<h6 className="p-3 m-0">PROJECT : {
+							projectList.filter(ele => ele.Id == currentProject ? true : false).length > 0 ? projectList.filter(ele => ele.Id == currentProject ? true : false)[0].Name : ""
+						}
 						</h6>
 					</a>
 					{props.state === "project" ? (
-						<Project selectedIndex={selectedIndex} swapDrawerVisible={swapDrawerVisible}/>
+						<Project selectedIndex={selectedIndex} swapDrawerVisible={swapDrawerVisible} />
 					) : null}
 					<a class="list-group-item border-0 p-0" onClick={() => {
 						navigate("personal/profile")
@@ -129,7 +154,7 @@ export default function Drawer(props) {
 					</a>
 					{
 						props.state === "personal" ? (
-							<Personal selectedIndex={selectedIndex} swapDrawerVisible={swapDrawerVisible}/>
+							<Personal selectedIndex={selectedIndex} swapDrawerVisible={swapDrawerVisible} />
 						)
 							: null
 					}
