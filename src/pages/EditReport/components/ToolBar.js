@@ -21,7 +21,7 @@ import './css/toolbar.css'
 export default function ToolBar() {
     return (
         <div>
-            <div className="m-auto row toolbar-container">
+            <div className="m-auto row toolbar-container" style={{zIndex: 10}}>
                 <button className="col m-0 p-0 btn" style={{ "minHeight": "50px" }}>
                     <img src={plus} width="20px" height="20px" />
                     <p className="p-0 m-0 text-center">add data</p>

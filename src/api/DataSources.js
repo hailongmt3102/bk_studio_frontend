@@ -11,9 +11,8 @@ const GetTableColumns = () => {
     return axiosClient.get("/data/")
 }
 
-const QueryData = (table, query) => {
+const QueryData = (query) => {
     return axiosClient.post("/data/query", {
-        table: table,
         query: query
     })
 }
