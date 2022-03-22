@@ -11,6 +11,11 @@ const GetTableColumns = () => {
     return axiosClient.get("/data/")
 }
 
+
+const GetDataSourcesListInformation = () => {
+    return axiosClient.get("/data/info")
+}
+
 const QueryData = (query) => {
     return axiosClient.post("/data/query", {
         query: query
@@ -20,5 +25,6 @@ const QueryData = (query) => {
 export {
     ImportDataApi,
     GetTableColumns,
-    QueryData
+    QueryData,
+    GetDataSourcesListInformation
 }
