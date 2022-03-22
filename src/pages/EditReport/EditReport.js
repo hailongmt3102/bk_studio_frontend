@@ -20,7 +20,7 @@ import BootstrapSelect from 'react-bootstrap-select-dropdown';
 import { Roboto, Poppins } from "../../utils/font"
 import SqlPopUp from "./components/SqlPopUp";
 
-import {getAllComponent} from 'api/Report'
+import { getAllComponent, createNewComponent } from 'api/Report'
 import { useLocation } from "react-router-dom";
 
 
@@ -42,6 +42,14 @@ export default function EditReport(props) {
                     alert(res.response.data)
                 })
         }
+
+        GetTableColumns()
+            .then(res => {
+                setDataSource(res.data)
+            })
+            .catch(err => {
+                console.log(err)
+            })
     }, [])
     // define some color template
     const colorTemplate = ['rgb(255, 99, 132)',
@@ -120,6 +128,31 @@ export default function EditReport(props) {
         setshowSqlPopUp(true)
         setPopUpType(type)
     }
+
+    const createNewComponentInReport = (query) => {
+        let currentProject = localStorage.getItem("currentProject")
+        if (currentProject != null) {
+            let RId = location.split('/')[3]
+            console.log(query.replaceAll('\n', " "))
+            createNewComponent(currentProject, RId, {
+                Title: "example",
+                Type: "Table",
+                QueryCommand: query.replaceAll('\n', " "),
+                Height: "600",
+                Width: "600",
+                Position: "x:100;y:100",
+                TitleTheme: "light",
+                TextTheme: "font:Roboto;size:12",
+                FrameTheme: "light"
+            })
+                .then(res => {
+                    alert(res.data)
+                })
+                .catch(err => {
+                    console.log(err.response.data)
+                })
+        }
+    }
     // render components
 
     return (
@@ -131,9 +164,10 @@ export default function EditReport(props) {
                     setshowSqlPopUp(false)
                 }}
                 onComplete={(sql) => {
-                    console.log(sql)
                     // setAppendPeopleList(appendPeopleList + 1)
+                    createNewComponentInReport(sql)
                 }}
+                dataSource={dataSource}
             />
             <div className="row">
 
@@ -261,7 +295,7 @@ export default function EditReport(props) {
                         <MenuBar showSqlPopUpFunction={showSqlPopUpFunction} />
                         <ToolBar />
                         <div className="m-2 content">
-                            <Content components={components}/>
+                            <Content components={components} />
                         </div>
                     </div>
                 </div>

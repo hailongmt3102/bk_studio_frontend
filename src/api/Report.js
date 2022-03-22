@@ -12,8 +12,13 @@ const getAllComponent = (PId, RId) => {
     return axiosClient.get(`/project/${PId}/${RId}/components`)
 }
 
+const createNewComponent = (PId, RId, data) => {
+    return axiosClient.post(`/project/${PId}/${RId}/insert`, data)
+}
+
 export {
     createNewReport,
     getAllReport,
-    getAllComponent
+    getAllComponent,
+    createNewComponent
 }

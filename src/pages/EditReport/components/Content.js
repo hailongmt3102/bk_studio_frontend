@@ -12,6 +12,10 @@ export default function Content(props) {
 
     const [tables, setTables] = useState({})
 
+    // setInterval(() => {
+    //     console.log(tables)
+    // }, 2000);
+
     useEffect(() => {
         props.components.map(component => {
             // get data of each component
@@ -30,7 +34,7 @@ export default function Content(props) {
                                 let TextThemeArray = result.TextTheme.split(";")
                                 result.TextTheme = {}
                                 TextThemeArray.map(style => result.TextTheme[style.split(':')[0]] = style.split(':')[1])
-                                setTables({ ...tables, [result.Id]: result })
+                                updateDataTable(result.Id, result)
                             } catch (e) {
                                 alert(e)
                             }
@@ -51,7 +55,7 @@ export default function Content(props) {
     return (
         <div>
             {
-                Object.keys(tables).map(key =>
+                Object.keys(tables).map((key, index) =>
                     <div style={{
                         fontSize: tables[key].TextTheme.size,
                         fontFamily: tables[key].TextTheme.font,
