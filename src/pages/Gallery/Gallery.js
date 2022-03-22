@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { getAllReport as getAllReportApi } from 'api/Report'
-
+import ReportCard from "components/ReportCard"
 import ReportImg from 'resources/images/report.png'
 
 export default function Gallery(props) {
@@ -15,7 +15,7 @@ export default function Gallery(props) {
         if (currentProject != null) {
             getAllReportApi(currentProject)
                 .then(res => {
-                    console.log(res)
+                    console.log(res.data)
                     setReports(res.data)
                 })
                 .catch(res => {
@@ -26,16 +26,15 @@ export default function Gallery(props) {
 
     const editReport = (Id) => {
         nav(`${Id}/edit`)
-    }   
+    }
     return (
         <div>
             <h1>Report Gallery</h1>
-            <div className='bg-white m-2 p-4'>
-                <div className='row'>
+            <div className='bg-white'>
+                <div className='row p-4'>
                     {reports.map(ele =>
-                        <div className='col' onClick={() => {editReport(ele.Id)}}> 
-                            {ele.Id}
-                            <img src={ReportImg} />
+                        <div className='col' style={{"minWidth":"600px", "maxWidth": "600px"}} onClick={() => { editReport(ele.Id) }}>
+                            <ReportCard data={ele} />
                         </div>
                     )}
                 </div>
