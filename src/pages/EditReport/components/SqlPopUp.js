@@ -215,7 +215,7 @@ export default function SqlPopUp(props) {
                                                 />
                                             </div>
                                             <div className='col-4 m-auto'>
-                                                <Autocomplete
+                                                {/* <Autocomplete
                                                     id="size-small-standard"
                                                     size="small"
                                                     options={fieldList}
@@ -232,17 +232,26 @@ export default function SqlPopUp(props) {
                                                     onChange={(e, value) => {
                                                         updateClause(index, { ...clause, num: value ?? "" })
                                                     }}
+                                                /> */}
+                                                <input
+                                                    type="text"
+                                                    onChange={(e, value) => {
+                                                        updateClause(index, { ...clause, num: e.target.value ?? "" })
+                                                    }}
                                                 />
                                             </div>
-                                            <div className='col-2'>
-                                                <button type="button" class="btn btn-sm ms-2 p-2" onClick={() => {
-                                                    setFunction_clause([...function_clause, {
-                                                        fx: "",
-                                                        field: "",
-                                                        num: 0
-                                                    }])
-                                                }}><img src={add_grey} height="30px" width="30px" /></button>
-                                            </div>
+                                            {index == function_clause.length - 1 ?
+                                                <div className='col-2'>
+                                                    <button type="button" class="btn btn-sm ms-2 p-2" onClick={() => {
+                                                        setFunction_clause([...function_clause, {
+                                                            fx: "",
+                                                            field: "",
+                                                            num: 0
+                                                        }])
+                                                    }}><img src={add_grey} height="30px" width="30px" /></button>
+                                                </div>
+                                                : null
+                                            }
                                         </div>
                                     )
                                 }
