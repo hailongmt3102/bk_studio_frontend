@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, InputGroup, Col, Button, FormControl } from 'react-bootstrap'
 import ClockSvg from 'resources/icons/clock.svg'
 import MemberSvg from 'resources/icons/two_people.svg'
@@ -19,16 +19,15 @@ import { updateStatus, deleteProject, editProject } from 'api/Project'
 
 import moment from 'moment';
 
+import { Store } from 'react-notifications-component'
+import { content } from "../utils/notification"
+
 const orangeStyle = {
     color: "#FF7F0D",
     fontWeight: "bold",
     fontFamily: Poppins,
     fontSize: "17px"
 }
-
-
-
-
 
 
 const timeCaster = (time) => {
@@ -58,22 +57,25 @@ export default function ProjectBox(props) {
     const navigate = useNavigate()
 
     useEffect(() => {
-        console.log("dô useEffect")
+        //console.log("dô useEffect")
         // get all project
-            updateStatus(props.data.Id, { Status: newProject.Status })
-                .then((res) => { 
-                })
-                .catch((e) => {
-                    alert(e.response.data);
-                })
+        updateStatus(props.data.Id, { Status: newProject.Status })
+            .then((res) => {
+            })
+            .catch((e) => {
+                alert(e.response.data);
+            })
     }, [newProject.Status])
 
     const DeleteProjectSubmit = () => {
 
         deleteProject(props.data.Id)
             .then((res) => {
+
+                // Store.addNotification(content("Success", "Deleted project ID:" + props.data.Id, "success"))
+
                 window.location.reload()
-                alert('Deleted project ID: ' + props.data.Id);
+                // alert('Deleted project ID: ' + props.data.Id);
 
             })
             .catch((e) => {
@@ -102,8 +104,11 @@ export default function ProjectBox(props) {
         <div className='shadow pb-2 pt-1 mb-5 bg-body' style={{ width: "430px", borderRadius: "20px" }}>
             <div className='mt-1 p-2'  >
                 <div className='d-flex justify-content-between'>
-                    <ThreeDotButton  items={option_list} icons_list={icons_list} icon={three_dot} onClick={(val) => {
-                       
+                    <ThreeDotButton items={option_list} icons_list={icons_list} icon={three_dot} onClick={(val) => {
+                        if (val === "Edit Project") {
+                            setpressEdit(true)
+                        }
+                        else DeleteProjectSubmit()
                     }} />
                     <DropdownWithIndex0 title={newProject.Status} items={status_list} icons_list={staus_icon_list} onClick={(val) => {
                         setNewProject({
@@ -115,7 +120,7 @@ export default function ProjectBox(props) {
                 </div>
                 {
                     pressEdit === false ?
-                        <div onClick={()=>{navigate("/pDetail/"+props.data.Id)}}>
+                        <div onClick={() => { navigate("/pDetail/" + props.data.Id) }}>
                             <h3 className='d-flex justify-content-center' style={{ color: "#0085FF", fontFamily: Poppins, fontSize: "45px" }}>
                                 {props.data.Name}
                             </h3>

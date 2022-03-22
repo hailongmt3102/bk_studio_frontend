@@ -36,11 +36,11 @@ export default function Login() {
     const onSubmitHandler = () => {
         // check email and password
         if ([information.Email.length, information.Password.length].includes(0)) {
-            Store.addNotification(content("Warning", "Login Fail", "danger"))
+            Store.addNotification(content("Warning", "Please fill in username or password", "danger"))
             return
         }
         if (!ValidateEmail(information.Email)) {
-            alert("You have entered an invalid email address!")
+            Store.addNotification(content("Warning", "Invalid Email", "danger"))
             return
         }
         // send information into server
@@ -58,10 +58,12 @@ export default function Login() {
                     localStorage.removeItem("password")
                     localStorage.removeItem("remember")
                 }
+                
                 navigate("/")
             })
             .catch((e) => {
-                alert("Login Fail");
+                Store.addNotification(content("Warning", "Login Fail", "danger"))
+                return
                 //alert(e.response.data);
             })
     }

@@ -229,7 +229,7 @@ export default function EditReport(props) {
                                 </div>
 
                             </div>
-                            <div>Alignmnet</div>
+                            <div>Alignment</div>
                             <div className="row m-3">
                                 <div className="col">
                                     <img src={align_left} height="20px" width="20px" />
