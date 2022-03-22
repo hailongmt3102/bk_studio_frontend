@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import SelectData from './Children/SelectData'
 import EditData from './Children/EditData'
 import {ImportDataApi} from 'api/DataSources'
+import { useNavigate } from 'react-router-dom'
 
 
 export default function ImportData() {
@@ -11,7 +12,7 @@ export default function ImportData() {
 
     const [step, setStep] = useState(1)
 
-
+    const navigate = useNavigate()
     const onloadComplete = () => {
         // navigate to next step, execute data file
         setStep(2)
@@ -30,7 +31,8 @@ export default function ImportData() {
         // send it to server
         ImportDataApi(name, data)
         .then (res => {
-            alert(res.data.body)
+            alert(res.data)
+            navigate("/datasources")
             setStep(1)
         })
         .catch(err => {

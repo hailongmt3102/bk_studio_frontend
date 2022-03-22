@@ -144,7 +144,7 @@ export default function SqlPopUp(props) {
                                     <TextField
                                         {...params}
                                         variant="standard"
-                                        placeholder="Favorites"
+                                        placeholder="Fields"
                                     />
                                 )}
                                 onChange={(e, val) => {
@@ -488,6 +488,24 @@ export default function SqlPopUp(props) {
                                 {
                                     order_clause.map((clause, index) => {
                                         return <div className='row p-0 m-0'>
+
+                                            <div className='col-5 m-auto'>
+                                                <Autocomplete
+                                                    id="size-small-standard"
+                                                    size="small"
+                                                    options={order_by_list}
+                                                    renderInput={(params) => (
+                                                        <TextField
+                                                            {...params}
+                                                            variant="standard"
+                                                            placeholder="Favorites"
+                                                        />
+                                                    )}
+                                                    onChange={(e, value) => {
+                                                        updateOrderClause(index, { ...clause, fx: value ?? "" })
+                                                    }}
+                                                />
+                                            </div>
                                             <div className='col-5 m-auto'>
                                                 <Autocomplete
                                                     id="size-small-standard"
@@ -503,23 +521,6 @@ export default function SqlPopUp(props) {
                                                     )}
                                                     onChange={(e, value) => {
                                                         updateOrderClause(index, { ...clause, field: value ?? "" })
-                                                    }}
-                                                />
-                                            </div>
-                                            <div className='col-5 m-auto'>
-                                                <Autocomplete
-                                                    id="size-small-standard"
-                                                    size="small"
-                                                    options={order_by_list}
-                                                    renderInput={(params) => (
-                                                        <TextField
-                                                            {...params}
-                                                            variant="standard"
-                                                            placeholder="Favorites"
-                                                        />
-                                                    )}
-                                                    onChange={(e, value) => {
-                                                        updateOrderClause(index, { ...clause, fx: value ?? "" })
                                                     }}
                                                 />
                                             </div>

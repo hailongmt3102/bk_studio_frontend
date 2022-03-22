@@ -21,13 +21,14 @@ import { Roboto, Poppins } from "../../utils/font"
 import SqlPopUp from "./components/SqlPopUp";
 
 import { getAllComponent, createNewComponent } from 'api/Report'
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate} from "react-router-dom";
 
 
 
 export default function EditReport(props) {
     const [components, setComponents] = useState([])
     const location = useLocation().pathname
+    const navigate = useNavigate()
     // this function will be call when loaded page
     useEffect(() => {
         let currentProject = localStorage.getItem("currentProject")
@@ -123,7 +124,7 @@ export default function EditReport(props) {
     const [showSqlPopUp, setshowSqlPopUp] = useState(false)
     const [popUpType, setPopUpType] = useState("")
 
-
+    
     const showSqlPopUpFunction = (type) => {
         setshowSqlPopUp(true)
         setPopUpType(type)
@@ -271,7 +272,7 @@ export default function EditReport(props) {
                             <div className="col-7 m-0 p-0">
                                 <div className="row" >
                                     <div className="col-1 mt-1">
-                                        <button type="button" class="btn btn-sm">
+                                        <button type="button" class="btn btn-sm" onClick={()=>{navigate(-1)}}>
                                             <img src={back} />
                                         </button>
                                     </div>
