@@ -13,6 +13,15 @@ export default function SqlPopUp(props) {
     const [value, setValue] = useState(op[0]);
     const [inputValue, setInputValue] = useState('');
 
+    const [function_clause, setFunction_clause] = useState(
+        [
+            {
+                fx: "SUM",
+                field: "a"
+            }
+        ]
+    )
+
     const [fieldList, setFieldList] = useState(
         ["a", "b", "c"]
     )
@@ -145,65 +154,75 @@ export default function SqlPopUp(props) {
                             </div>
 
                             <div className='row mt-5'>
-                                <div className='col-1 m-auto p-0'>
-                                    <div className='row m-0 p-0 '>
-                                        <div className='col m-0 p-0 '>
-                                            <input
-                                                class="form-check-input ms-3"
-                                                type="checkbox"
-                                                id="form2Example3c"
-                                                onClick={(e) => {
-                                                }}
-                                            />
-                                        </div>
-                                        <div className='col m-0 p-0'>
-                                            <div className='col-1  m-auto p-0' >
-                                                <div>Function</div>
-                                            </div>
-                                        </div>
+                                <div className='col m-0 p-0 '>
+                                    <input
+                                        class="form-check-input ms-3"
+                                        type="checkbox"
+                                        id="form2Example3c"
+                                        onClick={(e) => {
+                                        }}
+                                    />
+                                </div>
+                                <div className='col m-0 p-0'>
+                                    <div className='col-1  m-auto p-0' >
+                                        <div>Function</div>
                                     </div>
                                 </div>
-                                <div className='col-5 m-auto'>
-                                    <Autocomplete
-                                        className='ms-5'
-                                        id="size-small-standard"
-                                        size="small"
-                                        options={function_list}
-                                        //getOptionLabel={(option) => option.title}
-                                        //defaultValue={top100Films[13]}
-                                        renderInput={(params) => (
-                                            <TextField
-                                                {...params}
-                                                variant="standard"
-                                                //label="Size small"
-                                                placeholder="Favorites"
-                                            />
-                                        )}
-                                    />
-                                </div>
-                                <div className='col-1 m-auto'>
-                                    <div>IN</div>
-                                </div>
-                                <div className='col-4 m-auto'>
-                                    <Autocomplete
-                                        id="size-small-standard"
-                                        size="small"
-                                        options={fieldList}
-                                        //getOptionLabel={(option) => option.title}
-                                        //defaultValue={top100Films[13]}
-                                        renderInput={(params) => (
-                                            <TextField
-                                                {...params}
-                                                variant="standard"
-                                                //label="Size small"
-                                                placeholder="Favorites"
-                                            />
-                                        )}
-                                    />
-                                </div>
-                                <div className='col-1'>
-                                    <button type="button" class="btn btn-sm ms-2 p-2" onClick={() => { }}><img src={add_grey} height="30px" width="30px" /></button>
-                                </div>
+                            </div>
+                            <div className='row'>
+                                {
+                                    function_clause.map((e) => {
+                                        return <div className='row'>
+                                            <div className='col-5 m-auto'>
+                                                <Autocomplete
+                                                    className='ms-5'
+                                                    id="size-small-standard"
+                                                    size="small"
+                                                    options={function_list}
+                                                    //getOptionLabel={(option) => option.title}
+                                                    //defaultValue={top100Films[13]}
+                                                    renderInput={(params) => (
+                                                        <TextField
+                                                            {...params}
+                                                            variant="standard"
+                                                            //label="Size small"
+                                                            placeholder="Favorites"
+                                                        />
+                                                    )}
+                                                />
+                                            </div>
+                                            <div className='col-1 m-auto'>
+                                                <div>IN</div>
+                                            </div>
+                                            <div className='col-4 m-auto'>
+                                                <Autocomplete
+                                                    id="size-small-standard"
+                                                    size="small"
+                                                    options={fieldList}
+                                                    //getOptionLabel={(option) => option.title}
+                                                    //defaultValue={top100Films[13]}
+                                                    renderInput={(params) => (
+                                                        <TextField
+                                                            {...params}
+                                                            variant="standard"
+                                                            //label="Size small"
+                                                            placeholder="Favorites"
+                                                        />
+                                                    )}
+                                                />
+                                            </div>
+                                            <div className='col-1'>
+                                                <button type="button" class="btn btn-sm ms-2 p-2" onClick={() => {
+                                                    function_clause.push({
+                                                        fx: "",
+                                                        field: ""
+                                                    })
+                                                    console.log(function_clause)
+                                                }}><img src={add_grey} height="30px" width="30px" /></button>
+                                            </div>
+                                        </div>
+                                    })
+                                }
 
                             </div>
                             <div className='row mt-5'>
@@ -277,7 +296,9 @@ export default function SqlPopUp(props) {
                                         />
                                     </div>
                                     <div className='col'>
-                                        <button type="button" class="btn btn-sm ms-2 p-2" onClick={() => { }}><img src={add_grey} height="30px" width="30px" /></button>
+                                        <button type="button" class="btn btn-sm ms-2 p-2" onClick={() => {
+
+                                        }}><img src={add_grey} height="30px" width="30px" /></button>
                                     </div>
                                 </div>
                             </div>
