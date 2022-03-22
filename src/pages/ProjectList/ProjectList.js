@@ -23,7 +23,7 @@ export default function ProjectList() {
         getListProject()
             .then(response => {
                 setProjectList(response.data)
-                console.log(response.data)
+                //console.log(response.data)
             })
             .catch(
                 error => {

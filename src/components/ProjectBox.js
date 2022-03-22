@@ -76,7 +76,7 @@ export default function ProjectBox(props) {
             .then((res) => {
 
                 // Store.addNotification(content("Success", "Deleted project ID:" + props.data.Id, "success"))
-
+               
                 window.location.reload()
                 // alert('Deleted project ID: ' + props.data.Id);
 
@@ -103,8 +103,24 @@ export default function ProjectBox(props) {
 
 
     }
+    const handleCloseYes =()=>{
+        DeleteProjectSubmit()
+        console.log("close ne")
+    }
+    const handleCloseNo =()=>{
+        setConfirmDialog({...ConfirmDialog, isOpen:false})
+    }
+    const handleOpen =()=>{
+        setConfirmDialog({...ConfirmDialog, isOpen:true})
+    }
     return (
         <div>
+            <ConfirmDialog
+             confirmDialog={confirmDialog} 
+             title="Are you sure you want to delete this project?"
+             handleCloseYes={()=>handleCloseYes()}
+             handleCloseNo={()=>handleCloseNo()}
+            />
             <div className='shadow pb-2 pt-1 mb-5 bg-body' style={{ width: "430px", borderRadius: "20px" }}>
                 <div className='mt-1 p-2'  >
                     <div className='d-flex justify-content-between'>
@@ -112,7 +128,9 @@ export default function ProjectBox(props) {
                             if (val === "Edit Project") {
                                 setpressEdit(true)
                             }
-                            else DeleteProjectSubmit()
+                            else{
+                                handleOpen()
+                            } 
                         }} />
                         <DropdownWithIndex0 title={newProject.Status} items={status_list} icons_list={staus_icon_list} onClick={(val) => {
                             setNewProject({

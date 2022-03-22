@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Modal, Button, Form } from 'react-bootstrap'
 import ClockSvg from 'resources/icons/clock.svg'
 import MemberSvg from 'resources/icons/two_people.svg'
-
+import { getListProject } from 'api/Project'
 import { Roboto, Poppins } from "utils/font"
 import {createNewProject} from 'api/Project'
 
@@ -14,9 +14,29 @@ const orangeStyle = {
 
 export default function NewProjectModel(props) {
 
+    const [projectList, setProjectList] = useState([])
+
+    useEffect(() => {
+        // get all project
+        getListProject()
+            .then(response => {
+                setProjectList(response.data)
+                
+                //console.log(response.data)
+            })
+            .catch(
+                error => {
+                }
+            )
+    }, [])
+
+    const finalProject = projectList[projectList.length-1]
+    //console.log(finalProject)
+    //const id = final_project.Id
+    
 
     const [projectInfo, setProjectInfo] = useState({
-        Name: "Project name",
+        Name: "Project",
         StartTime: "",
         PredictEndtime: "",
         NumOfMember: 1,
