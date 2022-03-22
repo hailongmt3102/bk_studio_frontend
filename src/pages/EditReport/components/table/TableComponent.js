@@ -28,7 +28,7 @@ export default function TableComponent(props) {
                             <thead>
                                 <tr>
                                     {
-                                        Object.keys(props.data.data[0]).map(ele => ele != "id" ? <th>{ele}</th> : null)
+                                        Object.keys(props.data.data[0]).map(ele => <th>{ele}</th>)
                                     }
                                 </tr>
                             </thead>
@@ -38,8 +38,7 @@ export default function TableComponent(props) {
                                         <tr key={index}>
                                             {
                                                 Object.values(ele).map((value, i) =>
-                                                    i != 0 ?
-                                                        <td>{value}</td> : null
+                                                        <td>{value}</td>
                                                 )
                                             }
                                         </tr>

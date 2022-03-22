@@ -103,6 +103,7 @@ export default function SqlPopUp(props) {
             ;
         `
         props.onComplete(query)
+        props.handleClose()
     }
 
     useEffect(() => {

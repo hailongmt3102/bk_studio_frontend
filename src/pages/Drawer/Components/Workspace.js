@@ -65,7 +65,7 @@ export default function Workspace(props) {
 												link={"/pDetail/" + ele.Id}
 												active={false}
 												title={ele.Name}
-												customBackgroundColor={props.selectedProject === ele.Id ? "#e5e5e5" : false}
+												customBackgroundColor={props.selectedProject === ele.Id ? false : false}
 												onClick={props.swapDrawerVisible}
 											/>
 											</div>
