@@ -13,20 +13,22 @@ export default function SqlPopUp(props) {
     const [value, setValue] = useState(op[0]);
     const [inputValue, setInputValue] = useState('');
 
+    const [groupBy, setGroupBy] = useState([])
+
     const [function_clause, setFunction_clause] = useState(
         [
             {
-                fx: "SUM",
-                field: "a"
-            }
+                field: "",
+                op: "",
+            },
         ]
     )
 
     const [where_clause, setWhere_clause] = useState(
         [
             {
-                field: "SUM",
-                op: ">",
+                field: "",
+                op: "",
                 value: 0
             }
         ]
@@ -34,8 +36,8 @@ export default function SqlPopUp(props) {
     const [having_clause, setHaving_clause] = useState(
         [
             {
-                field: "SUM",
-                op: ">",
+                field: "",
+                op: "",
                 value: 0
             }
         ]
@@ -50,9 +52,7 @@ export default function SqlPopUp(props) {
         ]
     )
 
-    const [fieldList, setFieldList] = useState(
-        ["a", "b", "c"]
-    )
+    const [fieldList, setFieldList] = useState([])
 
     const function_list = [
         'COUNT',
@@ -62,18 +62,56 @@ export default function SqlPopUp(props) {
         'AVG',
     ];
 
-    const data_source = [
-        'a.csv',
-        'b.csv',
-        'v.csv',
-        'f.csv',
-        'iris.csv',
-    ];
+    const [data_source, set_data_source] = useState([]);
     const order_by_list = [
         'ASC',
         'DESC',
     ];
 
+    const [selectTable, setSelectTable] = useState([])
+
+    const [selectedField, setSelectedField] = useState([])
+    const [selectFrom, setSelectFrom] = useState([])
+
+    const updateFunctionClause = (index, value) => {
+        setFunction_clause([...function_clause.slice(0, index), value, ...function_clause.slice(index + 1)])
+    }
+
+    const updateWhereClause = (index, value) => {
+        setWhere_clause([...where_clause.slice(0, index), value, ...where_clause.slice(index + 1)])
+    }
+
+    const updateHavingClause = (index, value) => {
+        setHaving_clause([...having_clause.slice(0, index), value, ...having_clause.slice(index + 1)])
+    }
+
+    const updateOrderClause = (index, value) => {
+        setOrder_clause([...order_clause.slice(0, index), value, ...order_clause.slice(index + 1)])
+    }
+
+    const submit = () => {
+        let query = `
+            select 
+                ${fieldList.join(',')},
+                ${function_clause.map(clause => `${clause.op}(${clause.field})`).join(',')}
+            from ${selectFrom}
+            where ${where_clause.map(where => `${where.field} ${where.op} ${where.value}`).join(' and ')}
+            group by ${groupBy.join(',')}
+            having ${having_clause.map(having => `${having.field} ${having.op} ${having.value}`).join(' and ')}
+            order by ${order_clause.map(order => `${order.field} ${order.fx}`).join(',')} 
+            ;
+        `
+        props.onComplete(query)
+    }
+
+    useEffect(() => {
+        set_data_source(Object.keys(props.dataSource))
+
+        Object.keys(props.dataSource).map(key => {
+            // let arr = props.dataSource[key].map(field => )
+           setFieldList([...fieldList, ...props.dataSource[key]])
+        })
+    }, [props.dataSource])
     return (
         <Modal
             show={props.show}
@@ -99,17 +137,17 @@ export default function SqlPopUp(props) {
                                 className='ms-5 me-5'
                                 multiple
                                 id="tags-standard"
-                                options={fieldList}
-                                //getOptionLabel={(option) => option.title}
-                                //defaultValue={[top100Films[13]]}
+                                options={data_source}
                                 renderInput={(params) => (
                                     <TextField
                                         {...params}
                                         variant="standard"
-                                        // label="Multiple values"
                                         placeholder="Favorites"
                                     />
                                 )}
+                                onChange={(e, val) => {
+                                    setSelectTable(val)
+                                }}
                             />
                         </div>
                         : <div>
@@ -123,8 +161,6 @@ export default function SqlPopUp(props) {
                                         multiple
                                         id="tags-standard"
                                         options={data_source}
-                                        //getOptionLabel={(option) => option.title}
-                                        //defaultValue={[top100Films[13]]}
                                         renderInput={(params) => (
                                             <TextField
                                                 {...params}
@@ -133,13 +169,14 @@ export default function SqlPopUp(props) {
                                                 placeholder="Data sources"
                                             />
                                         )}
+                                        onChange={(e, val) => {
+                                            setSelectFrom(val)
+                                        }}
                                     />
                                 </div>
                             </div>
+                            <div>SELECT</div>
                             <div className='row mt-4'>
-                                <div className='row'>
-                                    <div>SELECT</div>
-                                </div>
                                 <div className='row m-0 p-0 p-4'>
                                     <div className='col-1 m-auto p-0'>
                                         <div className='row m-0 p-0 '>
@@ -150,6 +187,7 @@ export default function SqlPopUp(props) {
                                                     id="form2Example3c"
                                                     onClick={(e) => {
                                                     }}
+                                                    checked={true}
                                                 />
                                             </div>
                                             <div className='col m-0 p-0'>
@@ -165,16 +203,16 @@ export default function SqlPopUp(props) {
                                             multiple
                                             id="tags-standard"
                                             options={fieldList}
-                                            //getOptionLabel={(option) => option.title}
-                                            //defaultValue={[top100Films[13]]}
                                             renderInput={(params) => (
                                                 <TextField
                                                     {...params}
                                                     variant="standard"
-                                                    // label="Multiple values"
-                                                    placeholder="Favorites"
+                                                    placeholder="Fields"
                                                 />
                                             )}
+                                            onChange={(e,val) => {
+                                                setSelectedField(val)
+                                            }}
                                         />
                                     </div>
 
@@ -182,87 +220,79 @@ export default function SqlPopUp(props) {
                             </div>
 
                             <div className='row mt-5 m-0 p-0'>
-                                <div className='col-4'>
-                                    <div className='row'>
-                                        <div className='col-1 m-0 p-0 '>
-                                            <input
-                                                class="form-check-input ms-3"
-                                                type="checkbox"
-                                                id="form2Example3c"
-                                                onClick={(e) => {
-                                                }}
-                                            />
-                                        </div>
-                                        <div className='col'>Function</div>
-                                        <div className='col  m-auto'>
-                                            <button type="button" class="btn btn-sm ms-2 p-2" onClick={() => {
-                                                setFunction_clause([...function_clause, {
-                                                    fx: "",
-                                                    field: ""
-                                                }])
-                                                console.log(function_clause)
-                                            }}><img src={add_grey} height="30px" width="30px" /></button>
-
-                                        </div>
-
-
+                                <div className='col-4 row'>
+                                    <div className='col-2 m-0 p-0 '>
+                                        <input
+                                            class="form-check-input m-auto"
+                                            type="checkbox"
+                                            id="form2Example3c"
+                                            onClick={(e) => {
+                                            }}
+                                            checked={true}
+                                        />
+                                    </div>
+                                    <div className='col'>Function</div>
+                                    <div className='col  m-auto'>
+                                        <button type="button" class="btn btn-sm ms-2 p-2" onClick={() => {
+                                            setFunction_clause([...function_clause, {
+                                                field: "",
+                                                op: "",
+                                                value: 0
+                                            }])
+                                        }}>
+                                            <img src={add_grey} height="30px" width="30px" />
+                                        </button>
                                     </div>
                                 </div>
                             </div>
-
-                            <div className='row m-0 p-0 mt-4'>
-                                <div className='col'>
-                                    {
-                                        function_clause.map((e) => {
-                                            return <div className='row mt-2'>
-                                                <div className='col-5 m-auto'>
-                                                    <Autocomplete
-                                                        value={e.fx}
-                                                        id="size-small-standard"
-                                                        size="small"
-                                                        options={function_list}
-                                                        //getOptionLabel={(option) => option}
-                                                        //defaultValue={top100Films[13]}
-                                                        renderInput={(params) => (
-                                                            <TextField
-                                                                {...params}
-                                                                variant="standard"
-                                                                //label="Size small"
-                                                                placeholder="Favorites"
-                                                            />
-                                                        )}
+                            {
+                                function_clause.map((clause, index) =>
+                                    <div className='row'>
+                                        <div className='col-5 m-auto'>
+                                            <Autocomplete
+                                                id="function"
+                                                size="small"
+                                                options={fieldList}
+                                                renderInput={(params) =>
+                                                    <TextField
+                                                        {...params}
+                                                        variant="standard"
+                                                        placeholder="Field name"
                                                     />
-                                                </div>
-                                                <div className='col-1 m-auto'>
-                                                    <div>IN</div>
-                                                </div>
-                                                <div className='col-4 m-auto'>
-                                                    <Autocomplete
-                                                        value={e.field}
-                                                        id="size-small-standard"
-                                                        size="small"
-                                                        options={fieldList}
-                                                        //getOptionLabel={(option) => option.title}
-                                                        //defaultValue={top100Films[13]}
-                                                        renderInput={(params) => (
-                                                            <TextField
-                                                                {...params}
-                                                                variant="standard"
-                                                                //label="Size small"
-                                                                placeholder="Favorites"
-                                                            />
-                                                        )}
+                                                }
+                                                onChange={(e, value) => {
+                                                    updateFunctionClause(index, { ...clause, field: value ?? "" })
+                                                }}
+                                            />
+                                        </div>
+                                        <div className='col-5 m-auto'>
+                                            <Autocomplete
+                                                className='ms-5'
+                                                id="size-small-standard"
+                                                size="small"
+                                                options={function_list}
+                                                renderInput={(params) =>
+                                                    <TextField
+                                                        {...params}
+                                                        variant="standard"
+                                                        placeholder="Fx"
                                                     />
-                                                </div>
+                                                }
+                                                onChange={(e, value) => {
+                                                    updateFunctionClause(index, { ...clause, op: value ?? "" })
+                                                }}
+                                            />
+                                        </div>
+                                        <div className='col-2'>
+                                            <button type="button" class="btn btn-sm ms-2 p-2" onClick={() => {
+                                                setFunction_clause([...function_clause.slice(0, index), ...function_clause.slice(index + 1)])
+                                            }}><img src={add_grey} height="30px" width="30px" /></button>
+                                        </div>
+                                    </div>
+                                )
+                            }
 
-                                            </div>
-                                        })
-                                    }
-                                </div>
-
-
-                            </div>
-                            <div className='row mt-5'>
+                            {/* <div className='row mt-5'>
                                 <div className='col-1 m-auto p-0'>
                                     <div className='row m-0 p-0 '>
                                         <div className='col m-0 p-0 '>
@@ -284,7 +314,7 @@ export default function SqlPopUp(props) {
                                 <div className='col-11'>
 
                                 </div>
-                            </div>
+                            </div> */}
                             <div className='row  mt-5'>
                                 <div className='col-1'>
                                     <div>WHERE</div>
@@ -297,63 +327,69 @@ export default function SqlPopUp(props) {
                                             value: 0
                                         }])
                                     }}><img src={add_grey} height="30px" width="30px" /></button>
-
                                 </div>
                             </div>
-                            <div className='row p-0 m-0 mt-3'>
-                                {
-                                    where_clause.map((e) => {
-                                        return <div className='row p-0 m-0'>
-                                            <div className='col m-auto'>
-                                                <Autocomplete
-                                                    value={e.field}
-                                                    id="size-small-standard"
-                                                    size="small"
-                                                    options={fieldList}
-                                                    //getOptionLabel={(option) => option.title}
-                                                    //defaultValue={top100Films[13]}
-                                                    renderInput={(params) => (
-                                                        <TextField
-                                                            {...params}
-                                                            variant="standard"
-                                                            //label="Size small"
-                                                            placeholder="Favorites"
-                                                        />
-                                                    )}
-                                                />
-                                            </div>
-                                            <div className='col m-auto'>
-                                                <Autocomplete
-                                                    value={e.op}
-                                                    id="size-small-standard"
-                                                    size="small"
-                                                    options={op}
-                                                    renderInput={(params) => (
-                                                        <TextField
-                                                            {...params}
-                                                            variant="standard"
-                                                            //label="Size small"
-                                                            placeholder="Favorites"
-                                                        />
-                                                    )}
-                                                />
-
-                                            </div>
-                                            <div className='col m-auto'>
-                                                <TextField
-                                                    value={e.value}
-                                                    id="standard-textarea"
-                                                    //label="Multiline Placeholder"
-                                                    placeholder="Value"
-                                                    multiline
-                                                    variant="standard"
-                                                />
-                                            </div>
-
+                            {
+                                where_clause.map((clause, index) =>
+                                    <div className='row'>
+                                        <div className='col-5 m-auto'>
+                                            <Autocomplete
+                                                id="size-small-standard"
+                                                size="small"
+                                                options={fieldList}
+                                                renderInput={(params) =>
+                                                    <TextField
+                                                        {...params}
+                                                        variant="standard"
+                                                        placeholder="Field name"
+                                                    />
+                                                }
+                                                onChange={(e, value) => {
+                                                    updateWhereClause(index, { ...clause, field: value ?? "" })
+                                                }}
+                                            />
                                         </div>
-                                    }
-                                    )}
-                            </div>
+                                        <div className='col-2 m-auto'>
+                                            <Autocomplete
+                                                className='ms-5'
+                                                id="size-small-standard"
+                                                size="small"
+                                                options={op}
+                                                renderInput={(params) =>
+                                                    <TextField
+                                                        {...params}
+                                                        variant="standard"
+                                                        placeholder="Fx"
+                                                    />
+                                                }
+                                                onChange={(e, value) => {
+                                                    updateWhereClause(index, { ...clause, op: value ?? "" })
+                                                }}
+                                            />
+                                        </div>
+                                        <div className='col-4 m-auto'>
+                                            <TextField
+                                                id="standard-textarea"
+                                                placeholder="Value"
+                                                multiline
+                                                variant="standard"
+                                                onChange={(e) => {
+                                                    updateWhereClause(index, { ...clause, value: e.target.value ?? "" })
+                                                }}
+                                            />
+                                        </div>
+                                        <div className='col-1'>
+                                            <button type="button" class="btn btn-sm ms-2 p-2"
+                                                onClick={() => {
+                                                    setWhere_clause([...where_clause.slice(0, index), ...where_clause.slice(index + 1)])
+                                                }}
+                                            >
+                                                <img src={add_grey} height="30px" width="30px" />
+                                            </button>
+                                        </div>
+                                    </div>
+                                )
+                            }
                             <div className='row  mt-5'>
                                 <div className='col'>
                                     <div>GROUP BY</div>
@@ -364,23 +400,24 @@ export default function SqlPopUp(props) {
                                             multiple
                                             id="tags-standard"
                                             options={fieldList}
-                                            //getOptionLabel={(option) => option.title}
-                                            //defaultValue={[top100Films[13]]}
                                             renderInput={(params) => (
                                                 <TextField
                                                     {...params}
                                                     variant="standard"
                                                     label="Multiple values"
-                                                    placeholder="Favorites"
+                                                    placeholder="Field"
                                                 />
                                             )}
+                                            onChange={(e, val) => {
+                                                setGroupBy(val)
+                                            }}
                                         />
                                     </div>
                                 </div>
                             </div>
                             <div className='row  mt-5'>
                                 <div className='col-2'>
-                                    <div>HAVING BY</div>
+                                    <div>HAVING</div>
                                 </div>
                                 <div className='col-2'>
                                     <button type="button" class="btn btn-sm ms-2 p-2" onClick={() => {
@@ -395,29 +432,27 @@ export default function SqlPopUp(props) {
                             </div>
                             <div className='row p-0 m-0 mt-3'>
                                 {
-                                    having_clause.map((e) => {
+                                    having_clause.map((clause, index) => {
                                         return <div className='row p-0 m-0'>
-                                            <div className='col m-auto'>
+                                            <div className='col-4 m-auto'>
                                                 <Autocomplete
-                                                    value={e.field}
                                                     id="size-small-standard"
                                                     size="small"
                                                     options={fieldList}
-                                                    //getOptionLabel={(option) => option.title}
-                                                    //defaultValue={top100Films[13]}
                                                     renderInput={(params) => (
                                                         <TextField
                                                             {...params}
                                                             variant="standard"
-                                                            //label="Size small"
                                                             placeholder="Favorites"
                                                         />
                                                     )}
+                                                    onChange={(_, value) => {
+                                                        updateHavingClause(index, { ...clause, field: value })
+                                                    }}
                                                 />
                                             </div>
-                                            <div className='col m-auto'>
+                                            <div className='col-2 m-auto'>
                                                 <Autocomplete
-                                                    value={e.op}
                                                     id="size-small-standard"
                                                     size="small"
                                                     options={op}
@@ -425,24 +460,33 @@ export default function SqlPopUp(props) {
                                                         <TextField
                                                             {...params}
                                                             variant="standard"
-                                                            //label="Size small"
                                                             placeholder="Favorites"
                                                         />
                                                     )}
+                                                    onChange={(_, value) => {
+                                                        updateHavingClause(index, { ...clause, op: value })
+                                                    }}
                                                 />
-
                                             </div>
-                                            <div className='col m-auto'>
+                                            <div className='col-4 m-auto'>
                                                 <TextField
-                                                    value={e.value}
                                                     id="standard-textarea"
-                                                    //label="Multiline Placeholder"
                                                     placeholder="Value"
                                                     multiline
                                                     variant="standard"
+                                                    onChange={e => {
+                                                        updateHavingClause(index, { ...clause, value: e.target.value })
+                                                    }}
                                                 />
                                             </div>
-
+                                            <div className='col-2'>
+                                                <button type="button" class="btn btn-sm ms-2 p-2" onClick={() => {
+                                                    setHaving_clause([...having_clause.slice(0, index), ...having_clause.slice(index + 1)])
+                                                }}
+                                                >
+                                                    <img src={add_grey} height="30px" width="30px" />
+                                                </button>
+                                            </div>
                                         </div>
                                     }
                                     )}
@@ -455,7 +499,7 @@ export default function SqlPopUp(props) {
                                     <button type="button" class="btn btn-sm ms-2 p-2" onClick={() => {
                                         setOrder_clause([...order_clause, {
                                             fx: "",
-                                            field:""
+                                            field: ""
                                         }])
                                     }}><img src={add_grey} height="30px" width="30px" /></button>
 
@@ -463,16 +507,13 @@ export default function SqlPopUp(props) {
                             </div>
                             <div className='row p-0 m-0 mt-3'>
                                 {
-                                    order_clause.map((e) => {
+                                    order_clause.map((clause, index) => {
                                         return <div className='row p-0 m-0'>
-                                            <div className='col m-auto'>
+                                            <div className='col-5 m-auto'>
                                                 <Autocomplete
-                                                    value={e.fx}
                                                     id="size-small-standard"
                                                     size="small"
                                                     options={fieldList}
-                                                    //getOptionLabel={(option) => option.title}
-                                                    //defaultValue={top100Films[13]}
                                                     renderInput={(params) => (
                                                         <TextField
                                                             {...params}
@@ -481,33 +522,43 @@ export default function SqlPopUp(props) {
                                                             placeholder="Favorites"
                                                         />
                                                     )}
+                                                    onChange={(e, value) => {
+                                                        updateOrderClause(index, { ...clause, field: value ?? "" })
+                                                    }}
                                                 />
                                             </div>
-                                            <div className='col m-auto'>
+                                            <div className='col-5 m-auto'>
                                                 <Autocomplete
-                                                    value={e.field}
                                                     id="size-small-standard"
                                                     size="small"
-                                                    options={op}
+                                                    options={order_by_list}
                                                     renderInput={(params) => (
                                                         <TextField
                                                             {...params}
                                                             variant="standard"
-                                                            //label="Size small"
                                                             placeholder="Favorites"
                                                         />
                                                     )}
+                                                    onChange={(e, value) => {
+                                                        updateOrderClause(index, { ...clause, fx: value ?? "" })
+                                                    }}
                                                 />
-
+                                            </div>
+                                            <div className='col-2'>
+                                                <button type="button" class="btn btn-sm ms-2 p-2" onClick={() => {
+                                                    setOrder_clause([...order_clause.slice(0, index), ...order_clause.slice(index + 1)])
+                                                }}
+                                                >
+                                                    <img src={add_grey} height="30px" width="30px" />
+                                                </button>
                                             </div>
                                         </div>
                                     }
                                     )}
                             </div>
-                            {/* <NestedDropDown setSelectComponent={setSelectComponent} fieldAdd={fieldAdd} /> */}
                         </div>
                 }
-            </Modal.Body>
+            </Modal.Body >
             <Modal.Footer>
                 {
                     step == 1 ?
@@ -530,7 +581,7 @@ export default function SqlPopUp(props) {
                         </Button>
                         :
                         <Button onClick={() => {
-                            props.onComplete("query")
+                            submit()
                         }}>
                             Done
                         </Button>
@@ -539,6 +590,6 @@ export default function SqlPopUp(props) {
                 }
 
             </Modal.Footer>
-        </Modal>
+        </Modal >
     )
 }
