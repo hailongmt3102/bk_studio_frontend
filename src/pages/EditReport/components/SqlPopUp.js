@@ -14,27 +14,27 @@ export default function SqlPopUp(props) {
     const [inputValue, setInputValue] = useState('');
 
     const [fieldList, setFieldList] = useState(
-        ["a","b","c"]
+        ["a", "b", "c"]
     )
 
     const function_list = [
-        { title: 'COUNT', year: 1994 },
-        { title: 'SUM', year: 1972 },
-        { title: 'MAX', year: 1974 },
-        { title: 'MIN', year: 1974 },
-        { title: 'AVG', year: 1974 }
+        'COUNT',
+        'SUM',
+        'MAX',
+        'MIN',
+        'AVG',
     ];
 
     const data_source = [
-        { title: 'iris.csv', year: 1994 },
-        { title: 'iris.csv', year: 1972 },
-        { title: 'iris.csv', year: 1974 },
-        { title: 'iris.csv', year: 1974 },
-        { title: 'iris.csv', year: 1974 }
+        'a.csv',
+        'b.csv',
+        'v.csv',
+        'f.csv',
+        'iris.csv',
     ];
     const order_by_list = [
-         'ASC',
-         'DESC',
+        'ASC',
+        'DESC',
     ];
 
     return (
@@ -57,7 +57,24 @@ export default function SqlPopUp(props) {
             <Modal.Body>
                 {
                     step == 1 ?
-                        <div>Select table</div>
+                        <div>
+                            <Autocomplete
+                                className='ms-5 me-5'
+                                multiple
+                                id="tags-standard"
+                                options={fieldList}
+                                //getOptionLabel={(option) => option.title}
+                                //defaultValue={[top100Films[13]]}
+                                renderInput={(params) => (
+                                    <TextField
+                                        {...params}
+                                        variant="standard"
+                                        // label="Multiple values"
+                                        placeholder="Favorites"
+                                    />
+                                )}
+                            />
+                        </div>
                         : <div>
                             <div className='row m-auto'>
                                 <div className='col-1 m-auto'>
@@ -69,7 +86,7 @@ export default function SqlPopUp(props) {
                                         multiple
                                         id="tags-standard"
                                         options={data_source}
-                                        getOptionLabel={(option) => option.title}
+                                        //getOptionLabel={(option) => option.title}
                                         //defaultValue={[top100Films[13]]}
                                         renderInput={(params) => (
                                             <TextField
@@ -152,7 +169,7 @@ export default function SqlPopUp(props) {
                                         id="size-small-standard"
                                         size="small"
                                         options={function_list}
-                                        getOptionLabel={(option) => option.title}
+                                        //getOptionLabel={(option) => option.title}
                                         //defaultValue={top100Films[13]}
                                         renderInput={(params) => (
                                             <TextField
