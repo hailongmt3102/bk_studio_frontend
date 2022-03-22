@@ -34,7 +34,7 @@ function App() {
     const [drawerState, setDrawerState] = useState("workspace");
     return (
         <Router>
-            {/* <ReactNotifications/> */}
+            <ReactNotifications/> 
             <Drawer state={drawerState} setDrawerState={setDrawerState} />
             <div className="bg-light">
                 <Header />
