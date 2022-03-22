@@ -4,6 +4,7 @@ import NestedDropDown from 'components/NestedDropDown'
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import add_grey from 'resources/icons/add_grey.svg'
+import substract from 'resources/icons/substract.svg'
 export default function SqlPopUp(props) {
     const [step, setStep] = useState(1)
     const [selectComponent, setSelectComponent] = useState([])
@@ -109,7 +110,7 @@ export default function SqlPopUp(props) {
 
         Object.keys(props.dataSource).map(key => {
             // let arr = props.dataSource[key].map(field => )
-           setFieldList([...fieldList, ...props.dataSource[key]])
+            setFieldList([...fieldList, ...props.dataSource[key]])
         })
     }, [props.dataSource])
     return (
@@ -210,7 +211,7 @@ export default function SqlPopUp(props) {
                                                     placeholder="Fields"
                                                 />
                                             )}
-                                            onChange={(e,val) => {
+                                            onChange={(e, val) => {
                                                 setSelectedField(val)
                                             }}
                                         />
@@ -250,23 +251,6 @@ export default function SqlPopUp(props) {
                                     <div className='row'>
                                         <div className='col-5 m-auto'>
                                             <Autocomplete
-                                                id="function"
-                                                size="small"
-                                                options={fieldList}
-                                                renderInput={(params) =>
-                                                    <TextField
-                                                        {...params}
-                                                        variant="standard"
-                                                        placeholder="Field name"
-                                                    />
-                                                }
-                                                onChange={(e, value) => {
-                                                    updateFunctionClause(index, { ...clause, field: value ?? "" })
-                                                }}
-                                            />
-                                        </div>
-                                        <div className='col-5 m-auto'>
-                                            <Autocomplete
                                                 className='ms-5'
                                                 id="size-small-standard"
                                                 size="small"
@@ -283,38 +267,32 @@ export default function SqlPopUp(props) {
                                                 }}
                                             />
                                         </div>
+                                        <div className='col-5 m-auto'>
+                                            <Autocomplete
+                                                id="function"
+                                                size="small"
+                                                options={fieldList}
+                                                renderInput={(params) =>
+                                                    <TextField
+                                                        {...params}
+                                                        variant="standard"
+                                                        placeholder="Field name"
+                                                    />
+                                                }
+                                                onChange={(e, value) => {
+                                                    updateFunctionClause(index, { ...clause, field: value ?? "" })
+                                                }}
+                                            />
+                                        </div>
+
                                         <div className='col-2'>
                                             <button type="button" class="btn btn-sm ms-2 p-2" onClick={() => {
                                                 setFunction_clause([...function_clause.slice(0, index), ...function_clause.slice(index + 1)])
-                                            }}><img src={add_grey} height="30px" width="30px" /></button>
+                                            }}><img src={substract} height="30px" width="30px" /></button>
                                         </div>
                                     </div>
                                 )
                             }
-
-                            {/* <div className='row mt-5'>
-                                <div className='col-1 m-auto p-0'>
-                                    <div className='row m-0 p-0 '>
-                                        <div className='col m-0 p-0 '>
-                                            <input
-                                                class="form-check-input ms-3"
-                                                type="checkbox"
-                                                id="form2Example3c"
-                                                onClick={(e) => {
-                                                }}
-                                            />
-                                        </div>
-                                        <div className='col m-0 p-0'>
-                                            <div className='col-1  m-auto p-0' >
-                                                <div>All</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className='col-11'>
-
-                                </div>
-                            </div> */}
                             <div className='row  mt-5'>
                                 <div className='col-1'>
                                     <div>WHERE</div>
@@ -484,7 +462,7 @@ export default function SqlPopUp(props) {
                                                     setHaving_clause([...having_clause.slice(0, index), ...having_clause.slice(index + 1)])
                                                 }}
                                                 >
-                                                    <img src={add_grey} height="30px" width="30px" />
+                                                    <img src={substract} height="30px" width="30px" />
                                                 </button>
                                             </div>
                                         </div>
@@ -549,7 +527,7 @@ export default function SqlPopUp(props) {
                                                     setOrder_clause([...order_clause.slice(0, index), ...order_clause.slice(index + 1)])
                                                 }}
                                                 >
-                                                    <img src={add_grey} height="30px" width="30px" />
+                                                    <img src={substract} height="30px" width="30px" />
                                                 </button>
                                             </div>
                                         </div>
