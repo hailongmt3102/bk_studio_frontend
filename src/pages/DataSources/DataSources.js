@@ -59,7 +59,7 @@ export default function DataSources() {
                     <h1 className='m-2 mt-4' style={{ fontFamily: Poppins, color: blue_cloud, "font-weight": "bold" }}>User Sources</h1>
                     {
                         datasourceslist.map((ele) => {
-                            return <div className='col-3 ms-4 mt-3 pt-2 mb-5' style={{ "height": "190px", width: "370px", "border-radius": "20px", "backgroundColor": "#F7F7F7" }}>
+                            return <div className='col-3 ms-4 mt-3 pt-2 mb-5' style={{ "height": "200px", width: "400px", "border-radius": "20px", "backgroundColor": "#F7F7F7" }}>
                                 <div className='row' style={{ "paddingLeft": "310px" }}>
 
                                     <ThreeDotButton title={'adđ'} items={option_list} icon={three_dot} icons_list={[share_blue, edit, download_blue, delete_icon]} onClick={(val) => { }} />
@@ -70,13 +70,13 @@ export default function DataSources() {
                                     </div>
                                     <div class="col-5 ms-4 text-center" style={{ fontFamily: "Roboto" }}>
                                         <div class="col-4" style={{ fontFamily: "Roboto", color: blue_cloud }}>
-                                            <h2>Iris.csv</h2>
+                                            <h2>{ele.Information}</h2>
                                         </div>
                                         <div class="col-5 mt-1" style={{ fontFamily: "Roboto" }}>
-                                            datecreated:10/10/2021
+                                            datecreated:{ele.CreateTime}
                                         </div>
                                         <div class="col-5" style={{ fontFamily: "Roboto" }}>
-                                            lastmodified:10/10/2021
+                                            lastmodified:{ele.LastModified}
                                         </div>
 
 
@@ -92,7 +92,7 @@ export default function DataSources() {
                 <div className='col-5 m-4 bg-white'>
 
                     <h1 className='m-2 mt-4' style={{ fontFamily: Poppins, color: blue_cloud, "font-weight": "bold" }}>Sample</h1>
-                    <div className='col-3 ms-4 mt-3 pt-2' style={{ "height": "190px", width: "370px", "border-radius": "20px", "backgroundColor": "#F7F7F7" }}>
+                    {/* <div className='col-3 ms-4 mt-3 pt-2' style={{ "height": "190px", width: "370px", "border-radius": "20px", "backgroundColor": "#F7F7F7" }}>
                         <div className='row' style={{ "paddingLeft": "310px" }}>
 
                             <ThreeDotButton title={'adđ'} items={option_list} icon={three_dot} onClick={(val) => { }} />
@@ -116,7 +116,7 @@ export default function DataSources() {
                             </div>
 
                         </div>
-                    </div>
+                    </div> */}
 
                 </div>
 
