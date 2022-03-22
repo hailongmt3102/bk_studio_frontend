@@ -19,14 +19,21 @@ export default function Content(props) {
                 case "Table":
                     QueryDataApi(component.QueryCommand)
                         .then(res => {
-                            let result = component
-                            result.data = res.data
-                            let positionString = result.Position.split(";")
-                            result.Position = {
-                                x : positionString[0].substring(2),
-                                y : positionString[1].substring(2)
+                            try {
+                                let result = component
+                                result.data = res.data
+                                let positionString = result.Position.split(";")
+                                result.Position = {
+                                    x: positionString[0].substring(2),
+                                    y: positionString[1].substring(2)
+                                }
+                                let TextThemeArray = result.TextTheme.split(";")
+                                result.TextTheme = {}
+                                TextThemeArray.map(style => result.TextTheme[style.split(':')[0]] = style.split(':')[1])
+                                setTables({ ...tables, [result.Id]: result })
+                            } catch (e) {
+                                alert(e)
                             }
-                            setTables({ ...tables, [result.Id]: result })
                         })
                         .catch(err => {
                             console.log(err)
@@ -45,11 +52,18 @@ export default function Content(props) {
         <div>
             {
                 Object.keys(tables).map(key =>
-                    <TableComponent
-                        key={key}
-                        data={tables[key]}
-                        updateDataTable={(data) => { updateDataTable(key, data) }}
-                    />
+                    <div style={{
+                        fontSize: tables[key].TextTheme.size,
+                        fontFamily: tables[key].TextTheme.font,
+                        textAlign: "center"
+                    }}
+                    >
+                        <TableComponent
+                            key={key}
+                            data={tables[key]}
+                            updateDataTable={(data) => { updateDataTable(key, data) }}
+                        />
+                    </div>
                 )
             }
         </div>

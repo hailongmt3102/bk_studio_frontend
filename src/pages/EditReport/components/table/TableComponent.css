@@ -2,17 +2,11 @@
     overflow: scroll;
 }
 
-td {
+.component-table td, .component-table th {
     border: 1px solid #000;
 }
 
-tr td:last-child {
-    width: 1%;
-    white-space: nowrap;
-}
-
-
-.component-table td, .component-table thead th, .component-table tbody td{
+.component-table td, .component-table thead tr th, .component-table tbody td{
     overflow: hidden;
     padding: 10px;
     min-width: 100px;
