@@ -16,9 +16,10 @@ export default function SqlPopUp(props) {
     const [function_clause, setFunction_clause] = useState(
         [
             {
-                fx: "SUM",
-                field: "a"
-            }
+                fx: "",
+                field: "",
+                num: 0
+            },
         ]
     )
 
@@ -45,6 +46,10 @@ export default function SqlPopUp(props) {
         'ASC',
         'DESC',
     ];
+
+    const updateClause = (index, value) => {
+        setFunction_clause([...function_clause.slice(0, index), value, ...function_clause.slice(index + 1)])
+    }
 
     return (
         <Modal
@@ -171,28 +176,43 @@ export default function SqlPopUp(props) {
                             </div>
                             <div className='row'>
                                 {
-                                    function_clause.map((e) => {
-                                        return <div className='row'>
-                                            <div className='col-5 m-auto'>
+                                    function_clause.map((clause, index) =>
+                                        <div className='row'>
+                                            <div className='col-4 m-auto'>
+                                                <Autocomplete
+                                                    className='ms-5'
+                                                    id="size-small-standard"
+                                                    size="small"
+                                                    options={fieldList}
+                                                    renderInput={(params) =>
+                                                        <TextField
+                                                            {...params}
+                                                            variant="standard"
+                                                            placeholder="Field name"
+                                                        />
+                                                    }
+                                                    onChange={(e, value) => {
+                                                        updateClause(index, { ...clause, field: value ?? "" })
+                                                    }}
+                                                />
+                                            </div>
+                                            <div className='col-2 m-auto'>
                                                 <Autocomplete
                                                     className='ms-5'
                                                     id="size-small-standard"
                                                     size="small"
                                                     options={function_list}
-                                                    //getOptionLabel={(option) => option.title}
-                                                    //defaultValue={top100Films[13]}
-                                                    renderInput={(params) => (
+                                                    renderInput={(params) =>
                                                         <TextField
                                                             {...params}
                                                             variant="standard"
-                                                            //label="Size small"
-                                                            placeholder="Favorites"
+                                                            placeholder="Fx"
                                                         />
-                                                    )}
+                                                    }
+                                                    onChange={(e, value) => {
+                                                        updateClause(index, { ...clause, fx: value ?? "" })
+                                                    }}
                                                 />
-                                            </div>
-                                            <div className='col-1 m-auto'>
-                                                <div>IN</div>
                                             </div>
                                             <div className='col-4 m-auto'>
                                                 <Autocomplete
@@ -206,22 +226,25 @@ export default function SqlPopUp(props) {
                                                             {...params}
                                                             variant="standard"
                                                             //label="Size small"
-                                                            placeholder="Favorites"
+                                                            placeholder="Number"
                                                         />
                                                     )}
+                                                    onChange={(e, value) => {
+                                                        updateClause(index, { ...clause, num: value ?? "" })
+                                                    }}
                                                 />
                                             </div>
-                                            <div className='col-1'>
+                                            <div className='col-2'>
                                                 <button type="button" class="btn btn-sm ms-2 p-2" onClick={() => {
-                                                    function_clause.push({
+                                                    setFunction_clause([...function_clause, {
                                                         fx: "",
-                                                        field: ""
-                                                    })
-                                                    console.log(function_clause)
+                                                        field: "",
+                                                        num: 0
+                                                    }])
                                                 }}><img src={add_grey} height="30px" width="30px" /></button>
                                             </div>
                                         </div>
-                                    })
+                                    )
                                 }
 
                             </div>
