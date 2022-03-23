@@ -13,8 +13,12 @@ import { Link } from "react-router-dom";
 import CustomDropdownButton from 'pages/EditReport/components/CustomDropdownButton';
 import { getListCompanies } from "api/ListCompanies"
 import { Roboto, Poppins } from "../../utils/font"
+import NewProjectModel from '../ProjectList/components/NewProjectModel'
 import "@fontsource/poppins";
 export default function Register() {
+
+    const [showPModel, setShowPModel] = useState(false)
+    const [lastProjectId, setLastProjectId] = useState(0)
 
     const navigate = useNavigate()
     const [newCompany, setNewCompany] = useState(true)
@@ -56,29 +60,28 @@ export default function Register() {
         if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail)) {
             return (true)
         }
-        
+
         return (false)
     }
-    
+
     const onSubmitHandler = () => {
         console.log(information);
         if (!ValidateEmail(information.Email)) {
             alert("You have entered an invalid email address!")
-            return 
+            return
         }
-        if (information.Password.length <8) {
+        if (information.Password.length < 8) {
             alert("Password have to more than 8 digit")
-            return 
+            return
         }
-        if (information.Password !== confirmPassword )
-        {
+        if (information.Password !== confirmPassword) {
             alert("Password and confirm password don't match")
-            return 
+            return
         }
         RegisterApi(information)
             .then((res) => {
-
-                navigate("/account/login")
+                setShowPModel(true)
+                //navigate("/account/login")
             })
             .catch((e) => {
                 alert(e.response.data);
@@ -87,7 +90,15 @@ export default function Register() {
     }
     return (
         <section class="vh-100" style={{ backgroundColor: "#fff" }}>
+
             <div class="container h-100 ">
+                <NewProjectModel
+                    newProjectId={lastProjectId + 1}
+                    show={showPModel}
+                    handleClose={() => {
+                        setShowPModel(false)
+                    }}
+                />
                 <div class="row justify-content-center align-items-center h-100">
                     <div class="">
                         <div class="card text-black" style={{ borderRadius: "25px" }}>
