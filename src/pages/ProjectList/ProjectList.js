@@ -17,13 +17,19 @@ export default function ProjectList() {
     const [projectList, setProjectList] = useState([])
 
     const [appendProject, setAppendProject] = useState(0)
+
+    const [lastProjectId, setLastProjectId]=useState(0)
+
     const navigate = useNavigate()
     useEffect(() => {
         // get all project
         getListProject()
             .then(response => {
+                
                 setProjectList(response.data)
-                //console.log(response.data)
+                //console.log(response.data.length)
+                setLastProjectId(response.data.length !== 0 ? response.data.length : 0)
+                //console.log(lastProjectId)
             })
             .catch(
                 error => {
@@ -35,7 +41,9 @@ export default function ProjectList() {
         <div>
             <div className='d-flex flex-row pt-2'>
 
-            <h2 class="ms-4 mt-1" style={{ fontFamily: Poppins, color: deep_blue_primary, "font-weight": "bold", fontSize: "40px" }}> Project list</h2>
+            <h2 class="ms-4 mt-1" style={{ fontFamily: Poppins, color: deep_blue_primary, "font-weight": "bold", fontSize: "40px" }}> 
+            Project list
+            </h2>
                 <div className='d-flex flex-row pt-1'>
 
                     <button className='btn btn-default btn-lg ms-3 p-0'
@@ -47,6 +55,7 @@ export default function ProjectList() {
                     </button>
 
                     <NewProjectModel
+                        newProjectId={lastProjectId + 1}
                         show={showPModel}
                         handleClose={() => {
                             setShowPModel(false)

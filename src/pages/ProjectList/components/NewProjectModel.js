@@ -14,29 +14,12 @@ const orangeStyle = {
 
 export default function NewProjectModel(props) {
 
-    const [projectList, setProjectList] = useState([])
-
     useEffect(() => {
-        // get all project
-        getListProject()
-            .then(response => {
-                setProjectList(response.data)
-                
-                //console.log(response.data)
-            })
-            .catch(
-                error => {
-                }
-            )
-    }, [])
-
-    const finalProject = projectList[projectList.length-1]
-    //console.log(finalProject)
-    //const id = final_project.Id
-    
+        setProjectInfo({...projectInfo, Name: `Project ${props.newProjectId}`})
+    }, [props.newProjectId])
 
     const [projectInfo, setProjectInfo] = useState({
-        Name: "Project",
+        Name: 0,
         StartTime: "",
         PredictEndtime: "",
         NumOfMember: 1,
@@ -46,15 +29,12 @@ export default function NewProjectModel(props) {
     const [date, setDate] = useState(new Date());
     const [date1, setDate1] = useState(new Date());
 
-
+    const [projectName, setProjectName] = useState("");
     // when click submit button
     const onsubmit = () => {
         // check input field
         if ([projectInfo.Name, projectInfo.StartTime, projectInfo.PredictEndtime].includes("") || isNaN(projectInfo.NumOfMember)){
             alert("Some field is required")
-            return
-        }else if (projectInfo.Name === "Project name"){
-            alert("Please write new project name")
             return
         }else if (projectInfo.NumOfMember < 0) {
             alert("Num of member must be positive number")
@@ -82,7 +62,7 @@ export default function NewProjectModel(props) {
         return (
             <div>
                 <Form>
-                    <Form.Control type="text" value={projectInfo.Name}  onChange = {(event) => {
+                    <Form.Control type="text" value={projectInfo.Name} onChange = {(event) => {
                         setProjectInfo({...projectInfo, Name: event.target.value})
                     }}
                     className="text-primary border-0 mb-2"
