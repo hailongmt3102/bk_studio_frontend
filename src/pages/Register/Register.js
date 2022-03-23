@@ -50,8 +50,8 @@ export default function Register() {
                 setlistCompany(response.data)
             })
             .catch(
-                error => {
-                    console.log(error)
+                err => {
+                    alert(err.response.data)
                 }
             )
     }, [])
@@ -123,7 +123,7 @@ export default function Register() {
                                                             setinformation({
                                                                 ...information, Email: e.target.value
                                                             })
-                                                            console.log(information);
+                                                            //console.log(information);
                                                         }}
 
                                                         type="email"
@@ -144,7 +144,7 @@ export default function Register() {
                                                             setinformation({
                                                                 ...information, UserName: e.target.value
                                                             })
-                                                            console.log(information);
+                                                            //console.log(information);
                                                         }}
 
                                                         type="text"
@@ -165,7 +165,7 @@ export default function Register() {
                                                             setinformation({
                                                                 ...information, Password: e.target.value
                                                             })
-                                                            console.log(information);
+                                                            //console.log(information);
                                                         }}
                                                         type={isVisible ? "text" : "password"}
                                                         placeholder="Enter your password"
@@ -184,7 +184,7 @@ export default function Register() {
                                                     <Form.Control
                                                         onChange={(e) => {
                                                             setConfirmPassword(e.target.value)
-                                                            console.log(information);
+                                                            //console.log(information);
                                                         }}
                                                         type={isVisibleConfirmPassword ? "text" : "password"}
                                                         placeholder="Confirm your Password."
@@ -212,7 +212,7 @@ export default function Register() {
                                                                         setinformation({
                                                                             ...information, Birthday: e.target.value
                                                                         })
-                                                                        console.log(information);
+                                                                        //console.log(information);
                                                                     }}
                                                                 />
                                                             </Form.Group>
@@ -229,7 +229,7 @@ export default function Register() {
                                                             ...information, Gender: "Male"
                                                         })
 
-                                                        console.log(information);
+                                                        //console.log(information);
                                                     }}
                                                     inline
                                                     label="Male"
@@ -243,7 +243,7 @@ export default function Register() {
                                                             ...information, Gender: "Female"
                                                         })
 
-                                                        console.log(information);
+                                                        //console.log(information);
                                                     }}
                                                     inline
                                                     label="Female"
