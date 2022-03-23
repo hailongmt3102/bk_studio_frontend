@@ -13,11 +13,11 @@ import { Link } from "react-router-dom";
 import CustomDropdownButton from 'pages/EditReport/components/CustomDropdownButton';
 import { getListCompanies } from "api/ListCompanies"
 import { Poppins } from "../../utils/font"
-
+import NoIconDropDownButton from "../../components/NoIconDropDownButton"
 import "@fontsource/poppins";
 export default function Register() {
 
-   
+
 
     const navigate = useNavigate()
     const [newCompany, setNewCompany] = useState(true)
@@ -285,33 +285,31 @@ export default function Register() {
                                                 />
                                             </div>
                                             {!newCompany ?
-                                                <div><div class="d-md-flex mt-1 ">
-                                                    <h6 class="  me-2 mt-2">Company name: </h6>
-                                                    <div class="  me-2  ">
-                                                        <CustomDropdownButton title={information.Company === "" ? "Company" : information.Company} items={listCompany.map(ele => ele.Company)} onClick={(val, index) => {
-                                                            setinformation({
-                                                                ...information, Company: val, Tenant: listCompany[index].Tenant
-                                                            })
-                                                        }} />
-
-
-
-
-                                                    </div>
-                                                    <div class="d-md-flex mt-1 ">
-                                                        <h6 class=" me-2 mt-2">Position: </h6>
-                                                        <CustomDropdownButton title={information.Position === "" ? "Position" : information.Position} items={["Manager", "Member"]} onClick={(val) => {
-                                                            setinformation({
-                                                                ...information, Position: val
-                                                            })
-                                                            // console.log(information);
-                                                        }} />
+                                                <div>
+                                                    <div className='row m-0 p-0'>
+                                                        <h6 class="col-4 m-0 p-0 mt-2">Company name: </h6>
+                                                        <div class=" col-8 m-0 p-0 ">
+                                                            <NoIconDropDownButton title={information.Company === "" ? "Company" : information.Company} items={listCompany.map(ele => ele.Company)} onClick={(val, index) => {
+                                                                setinformation({
+                                                                    ...information, Company: val, Tenant: listCompany[index].Tenant
+                                                                })
+                                                            }} />
+                                                        </div>
 
                                                     </div>
-
+                                                    <div className='row  m-0 p-0'> 
+                                                        <h6 class="col-4 mt-2  m-0 p-0">Position: </h6>
+                                                        <div class=" col-8  m-0 p-0 ">
+                                                            <NoIconDropDownButton title={information.Position === "" ? "Position" : information.Position} items={["Manager", "Member"]} onClick={(val) => {
+                                                                setinformation({
+                                                                    ...information, Position: val
+                                                                })
+                                                                // console.log(information);
+                                                            }} />
+                                                        </div>
+                                                    </div>
                                                 </div>
 
-                                                </div>
                                                 : <div>
 
                                                     <Form.Group as={Col} md="12" controlId="validationCustomUsername">
@@ -337,14 +335,16 @@ export default function Register() {
 
                                                         </InputGroup>
                                                     </Form.Group>
-                                                    <div class="d-md-flex mt-1 ">
-                                                        <h6 class=" me-2 mt-2">Position: </h6>
-                                                        <CustomDropdownButton title={information.Position === "" ? "Position" : information.Position} items={["Manager", "Member"]} onClick={(val) => {
-                                                            setinformation({
-                                                                ...information, Position: val
-                                                            })
-                                                            // console.log(information);
-                                                        }} />
+                                                    <div className="row mt-1 ">
+                                                        <h6 className="col-3 mt-3">Position: </h6>
+                                                        <div className='col-8 m-auto'>
+                                                            <NoIconDropDownButton title={information.Position === "" ? "Position" : information.Position} items={["Manager", "Member"]} onClick={(val) => {
+                                                                setinformation({
+                                                                    ...information, Position: val
+                                                                })
+                                                                // console.log(information);
+                                                            }} />
+                                                        </div>
 
                                                     </div>
 
