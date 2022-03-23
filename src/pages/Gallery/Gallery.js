@@ -3,7 +3,8 @@ import { Link, useNavigate } from 'react-router-dom'
 import { getAllReport as getAllReportApi } from 'api/Report'
 import ReportCard from "components/ReportCard"
 import ReportImg from 'resources/images/report.png'
-
+import { Roboto, Poppins } from "utils/font"
+import { deep_blue_primary } from "../../utils/color"
 export default function Gallery(props) {
 
     const [reports, setReports] = useState([])
@@ -29,7 +30,10 @@ export default function Gallery(props) {
     }
     return (
         <div>
-            <h1>Report Gallery</h1>
+            <h2 class="ms-4 mt-2" style={{ fontFamily: Poppins, color: deep_blue_primary, "font-weight": "bold", fontSize: "40px" }}> 
+            Gallery:
+            </h2>
+           
             <div className='bg-white'>
                 <div className='row p-4'>
                     {reports.map(ele =>

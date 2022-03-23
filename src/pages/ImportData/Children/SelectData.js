@@ -2,13 +2,14 @@ import React from 'react'
 import ReactFileReader from 'react-file-reader'
 import ImportFileImage from 'resources/images/importFile.png'
 import ImportButton from '../Components/ImportButton'
-
+import { Roboto, Poppins } from "../../../utils/font"
+import { deep_blue_primary } from "../../../utils/color"
 export default function SelectData(props) {
 
     const executeStringResult = (result) => {
         let data = []
         let dataSheet = result.split('\n').length === 2 ? result.split('\r') : result.split('\n')
-        if (dataSheet.length ===  0) return
+        if (dataSheet.length === 0) return
         // find the sign to split string
         let divider = dataSheet[0].includes(',') ? ',' : ';'
         let keys = dataSheet[0].split(divider)
@@ -17,10 +18,10 @@ export default function SelectData(props) {
         console.log(keys)
         dataSheet.map((row, index) => {
             if (row.includes(divider)) {
-                if (index !== 0){
+                if (index !== 0) {
                     let rows = {}
                     row.split(divider).map((ele, index) => {
-                        rows[keys[index]] = ele.includes('\"')? ele.substring(1, ele.length - 1) : ele
+                        rows[keys[index]] = ele.includes('\"') ? ele.substring(1, ele.length - 1) : ele
                     })
                     data.push(rows)
                 }
@@ -39,7 +40,7 @@ export default function SelectData(props) {
         } else {
             // valid format
             // store file information
-            props.setFileInformation({...file[0], name: file[0].name.replaceAll('.', '_')})
+            props.setFileInformation({ ...file[0], name: file[0].name.replaceAll('.', '_') })
             var reader = new FileReader();
             reader.readAsText(file[0]);
             console.log(file[0])
@@ -53,15 +54,18 @@ export default function SelectData(props) {
         <div>
             <div>
                 <div>
-                    <h2 className='m-3'>
-                        Import Data
+                    <h2 class="ms-4 mt-2" style={{ fontFamily: Poppins, color: deep_blue_primary, "font-weight": "bold", fontSize: "40px" }}>
+                        Import data:
                     </h2>
                 </div>
-                <div className='bg-white'>
-                    <ReactFileReader handleFiles={(file) => { handleFiles(file) }} fileTypes={'.csv'}>
-                        <ImportButton text="Import file" image={ImportFileImage} />
-                    </ReactFileReader>
+                <div className='row bg-white'>
+                    <div className='col-2'>
+                        <ReactFileReader handleFiles={(file) => { handleFiles(file) }} fileTypes={'.csv'}>
+                            <ImportButton text="Import file" image={ImportFileImage}  />
+                        </ReactFileReader>
+                    </div>
                 </div>
+                
             </div>
         </div>
     )
