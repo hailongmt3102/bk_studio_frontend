@@ -9,7 +9,7 @@ export default function Gallery(props) {
 
     const [reports, setReports] = useState([])
 
-    const nav = useNavigate()
+   
 
     useEffect(() => {
         let currentProject = localStorage.getItem("currentProject")
@@ -25,9 +25,7 @@ export default function Gallery(props) {
         }
     }, [])
 
-    const editReport = (Id) => {
-        nav(`${Id}/edit`)
-    }
+  
     return (
         <div>
             <h2 class="ms-4 mt-2" style={{ fontFamily: Poppins, color: deep_blue_primary, "font-weight": "bold", fontSize: "40px" }}> 
@@ -37,7 +35,7 @@ export default function Gallery(props) {
             <div className='bg-white'>
                 <div className='row p-4'>
                     {reports.map(ele =>
-                        <div className='col' style={{"minWidth":"600px", "maxWidth": "600px"}} onClick={() => { editReport(ele.Id) }}>
+                        <div className='col' style={{"minWidth":"600px", "maxWidth": "600px"}} >
                             <ReportCard data={ele} />
                         </div>
                     )}

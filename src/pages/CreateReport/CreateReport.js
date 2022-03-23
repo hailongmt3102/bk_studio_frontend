@@ -14,7 +14,8 @@ export default function CreateReport() {
             CreateReportApi(currentProjectId,
                 {
                     Hastag: "2022",
-                    Description: "example"
+                    Description: "example", 
+                    Name : "Document"
                 }
             )
                 .then(res => {
