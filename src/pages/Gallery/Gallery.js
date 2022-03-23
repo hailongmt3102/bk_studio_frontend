@@ -5,6 +5,7 @@ import ReportCard from "components/ReportCard"
 import ReportImg from 'resources/images/report.png'
 import { Roboto, Poppins } from "utils/font"
 import { deep_blue_primary } from "../../utils/color"
+
 export default function Gallery(props) {
 
     const [reports, setReports] = useState([])

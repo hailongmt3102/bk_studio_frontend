@@ -5,6 +5,8 @@ import hearted from "../resources/icons/hearted.svg"
 import { useNavigate } from 'react-router-dom'
 import ThreeDotButton from "../components/ThreeDotButton"
 import delete_icon from 'resources/icons/delete.svg'
+import download_blue from "resources/icons/download_blue.svg"
+import share_blue from "resources/icons/share_blue.svg"
 import edit from 'resources/icons/edit.svg'
 import three_dot from "resources/icons/three-dot.svg"
 import { blue_cloud, deep_blue_primary } from "../utils/color"
@@ -14,11 +16,11 @@ export default function ReportCard(props) {
     const editReport = (Id) => {
         nav(`${Id}/edit`)
     }
-    const option_list = ["Edit", "Delete People"]
+    const option_list = ["Share", "Edit", "Download", "Delete"]
 
     const [heart, setHeart] = useState(false)
 
-    const icons_list = [edit, delete_icon]
+    const icons_list = [share_blue, edit, download_blue, delete_icon]
     return (
 
         <div className="row m-0 p-0 mt-4 mb-4  shadow border border-light" style={{ "borderRadius": "20px" }}>
@@ -42,23 +44,23 @@ export default function ReportCard(props) {
                 <div className='row ' >
 
                 </div>
-                <div className='row mt-2' style={{ "color": deep_blue_primary, "fontSize": "26px", "fontWeight": "bold" }}>
+                <div className='row mt-2' style={{ "color": deep_blue_primary, "fontSize": "28px", "fontWeight": "bold" }}>
                     {props.data.Name}
                 </div>
-                <div className='row mb-2' style={{ "color": blue_cloud, "fontSize": "20px", "fontWeight": "bold" }}>
+                <div className='row mb-2' style={{ "color": blue_cloud, "fontSize": "23px", "fontWeight": "bold" }}>
                     {props.data.Hastag}
                 </div>
                 <div className='row mt-4'>
-                    <p className='m-0 p-0'> <span style={{ "fontWeight": "bold" }}>Id:</span> {props.data.Id} </p>
+                    <p className='m-0 p-0'> <span style={{ "color": "#868585" }}>Id:</span> {props.data.Id} </p>
                 </div>
                 <div className='row mt-2'>
-                    <p className='m-0 p-0'> <span style={{ "fontWeight": "bold" }}>Created by:</span> {props.data.Author.slice(0, 20)}... </p>
+                    <p className='m-0 p-0'> <span style={{"color": "#868585"}}>Created by:</span> {props.data.Author.slice(0, 20)}... </p>
                 </div>
                 <div className='row mt-2'>
-                <p className='m-0 p-0'> <span style={{ "fontWeight": "bold" }}> Created Date: </span>  {props.data.CreateTime} </p>
+                <p className='m-0 p-0'> <span style={{ "color": "#868585" }}> Created Date: </span>  {props.data.CreateTime} </p>
                 </div>
                 <div className='row mt-2'>
-                <p className='m-0 p-0'> <span style={{ "fontWeight": "bold" }}>  Modified Date:  </span>    {props.data.LastModified} </p>
+                <p className='m-0 p-0'> <span style={{ "color": "#868585"}}>  Modified Date:  </span>    {props.data.LastModified} </p>
                  
                 </div>
             </div>
