@@ -12,13 +12,12 @@ import invisible from "resources/icons/invisible.svg"
 import { Link } from "react-router-dom";
 import CustomDropdownButton from 'pages/EditReport/components/CustomDropdownButton';
 import { getListCompanies } from "api/ListCompanies"
-import { Roboto, Poppins } from "../../utils/font"
-import NewProjectModel from '../ProjectList/components/NewProjectModel'
+import { Poppins } from "../../utils/font"
+
 import "@fontsource/poppins";
 export default function Register() {
 
-    const [showPModel, setShowPModel] = useState(false)
-    const [lastProjectId, setLastProjectId] = useState(0)
+   
 
     const navigate = useNavigate()
     const [newCompany, setNewCompany] = useState(true)
@@ -80,8 +79,7 @@ export default function Register() {
         }
         RegisterApi(information)
             .then((res) => {
-                setShowPModel(true)
-                //navigate("/account/login")
+                navigate("/account/login")
             })
             .catch((e) => {
                 alert(e.response.data);
@@ -92,13 +90,6 @@ export default function Register() {
         <section class="vh-100" style={{ backgroundColor: "#fff" }}>
 
             <div class="container h-100 ">
-                <NewProjectModel
-                    newProjectId={lastProjectId + 1}
-                    show={showPModel}
-                    handleClose={() => {
-                        setShowPModel(false)
-                    }}
-                />
                 <div class="row justify-content-center align-items-center h-100">
                     <div class="">
                         <div class="card text-black" style={{ borderRadius: "25px" }}>
