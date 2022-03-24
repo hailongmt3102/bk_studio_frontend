@@ -2,9 +2,11 @@ import React, { useState } from 'react'
 
 import SelectData from './Children/SelectData'
 import EditData from './Children/EditData'
-import {ImportDataApi} from 'api/DataSources'
+import { ImportDataApi } from 'api/DataSources'
 import { useNavigate } from 'react-router-dom'
 
+import {Store} from 'react-notifications-component'
+import {content} from "../../utils/notification"
 
 export default function ImportData() {
     const [dataFile, setDataFile] = useState([])
@@ -30,14 +32,15 @@ export default function ImportData() {
         })
         // send it to server
         ImportDataApi(name, data)
-        .then (res => {
-            alert(res.data)
-            navigate("/datasources")
-            setStep(1)
-        })
-        .catch(err => {
-            alert(err)
-        })
+            .then(res => {
+                Store.addNotification(content("Success", "Import data successfully", "success")) 
+                navigate("/datasources")
+                setStep(1)
+            })
+            .catch(err => {
+                Store.addNotification(content("Warning", err.response.data, "danger"))
+                return
+            })
 
     }
 

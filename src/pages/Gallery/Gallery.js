@@ -5,6 +5,8 @@ import ReportCard from "components/ReportCard"
 import ReportImg from 'resources/images/report.png'
 import { Roboto, Poppins } from "utils/font"
 import { deep_blue_primary } from "../../utils/color"
+import {Store} from 'react-notifications-component'
+import {content} from "../../utils/notification"
 
 export default function Gallery(props) {
 
@@ -17,11 +19,12 @@ export default function Gallery(props) {
         if (currentProject != null) {
             getAllReportApi(currentProject)
                 .then(res => {
-                    console.log(res.data)
+                    //console.log(res.data)
                     setReports(res.data)
                 })
                 .catch(res => {
-                    alert(res.response.data)
+                    Store.addNotification(content("Warning", res.response.data, "danger"))
+                    return
                 })
         }
     }, [])

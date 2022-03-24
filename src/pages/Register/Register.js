@@ -15,6 +15,10 @@ import { getListCompanies } from "api/ListCompanies"
 import { Poppins } from "../../utils/font"
 import NoIconDropDownButton from "../../components/NoIconDropDownButton"
 import "@fontsource/poppins";
+
+
+import { Store } from 'react-notifications-component'
+import { content } from "../../utils/notification"
 export default function Register() {
 
 
@@ -51,7 +55,8 @@ export default function Register() {
             })
             .catch(
                 err => {
-                    alert(err.response.data)
+                    Store.addNotification(content("Warning", err.response.data, "danger"))
+                    return
                 }
             )
     }, [])
@@ -66,23 +71,25 @@ export default function Register() {
     const onSubmitHandler = () => {
         console.log(information);
         if (!ValidateEmail(information.Email)) {
-            alert("You have entered an invalid email address!")
+            Store.addNotification(content("Warning", "You have entered an invalid email address!", "warning"))
             return
         }
         if (information.Password.length < 8) {
-            alert("Password have to more than 8 digit")
-            return
+            Store.addNotification(content("Warning", "Password have to more than 8 digit", "warning"))
+            return 
         }
         if (information.Password !== confirmPassword) {
-            alert("Password and confirm password don't match")
-            return
+            Store.addNotification(content("Warning", "Password and confirm password don't match", "warning"))
+            return 
+           
         }
         RegisterApi(information)
             .then((res) => {
                 navigate("/account/login")
             })
             .catch((e) => {
-                alert(e.response.data);
+                Store.addNotification(content("Warning", "Change password fail", "danger"))
+                console.log(e.response.data);
             })
 
     }
@@ -297,7 +304,7 @@ export default function Register() {
                                                         </div>
 
                                                     </div>
-                                                    <div className='row  m-0 p-0'> 
+                                                    <div className='row  m-0 p-0'>
                                                         <h6 class="col-4 mt-2  m-0 p-0">Position: </h6>
                                                         <div class=" col-8  m-0 p-0 ">
                                                             <NoIconDropDownButton title={information.Position === "" ? "Position" : information.Position} items={["Manager", "Member"]} onClick={(val) => {

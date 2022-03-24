@@ -86,13 +86,12 @@ export default function Login() {
                 .then((res) => {
                     // login successful
                     localStorage.setItem("token", res.data.AccessToken)
-
                     localStorage.setItem("username", res.data.UserName)
                     navigate("/")
                 })
                 .catch((err) => {
                     // login fail
-                    alert(err.response.data);
+                    Store.addNotification(content("Warning", "Google Login Fail", "danger"))
                 })
         }
     }

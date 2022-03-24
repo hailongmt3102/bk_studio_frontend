@@ -13,6 +13,8 @@ import { deep_blue_primary } from "../../utils/color"
 import "@fontsource/poppins";
 import Drop from 'pages/EditReport/components/Drop';
 import moment from 'moment';
+import { Store } from 'react-notifications-component'
+import { content } from "../../utils/notification"
 
 export default function Profile() {
 
@@ -78,10 +80,12 @@ export default function Profile() {
                 console.log(res.data)
                 window.location.reload()
                 localStorage.setItem("username", information.UserName)
-                alert('Update informationt thành công');
+                Store.addNotification(content("Warning", "Updated information successfully", "danger"))
+                return
             })
             .catch((e) => {
-                alert(e.response.data);
+                Store.addNotification(content("Warning", e.response.data, "danger"))
+                return
             })
 
     }

@@ -66,7 +66,8 @@ export default function ProjectBox(props) {
             .then((res) => {
             })
             .catch((e) => {
-                alert(e.response.data);
+                Store.addNotification(content("Warning", e.response.data, "danger"))
+                return
             })
     }, [newProject.Status])
 
@@ -89,11 +90,13 @@ export default function ProjectBox(props) {
             PredictEndtime: projectInformation.PredictEndtime.substring(0, 10)
         })
             .then((res) => {
+                // Store.addNotification(content("Success", "Edited Project successful", "sucess"))
                 window.location.reload()
-                alert("Edit thanh cong")
             })
             .catch((e) => {
-                console.log(e.response)
+                //console.log(e.response)
+                Store.addNotification(content("Warning", e.response.data, "danger"))
+                return
                 // alert(e.response.data);
             })
 
