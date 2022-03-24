@@ -15,7 +15,7 @@ import Drop from 'pages/EditReport/components/Drop';
 import moment from 'moment';
 import { Store } from 'react-notifications-component'
 import { content } from "../../utils/notification"
-
+import people_default from "resources/icons/people_default.svg"
 export default function Profile() {
 
     const navigate = useNavigate()
@@ -101,7 +101,7 @@ export default function Profile() {
             <div class="row r" style={{ height: 750 }}>
                 <div class="col-2 me-5 ms-4 justify-content-center ">
                     <div class="mb-4 ms-5 mt-3">
-                        <img src={information.Avatar} height="200px" width="200px" style={{ "border-radius": "50%" }} alt={avt} /></div>
+                        <img src={people_default}  height="200px" width="200px" style={{ "border-radius": "50%" }} alt={avt} /></div>
                     <div class="mt-2 ms-5 ">
                         <button class=" btn sm ms-4 p-3" type="button" style={{ color: "white", backgroundColor: "#FF7F0D", borderRadius: "30px ", fontFamily: Poppins, fontSize: 14 }} onClick={() => navigate("/account/changePassword")}>Change Password</button>
                     </div>

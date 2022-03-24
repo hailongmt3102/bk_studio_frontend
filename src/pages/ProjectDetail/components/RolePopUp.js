@@ -11,119 +11,86 @@ import { Roboto, Poppins } from "utils/font"
 import { createNewProject } from 'api/Project'
 import PeopleCardMini from 'components/PeopleCardMini/PeopleCardMini'
 
+import { editRoleWithProject } from "../../../api/Project"
+
+
 import { getListPeopleByProjectID } from '../../../api/People'
 const orangeStyle = {
     color: "black",
     fontFamily: Poppins
 }
 
-export default function RolePopup(props) {
-    const [listpeopleToAdd, setPeopleListToAdd] = useState([])
-    const [people, setPeople] = useState([])
-    var location = useLocation()
-    const array = location.pathname.split("/");
-    const [peopleInProject, setPeopleListInProject] = useState([])
-    var project_id = array[array.length - 1]
+export default function RolePopUp(props) {
 
-    const [filterPeople, setFilterPeople] = useState([])
+
+    const [role_list, setRole_list] = useState(["Invite",
+        "Import data to project",
+        "Edit project information",
+        "Delete project",
+        "Change project status",
+        "Delete member",
+        "Edit member information"])
+
+    const [data, setData] = useState({
+        Email: "",
+        Permission: []
+    })
+
     useEffect(() => {
+         setData({
+            Email: props.Email, 
+            Permission: tmp_list
+        })
+    },[props.Email])
+    
 
-        getListPeople()
-            .then(res => {
-                setPeople(res.data)
-                // console.log(res.data)
-            })
-            .catch(err => {
-                console.log(err)
-            })
-        getListPeopleByProjectID(project_id)
+    const [tmp_list, setTmp_list] = useState([])
+
+
+    const onsubmit = () => {
+        console.log(data)
+        editRoleWithProject(props.PId)
             .then(response => {
-                // console.log(response.data)
-                setPeopleListInProject(response.data)
+                console.log(response.data)
+                //setPeopleListInProject(response.data)
             })
             .catch(
                 error => {
                 }
             )
-        //if email trong people thuộc email trong project thì people loại thằng đó ra 
-
-        //list People 
-        //List People trong project 
-        // cần lọc lại cái list people 
-
-    }, [])
-
-    useEffect(() => {
-        console.log(peopleInProject)
-        let EmailInPro = peopleInProject.map(ele => ele.Email)
-        let fittedpeople = people.filter(
-            (ele) => EmailInPro.includes(ele.Email) ? false : true
-        )
-        console.log(fittedpeople)
-        setFilterPeople(fittedpeople)
-    }, [people, peopleInProject])
-    // when click submit button
-    const onsubmit = () => {
-
-
-        //console.log(listpeopleToAdd)
-        inviteMember(project_id, { "NewUsers": listpeopleToAdd })
-            .then(res => {
-                props.handleClose()
-                alert("Đã thêm member thành công")
-                window.location.reload()
-                setPeopleListToAdd([])
-                props.onComplete()
-            })
-            .catch(err => {
-                alert(err.response.data)
-            })
-
+        
     }
     const body = () => {
         return (
             <div>
                 {
-                    filterPeople.map((ele, index) => {
-                        return <div className='d-flex align-items-center mb-3'>
-                            <input
-                                class="form-check-input me-2"
-                                type="checkbox"
-                                id="form2Example3c"
-                                onClick={(e) => {
-                                    if (e.target.checked === true) {
-                                        console.log("true nè")
-                                        if (!listpeopleToAdd.includes(ele.Email)) {
-                                            listpeopleToAdd.push(ele.Email)
-                                            // console.log(ele.name)
-                                            // console.log(listpeopleToAdd)
+                    role_list.map((ele) => {
+                        return <div className='row mt-2'>
+                            <div className='col-1'>
+                                <input
+                                    class="form-check-input me-2"
+                                    type="checkbox"
+                                    id="form2Example3c"
+                                    onClick={(e) => {
+                                        if (e.target.checked === true) {
+                                            if (!tmp_list.includes(ele))
+                                                tmp_list.push(ele)
+                                            console.log(tmp_list)
                                         }
-                                    }
-                                    else if (e.target.checked === false) {
-
-                                        if (listpeopleToAdd.includes(ele.Email)) {
-                                            console.log("false nè xóa nó nha")
-                                            for (var i = listpeopleToAdd.length - 1; i >= 0; i--) {
-                                                if (listpeopleToAdd[i] === ele.Email) {
-                                                    listpeopleToAdd.splice(i, 1);
+                                        else if (e.target.checked === false) {
+                                            if (tmp_list.includes(ele)) {
+                                                for (var i = tmp_list.length - 1; i >= 0; i--) {
+                                                    if (tmp_list[i] === ele) {
+                                                        tmp_list.splice(i, 1);
+                                                    }
                                                 }
                                             }
-                                            // console.log(listpeopleToAdd)
+                                            console.log(tmp_list)
                                         }
-                                    }
-                                    // console.log(ele.name)
-                                }}
-                            />
-                            <div><PeopleCardMini
-                                onClick={() => {
-
-                                }}
-                                name={ele.UserName}
-                                email={ele.Email}
-                                avatar={ele.Avatar}
-                                haveRadioCheck={true}
-                                isManager={true}
-                            /></div>
+                                    }}
+                                />
+                            </div>
+                            <div className='col-11'>{ele}</div>
                         </div>
                     })
                 }
@@ -140,7 +107,7 @@ export default function RolePopup(props) {
             size="lg"
         >
             <Modal.Header closeButton>
-                <Modal.Title><div className='d-flex align-items-center' style={{ fontFamily: Poppins, color: deep_blue_primary, "font-weight": "bold", fontSize: "30px" }}>Invite member to project</div></Modal.Title>
+                <Modal.Title><div className='d-flex align-items-center' style={{ fontFamily: Poppins, color: deep_blue_primary, "font-weight": "bold", fontSize: "30px" }}>Edit Role</div></Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 {

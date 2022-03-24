@@ -13,7 +13,7 @@ const textStyle = {
 }
 
 export default function PeopleCard(props) {
-    const option_list = ["Edit", "Delete People"]
+    const option_list = ["Edit role", "Delete People"]
 
 
     const icons_list = [edit, delete_icon]
@@ -26,15 +26,21 @@ export default function PeopleCard(props) {
     return (
         <div className={props.isManager ? "m-4 peoplecard manager" : "m-4 peoplecard member"} onClick={props.onClick}>
             <div className='row  m-0'>
-                <div className='d-flex m-0 p-0 justify-content-end'><ThreeDotButton title={'adđ'} items={option_list} icons_list={icons_list} icon={three_dot} onClick={(val) => {
-                    // if (val === 'Delete Project')
-                    //     DeleteProjectSubmit()
-                    // else {
-                    //     setPressRename(true)
-                    //     RenameProjectSubmit()
-                    //}
-                }} />
-                </div>
+                {props.isManager ? <div className='d-flex m-0 p-0 justify-content-end'>
+                    <ThreeDotButton title={'adđ'} items={option_list} icons_list={icons_list} icon={three_dot} onClick={(val) => {
+                        if (val === "Edit role")
+                            props.getEmail()
+                            props.setshowRolePopUp()
+                        // else {
+                        //     setPressRename(true)
+                        //     RenameProjectSubmit()
+                        //}
+                    }} />
+
+                </div> :
+                    <div className='row mt-4'>
+                    </div>
+                }
                 <div className='row p-2 m-0 p-0'>
                     <div className='col-3 align-items-center'>
                         {props.avatar === "" ?

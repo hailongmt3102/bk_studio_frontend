@@ -24,6 +24,9 @@ const inviteMember = (id, data) => {
     return axiosClient.post('/project/'+id+'/invite', data)
 }
 
+const editRoleWithProject = (id, data) => {
+    return axiosClient.post('/project/'+id+'/updatePermission', data)
+}
 
 export {
     getListProject,
@@ -31,5 +34,6 @@ export {
     updateStatus,
     deleteProject,
     editProject,
-    inviteMember
+    inviteMember,
+    editRoleWithProject
 }

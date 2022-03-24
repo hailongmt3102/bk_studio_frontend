@@ -9,6 +9,7 @@ import add_people from "resources/icons/add_people.svg"
 import PeopleCard from "components/PeopleCard/PeopleCard"
 
 import PeoplePopup from './components/PeoplePopup'
+import RolePopUp from './components/RolePopUp'
 
 export default function ProjectDetail() {
 
@@ -21,10 +22,12 @@ export default function ProjectDetail() {
     const [appendPeopleList, setAppendPeopleList] = useState(0)
     const [showRolePopUp, setshowRolePopUp] = useState(false)
 
+     const [email, setEmail] = useState("")
+
     useEffect(() => {
         getListPeopleByProjectID(project_id)
             .then(response => {
-                console.log(response.data)
+                //console.log(response.data)
                 setPeopleListInProject(response.data)
             })
             .catch(
@@ -32,7 +35,6 @@ export default function ProjectDetail() {
                 }
             )
     }, [appendPeopleList])
-
 
     return <div>
         <div>
@@ -44,6 +46,15 @@ export default function ProjectDetail() {
                 onComplete={() => {
                     setAppendPeopleList(appendPeopleList + 1)
                 }}
+            />
+            <RolePopUp
+                PId = {project_id}
+                Email = {email}
+                show={showRolePopUp}
+                handleClose={() => {
+                    setshowRolePopUp(false)
+                }}
+
             />
             <div className='row mt-2 m-0 p-0'>
                 <h2 class="col-10  m-0 p-0" style={{ fontFamily: Poppins, color: deep_blue_primary, "font-weight": "bold", fontSize: "40px" }}>
@@ -69,18 +80,20 @@ export default function ProjectDetail() {
                             <div class="p-2"> {
                                 peopleInProject.map((ele, index) => {
                                     if (ele.Position !== "Manager") return null
-                                    return <div class="d-flex p-2"> <PeopleCard
-                                        onClick={() => {
-
-                                        }}
-                                        name={ele.UserName}
-                                        email={ele.Email}
-                                        avatar={ele.Avatar}
-                                        rank={ele.RankAccount}
-                                        birthday={ele.Birthday.substring(0, 10).split('-').reverse().join('-')}
-                                        gender={ele.Gender}
-                                        isManager={true}
-                                    />
+                                    return <div class="d-flex p-2">
+                                        <PeopleCard
+                                            onClick={() => {
+                                            }}
+                                            getEmail = {()=>setEmail(ele.Email)}
+                                            setshowRolePopUp={() => setshowRolePopUp(true)}
+                                            name={ele.UserName}
+                                            email={ele.Email}
+                                            avatar={ele.Avatar}
+                                            rank={ele.RankAccount}
+                                            birthday={ele.Birthday.substring(0, 10).split('-').reverse().join('-')}
+                                            gender={ele.Gender}
+                                            isManager={true}
+                                        />
                                     </div>
                                 })
                             }

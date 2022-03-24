@@ -54,12 +54,12 @@ export default function PeoplePopup(props) {
     }, [])
 
     useEffect(() => {
-        console.log(peopleInProject)
+        //console.log(peopleInProject)
         let EmailInPro = peopleInProject.map(ele => ele.Email)
         let fittedpeople = people.filter(
             (ele) => EmailInPro.includes(ele.Email) ? false : true
         )
-        console.log(fittedpeople)
+        //console.log(fittedpeople)
         setFilterPeople(fittedpeople)
     }, [people, peopleInProject])
     // when click submit button
