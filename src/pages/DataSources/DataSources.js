@@ -57,11 +57,11 @@ export default function DataSources() {
             <div className='row bg-light'>
                 <div className='col-6 m-4 bg-white'>
                     <h1 className='m-2 mt-4' style={{ fontFamily: Poppins, color: blue_cloud, "font-weight": "bold" }}>User Sources</h1>
-                    {
+                    <div className='row'>
+                        {
                         datasourceslist.map((ele) => {
                             return <div className='col-3 ms-4 mt-3 pt-2 mb-5' style={{ "height": "200px", width: "400px", "border-radius": "20px", "backgroundColor": "#F7F7F7" }}>
                                 <div className='row ms-3' style={{ "paddingLeft": "310px" }}>
-
                                     <ThreeDotButton title={'adđ'} items={option_list} icon={three_dot} icons_list={[share_blue, edit, download_blue, delete_icon]} onClick={(val) => { }} />
                                 </div>
                                 <div className="row m-0 p-0">
@@ -78,16 +78,13 @@ export default function DataSources() {
                                         <div class="row m-0 p-0" style={{ fontFamily: "Roboto" }}>
                                             <p><span style={{ "color": "#868585" }}>last modified: </span>{ele.LastModified}</p>
                                         </div>
-
-
                                     </div>
-
                                 </div>
                             </div>
-
                         })
-                    }
 
+                    }
+                    </div>
                 </div>
                 <div className='col-5 m-4 bg-white'>
 
