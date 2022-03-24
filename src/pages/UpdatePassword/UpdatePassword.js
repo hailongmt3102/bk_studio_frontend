@@ -12,7 +12,8 @@ import { Link } from "react-router-dom";
 import { deep_blue_primary } from "../../utils/color"
 import "@fontsource/poppins";
 
-
+import {Store} from 'react-notifications-component'
+import {content} from "../../utils/notification"
 
 export default function UpdatePassword() {
     const [isVisible, setisVisible] = useState(false)
@@ -24,17 +25,22 @@ export default function UpdatePassword() {
     const onSubmitHandler = () => {
         console.log("da nhan Change")
         if (information.Code === null || information.NewPassword === "") {
-            alert("Please fill in code or new password");
+            Store.addNotification(content("Warning", "Please fill in code or new password", "warning"))
+            return 
+        }
+        else if (information.NewPassword.length < 8){
+            Store.addNotification(content("Warning", "Password have to more than 8 digit", "warning"))
+            return 
         }
         else {
             updatePasswordAPI(information)
                 .then((res) => {
-                    console.log("da change thanh cong roi")
-                    alert("Changed Password");
+                    Store.addNotification(content("Success", "Changed Password", "success"))
                     navigate("/account/login")
                 })
                 .catch((e) => {
-                    alert(e.response.data);
+                    Store.addNotification(content("Warning", "Change password fail", "danger"))
+                    return
                 })
         }
 

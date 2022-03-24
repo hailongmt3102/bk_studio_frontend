@@ -8,23 +8,39 @@ import email from "resources/icons/email.svg";
 
 import { Link } from "react-router-dom";
 import { deep_blue_primary } from "../../utils/color"
+
+import { Store } from 'react-notifications-component'
+import { content } from "../../utils/notification"
+
 export default function ForgetPassword() {
    
     const [Email, setEmail] = useState("")
     const navigate = useNavigate()
+
+    function ValidateEmail(mail) {
+        if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail)) {
+            return (true)
+        }
+        
+        return (false)
+    }
+
     const onSubmitHandler = () => {
-        console.log("da nhan send")
         if (Email===""){
-            alert("Please fill in your email");
+            Store.addNotification(content("Warning", "Please fill in your email", "warning"))
+        }
+        else if(!ValidateEmail(Email)){
+            Store.addNotification(content("Warning", "Invalid Email", "warning"))
+            return
         }
         else{
             ForgotPasswordAPI(Email)
             .then((res) => {
+                Store.addNotification(content("Message", "Please check email to get forgot password code for your account", "info"))
                 navigate("/account/updatePassword")
-                alert("Please check email to get forgot password code for your account");
             })
             .catch((e) => {
-                alert(e.response.data);
+                Store.addNotification(content("Warning", e.reponse.data, "danger"))
             })
         }
         

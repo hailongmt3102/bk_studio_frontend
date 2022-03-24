@@ -22,8 +22,12 @@ export default function ChangePassword() {
     const onSubmitHandler = () => {
         //console.log("da nhan Change")
         if (information.NewPassword === "") {
-            Store.addNotification(content("Warning", "Please fill in your password", "info"))
+            Store.addNotification(content("Warning", "Please fill in your password", "warning"))
             return
+        }
+        else if (information.NewPassword.length < 8) {
+            Store.addNotification(content("Warning", "Password have to more than 8 digit", "warning"))
+            return 
         }
         else {
             SetNewPasswordAPI(information)
@@ -33,6 +37,7 @@ export default function ChangePassword() {
                 })
                 .catch((e) => {
                     Store.addNotification(content("Warning", "Change password fail", "danger"))
+                    return
                 })
         }
 
