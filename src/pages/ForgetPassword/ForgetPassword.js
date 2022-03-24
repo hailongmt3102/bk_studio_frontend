@@ -82,7 +82,7 @@ export default function ForgetPassword() {
 
                                           
                                             <div class="d-grid gap-2  mt-5 "  style={{ fontFamily: Poppins, fontSize: 14}}>
-                                                <button class="btn btn-primary p-2" type="button" style={{ backgroundColor: "#034078", borderRadius: "25px " }} onClick={onSubmitHandler}>Send Email</button>
+                                                <a class="btn btn-primary p-2" type="button" style={{ backgroundColor: "#034078", borderRadius: "25px " }} onClick={onSubmitHandler}>Send Email</a>
 
                                             </div>
                                             {/* <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4 m-2">

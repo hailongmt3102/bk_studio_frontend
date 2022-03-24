@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Form, InputGroup, Col, Button, FormControl } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import login_image from "resources/images/login_image.png"
-import { SetNewPasswordAPI  } from "api/Account"
+import { SetNewPasswordAPI } from "api/Account"
 import lock from "resources/icons/lock.svg";
 import visible from "resources/icons/visible.svg"
 import invisible from "resources/icons/invisible.svg"
@@ -10,6 +10,8 @@ import { Link } from "react-router-dom";
 import { deep_blue_primary } from "../../utils/color"
 import "@fontsource/poppins";
 import { Poppins } from 'utils/font'
+import { Store } from 'react-notifications-component'
+import { content } from "../../utils/notification"
 
 export default function ChangePassword() {
     const [isVisible, setisVisible] = useState(false)
@@ -18,19 +20,19 @@ export default function ChangePassword() {
     })
     const navigate = useNavigate()
     const onSubmitHandler = () => {
-        console.log("da nhan Change")
-        if ( information.NewPassword === "") {
-            alert("Please fill in password");
+        //console.log("da nhan Change")
+        if (information.NewPassword === "") {
+            Store.addNotification(content("Warning", "Please fill in your password", "info"))
+            return
         }
         else {
             SetNewPasswordAPI(information)
                 .then((res) => {
-                    console.log("da change thanh cong roi")
-                    alert("Changed Password");
+                    Store.addNotification(content("Success", "Changed Password", "success"))
                     navigate("/account/login")
                 })
                 .catch((e) => {
-                    alert(e.response.data);
+                    Store.addNotification(content("Warning", "Change password fail", "danger"))
                 })
         }
 
@@ -49,7 +51,7 @@ export default function ChangePassword() {
                                         <img src={login_image} style={{ borderTopLeftRadius: "25px", borderBottomLeftRadius: "25px" }} class="img-fluid" alt="Sample image" />
                                     </div>
                                     <div class="col-md-10 col-lg-6 col-xl-5 order-1 order-lg-2 mt-5 ">
-                                        
+
                                         <p class="h1 fw-bold mb-2 mx-1 mx-md-4 mt-5" style={{ color: deep_blue_primary, fontFamily: Poppins }}>Change Password</p>
 
 
@@ -58,12 +60,12 @@ export default function ChangePassword() {
                                                 If you already have an account register
                                             </div>
                                             <label class="form-check-label" style={{ fontFamily: Poppins }}>
-                                                You can <Link to="/account/login" class="border-0" style={{ color: deep_blue_primary, "font-weight": "bold"}}>  Login here !
+                                                You can <Link to="/account/login" class="border-0" style={{ color: deep_blue_primary, "font-weight": "bold" }}>  Login here !
                                                 </Link>
                                             </label>
 
                                         </div>
-                                        <form class="mx-1 mx-md-4 mt-2 "  style={{ fontFamily: Poppins }}>
+                                        <form class="mx-1 mx-md-4 mt-2 " style={{ fontFamily: Poppins }}>
                                             <Form.Group as={Col} md="12" controlId="validationCustomUsername">
                                                 <Form.Label>New Password</Form.Label>
                                                 <InputGroup hasValidation>
@@ -81,7 +83,7 @@ export default function ChangePassword() {
                                                         required
                                                     />
 
-                                                    <button class="btn shadow-none border-top border-bottom border-end" onClick={() => { setisVisible(!isVisible) }}><img width="20px" height="20px" src={isVisible ? visible : invisible }></img></button>
+                                                    <a class="btn shadow-none border-top border-bottom border-end" onClick={() => { setisVisible(!isVisible) }}><img width="20px" height="20px" src={isVisible ? visible : invisible}></img></a>
                                                     {/* <Button ><img src={eye_black}></img></Button> */}
                                                 </InputGroup>
                                             </Form.Group>
@@ -89,7 +91,7 @@ export default function ChangePassword() {
 
 
                                             <div class="d-grid gap-2  mt-5">
-                                                <button class="btn btn-primary p-2"  type="button" style={{ backgroundColor: "#034078", borderRadius: "25px",fontFamily: Poppins }} onClick={onSubmitHandler}>Send Email</button>
+                                                <button class="btn btn-primary p-2" type="button" style={{ backgroundColor: "#034078", borderRadius: "25px", fontFamily: Poppins }} onClick={onSubmitHandler}>Send</button>
 
                                             </div>
                                             {/* <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4 m-2">

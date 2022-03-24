@@ -105,7 +105,7 @@ export default function UpdatePassword() {
                                                             required
                                                         />
 
-                                                        <button class="btn shadow-none border-top border-bottom border-end" onClick={() => { setisVisible(!isVisible) }}><img width="20px" height="20px" src={isVisible ? visible : invisible}></img></button>
+                                                        <a class="btn shadow-none border-top border-bottom border-end" onClick={() => { setisVisible(!isVisible) }}><img width="20px" height="20px" src={isVisible ? visible : invisible}></img></a>
 
                                                     </InputGroup>
                                                 </Form.Group>
