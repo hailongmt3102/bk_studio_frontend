@@ -41,6 +41,7 @@ export default function ForgetPassword() {
             })
             .catch((e) => {
                 Store.addNotification(content("Warning", e.reponse.data, "danger"))
+                return 
             })
         }
         
