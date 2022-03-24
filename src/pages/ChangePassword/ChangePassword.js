@@ -27,12 +27,14 @@ export default function ChangePassword() {
         }
         else if (information.NewPassword.length < 8) {
             Store.addNotification(content("Warning", "Password have to more than 8 digit", "warning"))
-            return 
+            return
         }
         else {
             SetNewPasswordAPI(information)
                 .then((res) => {
-                    Store.addNotification(content("Success", "Changed Password", "success"))
+                    Store.addNotification(content("Success", "Changed Password", "success", {
+                        duration: 5000
+                    }))
                     navigate("/account/login")
                 })
                 .catch((e) => {

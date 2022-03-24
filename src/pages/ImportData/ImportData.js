@@ -5,8 +5,8 @@ import EditData from './Children/EditData'
 import { ImportDataApi } from 'api/DataSources'
 import { useNavigate } from 'react-router-dom'
 
-import {Store} from 'react-notifications-component'
-import {content} from "../../utils/notification"
+import { Store } from 'react-notifications-component'
+import { content } from "../../utils/notification"
 
 export default function ImportData() {
     const [dataFile, setDataFile] = useState([])
@@ -33,7 +33,9 @@ export default function ImportData() {
         // send it to server
         ImportDataApi(name, data)
             .then(res => {
-                Store.addNotification(content("Success", "Import data successfully", "success")) 
+                Store.addNotification(content("Success", "Import data successfully", "success"), {
+                    duration: 5000
+                })
                 navigate("/datasources")
                 setStep(1)
             })

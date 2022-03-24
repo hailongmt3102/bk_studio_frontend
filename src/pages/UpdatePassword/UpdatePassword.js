@@ -35,7 +35,10 @@ export default function UpdatePassword() {
         else {
             updatePasswordAPI(information)
                 .then((res) => {
-                    Store.addNotification(content("Success", "Changed Password", "success"))
+                    Store.addNotification(content("Success", "Changed Password", "success")
+                    ,{
+                        duration: 5000
+                    })
                     navigate("/account/login")
                 })
                 .catch((e) => {
