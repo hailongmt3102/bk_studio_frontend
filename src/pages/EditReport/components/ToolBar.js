@@ -18,10 +18,10 @@ import CircleModel from './AddShapeModel/CircleModel';
 import TableModel from './AddShapeModel/TableModel';
 
 import './css/toolbar.css'
-export default function ToolBar() {
+export default function ToolBar(props) {
     return (
         <div>
-            <div className="m-auto row toolbar-container" style={{zIndex: 10}}>
+            <div className="m-auto row toolbar-container" style={{ zIndex: 10 }}>
                 <button className="col m-0 p-0 btn" style={{ "minHeight": "50px" }}>
                     <img src={plus} width="20px" height="20px" />
                     <p className="p-0 m-0 text-center">add data</p>
@@ -57,7 +57,10 @@ export default function ToolBar() {
                     <img src={comment} width="20px" height="20px" />
                     <p className="p-0 m-0">comment</p>
                 </button>
-                <button className="col m-0 p-0 btn btn-sm" style={{ "minWidth": "80px", "minHeight": "50px" }}>
+                <button className="col m-0 p-0 btn btn-sm" style={{ "minWidth": "80px", "minHeight": "50px" }}
+                    onClick={() => {
+                        props.saveAsACopy()
+                    }}>
                     <img src={copy} width="20px" height="20px" />
                     <p className="p-0 m-0">create a copy</p>
                 </button>
