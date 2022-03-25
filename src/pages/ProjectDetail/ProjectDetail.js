@@ -156,10 +156,20 @@ export default function ProjectDetail() {
 
     }
     const aboutComponent = () => {
-        return <div><h2 class="col-10  m-0 p-0" style={{ fontFamily: Poppins, color: deep_blue_primary, "font-weight": "bold", fontSize: "40px" }}>
-            <div className='ms-4'>About:</div>
-        </h2>
-            <div className='m-3 p-4  bg-white' style={{ height: "300px" }}>
+        return <div>
+            <div className='row m-0 p-0 mt-3' >
+                <div className=' col-10' style={{ fontFamily: Poppins, color: deep_blue_primary, "font-weight": "bold", fontSize: "40px" }}>About:</div>
+                <div className='col-2 m-0 p-0 m-auto'>
+                    <button class="btn btn-primary btn-lg ms-5 p-3" 
+                        onClick={() => { EditProjectSubmit() }} 
+                        type="button" 
+                        style = {{backgroundColor: deep_blue_primary, borderRadius: "30px"}}
+                        >
+                        Save change
+                    </button>
+                </div>
+            </div>
+            <div className='m-3 p-4  bg-white' style={{ height: "350px" }}>
                 <div className='row m-0 p-0'>
                     <div className='col-6'>
                         <div className='m-3 m-0 p-0'>
@@ -234,24 +244,27 @@ export default function ProjectDetail() {
                     <div className='col-6'>
                         <div className='m-3 m-0 p-0'>
                             <div class=" row text-center m-0 p-0">
-                                <div className='col-1 m-auto m-0 p-0'>
+                                <div className='col-1  m-0 p-0'>
                                     <img src={file_orange} height="24px" width="22px" />
                                 </div>
-                                <div className='col-2 m-auto m-0 p-0' style={{ "text-align": "left" }} >
+                                <div className='col-2 m-0 p-0' style={{ "text-align": "left" }} >
                                     <div className='ms-2'>
                                         <div style={orangeStyle}>Description :</div>
                                     </div>
                                 </div>
-                                <div className='col-8 m-auto m-0 p-0' >
-                                    <Form.Control type="text" value={projectInformation.Description} onChange={(event) => {
-                                        setprojectInformation({ ...projectInformation, Description: event.target.value })
-                                    }}
-                                    />
+                                <div className='col-8  m-0 p-0' >
+                                    {/* <Form.Control componentClass="textarea" type="text" 
+                                    /> */}
+                                    <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1" >
+                                        <Form.Control as="textarea" rows={6} value={projectInformation.Description} onChange={(event) => {
+                                            setprojectInformation({ ...projectInformation, Description: event.target.value })
+                                        }} />
+                                    </Form.Group>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div className='d-flex justify-content-center mt-4'><button onClick={() => { EditProjectSubmit() }} type="button" class="btn btn-primary btn-lg">Save</button></div>
+
                 </div>
 
             </div>
