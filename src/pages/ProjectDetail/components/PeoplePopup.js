@@ -11,6 +11,9 @@ import { Roboto, Poppins } from "utils/font"
 import { createNewProject } from 'api/Project'
 import PeopleCardMini from 'components/PeopleCardMini/PeopleCardMini'
 
+import {Store} from 'react-notifications-component'
+import {content} from "../../../utils/notification"
+
 import { getListPeopleByProjectID } from '../../../api/People'
 const orangeStyle = {
     color: "black",
@@ -70,7 +73,7 @@ export default function PeoplePopup(props) {
         inviteMember(project_id, { "NewUsers": listpeopleToAdd })
             .then(res => {
                 props.handleClose()
-                alert("Đã thêm member thành công")
+                Store.addNotification(content("Success", "Added member", "success", {duration: 100000}))
                 window.location.reload()
                 setPeopleListToAdd([])
                 props.onComplete()

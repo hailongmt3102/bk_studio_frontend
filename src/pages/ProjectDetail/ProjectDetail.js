@@ -22,7 +22,10 @@ export default function ProjectDetail() {
     const [appendPeopleList, setAppendPeopleList] = useState(0)
     const [showRolePopUp, setshowRolePopUp] = useState(false)
 
-     const [email, setEmail] = useState("")
+    const [email, setEmail] = useState("")
+
+    
+    
 
     useEffect(() => {
         getListPeopleByProjectID(project_id)
@@ -34,6 +37,7 @@ export default function ProjectDetail() {
                 error => {
                 }
             )
+       
     }, [appendPeopleList])
 
     return <div>
@@ -48,13 +52,12 @@ export default function ProjectDetail() {
                 }}
             />
             <RolePopUp
-                PId = {project_id}
-                Email = {email}
+                PId={project_id}
                 show={showRolePopUp}
+                Email={email}
                 handleClose={() => {
                     setshowRolePopUp(false)
                 }}
-
             />
             <div className='row mt-2 m-0 p-0'>
                 <h2 class="col-10  m-0 p-0" style={{ fontFamily: Poppins, color: deep_blue_primary, "font-weight": "bold", fontSize: "40px" }}>
@@ -84,7 +87,7 @@ export default function ProjectDetail() {
                                         <PeopleCard
                                             onClick={() => {
                                             }}
-                                            getEmail = {()=>setEmail(ele.Email)}
+                                            getEmail={() => setEmail(ele.Email)}
                                             setshowRolePopUp={() => setshowRolePopUp(true)}
                                             name={ele.UserName}
                                             email={ele.Email}
@@ -110,8 +113,10 @@ export default function ProjectDetail() {
                                     return <PeopleCard
                                         className="col"
                                         onClick={() => {
-
                                         }}
+                                        getEmail={() => setEmail(ele.Email)}
+                                        setshowRolePopUp={() => setshowRolePopUp(true)}
+                                        setdontshowRolePopUp={() => setshowRolePopUp(false)}
                                         name={ele.UserName}
                                         email={ele.Email}
                                         rank={ele.RankAccount}

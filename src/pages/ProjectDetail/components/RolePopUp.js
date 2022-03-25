@@ -11,8 +11,10 @@ import { Roboto, Poppins } from "utils/font"
 import { createNewProject } from 'api/Project'
 import PeopleCardMini from 'components/PeopleCardMini/PeopleCardMini'
 
-import { editRoleWithProject } from "../../../api/Project"
+import { editPeopleRoleWithProject } from "../../../api/Project"
 
+import {Store} from 'react-notifications-component'
+import {content} from "utils/notification"
 
 import { getListPeopleByProjectID } from '../../../api/People'
 const orangeStyle = {
@@ -49,13 +51,17 @@ export default function RolePopUp(props) {
 
     const onsubmit = () => {
         console.log(data)
-        editRoleWithProject(props.PId)
+        editPeopleRoleWithProject(props.PId, data)
             .then(response => {
                 console.log(response.data)
-                //setPeopleListInProject(response.data)
+                Store.addNotification(content("Success", "Editted role", "success"))
+                props.handleClose()
+                
             })
             .catch(
                 error => {
+                    Store.addNotification(content("Warning", error.data, "danger"))
+                    props.handleClose()
                 }
             )
         

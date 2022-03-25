@@ -1,20 +1,33 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import '../css/TextFont.css'
 import './peopleCard.css'
 import { Roboto, Poppins } from "../../utils/font"
+import { useLocation, useNavigate } from 'react-router-dom'
 import people_default from "resources/icons/people_default.svg"
 import three_dot from "resources/icons/three-dot.svg"
 import ThreeDotButton from 'components/ThreeDotButton'
 import delete_icon from 'resources/icons/delete.svg'
 import edit from 'resources/icons/edit.svg'
-
+import {canUpdatePermission} from "api/Project"
 const textStyle = {
     fontFamily: Roboto,
 }
 
 export default function PeopleCard(props) {
+    var location = useLocation()
+    const array = location.pathname.split("/");
+    var project_id = array[array.length - 1]
     const option_list = ["Edit role", "Delete People"]
-
+    const [peopleCanEditRoleList,setPeopleCanEditRoleList]=useState(false)
+    useEffect(() => {
+        canUpdatePermission(project_id)
+        .then(res => {
+           setPeopleCanEditRoleList(true)
+        })
+        .catch(err => {
+            setPeopleCanEditRoleList(false)
+        })
+    }, [])
 
     const icons_list = [edit, delete_icon]
 
@@ -26,11 +39,16 @@ export default function PeopleCard(props) {
     return (
         <div className={props.isManager ? "m-4 peoplecard manager" : "m-4 peoplecard member"} onClick={props.onClick}>
             <div className='row  m-0'>
-                {props.isManager ? <div className='d-flex m-0 p-0 justify-content-end'>
+                {!props.isManager ? <div className='d-flex m-0 p-0 justify-content-end'>
                     <ThreeDotButton title={'adđ'} items={option_list} icons_list={icons_list} icon={three_dot} onClick={(val) => {
                         if (val === "Edit role")
                             props.getEmail()
-                            props.setshowRolePopUp()
+                            console.log("show di")
+                            if (peopleCanEditRoleList == true) {
+                                console.log("dang show ne")
+                                props.setshowRolePopUp();
+                            }
+                            else props.setdontshowRolePopUp()
                         // else {
                         //     setPressRename(true)
                         //     RenameProjectSubmit()

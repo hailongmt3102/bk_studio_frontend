@@ -20,7 +20,7 @@ import BootstrapSelect from 'react-bootstrap-select-dropdown';
 import { Roboto, Poppins } from "../../utils/font"
 import SqlPopUp from "./components/SqlPopUp";
 
-import { getAllComponent, createNewComponent } from 'api/Report'
+import { createNewReport, getAllComponent, createNewComponent} from 'api/Report'
 import { useLocation, useNavigate } from "react-router-dom";
 
 
@@ -31,27 +31,14 @@ export default function EditReport(props) {
     const navigate = useNavigate()
     // this function will be call when loaded page
 
+    const nav = useNavigate()
 
-    const CreateCopyReport = () => {
-        // createNewReport(RId,
-        //     {
-        //         Hastag: "2022",
-        //         Description: "example",
-        //         Name: "Copy"
-        //     })
-        // .then(res => {
-        //     console.log(res.data)
-        //     // nav(`/project/gallery/${res.data.Id}/edit`)
-        // })
-        // .catch(err => {
-        //     //alert(err.response.data)
-        // })
-    }
+    let RId = location.split('/')[3]
 
     useEffect(() => {
         let currentProject = localStorage.getItem("currentProject")
         if (currentProject != null) {
-            let RId = location.split('/')[3]
+
             console.log(RId)
             getAllComponent(currentProject, RId)
                 .then(res => {
@@ -69,7 +56,33 @@ export default function EditReport(props) {
             .catch(err => {
                 console.log(err)
             })
+        
+
     }, [])
+
+
+    const createCopyReport = () => {
+        createNewReport(localStorage.getItem("currentProject"),
+            {
+                TId: "1",
+                Hastag: "2022",
+                Description: "example",
+                Name: "new"
+            })
+            .then(res => {
+                console.log(res.data)
+                nav(`/project/gallery/${res.data.Id}/edit`)
+            })
+            .catch(err => {
+                //alert(err.response.data)
+            })
+    }
+
+
+
+
+
+
     // define some color template
     const colorTemplate = ['rgb(255, 99, 132)',
         'rgb(54, 162, 235)',
@@ -314,7 +327,7 @@ export default function EditReport(props) {
                         <MenuBar showSqlPopUpFunction={showSqlPopUpFunction} />
 
                         <ToolBar
-                            saveAsACopy={CreateCopyReport()}
+                            saveAsACopy={() => createCopyReport()}
                         />
                         <div className="m-2 content">
                             <Content components={components} />

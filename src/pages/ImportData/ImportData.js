@@ -33,7 +33,7 @@ export default function ImportData() {
         // send it to server
         ImportDataApi(name, data)
             .then(res => {
-                Store.addNotification(content("Success", "Import data successfully", "success"), {
+                Store.addNotification(content("Success", "Imported data", "success"), {
                     duration: 5000
                 })
                 navigate("/datasources")
