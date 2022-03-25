@@ -18,6 +18,21 @@ import moment from 'moment';
 import { Store } from 'react-notifications-component'
 import { content } from "utils/notification"
 import { updateStatus, deleteProject, editProject } from 'api/Project'
+
+
+import add_round from "resources/icons/add_round.svg"
+import edit from "resources/icons/edit.svg"
+import delete_icon from "resources/icons/delete.svg"
+import download_blue from "resources/icons/download_blue.svg"
+import share_blue from "resources/icons/share_blue.svg"
+import excel_icon from "resources/icons/excel_icon.svg"
+
+import three_dot from "resources/icons/three-dot.svg"
+import { orange } from "../../utils/color"
+import ThreeDotButton from 'components/ThreeDotButton'
+
+
+import { GetDataSourcesListInformation } from '../../api/DataSources'
 export default function ProjectDetail() {
 
     var location = useLocation()
@@ -55,6 +70,21 @@ export default function ProjectDetail() {
 
     }, [])
 
+    const [datasourceslist, setDatasourceslist] = useState([])
+    const option_list = ["Share", "Edit", "Download", "Delete"]
+    useEffect(() => {
+        //console.log("Lấy data nè")
+        // get list people
+        GetDataSourcesListInformation()
+            .then(res => {
+                setDatasourceslist(res.data)
+                console.log(res.data)
+            })
+            .catch(err => {
+                console.log(err)
+            })
+
+    }, [])
 
     useEffect(() => {
         getListPeopleByProjectID(project_id)
@@ -164,8 +194,8 @@ export default function ProjectDetail() {
                         <button class="btn btn-primary btn-lg ms-5 p-3 "
                             onClick={() => { EditProjectSubmit() }}
                             type="button"
-                            style = {{backgroundColor: deep_blue_primary, borderRadius: "30px"}}
-                            >
+                            style={{ backgroundColor: deep_blue_primary, borderRadius: "30px" }}
+                        >
                             Save change
                         </button>
                     </div>
@@ -275,6 +305,46 @@ export default function ProjectDetail() {
 
         </div>
     }
+    const dataSourcesComponent = () => {
+        return <div>
+            <div className='row m-0 p-0 mt-3' >
+                <div className=' col-10' style={{ fontFamily: Poppins, color: deep_blue_primary, "font-weight": "bold", fontSize: "40px" }}>Data Sources:</div>
+            </div>
+            <div className='m-3 p-4  bg-white' style={{ height: "350px" }}>
+                <div className='row'>
+                    {
+                        datasourceslist.map((ele) => {
+                            return <div className='col-3 ms-4 mt-3 pt-2 mb-5' style={{ "height": "200px", width: "400px", "border-radius": "20px", "backgroundColor": "#F7F7F7" }}>
+                                <div className='row ms-3' style={{ "paddingLeft": "310px" }}>
+                                    <ThreeDotButton title={'adđ'} items={option_list} icon={three_dot} icons_list={[share_blue, edit, download_blue, delete_icon]} onClick={(val) => { }} />
+                                </div>
+                                <div className="row m-0 p-0">
+                                    <div className="col-2 m-0 p-0 d-flex" style={{ fontFamily: "Roboto" }}>
+                                        <img className='ms-4' src={excel_icon} />
+                                    </div>
+                                    <div class="col-10 m-0 p-0 text-center" style={{ fontFamily: "Roboto" }}>
+                                        <div class="row m-0 p-0 ms-2" style={{ fontFamily: "Roboto", color: blue_cloud }}>
+                                            <h3>{ele.Information}</h3>
+                                        </div>
+                                        <div class="row  m-0 p-0 mt-1" style={{ fontFamily: "Roboto" }}>
+                                            <p><span style={{ "color": "#868585" }}>date created: </span>{ele.CreateTime}</p>
+                                        </div>
+                                        <div class="row m-0 p-0" style={{ fontFamily: "Roboto" }}>
+                                            <p><span style={{ "color": "#868585" }}>last modified: </span>{ele.LastModified}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        })
+
+                    }
+                </div>
+            </div>
+
+
+
+        </div>
+    }
     return <div>
         <div>
             <PeoplePopup
@@ -295,6 +365,7 @@ export default function ProjectDetail() {
                 }}
             />
             <div className='row mt-2 m-0 p-0'>
+                {dataSourcesComponent()}
                 {aboutComponent()}
                 <h2 class="col-10  m-0 p-0" style={{ fontFamily: Poppins, color: deep_blue_primary, "font-weight": "bold", fontSize: "40px" }}>
                     <div className='ms-4'>My team:</div>
