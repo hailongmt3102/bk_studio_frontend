@@ -32,6 +32,10 @@ const canUpdatePermission = (id, data) => {
     return axiosClient.get('/project/'+id+'/canUpdatePermission', data)
 }
 
+const getInformationByPId = (id) => {
+    return axiosClient.get('/project/'+id+'/info')
+}
+
 
 
 export {
@@ -42,5 +46,6 @@ export {
     editProject,
     inviteMember,
     editPeopleRoleWithProject,
-    canUpdatePermission
+    canUpdatePermission,
+    getInformationByPId
 }

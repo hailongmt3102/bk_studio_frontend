@@ -7,7 +7,7 @@ import { blue_cloud } from "../../utils/color"
 import { deep_blue_primary } from "../../utils/color"
 import add_people from "resources/icons/add_people.svg"
 import PeopleCard from "components/PeopleCard/PeopleCard"
-
+import { getInformationByPId } from "api/Project"
 import PeoplePopup from './components/PeoplePopup'
 import RolePopUp from './components/RolePopUp'
 
@@ -24,8 +24,21 @@ export default function ProjectDetail() {
 
     const [email, setEmail] = useState("")
 
-    
-    
+
+    useEffect(() => {
+        getInformationByPId(project_id)
+            .then(response => {
+                console.log(response.data)
+                // setPeopleListInProject(response.data)
+            })
+            .catch(
+                error => {
+                }
+            )
+
+
+    }, [])
+
 
     useEffect(() => {
         getListPeopleByProjectID(project_id)
@@ -37,44 +50,12 @@ export default function ProjectDetail() {
                 error => {
                 }
             )
-       
+
+
     }, [appendPeopleList])
 
-    return <div>
-        <div>
-            <PeoplePopup
-                show={showPeoplePopUp}
-                handleClose={() => {
-                    setshowPeoplePopUp(false)
-                }}
-                onComplete={() => {
-                    setAppendPeopleList(appendPeopleList + 1)
-                }}
-            />
-            <RolePopUp
-                PId={project_id}
-                show={showRolePopUp}
-                Email={email}
-                handleClose={() => {
-                    setshowRolePopUp(false)
-                }}
-            />
-            <div className='row mt-2 m-0 p-0'>
-                <h2 class="col-10  m-0 p-0" style={{ fontFamily: Poppins, color: deep_blue_primary, "font-weight": "bold", fontSize: "40px" }}>
-                    <div className='ms-4'>My team:</div>
-                </h2>
-                <div className='col-2 ml-auto m-0 p-0 text-right align-self-end'>
-                    <button class=" btn p-3 ms-5 " type="button" style={{ color: "white", backgroundColor: deep_blue_primary, borderRadius: "30px ", fontFamily: Poppins, fontSize: 16 }} onClick={() => {
-                        setshowPeoplePopUp(true)
-                        //inviteMemberSubmit()
-                    }}><div className='d-flex'>
-                            <div className='d-flex justify-content-center me-2' style={{ color: "white", fontFamily: Poppins, fontSize: 17 }}>Invite People</div>
-                            <div className='d-flex justify-content-center'><img src={add_people} height="20px" width="20px" /></div>
-                        </div>
-                    </button>
-                </div>
-            </div>
-
+    const peopleComponent = () => {
+        return <div>
             <div className='rounded-5 bg-white'>
                 <div className='row m-0 p-0 bg-light'>
                     <div className='col-4 m-0 p-0 '>
@@ -102,7 +83,6 @@ export default function ProjectDetail() {
                             }
                             </div>
                         </div>
-
                     </div>
                     <div className='col-8 m-0 p-0' >
                         <div className='m-4 p-4 bg-white' style={{ height: "100%" }}>
@@ -129,11 +109,56 @@ export default function ProjectDetail() {
                             }
                             </div>
                         </div>
-
                     </div>
-
                 </div>
             </div>
+        </div>
+    }
+    const aboutComponent = () => {
+        return <div><h2 class="col-10  m-0 p-0" style={{ fontFamily: Poppins, color: deep_blue_primary, "font-weight": "bold", fontSize: "40px" }}>
+            <div className='ms-4'>About:</div>
+        </h2>
+            <div className='m-3 p-4  bg-white' style={{ height: "400px" }}>
+            </div></div>
+    }
+    return <div>
+        <div>
+            <PeoplePopup
+                show={showPeoplePopUp}
+                handleClose={() => {
+                    setshowPeoplePopUp(false)
+                }}
+                onComplete={() => {
+                    setAppendPeopleList(appendPeopleList + 1)
+                }}
+            />
+            <RolePopUp
+                PId={project_id}
+                show={showRolePopUp}
+                Email={email}
+                handleClose={() => {
+                    setshowRolePopUp(false)
+                }}
+            />
+            <div className='row mt-2 m-0 p-0'>
+                {aboutComponent()}
+                <h2 class="col-10  m-0 p-0" style={{ fontFamily: Poppins, color: deep_blue_primary, "font-weight": "bold", fontSize: "40px" }}>
+                    <div className='ms-4'>My team:</div>
+                </h2>
+                <div className='col-2 ml-auto m-0 p-0 text-right align-self-end'>
+                    <button class=" btn p-3 ms-5 " type="button" style={{ color: "white", backgroundColor: deep_blue_primary, borderRadius: "30px ", fontFamily: Poppins, fontSize: 16 }} onClick={() => {
+                        setshowPeoplePopUp(true)
+                        //inviteMemberSubmit()
+                    }}><div className='d-flex'>
+                            <div className='d-flex justify-content-center me-2' style={{ color: "white", fontFamily: Poppins, fontSize: 17 }}>Invite People</div>
+                            <div className='d-flex justify-content-center'><img src={add_people} height="20px" width="20px" /></div>
+                        </div>
+                    </button>
+                </div>
+
+            </div>
+            {peopleComponent()}
+
         </div>
 
     </div>;
