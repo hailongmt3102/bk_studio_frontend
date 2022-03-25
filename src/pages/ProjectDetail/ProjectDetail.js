@@ -159,14 +159,16 @@ export default function ProjectDetail() {
         return <div>
             <div className='row m-0 p-0 mt-3' >
                 <div className=' col-10' style={{ fontFamily: Poppins, color: deep_blue_primary, "font-weight": "bold", fontSize: "40px" }}>About:</div>
-                <div className='col-2 m-0 p-0 m-auto'>
-                    <button class="btn btn-primary btn-lg ms-5 p-3" 
-                        onClick={() => { EditProjectSubmit() }} 
-                        type="button" 
-                        style = {{backgroundColor: deep_blue_primary, borderRadius: "30px"}}
-                        >
-                        Save change
-                    </button>
+                <div className='col-2 m-0 p-0 m-auto text-right align-self-end'>
+                    <div className='ms-3'>
+                        <button class="btn btn-primary btn-lg ms-5 p-3 "
+                            onClick={() => { EditProjectSubmit() }}
+                            type="button"
+                            style = {{backgroundColor: deep_blue_primary, borderRadius: "30px"}}
+                            >
+                            Save change
+                        </button>
+                    </div>
                 </div>
             </div>
             <div className='m-3 p-4  bg-white' style={{ height: "350px" }}>
