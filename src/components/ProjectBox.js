@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Form, InputGroup, Col, Button, FormControl } from 'react-bootstrap'
 import ClockSvg from 'resources/icons/clock.svg'
 import MemberSvg from 'resources/icons/two_people.svg'
-
+import moment from 'moment';
 import three_dot from "resources/icons/three-dot.svg"
 import ThreeDotButton from 'components/ThreeDotButton'
 import DropdownWithIndex0 from 'components/DropdownWithIndex0'
@@ -17,10 +17,11 @@ import now_icon from 'resources/icons/status/now.svg'
 import { Roboto, Poppins } from "utils/font"
 import { updateStatus, deleteProject, editProject } from 'api/Project'
 
-import moment from 'moment';
+
 
 import { Store } from 'react-notifications-component'
 import { content } from "../utils/notification"
+
 import ConfirmDialog from "./ConfirmDialog";
 const orangeStyle = {
     color: "#FF7F0D",
@@ -48,7 +49,8 @@ export default function ProjectBox(props) {
         Id: props.data.Id,
         Status: props.data.Status,
     })
-    const [pressEdit, setpressEdit] = useState(false)
+  
+    
     const [projectInformation, setprojectInformation] = useState({
         Name: props.data.Name,
         StartTime: props.data.StartTime,
@@ -83,6 +85,7 @@ export default function ProjectBox(props) {
             })
 
     }
+    const [pressEdit, setpressEdit] = useState(false)
     const EditProjectSubmit = () => {
         editProject(props.data.Id, {
             ...projectInformation,
