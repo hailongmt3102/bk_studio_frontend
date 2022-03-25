@@ -98,7 +98,7 @@ export default function Profile() {
         <div>
 
             <h3 class="mt-3 mb-3 ms-5" style={{ fontFamily: Poppins, color: deep_blue_primary, "font-weight": "bold", fontSize: "40px" }}> Profile:</h3>
-            <div class="row r" style={{ height: 750 }}>
+            <div class="row rounded bg-white p-4 m-4" style={{ height: 750 }}>
                 <div class="col-2 me-5 ms-4 justify-content-center ">
                     <div class="mb-4 ms-5 mt-3">
                         <img src={people_default}  height="200px" width="200px" style={{ "border-radius": "50%" }} alt={avt} /></div>
