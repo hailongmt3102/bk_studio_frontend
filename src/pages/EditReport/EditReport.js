@@ -13,10 +13,10 @@ import align_justify from "resources/icons/align_justify.svg"
 import bold from "resources/icons/bold.svg"
 import underline from "resources/icons/underline.svg"
 import italic from "resources/icons/italic.svg"
-import TextField from '@mui/material/TextField';
+
 import Autocomplete from '@mui/material/Autocomplete';
 import { GetTableColumns, QueryData } from "api/DataSources"
-import BootstrapSelect from 'react-bootstrap-select-dropdown';
+
 import { Roboto, Poppins } from "../../utils/font"
 import SqlPopUp from "./components/SqlPopUp";
 

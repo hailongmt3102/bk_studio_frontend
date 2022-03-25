@@ -19,43 +19,9 @@ import people_default from "resources/icons/people_default.svg"
 import edit_grey from "resources/icons/edit_grey.svg";
 import Badge from '@mui/material/Badge';
 import Avatar from '@mui/material/Avatar';
+import Uploady, { useUploady } from "@rpldy/uploady";
 
 export default function Profile() {
-
-    const StyledBadge = styled(Badge)(({ theme }) => ({
-        '& .MuiBadge-badge': {
-            backgroundColor: '#44b700',
-            color: '#44b700',
-            boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
-            '&::after': {
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                width: '100%',
-                height: '100%',
-                borderRadius: '50%',
-                animation: 'ripple 1.2s infinite ease-in-out',
-                border: '1px solid currentColor',
-                content: '""',
-            },
-        },
-        '@keyframes ripple': {
-            '0%': {
-                transform: 'scale(.8)',
-                opacity: 1,
-            },
-            '100%': {
-                transform: 'scale(2.4)',
-                opacity: 0,
-            },
-        },
-    }));
-
-    // const SmallAvatar = styled(Avatar)(({ theme }) => ({
-    //     width: 100,
-    //     height: 100,
-    //     border: `2px solid ${theme.palette.background.paper}`,
-    // }));
 
     const navigate = useNavigate()
     useEffect(() => {
@@ -92,22 +58,12 @@ export default function Profile() {
 
     const submitUpdate = () => {
         console.log("chạy hàm update")
-        // console.log(
-        //     {
-        //         "UserName": information.UserName,
-        //         "RankAccount": information.RankAccount,
-        //         "Avatar": "",
-        //         "OverView": information.OverView,
-        //         "Company": information.Company,
-        //         "Gender": information.Gender,
-        //         "Address": information.Address,
-        //         "Birthday": "2000-12-04"
-        //     })
+        console.log(information)
         updateInformation(
             {
                 "UserName": information.UserName,
                 "RankAccount": information.RankAccount,
-                "Avatar": "information.Avatar",
+                "Avatar": information.Avatar,
                 "OverView": information.OverView,
                 "Company": information.Company,
                 "Gender": information.Gender,
@@ -116,11 +72,11 @@ export default function Profile() {
             }
         )
             .then((res) => {
-                console.log(res.data)
+                //console.log(res.data)
 
                 localStorage.setItem("username", information.UserName)
                 Store.addNotification(content("Success", "Updated information", "success"))
-                window.location.reload()
+                //window.location.reload()
                 return
             })
             .catch((e) => {
@@ -136,12 +92,14 @@ export default function Profile() {
         let reader = new FileReader();
         reader.readAsDataURL(files[0]);
 
-        reader.onload = (e) => {
-            setinformation({
-                ...information, Avatar: e.target.result
-            })
-            //console.log("img data", e.target.result)
-        }
+        // reader.onload = (e) => {
+           
+        //     //console.log("img data", e.target.result)
+        // }
+        setinformation({
+            ...information, Avatar: URL.createObjectURL(e.target.files[0]) 
+        })
+        console.log("file",URL.createObjectURL(e.target.files[0]))
     }
 
     const [pressEdit, setPressEdit] = useState(false)
@@ -152,17 +110,7 @@ export default function Profile() {
             <h3 class="mt-3 mb-3 ms-5" style={{ fontFamily: Poppins, color: deep_blue_primary, "font-weight": "bold", fontSize: "40px" }}> Profile:</h3>
             <div class="row rounded bg-white p-4 m-4" style={{ height: 750 }}>
                 <div class="col-2 me-5 ms-4 justify-content-center ">
-                    {pressEdit === true ?
-                        <div>
-                            <Form.Group controlId="formFile" className="mb-3" onChange={(e) => onChange(e)}>
-                                {/* <Form.Label>Default file input example</Form.Label> */}
-                                <Form.Control type="file" />
-                            </Form.Group>
-                            {/* <input type="file" name="file"  /> */}
 
-                        </div>
-                        : null
-                    }
                     <div class="mb-4 ms-5 mt-3" >
                         {/* <img src={information.Avatar}  style={{ "border-radius": "50%" }} alt={avt} /> */}
                         <Badge
@@ -171,19 +119,30 @@ export default function Profile() {
                             badgeContent={
                                 <img className='rounded-circle p-2' height="50px" width="50px"
                                     style={{ "backgroundColor": "#E5E5E5" }}
-                                    onClick={() => {setPressEdit(true) }} src={edit_grey}
+                                    onClick={() => { setPressEdit(true) }} src={edit_grey}
                                 />
                             }
                         >
-                            <img height="200px" width="200px" src={information.Avatar} />
+                            <img className='rounded-circle' height="200px" width="200px" src={information.Avatar} />
                         </Badge>
-                    </div>
 
-                    <div class="mt-2 ms-5 ">
-                        <button class=" btn sm mt-2 ms-4 p-3" type="button" style={{ color: "white", backgroundColor: "#FF7F0D", borderRadius: "30px ", fontFamily: Poppins, fontSize: 14 }} onClick={() => navigate("/account/changePassword")}>
-                            Change Password
-                        </button>
                     </div>
+                    {pressEdit === true ?
+                        <div>
+                            <Form.Group controlId="formFile" className="ms-3" onChange={(e) => onChange(e)}>
+                                {/* <Form.Label>Default file input example</Form.Label> */}
+                                <Form.Control type="file" />
+                            </Form.Group>
+                            {/* <input type="file" name="file"  /> */}
+
+                        </div>
+                        : < div class="mt-2 ms-5 ">
+                            <button class=" btn sm mt-2 ms-4 p-3" type="button" style={{ color: "white", backgroundColor: "#FF7F0D", borderRadius: "30px ", fontFamily: Poppins, fontSize: 14 }} onClick={() => navigate("/account/changePassword")}>
+                                Change Password
+                            </button>
+                        </div>
+                    }
+
                 </div>
                 <div class="ms-5 col-8">
                     <div class=" justify-content-start align-items-center py-2">
@@ -314,6 +273,6 @@ export default function Profile() {
 
 
 
-        </div>
+        </div >
     )
 }
