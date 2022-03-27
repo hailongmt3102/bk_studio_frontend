@@ -327,7 +327,7 @@ export default function EditReport(props) {
                         <MenuBar showSqlPopUpFunction={showSqlPopUpFunction} />
 
                         <ToolBar
-                            saveAsACopy={() => createCopyReport()}
+                            
                         />
                         <div className="m-2 content">
                             <Content components={components} />
