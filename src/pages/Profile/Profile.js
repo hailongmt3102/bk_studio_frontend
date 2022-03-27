@@ -53,7 +53,6 @@ export default function Profile() {
         Address: "",
         Birthday: "",
         Position: ""
-
     })
 
     const submitUpdate = () => {

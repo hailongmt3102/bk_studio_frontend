@@ -13,16 +13,22 @@ import PeopleCardMini from 'components/PeopleCardMini/PeopleCardMini'
 
 import { editPeopleRoleWithProject } from "../../../api/Project"
 
-import {Store} from 'react-notifications-component'
-import {content} from "utils/notification"
+import { Store } from 'react-notifications-component'
+import { content } from "utils/notification"
 
 import { getListPeopleByProjectID } from '../../../api/People'
+import { getRoleListOfAPeople } from "api/Project"
 const orangeStyle = {
     color: "black",
     fontFamily: Poppins
 }
 
+
+
 export default function RolePopUp(props) {
+
+
+
 
 
     const [role_list, setRole_list] = useState(["Invite",
@@ -38,25 +44,50 @@ export default function RolePopUp(props) {
         Permission: []
     })
 
+    const [dataToGetListRole, setDataToGetListRole] = useState({
+        Email: "",
+        Id: 0
+    })
+
+    // useEffect(() => {
+        
+    // }, [props.Email])
+
+
     useEffect(() => {
-         setData({
-            Email: props.Email, 
+        setData({
+            Email: props.Email,
             Permission: tmp_list
         })
-    },[props.Email])
-    
+        setDataToGetListRole(
+            {
+                Email: props.Email,
+                Id: props.PId
+            }
+        )
+        
+    }, [props.Email])
+
 
     const [tmp_list, setTmp_list] = useState([])
 
 
     const onsubmit = () => {
         console.log(data)
+        getRoleListOfAPeople(dataToGetListRole)
+            .then(response => {
+                console.log("getRoleList", response.data)
+            })
+            .catch(
+                error => {
+                }
+            )
         editPeopleRoleWithProject(props.PId, data)
             .then(response => {
                 console.log(response.data)
                 Store.addNotification(content("Success", "Editted role", "success"))
                 props.handleClose()
-                
+
             })
             .catch(
                 error => {
@@ -64,7 +95,7 @@ export default function RolePopUp(props) {
                     props.handleClose()
                 }
             )
-        
+
     }
     const body = () => {
         return (
