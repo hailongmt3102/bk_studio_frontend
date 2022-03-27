@@ -19,7 +19,7 @@ import people_default from "resources/icons/people_default.svg"
 import edit_grey from "resources/icons/edit_grey.svg";
 import Badge from '@mui/material/Badge';
 import Avatar from '@mui/material/Avatar';
-import Uploady, { useUploady } from "@rpldy/uploady";
+
 
 export default function Profile() {
 

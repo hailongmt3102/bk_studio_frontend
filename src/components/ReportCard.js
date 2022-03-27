@@ -16,7 +16,7 @@ export default function ReportCard(props) {
     const editReport = (Id) => {
         nav(`${Id}/edit`)
     }
-    const option_list = ["Share", "Edit", "Download", "Delete"]
+    const option_list = ["Share", "Edit information", "Download", "Delete"]
 
     const [heart, setHeart] = useState(false)
 
