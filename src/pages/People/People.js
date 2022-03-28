@@ -62,7 +62,7 @@ export default function People() {
                                     else {
                                         if (ele.Position !== "Manager") return null
                                         return <div class="d-flex p-2"> <PeopleCard
-                                        position={ele.Position}
+                                            position={ele.Position}
                                             name={ele.UserName}
                                             email={ele.Email}
                                             avatar={ele.Avatar}
@@ -86,13 +86,30 @@ export default function People() {
                     <div className='col-8 m-0 p-0' >
                         <div className='m-4 p-4 bg-white' style={{ height: "100%" }}>
                             <h1 style={{ fontFamily: Poppins, color: blue_cloud, "font-weight": "bold" }}>Member</h1>
-                            <div className='row ms-3'>{
-                                people.map((ele, index) => {
-                                    if (ele.Email === getEmail) {
-                                        if (ele.Position !== "Member") return null
+                            <div className='row ms-3'>
+                                {
+                                    people.map((ele, index) => {
+                                        if (ele.Email === getEmail) {
+                                            if (ele.Position !== "Member") return null
+                                            else {
+                                                return <PeopleCard
+                                                    position={ele.Position}
+                                                    name={ele.UserName}
+                                                    email={ele.Email}
+                                                    avatar={ele.Avatar}
+                                                    rank={ele.RankAccount}
+                                                    birthday={ele.Birthday.substring(0, 10).split('-').reverse().join('-')}
+                                                    gender={ele.Gender}
+                                                    isManager={false}
+                                                    showThreeDotButton={false}
+                                                    isMe={true}
+                                                />
+                                            }
+                                        }
                                         else {
-                                            return <PeopleCard
-                                            position={ele.Position}
+                                            if (ele.Position !== "Member") return null
+                                            return <div class="col"> <PeopleCard
+                                                position={ele.Position}
                                                 name={ele.UserName}
                                                 email={ele.Email}
                                                 avatar={ele.Avatar}
@@ -101,32 +118,13 @@ export default function People() {
                                                 gender={ele.Gender}
                                                 isManager={false}
                                                 showThreeDotButton={false}
-                                                isMe={true}
-
+                                                isMe={false}
                                             />
+                                            </div>
                                         }
-                                    }
-                                    else {
-                                        if (ele.Position !== "Member") return null
-                                        return <div class="d-flex p-2"> <PeopleCard
-                                        position={ele.Position}
-                                            name={ele.UserName}
-                                            email={ele.Email}
-                                            avatar={ele.Avatar}
-                                            rank={ele.RankAccount}
-                                            birthday={ele.Birthday.substring(0, 10).split('-').reverse().join('-')}
-                                            gender={ele.Gender}
-                                            isManager={false}
-                                            showThreeDotButton={false}
-                                            isMe={false}
-                                        />
-                                        </div>
+                                    })
+                                }
 
-                                    }
-
-
-                                })
-                            }
                             </div>
                         </div>
 

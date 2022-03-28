@@ -120,7 +120,7 @@ export default function PeopleCard(props) {
         <div>
             <ConfirmDialog
                 confirmDialog={confirmDialog}
-                title="Are you sure you want to delete this project?"
+                title="Are you sure you want to delete this member?"
                 handleCloseYes={() => handleCloseYes()}
                 handleCloseNo={() => handleCloseNo()}
             />
