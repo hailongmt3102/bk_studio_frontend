@@ -40,7 +40,8 @@ export default function PeopleCard(props) {
         <div className={props.isManager ? "m-4 peoplecard manager" : "m-4 peoplecard member"} onClick={props.onClick}>
             <div className='row  m-0'>
                 {!props.isManager ? <div className='d-flex m-0 p-0 justify-content-end'>
-                    <ThreeDotButton title={'adđ'} items={option_list} icons_list={icons_list} icon={three_dot} onClick={(val) => {
+                   
+                   {props.showThreeDotButton ? <ThreeDotButton title={'adđ'} items={option_list} icons_list={icons_list} icon={three_dot} onClick={(val) => {
                         if (val === "Edit role")
                             props.getEmail()
                             console.log("show di")
@@ -53,7 +54,8 @@ export default function PeopleCard(props) {
                         //     setPressRename(true)
                         //     RenameProjectSubmit()
                         //}
-                    }} />
+                    }} />:<div className='row mt-3'></div>
+                }
 
                 </div> :
                     <div className='row mt-4'>

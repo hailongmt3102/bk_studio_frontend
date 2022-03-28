@@ -17,8 +17,7 @@ const textStyle = {
 export default function People() {
 
     let getEmail = localStorage.getItem("email") ?? ""
-    console.log(getEmail)
-    const [findMe, setFindMe] = useState(false)
+    //console.log(getEmail)
     const [people, setPeople] = useState([])
     useEffect(() => {
         // get list people
@@ -54,6 +53,7 @@ export default function People() {
                                             birthday={ele.Birthday.substring(0, 10).split('-').reverse().join('-')}
                                             gender={ele.Gender}
                                             isManager={true}
+                                            showThreeDotButton={false}
                                         />
                                     }
                                     else {
@@ -66,6 +66,7 @@ export default function People() {
                                             birthday={ele.Birthday.substring(0, 10).split('-').reverse().join('-')}
                                             gender={ele.Gender}
                                             isManager={true}
+                                            showThreeDotButton={false}
                                         />
                                         </div>
 
@@ -92,6 +93,7 @@ export default function People() {
                                             birthday={ele.Birthday.substring(0, 10).split('-').reverse().join('-')}
                                             gender={ele.Gender}
                                             isManager={false}
+                                            showThreeDotButton={false}
                                         />
                                     }
                                     else {
@@ -105,6 +107,7 @@ export default function People() {
                                             birthday={ele.Birthday.substring(0, 10).split('-').reverse().join('-')}
                                             gender={ele.Gender}
                                             isManager={false}
+                                            showThreeDotButton={false}
                                         />
                                     }
 

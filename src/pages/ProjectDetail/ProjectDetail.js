@@ -30,11 +30,11 @@ import excel_icon from "resources/icons/excel_icon.svg"
 import three_dot from "resources/icons/three-dot.svg"
 import { orange } from "../../utils/color"
 import ThreeDotButton from 'components/ThreeDotButton'
-
+import MeCard from "components/PeopleCard/MeCard"
 
 import { GetDataSourcesListInformation } from '../../api/DataSources'
 export default function ProjectDetail() {
-
+    let getEmail = localStorage.getItem("email") ?? ""
     var location = useLocation()
     var navigate = useNavigate()
     const array = location.pathname.split("/");
@@ -109,13 +109,9 @@ export default function ProjectDetail() {
                             <h1 className='row ' style={{ fontFamily: Poppins, color: blue_cloud, "font-weight": "bold" }}>Manager</h1>
                             <div class="p-2"> {
                                 peopleInProject.map((ele, index) => {
-                                    if (ele.Position !== "Manager") return null
-                                    return <div class="d-flex p-2">
-                                        <PeopleCard
-                                            onClick={() => {
-                                            }}
-                                            data={ele}
-                                            setshowRolePopUp={() => setshowRolePopUp(true)}
+                                    if (ele.Email === getEmail) {
+                                        //setFindMe(true)
+                                        return <MeCard
                                             name={ele.UserName}
                                             email={ele.Email}
                                             avatar={ele.Avatar}
@@ -123,8 +119,30 @@ export default function ProjectDetail() {
                                             birthday={ele.Birthday.substring(0, 10).split('-').reverse().join('-')}
                                             gender={ele.Gender}
                                             isManager={true}
+                                            showThreeDotButton={true}
                                         />
-                                    </div>
+                                    }
+                                    else {
+                                        if (ele.Position !== "Manager") return null
+                                        return <div class="d-flex p-2">
+
+                                            <PeopleCard
+                                                onClick={() => {
+                                                }}
+                                                data={ele}
+                                                setshowRolePopUp={() => setshowRolePopUp(true)}
+                                                name={ele.UserName}
+                                                email={ele.Email}
+                                                avatar={ele.Avatar}
+                                                rank={ele.RankAccount}
+                                                birthday={ele.Birthday.substring(0, 10).split('-').reverse().join('-')}
+                                                gender={ele.Gender}
+                                                isManager={true}
+                                                showThreeDotButton={true}
+                                            />
+                                        </div>
+                                    }
+
                                 })
                             }
                             </div>
@@ -135,22 +153,39 @@ export default function ProjectDetail() {
                             <h1 style={{ fontFamily: Poppins, color: blue_cloud, "font-weight": "bold" }}>Member</h1>
                             <div className='row ms-3'>{
                                 peopleInProject.map((ele, index) => {
-                                    if (ele.Position !== "Member") return null
-                                    return <PeopleCard
-                                        className="col"
-                                        onClick={() => {
-                                        }}
-                                        getEmail={() => setEmail(ele.Email)}
-                                        setshowRolePopUp={() => setshowRolePopUp(true)}
-                                        setdontshowRolePopUp={() => setshowRolePopUp(false)}
-                                        name={ele.UserName}
-                                        email={ele.Email}
-                                        rank={ele.RankAccount}
-                                        avatar={ele.Avatar}
-                                        birthday={ele.Birthday.substring(0, 10).split('-').reverse().join('-')}
-                                        gender={ele.Gender}
-                                        isManager={false}
-                                    />
+                                    if (ele.Email === getEmail) {
+                                        //setFindMe(true)
+                                        return <MeCard
+                                            name={ele.UserName}
+                                            email={ele.Email}
+                                            avatar={ele.Avatar}
+                                            rank={ele.RankAccount}
+                                            birthday={ele.Birthday.substring(0, 10).split('-').reverse().join('-')}
+                                            gender={ele.Gender}
+                                            isManager={false}
+                                            showThreeDotButton={true}
+                                        />
+                                    }
+                                    else {
+                                        if (ele.Position !== "Member") return null
+                                        return <PeopleCard
+                                            className="col"
+                                            onClick={() => {
+                                            }}
+                                            getEmail={() => setEmail(ele.Email)}
+                                            setshowRolePopUp={() => setshowRolePopUp(true)}
+                                            setdontshowRolePopUp={() => setshowRolePopUp(false)}
+                                            name={ele.UserName}
+                                            email={ele.Email}
+                                            rank={ele.RankAccount}
+                                            avatar={ele.Avatar}
+                                            birthday={ele.Birthday.substring(0, 10).split('-').reverse().join('-')}
+                                            gender={ele.Gender}
+                                            isManager={false}
+                                            showThreeDotButton={true}
+                                        />
+                                    }
+
                                 })
                             }
                             </div>
@@ -316,11 +351,11 @@ export default function ProjectDetail() {
                         datasourceslist.map((ele) => {
                             return <div className='col-3 ms-4 mt-3 pt-2 mb-5' style={{ "height": "200px", width: "400px", "border-radius": "20px", "backgroundColor": "#F7F7F7" }}>
                                 <div className='row ms-3' style={{ "paddingLeft": "310px" }}>
-                                    <ThreeDotButton title={'adđ'} 
-                                    items={option_list} 
-                                    icon={three_dot} 
-                                    icons_list={[share_blue, edit, download_blue, delete_icon]}
-                                    onClick={(val) => { }} />
+                                    <ThreeDotButton title={'adđ'}
+                                        items={option_list}
+                                        icon={three_dot}
+                                        icons_list={[share_blue, edit, download_blue, delete_icon]}
+                                        onClick={(val) => { }} />
                                 </div>
                                 <div className="row m-0 p-0">
                                     <div className="col-2 m-0 p-0 d-flex" style={{ fontFamily: "Roboto" }}>

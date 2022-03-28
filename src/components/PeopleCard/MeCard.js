@@ -40,7 +40,7 @@ export default function MeCard(props) {
         <div className="m-4 peoplecard me"  onClick={props.onClick}>
             <div className='row  m-0'>
                 {!props.isManager ? <div className='d-flex m-0 p-0 justify-content-end'>
-                    <ThreeDotButton title={'adđ'} items={option_list} icons_list={icons_list} icon={three_dot} onClick={(val) => {
+                    {props.showThreeDotButton?<ThreeDotButton title={'adđ'} items={option_list} icons_list={icons_list} icon={three_dot} onClick={(val) => {
                         if (val === "Edit role")
                             props.getEmail()
                             console.log("show di")
@@ -54,6 +54,8 @@ export default function MeCard(props) {
                         //     RenameProjectSubmit()
                         //}
                     }} />
+                    :<div className='row mt-3'></div>
+                    }
 
                 </div> :
                     <div className='row mt-4'>
