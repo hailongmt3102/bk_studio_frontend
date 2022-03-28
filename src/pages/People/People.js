@@ -8,7 +8,7 @@ import tick from "resources/icons/tick.svg"
 
 import PeopleCard from "components/PeopleCard/PeopleCard"
 
-import MeCard from "components/PeopleCard/MeCard"
+
 import { getListPeople } from '../../api/People'
 
 const textStyle = {
@@ -42,23 +42,27 @@ export default function People() {
                             <h1 className='row ' style={{ fontFamily: Poppins, color: blue_cloud, "font-weight": "bold" }}>Manager</h1>
                             <div class="p-2"> {
                                 people.map((ele, index) => {
-
                                     if (ele.Email === getEmail) {
-                                        //setFindMe(true)
-                                        return <MeCard
-                                            name={ele.UserName}
-                                            email={ele.Email}
-                                            avatar={ele.Avatar}
-                                            rank={ele.RankAccount}
-                                            birthday={ele.Birthday.substring(0, 10).split('-').reverse().join('-')}
-                                            gender={ele.Gender}
-                                            isManager={true}
-                                            showThreeDotButton={false}
-                                        />
+                                        if (ele.Position !== "Manager") return null
+                                        else {
+                                            return <PeopleCard
+                                                position={ele.Position}
+                                                name={ele.UserName}
+                                                email={ele.Email}
+                                                avatar={ele.Avatar}
+                                                rank={ele.RankAccount}
+                                                birthday={ele.Birthday.substring(0, 10).split('-').reverse().join('-')}
+                                                gender={ele.Gender}
+                                                isManager={true}
+                                                showThreeDotButton={false}
+                                                isMe={true}
+                                            />
+                                        }
                                     }
                                     else {
                                         if (ele.Position !== "Manager") return null
                                         return <div class="d-flex p-2"> <PeopleCard
+                                        position={ele.Position}
                                             name={ele.UserName}
                                             email={ele.Email}
                                             avatar={ele.Avatar}
@@ -67,6 +71,7 @@ export default function People() {
                                             gender={ele.Gender}
                                             isManager={true}
                                             showThreeDotButton={false}
+                                            isMe={false}
                                         />
                                         </div>
 
@@ -84,32 +89,41 @@ export default function People() {
                             <div className='row ms-3'>{
                                 people.map((ele, index) => {
                                     if (ele.Email === getEmail) {
-                                        //setFindMe(true)
-                                        return <MeCard
-                                            name={ele.UserName}
-                                            email={ele.Email}
-                                            avatar={ele.Avatar}
-                                            rank={ele.RankAccount}
-                                            birthday={ele.Birthday.substring(0, 10).split('-').reverse().join('-')}
-                                            gender={ele.Gender}
-                                            isManager={false}
-                                            showThreeDotButton={false}
-                                        />
+                                        if (ele.Position !== "Member") return null
+                                        else {
+                                            return <PeopleCard
+                                            position={ele.Position}
+                                                name={ele.UserName}
+                                                email={ele.Email}
+                                                avatar={ele.Avatar}
+                                                rank={ele.RankAccount}
+                                                birthday={ele.Birthday.substring(0, 10).split('-').reverse().join('-')}
+                                                gender={ele.Gender}
+                                                isManager={false}
+                                                showThreeDotButton={false}
+                                                isMe={true}
+
+                                            />
+                                        }
                                     }
                                     else {
                                         if (ele.Position !== "Member") return null
-                                        return <PeopleCard
-                                            className="col"
+                                        return <div class="d-flex p-2"> <PeopleCard
+                                        position={ele.Position}
                                             name={ele.UserName}
                                             email={ele.Email}
-                                            rank={ele.RankAccount}
                                             avatar={ele.Avatar}
+                                            rank={ele.RankAccount}
                                             birthday={ele.Birthday.substring(0, 10).split('-').reverse().join('-')}
                                             gender={ele.Gender}
                                             isManager={false}
                                             showThreeDotButton={false}
+                                            isMe={false}
                                         />
+                                        </div>
+
                                     }
+
 
                                 })
                             }

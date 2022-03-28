@@ -8,27 +8,55 @@ import three_dot from "resources/icons/three-dot.svg"
 import ThreeDotButton from 'components/ThreeDotButton'
 import delete_icon from 'resources/icons/delete.svg'
 import edit from 'resources/icons/edit.svg'
-import {canUpdatePermission} from "api/Project"
+import { canUpdatePermission, deleteMemberInAProject } from "api/Project"
+
+import { Store } from 'react-notifications-component'
+import { content } from "../../utils/notification"
+import ConfirmDialog from "../ConfirmDialog";
 const textStyle = {
     fontFamily: Roboto,
 }
 
+
+
+
 export default function PeopleCard(props) {
-    var location = useLocation()
-    const array = location.pathname.split("/");
-    var project_id = array[array.length - 1]
+    const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: '', subTitle: '' })
+    const handleCloseYes = () => {
+        deleteSubmit()
+        console.log("close ne")
+    }
+    const handleCloseNo = () => {
+        setConfirmDialog({ ...ConfirmDialog, isOpen: false })
+    }
+    const handleOpen = () => {
+        setConfirmDialog({ ...ConfirmDialog, isOpen: true })
+    }
     const option_list = ["Edit role", "Delete People"]
-    const [peopleCanEditRoleList,setPeopleCanEditRoleList]=useState(false)
+    const [peopleCanEditRoleList, setPeopleCanEditRoleList] = useState(false)
     useEffect(() => {
-        canUpdatePermission(project_id)
-        .then(res => {
-           setPeopleCanEditRoleList(true)
-        })
-        .catch(err => {
-            setPeopleCanEditRoleList(false)
-        })
+        canUpdatePermission(props.project_id)
+            .then(res => {
+                setPeopleCanEditRoleList(true)
+            })
+            .catch(err => {
+                setPeopleCanEditRoleList(false)
+                Store.addNotification(content("Error", "You can't edit role for this member", "danger"))
+                return
+            })
     }, [])
 
+
+    const deleteSubmit = () => {
+        deleteMemberInAProject(props.project_id, { Email: props.email })
+            .then(res => {
+                Store.addNotification(content("Success", "Deleted Member", "success"))
+                window.location.reload()
+            })
+            .catch(err => {
+                alert(err.data)
+            })
+    }
     const icons_list = [edit, delete_icon]
 
     // const [pressRename, setPressRename] = useState(false)
@@ -36,59 +64,77 @@ export default function PeopleCard(props) {
     //     Id: props.data.Id,
     //     Name: props.data.Name,
     // })
-    return (
-        <div className={props.isManager ? "m-4 peoplecard manager" : "m-4 peoplecard member"} onClick={props.onClick}>
-            <div className='row  m-0'>
-                {!props.isManager ? <div className='d-flex m-0 p-0 justify-content-end'>
-                   
-                   {props.showThreeDotButton ? <ThreeDotButton title={'adđ'} items={option_list} icons_list={icons_list} icon={three_dot} onClick={(val) => {
-                        if (val === "Edit role")
-                            props.getEmail()
-                            console.log("show di")
-                            if (peopleCanEditRoleList == true) {
-                                console.log("dang show ne")
-                                props.setshowRolePopUp();
-                            }
-                            else props.setdontshowRolePopUp()
-                        // else {
-                        //     setPressRename(true)
-                        //     RenameProjectSubmit()
-                        //}
-                    }} />:<div className='row mt-3'></div>
+
+    const component = () => {
+        return <div className='row  m-0'>
+            {!props.isManager ? <div className='d-flex m-0 p-0 justify-content-end'>
+                {props.showThreeDotButton ? <ThreeDotButton title={'adđ'} items={option_list} icons_list={icons_list} icon={three_dot} onClick={(val) => {
+                    if (val === "Edit role") {
+                        props.getEmail()
+                        console.log("show di")
+                        if (peopleCanEditRoleList == true) {
+                            console.log("dang show ne")
+                            props.setshowRolePopUp();
+                        }
+                        else props.setdontshowRolePopUp()
+                    }
+                    else {
+                        handleOpen()
+                    }
+                }} /> : <div className='row mt-3'></div>
                 }
-
-                </div> :
-                    <div className='row mt-4'>
-                    </div>
-                }
-                <div className='row p-2 m-0 p-0'>
-                    <div className='col-3 align-items-center'>
-                        {props.avatar === "" ?
-                            <img src={people_default} height="100px" width="100px" />
-                            : <img src={props.avatar} height="100px" width="100px" style={{ "border-radius": "50%" }} />}
-                    </div>
-
-
-                    <div className='col-9'>
-                        <div className='ms-5 mb-3'>
-                            <h2 style={{ textStyle, "fontWeight": "bold", fontSize: "30px" }}>
-                                {props.name}
-                            </h2>
-                            <div style={{ textStyle }}>
-                                Email: {props.email}
-                            </div>
-                            <div style={{ textStyle }}>
-                                Rank: {props.rank}
-                            </div>
-                            <div style={{ textStyle }}>
-                                Online: 6 hour later
-                            </div>
+            </div> :
+                <div className='row mt-4'>
+                </div>
+            }
+            <div className='row p-2 m-0 p-0'>
+                <div className='col-3 align-items-center'>
+                    {props.avatar === "" ?
+                        <img src={people_default} height="100px" width="100px" />
+                        : <img src={props.avatar} height="100px" width="100px" style={{ "border-radius": "50%" }} />}
+                </div>
+                <div className='col-9'>
+                    <div className='ms-5 mb-3'>
+                        <h2 style={{ textStyle, "fontWeight": "bold", fontSize: "30px" }}>
+                            {props.name}
+                        </h2>
+                        <div style={{ textStyle }}>
+                            Email: {props.email}
                         </div>
-
+                        <div style={{ textStyle }}>
+                            Rank: {props.rank}
+                        </div>
+                        <div style={{ textStyle }}>
+                            Online: 6 hour later
+                        </div>
+                        {/* <div style={{ textStyle }}>
+                           {props.position}
+                        </div> */}
                     </div>
-
                 </div>
             </div>
+        </div>
+    }
+    return (
+
+        <div>
+            <ConfirmDialog
+                confirmDialog={confirmDialog}
+                title="Are you sure you want to delete this project?"
+                handleCloseYes={() => handleCloseYes()}
+                handleCloseNo={() => handleCloseNo()}
+            />
+            {
+                props.isMe ? 
+                <div className="m-4 peoplecard me" onClick={props.onClick}>
+                    {component()}
+                </div>
+                :
+                <div className={props.isManager ? "m-4 peoplecard manager" : "m-4 peoplecard member"} onClick={props.onClick}>
+                    {component()}
+                </div>
+            }
+
         </div>
     )
 }

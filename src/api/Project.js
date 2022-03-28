@@ -39,6 +39,9 @@ const getInformationByPId = (id) => {
 const getRoleListOfAPeople = (data) => {
     return axiosClient.post('/project/getPermission', data)
 }
+const deleteMemberInAProject = (id, data) => {
+    return axiosClient.post('/project/'+id+'/deleteMember', data)
+}
 
 
 
@@ -52,5 +55,6 @@ export {
     editPeopleRoleWithProject,
     canUpdatePermission,
     getInformationByPId,
-    getRoleListOfAPeople
+    getRoleListOfAPeople,
+    deleteMemberInAProject
 }

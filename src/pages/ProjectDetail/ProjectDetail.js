@@ -30,7 +30,7 @@ import excel_icon from "resources/icons/excel_icon.svg"
 import three_dot from "resources/icons/three-dot.svg"
 import { orange } from "../../utils/color"
 import ThreeDotButton from 'components/ThreeDotButton'
-import MeCard from "components/PeopleCard/MeCard"
+
 
 import { GetDataSourcesListInformation } from '../../api/DataSources'
 export default function ProjectDetail() {
@@ -59,15 +59,13 @@ export default function ProjectDetail() {
     useEffect(() => {
         getInformationByPId(project_id)
             .then(response => {
-                console.log(response.data)
+                //console.log(response.data)
                 setprojectInformation(response.data)
             })
             .catch(
                 error => {
                 }
             )
-
-
     }, [])
 
     const [datasourceslist, setDatasourceslist] = useState([])
@@ -78,7 +76,7 @@ export default function ProjectDetail() {
         GetDataSourcesListInformation()
             .then(res => {
                 setDatasourceslist(res.data)
-                console.log(res.data)
+                //console.log(res.data)
             })
             .catch(err => {
                 console.log(err)
@@ -89,7 +87,7 @@ export default function ProjectDetail() {
     useEffect(() => {
         getListPeopleByProjectID(project_id)
             .then(response => {
-                //console.log(response.data)
+                console.log(response.data)
                 setPeopleListInProject(response.data)
             })
             .catch(
@@ -107,11 +105,12 @@ export default function ProjectDetail() {
                     <div className='col-4 m-0 p-0 '>
                         <div className='m-4 p-4 bg-white' style={{ height: "100%" }}>
                             <h1 className='row ' style={{ fontFamily: Poppins, color: blue_cloud, "font-weight": "bold" }}>Manager</h1>
-                            <div class="p-2"> {
+                            {/* <div class="p-2"> {
                                 peopleInProject.map((ele, index) => {
                                     if (ele.Email === getEmail) {
                                         //setFindMe(true)
-                                        return <MeCard
+                                        if (ele.Position === "Manager"){
+                                            return <MeCard
                                             name={ele.UserName}
                                             email={ele.Email}
                                             avatar={ele.Avatar}
@@ -120,16 +119,18 @@ export default function ProjectDetail() {
                                             gender={ele.Gender}
                                             isManager={true}
                                             showThreeDotButton={true}
+                                            project_id={project_id}
                                         />
+                                        }
+                                        else return null
+                                       
                                     }
                                     else {
                                         if (ele.Position !== "Manager") return null
                                         return <div class="d-flex p-2">
-
                                             <PeopleCard
                                                 onClick={() => {
                                                 }}
-                                                data={ele}
                                                 setshowRolePopUp={() => setshowRolePopUp(true)}
                                                 name={ele.UserName}
                                                 email={ele.Email}
@@ -139,54 +140,58 @@ export default function ProjectDetail() {
                                                 gender={ele.Gender}
                                                 isManager={true}
                                                 showThreeDotButton={true}
+                                                project_id={project_id}
                                             />
                                         </div>
                                     }
 
                                 })
                             }
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                     <div className='col-8 m-0 p-0' >
                         <div className='m-4 p-4 bg-white' style={{ height: "100%" }}>
                             <h1 style={{ fontFamily: Poppins, color: blue_cloud, "font-weight": "bold" }}>Member</h1>
                             <div className='row ms-3'>{
-                                peopleInProject.map((ele, index) => {
-                                    if (ele.Email === getEmail) {
-                                        //setFindMe(true)
-                                        return <MeCard
-                                            name={ele.UserName}
-                                            email={ele.Email}
-                                            avatar={ele.Avatar}
-                                            rank={ele.RankAccount}
-                                            birthday={ele.Birthday.substring(0, 10).split('-').reverse().join('-')}
-                                            gender={ele.Gender}
-                                            isManager={false}
-                                            showThreeDotButton={true}
-                                        />
-                                    }
-                                    else {
-                                        if (ele.Position !== "Member") return null
-                                        return <PeopleCard
-                                            className="col"
-                                            onClick={() => {
-                                            }}
-                                            getEmail={() => setEmail(ele.Email)}
-                                            setshowRolePopUp={() => setshowRolePopUp(true)}
-                                            setdontshowRolePopUp={() => setshowRolePopUp(false)}
-                                            name={ele.UserName}
-                                            email={ele.Email}
-                                            rank={ele.RankAccount}
-                                            avatar={ele.Avatar}
-                                            birthday={ele.Birthday.substring(0, 10).split('-').reverse().join('-')}
-                                            gender={ele.Gender}
-                                            isManager={false}
-                                            showThreeDotButton={true}
-                                        />
-                                    }
+                                // peopleInProject.map((ele, index) => {
+                                //     if (ele.Email === getEmail) {
+                                //         //setFindMe(true)
+                                //         if (ele.Position === "Member"){
+                                //             return <MeCard
+                                //             name={ele.UserName}
+                                //             email={ele.Email}
+                                //             avatar={ele.Avatar}
+                                //             rank={ele.RankAccount}
+                                //             birthday={ele.Birthday.substring(0, 10).split('-').reverse().join('-')}
+                                //             gender={ele.Gender}
+                                //             isManager={false}
+                                //             showThreeDotButton={true}
+                                //             project_id={project_id}
+                                //         />
+                                //         }
+                                //         else return null
+                                       
+                                //     }
+                                //     else {
+                                //         if (ele.Position !== "Member") return null
+                                //         return <PeopleCard
+                                //             className="col"
+                                //             setshowRolePopUp={() => setshowRolePopUp(true)}
+                                //             setdontshowRolePopUp={() => setshowRolePopUp(false)}
+                                //             name={ele.UserName}
+                                //             email={ele.Email}
+                                //             rank={ele.RankAccount}
+                                //             avatar={ele.Avatar}
+                                //             birthday={ele.Birthday.substring(0, 10).split('-').reverse().join('-')}
+                                //             gender={ele.Gender}
+                                //             isManager={false}
+                                //             showThreeDotButton={true}
+                                //             project_id={project_id}
+                                //         />
+                                //     }
 
-                                })
+                                // })
                             }
                             </div>
                         </div>

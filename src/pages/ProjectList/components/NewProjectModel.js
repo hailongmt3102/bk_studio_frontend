@@ -6,6 +6,9 @@ import { getListProject } from 'api/Project'
 import { Roboto, Poppins } from "utils/font"
 import {createNewProject} from 'api/Project'
 
+import { Store } from 'react-notifications-component'
+import { content } from "../../../utils/notification"
+
 
 const orangeStyle = {
     color: "black",
@@ -50,7 +53,7 @@ export default function NewProjectModel(props) {
         createNewProject(info)
         .then(res => {
             props.handleClose()
-            alert("Successful")
+            Store.addNotification(content("Successful", "Created a new project", "success"))
             props.onComplete()
         })
         .catch(err => {

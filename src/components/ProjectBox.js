@@ -77,7 +77,8 @@ export default function ProjectBox(props) {
 
         deleteProject(props.data.Id)
             .then((res) => {
-                //window.location.reload()
+                Store.addNotification(content("Successful", "Deleted Project", "success"))
+                window.location.reload()
             })
             .catch((e) => {
                 Store.addNotification(content("Error", "Delete Fail", "danger"))
