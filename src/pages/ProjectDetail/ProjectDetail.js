@@ -17,7 +17,7 @@ import MemberSvg from 'resources/icons/two_people.svg'
 import moment from 'moment';
 import { Store } from 'react-notifications-component'
 import { content } from "utils/notification"
-import { updateStatus, deleteProject, editProject } from 'api/Project'
+import { updateStatus, deleteProject, editProject, canUpdatePermission } from 'api/Project'
 
 
 import add_round from "resources/icons/add_round.svg"
@@ -30,6 +30,7 @@ import excel_icon from "resources/icons/excel_icon.svg"
 import three_dot from "resources/icons/three-dot.svg"
 import { orange } from "../../utils/color"
 import ThreeDotButton from 'components/ThreeDotButton'
+
 
 
 import { GetDataSourcesListInformation } from '../../api/DataSources'
@@ -56,6 +57,7 @@ export default function ProjectDetail() {
         Description: ""
     })
 
+    const [peopleCanEditRoleList, setPeopleCanEditRoleList] = useState(false)
     useEffect(() => {
         getInformationByPId(project_id)
             .then(response => {
@@ -66,6 +68,13 @@ export default function ProjectDetail() {
                 error => {
                 }
             )
+        canUpdatePermission(project_id)
+            .then(res => {
+                setPeopleCanEditRoleList(true)
+            })
+            .catch(err => {
+                setPeopleCanEditRoleList(false)
+            })
     }, [])
 
     const [datasourceslist, setDatasourceslist] = useState([])
@@ -121,6 +130,9 @@ export default function ProjectDetail() {
                                                 isManager={true}
                                                 showThreeDotButton={false}
                                                 isMe={true}
+                                                peopleCanEditRoleList={peopleCanEditRoleList}
+                                                setshowRolePopUp={() => { setshowRolePopUp(true) }}
+                                                setdontshowRolePopUp={() => { setshowRolePopUp(false) }}
                                             />
                                         }
                                     }
@@ -137,6 +149,9 @@ export default function ProjectDetail() {
                                             isManager={true}
                                             showThreeDotButton={false}
                                             isMe={false}
+                                            peopleCanEditRoleList={peopleCanEditRoleList}
+                                            setshowRolePopUp={() => { setshowRolePopUp(true) }}
+                                            setdontshowRolePopUp={() => { setshowRolePopUp(false) }}
                                         />
                                         </div>
 
@@ -167,6 +182,12 @@ export default function ProjectDetail() {
                                                 isManager={false}
                                                 showThreeDotButton={true}
                                                 isMe={true}
+                                                peopleCanEditRoleList={peopleCanEditRoleList}
+                                                setshowRolePopUp={() => { setshowRolePopUp(true) }}
+                                                setdontshowRolePopUp={() => {
+                                                    setshowRolePopUp(false)
+                                                    Store.addNotification(content("Warning", "You don't edit member's role because you also are member position", "warning"))
+                                                }}
 
                                             />
                                         }
@@ -185,6 +206,13 @@ export default function ProjectDetail() {
                                             isManager={false}
                                             showThreeDotButton={true}
                                             isMe={false}
+                                            peopleCanEditRoleList={peopleCanEditRoleList}
+                                            setshowRolePopUp={() => { setshowRolePopUp(true) }}
+                                            setdontshowRolePopUp={() => {
+                                                setshowRolePopUp(false)
+                                                Store.addNotification(content("Warning", "You don't edit member's role because you also are member position", "warning"))
+
+                                            }}
                                         />
                                         </div>
 

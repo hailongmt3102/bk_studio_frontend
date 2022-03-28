@@ -8,7 +8,7 @@ import three_dot from "resources/icons/three-dot.svg"
 import ThreeDotButton from 'components/ThreeDotButton'
 import delete_icon from 'resources/icons/delete.svg'
 import edit from 'resources/icons/edit.svg'
-import { canUpdatePermission, deleteMemberInAProject } from "api/Project"
+import {  deleteMemberInAProject } from "api/Project"
 
 import { Store } from 'react-notifications-component'
 import { content } from "../../utils/notification"
@@ -33,19 +33,8 @@ export default function PeopleCard(props) {
         setConfirmDialog({ ...ConfirmDialog, isOpen: true })
     }
     const option_list = ["Edit role", "Delete People"]
-    const [peopleCanEditRoleList, setPeopleCanEditRoleList] = useState(false)
-    useEffect(() => {
-        canUpdatePermission(props.project_id)
-            .then(res => {
-                setPeopleCanEditRoleList(true)
-            })
-            .catch(err => {
-                setPeopleCanEditRoleList(false)
-                Store.addNotification(content("Error", "You can't edit role for this member", "danger"))
-                return
-            })
-    }, [])
-
+    
+    
 
     const deleteSubmit = () => {
         deleteMemberInAProject(props.project_id, { Email: props.email })
@@ -54,7 +43,7 @@ export default function PeopleCard(props) {
                 window.location.reload()
             })
             .catch(err => {
-                alert(err.data)
+                Store.addNotification(content("Warning", "You don't delete member's role because you also are member position", "warning"))
             })
     }
     const icons_list = [edit, delete_icon]
@@ -70,16 +59,16 @@ export default function PeopleCard(props) {
             {!props.isManager ? <div className='d-flex m-0 p-0 justify-content-end'>
                 {props.showThreeDotButton ? <ThreeDotButton title={'adđ'} items={option_list} icons_list={icons_list} icon={three_dot} onClick={(val) => {
                     if (val === "Edit role") {
-                        props.getEmail()
-                        console.log("show di")
-                        if (peopleCanEditRoleList == true) {
+                        if (props.peopleCanEditRoleList == true) {
                             console.log("dang show ne")
                             props.setshowRolePopUp();
                         }
-                        else props.setdontshowRolePopUp()
+                        else {
+                            props.setdontshowRolePopUp()
+                        }
                     }
                     else {
-                        handleOpen()
+                        deleteSubmit()
                     }
                 }} /> : <div className='row mt-3'></div>
                 }
@@ -99,7 +88,7 @@ export default function PeopleCard(props) {
                             {props.name}
                         </h2>
                         <div style={{ textStyle }}>
-                            Email: {props.email}
+                            Email: {props.email.substring(0, 18)+"..."}
                         </div>
                         <div style={{ textStyle }}>
                             Rank: {props.rank}
