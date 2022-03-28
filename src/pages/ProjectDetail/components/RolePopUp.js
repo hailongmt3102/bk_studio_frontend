@@ -28,10 +28,8 @@ const orangeStyle = {
 export default function RolePopUp(props) {
 
 
-
-
-
-    const [role_list, setRole_list] = useState(["Invite",
+    const [show_list, setshow_list] = useState([
+        "Invite",
         "Import data to project",
         "Edit project information",
         "Delete project",
@@ -39,54 +37,67 @@ export default function RolePopUp(props) {
         "Delete member",
         "Edit member information"])
 
-    const [data, setData] = useState({
+
+    const [getList, setGetList] = useState([])
+
+    const [sendList, setSendList] = useState([])
+
+    useEffect(() => {
+        var array1 = show_list;
+        var array2 = getList;
+
+        for (var i = 0; i < array2.length; i++) {
+            var arrlen = array1.length;
+            for (var j = 0; j < arrlen; j++) {
+                if (array2[i] == array1[j]) {
+                    array1 = array1.slice(0, j).concat(array1.slice(j + 1, arrlen));
+                }
+            }
+        }
+        console.log("show nè", array1)
+        setshow_list(array1)
+    }, [getList])
+
+    const [dataToSend, setDataToSend] = useState({
         Email: "",
         Permission: []
     })
-
-    const [dataToGetListRole, setDataToGetListRole] = useState({
-        Email: "",
-        Id: 0
-    })
-
-    // useEffect(() => {
-        
-    // }, [props.Email])
-
-
     useEffect(() => {
-        setData({
+        getRoleListOfAPeople({
             Email: props.Email,
-            Permission: tmp_list
+            Id: props.PId
         })
-        setDataToGetListRole(
-            {
-                Email: props.Email,
-                Id: props.PId
-            }
-        )
-        
+            .then(res => {
+                setGetList(res.data)
+                console.log( res.data)
+            })
+            .catch(err => {
+
+            })
     }, [props.Email])
 
+    useEffect(() => {
 
-    const [tmp_list, setTmp_list] = useState([])
+        setDataToSend(
+            {
+                Email: props.Email,
+                Permission: sendList
+            }
+        )
+    }, [sendList,props.Email])
+
+
+
 
 
     const onsubmit = () => {
-        console.log(data)
-        getRoleListOfAPeople(dataToGetListRole)
-            .then(response => {
-                console.log("getRoleList", response.data)
-            })
-            .catch(
-                error => {
-                }
-            )
-        editPeopleRoleWithProject(props.PId, data)
+        console.log("gui len", dataToSend)
+        editPeopleRoleWithProject(props.PId, dataToSend)
             .then(response => {
                 console.log(response.data)
                 Store.addNotification(content("Success", "Editted role", "success"))
                 props.handleClose()
+                window.location.reload()
 
             })
             .catch(
@@ -101,7 +112,7 @@ export default function RolePopUp(props) {
         return (
             <div>
                 {
-                    role_list.map((ele) => {
+                    show_list.map((ele) => {
                         return <div className='row mt-2'>
                             <div className='col-1'>
                                 <input
@@ -110,19 +121,19 @@ export default function RolePopUp(props) {
                                     id="form2Example3c"
                                     onClick={(e) => {
                                         if (e.target.checked === true) {
-                                            if (!tmp_list.includes(ele))
-                                                tmp_list.push(ele)
-                                            console.log(tmp_list)
+                                            if (!sendList.includes(ele))
+                                                sendList.push(ele)
+                                            console.log(sendList)
                                         }
                                         else if (e.target.checked === false) {
-                                            if (tmp_list.includes(ele)) {
-                                                for (var i = tmp_list.length - 1; i >= 0; i--) {
-                                                    if (tmp_list[i] === ele) {
-                                                        tmp_list.splice(i, 1);
+                                            if (sendList.includes(ele)) {
+                                                for (var i = sendList.length - 1; i >= 0; i--) {
+                                                    if (sendList[i] === ele) {
+                                                        sendList.splice(i, 1);
                                                     }
                                                 }
                                             }
-                                            console.log(tmp_list)
+                                            console.log(sendList)
                                         }
                                     }}
                                 />

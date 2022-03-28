@@ -96,7 +96,7 @@ export default function ProjectDetail() {
     useEffect(() => {
         getListPeopleByProjectID(project_id)
             .then(response => {
-                console.log(response.data)
+                //console.log(response.data)
                 setPeopleListInProject(response.data)
             })
             .catch(
@@ -183,11 +183,14 @@ export default function ProjectDetail() {
                                                 showThreeDotButton={true}
                                                 isMe={true}
                                                 peopleCanEditRoleList={peopleCanEditRoleList}
-                                                setshowRolePopUp={() => { setshowRolePopUp(true) }}
+                                                setshowRolePopUp={() => {
+                                                    setshowRolePopUp(true)
+                                                }}
                                                 setdontshowRolePopUp={() => {
                                                     setshowRolePopUp(false)
                                                     Store.addNotification(content("Warning", "You don't edit member's role because you also are member position", "warning"))
                                                 }}
+                                                getEmail = {()=>{setEmail(ele.Email)}}
 
                                             />
                                         }
@@ -207,12 +210,15 @@ export default function ProjectDetail() {
                                             showThreeDotButton={true}
                                             isMe={false}
                                             peopleCanEditRoleList={peopleCanEditRoleList}
-                                            setshowRolePopUp={() => { setshowRolePopUp(true) }}
+                                            setshowRolePopUp={() => {
+                                                setshowRolePopUp(true)
+                                            }}
                                             setdontshowRolePopUp={() => {
                                                 setshowRolePopUp(false)
                                                 Store.addNotification(content("Warning", "You don't edit member's role because you also are member position", "warning"))
 
                                             }}
+                                            getEmail = {()=>{setEmail(ele.Email)}}
                                         />
                                         </div>
 

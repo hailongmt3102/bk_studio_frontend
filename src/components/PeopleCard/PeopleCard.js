@@ -60,7 +60,7 @@ export default function PeopleCard(props) {
                 {props.showThreeDotButton ? <ThreeDotButton title={'adđ'} items={option_list} icons_list={icons_list} icon={three_dot} onClick={(val) => {
                     if (val === "Edit role") {
                         if (props.peopleCanEditRoleList == true) {
-                            console.log("dang show ne")
+                            props.getEmail()
                             props.setshowRolePopUp();
                         }
                         else {
