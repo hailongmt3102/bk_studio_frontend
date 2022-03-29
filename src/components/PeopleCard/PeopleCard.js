@@ -67,7 +67,7 @@ export default function PeopleCard(props) {
                             props.setdontshowRolePopUp()
                         }
                     }
-                    else {
+                    else if (val === "Delete People") {
                         deleteSubmit()
                     }
                 }} /> : <div className='row mt-3'></div>

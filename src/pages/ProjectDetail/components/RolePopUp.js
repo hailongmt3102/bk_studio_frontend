@@ -69,7 +69,7 @@ export default function RolePopUp(props) {
         })
             .then(res => {
                 setGetList(res.data)
-                console.log( res.data)
+                console.log("List quyền", res.data)
             })
             .catch(err => {
 
@@ -97,7 +97,7 @@ export default function RolePopUp(props) {
                 console.log(response.data)
                 Store.addNotification(content("Success", "Editted role", "success"))
                 props.handleClose()
-                window.location.reload()
+                //window.location.reload()
 
             })
             .catch(

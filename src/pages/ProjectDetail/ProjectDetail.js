@@ -190,7 +190,8 @@ export default function ProjectDetail() {
                                                     setshowRolePopUp(false)
                                                     Store.addNotification(content("Warning", "You don't edit member's role because you also are member position", "warning"))
                                                 }}
-                                                getEmail = {()=>{setEmail(ele.Email)}}
+                                                getEmail = {()=>{
+                                                    setEmail(ele.Email)}}
 
                                             />
                                         }
@@ -218,7 +219,8 @@ export default function ProjectDetail() {
                                                 Store.addNotification(content("Warning", "You don't edit member's role because you also are member position", "warning"))
 
                                             }}
-                                            getEmail = {()=>{setEmail(ele.Email)}}
+                                            getEmail = {()=>{
+                                                setEmail(ele.Email)}}
                                         />
                                         </div>
 
