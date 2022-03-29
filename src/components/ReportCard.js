@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { Form } from 'react-bootstrap'
 import default_report_img from "../resources/icons/default_report_img.svg"
 import heart_img from "../resources/icons/heart.svg"
 import hearted from "../resources/icons/hearted.svg"
@@ -12,7 +13,9 @@ import three_dot from "resources/icons/three-dot.svg"
 import { blue_cloud, deep_blue_primary } from "../utils/color"
 import { Store } from 'react-notifications-component'
 import { content } from "../utils/notification"
-import { like, unlike, deleteReport } from 'api/Report'
+import { like, unlike, deleteReport, updateReportInformation } from 'api/Report'
+
+import { Roboto, Poppins } from "utils/font"
 import ConfirmDialog from "components/ConfirmDialog";
 
 export default function ReportCard(props) {
@@ -28,13 +31,11 @@ export default function ReportCard(props) {
     const handleOpen = () => {
         setConfirmDialog({ ...ConfirmDialog, isOpen: true })
     }
+    const option_list = ["Share", "Edit information", "Download", "Delete"]
+    const icons_list = [share_blue, edit, download_blue, delete_icon]
     const nav = useNavigate()
     const RId = props.data.Id
     const currentProject = localStorage.getItem("currentProject")
-    useEffect(() => {
-
-    }, [])
-
     const [heart, setHeart] = useState(false)
     const likeSubmit = () => {
         if (currentProject != null) {
@@ -76,11 +77,26 @@ export default function ReportCard(props) {
             })
     }
 
-    const option_list = ["Share", "Edit information", "Download", "Delete"]
+    const [pressEdit, setPressEdit] = useState(false)
+    const [dataToUpdate, setDataToUpdate] = useState({
+        "Hastag": props.data.Hastag,
+        "Description": "",
+        "Name": props.data.Name
+    })
 
+    const updateSubmit = () => {
+        updateReportInformation(currentProject, RId, dataToUpdate)
+            .then(res => {
+                Store.addNotification(content("Success", "Updated Report Information", "success"))
+                window.location.reload()
+            })
+            .catch(err => {
+                Store.addNotification(content("Fail", "Fail update", "danger"))
+                console.log(err.response.data)
+                
+            })
+    }
 
-
-    const icons_list = [share_blue, edit, download_blue, delete_icon]
     return (
 
         <div>
@@ -110,6 +126,10 @@ export default function ReportCard(props) {
                             <ThreeDotButton title={'adđ'} items={option_list} icons_list={icons_list} icon={three_dot} onClick={(val) => {
                                 if (val === 'Delete')
                                     handleOpen()
+                                else if (val === "Edit information") {
+                                    setPressEdit(true)
+                                    
+                                }
                                 // else {
                                 //     setPressRename(true)
                                 //     RenameProjectSubmit()
@@ -119,12 +139,47 @@ export default function ReportCard(props) {
                     </div>
                     <div className='row ' >
                     </div>
-                    <div className='row mt-2' style={{ "color": deep_blue_primary, "fontSize": "28px", "fontWeight": "bold" }}>
-                        {props.data.Name}
-                    </div>
-                    <div className='row mb-2' style={{ "color": blue_cloud, "fontSize": "23px", "fontWeight": "bold" }}>
-                        {props.data.Hastag}
-                    </div>
+                    {
+                        pressEdit ?
+                            <div>
+                                <div className='row pe-4' style={{ maxHeight: "50px" }}>
+                                    <Form.Control size="sm" type="text" value={dataToUpdate.Name} onChange={(event) => {
+                                        setDataToUpdate({ ...dataToUpdate, Name: event.target.value })
+                                    }}
+                                        className="border-0"
+                                        style={{
+                                            fontSize: "28px",
+                                            fontFamily: Poppins,
+                                            "color": deep_blue_primary,
+                                            "fontWeight": "bold"
+                                        }}
+                                    />
+                                </div>
+                                <div className='row mt-1 pe-4' >
+                                    <Form.Control size="sm" type="text" value={dataToUpdate.Hastag} onChange={(event) => {
+                                        setDataToUpdate({ ...dataToUpdate, Hastag: event.target.value })
+                                    }}
+                                        className="border-0"
+                                        style={{
+                                            fontSize: "20px",
+                                            fontFamily: Poppins,
+                                            "color": blue_cloud,
+                                            "fontWeight": "bold"
+                                        }}
+                                    />
+                                </div>
+                            </div> :
+                            <div>
+                                <div className='row mt-2' style={{ "color": deep_blue_primary, "fontSize": "28px", "fontWeight": "bold" }}>
+                                    {props.data.Name}
+                                </div>
+                                <div className='row mb-2' style={{ "color": blue_cloud, "fontSize": "23px", "fontWeight": "bold" }}>
+                                    {props.data.Hastag}
+                                </div>
+                            </div>
+                    }
+
+
                     <div className='row mt-4'>
                         <p className='m-0 p-0'> <span style={{ "color": "#868585" }}>Id:</span> {props.data.Id} </p>
                     </div>
@@ -137,6 +192,15 @@ export default function ReportCard(props) {
                     <div className='row mt-2'>
                         <p className='m-0 p-0'> <span style={{ "color": "#868585" }}>  Modified Date:  </span>    {props.data.LastModified} </p>
                     </div>
+                    {
+                        pressEdit ?
+                            <div className='text-center row me-5  justify-content-center mt-3 mb-4'>
+                                <button onClick={() => {updateSubmit()}} type="button" class="btn btn-primary">
+                                    Save
+                                </button>
+                            </div>
+                            : null
+                    }
                 </div>
             </div >
         </div>

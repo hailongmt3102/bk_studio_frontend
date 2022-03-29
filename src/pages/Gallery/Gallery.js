@@ -8,6 +8,7 @@ import { deep_blue_primary } from "../../utils/color"
 import {Store} from 'react-notifications-component'
 import {content} from "../../utils/notification"
 
+
 export default function Gallery(props) {
 
     const [reports, setReports] = useState([])
