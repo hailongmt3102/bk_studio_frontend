@@ -20,8 +20,8 @@ import edit_grey from "resources/icons/edit_grey.svg";
 import Badge from '@mui/material/Badge';
 import Avatar from '@mui/material/Avatar';
 
-
 export default function Profile() {
+
 
     const navigate = useNavigate()
     useEffect(() => {
@@ -53,11 +53,22 @@ export default function Profile() {
         Address: "",
         Birthday: "",
         Position: ""
+
     })
 
     const submitUpdate = () => {
         console.log("chạy hàm update")
-        console.log(information)
+        // console.log(
+        //     {
+        //         "UserName": information.UserName,
+        //         "RankAccount": information.RankAccount,
+        //         "Avatar": "",
+        //         "OverView": information.OverView,
+        //         "Company": information.Company,
+        //         "Gender": information.Gender,
+        //         "Address": information.Address,
+        //         "Birthday": "2000-12-04"
+        //     })
         updateInformation(
             {
                 "UserName": information.UserName,
@@ -71,11 +82,11 @@ export default function Profile() {
             }
         )
             .then((res) => {
-                //console.log(res.data)
+                console.log(res.data)
 
                 localStorage.setItem("username", information.UserName)
                 Store.addNotification(content("Success", "Updated information", "success"))
-                //window.location.reload()
+                window.location.reload()
                 return
             })
             .catch((e) => {
@@ -91,14 +102,12 @@ export default function Profile() {
         let reader = new FileReader();
         reader.readAsDataURL(files[0]);
 
-        // reader.onload = (e) => {
-           
-        //     //console.log("img data", e.target.result)
-        // }
-        setinformation({
-            ...information, Avatar: URL.createObjectURL(e.target.files[0]) 
-        })
-        console.log("file",URL.createObjectURL(e.target.files[0]))
+        reader.onload = (e) => {
+            setinformation({
+                ...information, Avatar: e.target.result
+            })
+            //console.log("img data", e.target.result)
+        }
     }
 
     const [pressEdit, setPressEdit] = useState(false)

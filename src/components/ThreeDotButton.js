@@ -31,7 +31,7 @@ export default function ThreeDotButton(props) {
                 {
                     props.items.map((item, index) => {
                         return (
-                            <Dropdown.Item style={{ "width": "250px" }} key={index} eventKey={index} onClick={() => { props.onClick(item, index) }}>
+                            <Dropdown.Item style={{ "minWidth": "200px" }} key={index} eventKey={index} onClick={() => { props.onClick(item, index) }}>
                                 <div>
                                     {
                                         props.icons_list !== undefined ?
