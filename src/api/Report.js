@@ -22,11 +22,16 @@ const unlike = (PId, RId) => {
     return axiosClient.get(`/project/${PId}/${RId}/unfavorite`)
 }
 
+const deleteReport = (PId, RId) => {
+    return axiosClient.get(`/project/${PId}/${RId}/delete`)
+}
+
 export {
     createNewReport,
     getAllReport,
     getAllComponent,
     createNewComponent,
     like,
-    unlike
+    unlike,
+    deleteReport
 }
