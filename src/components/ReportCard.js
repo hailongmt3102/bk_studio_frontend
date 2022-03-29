@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import default_report_img from "../resources/icons/default_report_img.svg"
 import heart_img from "../resources/icons/heart.svg"
 import hearted from "../resources/icons/hearted.svg"
@@ -10,15 +10,51 @@ import share_blue from "resources/icons/share_blue.svg"
 import edit from 'resources/icons/edit.svg'
 import three_dot from "resources/icons/three-dot.svg"
 import { blue_cloud, deep_blue_primary } from "../utils/color"
+import { Store } from 'react-notifications-component'
+import { content } from "../utils/notification"
+import { like, unlike } from 'api/Report'
+
+
 
 export default function ReportCard(props) {
     const nav = useNavigate()
+    const RId = props.data.Id
+    const currentProject = localStorage.getItem("currentProject")
+    useEffect(() => {
+
+    }, [])
+
+    const [heart, setHeart] = useState(false)
+    const likeSubmit = () => {
+        if (currentProject != null) {
+            like(currentProject, RId)
+                .then(res => {
+                    setHeart(true)
+                })
+                .catch(err => {
+                    Store.addNotification(content("Warning", err.response.data, "danger"))
+                    return
+                })
+        }
+    }
+    const unlikeSubmit = () => {
+        if (currentProject != null) {
+            unlike(currentProject, RId)
+                .then(res => {
+                    setHeart(false)
+                })
+                .catch(err => {
+                    Store.addNotification(content("Warning", err.response.data, "danger"))
+                    return
+                })
+        }
+    }
     const editReport = (Id) => {
         nav(`${Id}/edit`)
     }
     const option_list = ["Share", "Edit information", "Download", "Delete"]
 
-    const [heart, setHeart] = useState(false)
+  
 
     const icons_list = [share_blue, edit, download_blue, delete_icon]
     return (
@@ -29,7 +65,18 @@ export default function ReportCard(props) {
             </div>
             <div className='col  m-0 p-0'>
                 <div class="d-flex flex-row-reverse me-3">
-                    <button type="button" class="btn btn-sm" onClick={() => {heart == true ? setHeart(false) : setHeart(true)}}><img src={heart == false? heart_img: hearted} height="20px" width="20px" /></button>
+                    <button type="button" class="btn btn-sm" onClick={()=> {
+                        if (heart === false) {
+                            likeSubmit()
+                            
+                        }
+                        else {
+                            unlikeSubmit()
+                            
+                        }
+                    }}>
+                        <img src={heart == false ? heart_img : hearted} height="20px" width="20px" />
+                    </button>
                     <div>
                         <ThreeDotButton title={'adđ'} items={option_list} icons_list={icons_list} icon={three_dot} onClick={(val) => {
                             // if (val === 'Delete Project')
@@ -54,16 +101,16 @@ export default function ReportCard(props) {
                     <p className='m-0 p-0'> <span style={{ "color": "#868585" }}>Id:</span> {props.data.Id} </p>
                 </div>
                 <div className='row mt-2'>
-                    <p className='m-0 p-0'> <span style={{"color": "#868585"}}>Created by:</span> {props.data.Author.slice(0, 20)}... </p>
+                    <p className='m-0 p-0'> <span style={{ "color": "#868585" }}>Created by:</span> {props.data.Author.slice(0, 20)}... </p>
                 </div>
                 <div className='row mt-2'>
-                <p className='m-0 p-0'> <span style={{ "color": "#868585" }}> Created Date: </span>  {props.data.CreateTime} </p>
+                    <p className='m-0 p-0'> <span style={{ "color": "#868585" }}> Created Date: </span>  {props.data.CreateTime} </p>
                 </div>
                 <div className='row mt-2'>
-                <p className='m-0 p-0'> <span style={{ "color": "#868585"}}>  Modified Date:  </span>    {props.data.LastModified} </p>
-                 
+                    <p className='m-0 p-0'> <span style={{ "color": "#868585" }}>  Modified Date:  </span>    {props.data.LastModified} </p>
+
                 </div>
             </div>
-        </div>
+        </div >
     )
 }

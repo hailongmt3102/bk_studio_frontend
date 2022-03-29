@@ -22,8 +22,8 @@ export default function Gallery(props) {
                     //console.log(res.data)
                     setReports(res.data)
                 })
-                .catch(res => {
-                    Store.addNotification(content("Warning", res.response.data, "danger"))
+                .catch(err => {
+                    Store.addNotification(content("Warning", err.response.data, "danger"))
                     return
                 })
         }

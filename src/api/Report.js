@@ -15,10 +15,18 @@ const getAllComponent = (PId, RId) => {
 const createNewComponent = (PId, RId, data) => {
     return axiosClient.post(`/project/${PId}/${RId}/insert`, data)
 }
+const like = (PId, RId) => {
+    return axiosClient.get(`/project/${PId}/${RId}/favorite`)
+}
+const unlike = (PId, RId) => {
+    return axiosClient.get(`/project/${PId}/${RId}/unfavorite`)
+}
 
 export {
     createNewReport,
     getAllReport,
     getAllComponent,
-    createNewComponent
+    createNewComponent,
+    like,
+    unlike
 }
