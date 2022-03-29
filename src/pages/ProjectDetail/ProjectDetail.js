@@ -7,6 +7,7 @@ import { Roboto, Poppins } from "../../utils/font"
 import { blue_cloud } from "../../utils/color"
 import { deep_blue_primary } from "../../utils/color"
 import add_people from "resources/icons/add_people.svg"
+import sendTo from "resources/icons/sendto.svg"
 import file_orange from "resources/icons/file_orange.svg"
 import PeopleCard from "components/PeopleCard/PeopleCard"
 import { getInformationByPId } from "api/Project"
@@ -78,7 +79,7 @@ export default function ProjectDetail() {
     }, [])
 
     const [datasourceslist, setDatasourceslist] = useState([])
-    const option_list = ["Share", "Edit", "Download", "Delete"]
+    const option_list = ["Send to Workspace","Edit information","Share", "Download", "Delete"]
     useEffect(() => {
         //console.log("Lấy data nè")
         // get list people
@@ -395,7 +396,7 @@ export default function ProjectDetail() {
                                     <ThreeDotButton title={'adđ'}
                                         items={option_list}
                                         icon={three_dot}
-                                        icons_list={[share_blue, edit, download_blue, delete_icon]}
+                                        icons_list={[sendTo,edit,share_blue, download_blue, delete_icon]}
                                         onClick={(val) => { }} />
                                 </div>
                                 <div className="row m-0 p-0">
