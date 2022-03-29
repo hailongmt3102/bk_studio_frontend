@@ -68,7 +68,7 @@ export default function PeopleCard(props) {
                         }
                     }
                     else if (val === "Delete People") {
-                        deleteSubmit()
+                        handleOpen()
                     }
                 }} /> : <div className='row mt-3'></div>
                 }
