@@ -20,7 +20,7 @@ import { Store } from 'react-notifications-component'
 import { content } from "utils/notification"
 import { updateStatus, deleteProject, editProject, canUpdatePermission } from 'api/Project'
 
-
+import { SendToWorkspace} from 'api/DataSources'
 import add_round from "resources/icons/add_round.svg"
 import edit from "resources/icons/edit.svg"
 import delete_icon from "resources/icons/delete.svg"
@@ -43,7 +43,7 @@ export default function ProjectDetail() {
     var project_id = array[array.length - 1]
     const [peopleInProject, setPeopleListInProject] = useState([])
     const [showPeoplePopUp, setshowPeoplePopUp] = useState(false)
-    const [appendPeopleList, setAppendPeopleList] = useState(0)
+    
     const [showRolePopUp, setshowRolePopUp] = useState(false)
     const timeCaster = (time) => {
         return time.substring(0, 19).replace('T', " ")
@@ -106,7 +106,7 @@ export default function ProjectDetail() {
             )
 
 
-    }, [appendPeopleList])
+    }, [])
 
     const peopleComponent = () => {
         return <div>
@@ -382,6 +382,17 @@ export default function ProjectDetail() {
 
         </div>
     }
+
+    const sendToWorkspaceSubmit = () => {
+        SendToWorkspace(project_id, {"Type":"Workspace"})
+            .then((res) => {
+                console.log("dadx chuyeenr sang thanh cong")
+            })
+            .catch((e) => {
+                console.log(e.response.data)
+               
+            })
+    }
     const dataSourcesComponent = () => {
         return <div>
             <div className='row m-0 p-0 mt-3' >
@@ -397,7 +408,11 @@ export default function ProjectDetail() {
                                         items={option_list}
                                         icon={three_dot}
                                         icons_list={[sendTo,edit,share_blue, download_blue, delete_icon]}
-                                        onClick={(val) => { }} />
+                                        onClick={(val) => { 
+                                            if (val === "Send to Workspace"){
+                                                sendToWorkspaceSubmit()
+                                            }
+                                        }} />
                                 </div>
                                 <div className="row m-0 p-0">
                                     <div className="col-2 m-0 p-0 d-flex" style={{ fontFamily: "Roboto" }}>
@@ -434,7 +449,7 @@ export default function ProjectDetail() {
                     setshowPeoplePopUp(false)
                 }}
                 onComplete={() => {
-                    setAppendPeopleList(appendPeopleList + 1)
+                    //setAppendPeopleList(appendPeopleList + 1)
                 }}
             />
             <RolePopUp

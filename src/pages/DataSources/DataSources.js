@@ -62,7 +62,10 @@ export default function DataSources() {
                         datasourceslist.map((ele) => {
                             return <div className='col-3 ms-4 mt-3 pt-2 mb-5' style={{ "height": "200px", width: "400px", "border-radius": "20px", "backgroundColor": "#F7F7F7" }}>
                                 <div className='row ms-3' style={{ "paddingLeft": "310px" }}>
-                                    <ThreeDotButton title={'adđ'} items={option_list} icon={three_dot} icons_list={[share_blue, edit, download_blue, delete_icon]} onClick={(val) => { }} />
+                                    <ThreeDotButton title={'adđ'} items={option_list} icon={three_dot} icons_list={[share_blue, edit, download_blue, delete_icon]} 
+                                    onClick={(val) => {
+                                        
+                                     }} />
                                 </div>
                                 <div className="row m-0 p-0">
                                     <div className="col-2 m-0 p-0 d-flex" style={{ fontFamily: "Roboto" }}>

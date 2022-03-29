@@ -22,9 +22,14 @@ const QueryData = (query) => {
     })
 }
 
+const SendToWorkspace = (id, data) => {
+    return axiosClient.post("/data/"+id+"/switchtype", data)
+}
+
 export {
     ImportDataApi,
     GetTableColumns,
     QueryData,
-    GetDataSourcesListInformation
+    GetDataSourcesListInformation,
+    SendToWorkspace
 }

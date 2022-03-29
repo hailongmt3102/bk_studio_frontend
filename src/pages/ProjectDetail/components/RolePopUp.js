@@ -11,6 +11,7 @@ import { Roboto, Poppins } from "utils/font"
 import { createNewProject } from 'api/Project'
 import PeopleCardMini from 'components/PeopleCardMini/PeopleCardMini'
 
+import { useChecklist } from 'react-checklist';
 import { editPeopleRoleWithProject } from "../../../api/Project"
 
 import { Store } from 'react-notifications-component'
@@ -37,26 +38,23 @@ export default function RolePopUp(props) {
         "Delete member",
         "Edit member information"])
 
+    const data = [
+        { _id: 1, label: 'item 1' },
+        { _id: 2, label: 'item 2' },
+        { _id: 3, label: 'item 3' },
+    ]
+
+    const { handleCheck, checkedItems } = useChecklist(data, {
+        key: '_id',
+        keyType: 'number',
+    });
+
+     // Set(0) - handling with Set
+    console.log([...checkedItems]);
 
     const [getList, setGetList] = useState([])
 
     const [sendList, setSendList] = useState([])
-
-    useEffect(() => {
-        var array1 = show_list;
-        var array2 = getList;
-
-        for (var i = 0; i < array2.length; i++) {
-            var arrlen = array1.length;
-            for (var j = 0; j < arrlen; j++) {
-                if (array2[i] == array1[j]) {
-                    array1 = array1.slice(0, j).concat(array1.slice(j + 1, arrlen));
-                }
-            }
-        }
-        console.log("show nè", array1)
-        setshow_list(array1)
-    }, [getList])
 
     const [dataToSend, setDataToSend] = useState({
         Email: "",
@@ -69,7 +67,7 @@ export default function RolePopUp(props) {
         })
             .then(res => {
                 setGetList(res.data)
-                console.log("List quyền", res.data)
+                console.log("get List", res.data)
             })
             .catch(err => {
 
@@ -84,7 +82,7 @@ export default function RolePopUp(props) {
                 Permission: sendList
             }
         )
-    }, [sendList,props.Email])
+    }, [sendList, props.Email])
 
 
 
@@ -108,10 +106,19 @@ export default function RolePopUp(props) {
             )
 
     }
+
+    const handleChange = (e) => {
+        if (e.target.checked === true) {
+            setDataToSend(
+                ...dataToSend, e
+            )
+        }
+    };
+
     const body = () => {
         return (
             <div>
-                {
+                {/* {
                     show_list.map((ele) => {
                         return <div className='row mt-2'>
                             <div className='col-1'>
@@ -119,29 +126,47 @@ export default function RolePopUp(props) {
                                     class="form-check-input me-2"
                                     type="checkbox"
                                     id="form2Example3c"
-                                    onClick={(e) => {
-                                        if (e.target.checked === true) {
-                                            if (!sendList.includes(ele))
-                                                sendList.push(ele)
-                                            console.log(sendList)
-                                        }
-                                        else if (e.target.checked === false) {
-                                            if (sendList.includes(ele)) {
-                                                for (var i = sendList.length - 1; i >= 0; i--) {
-                                                    if (sendList[i] === ele) {
-                                                        sendList.splice(i, 1);
-                                                    }
-                                                }
-                                            }
-                                            console.log(sendList)
-                                        }
+                                    defaultChecked={getList.includes(ele) ? true : false}
+                                    onChange={() => handleChange(ele)}
+                                    onClick={() => {
+                                        // if (e.target.checked === true) {
+                                        //     if (!sendList.includes(ele))
+                                        //         sendList.push(ele)
+                                        //     console.log(sendList)
+                                        // }
+                                        // else if (e.target.checked === false) {
+                                        //     if (sendList.includes(ele)) {
+                                        //         for (var i = sendList.length - 1; i >= 0; i--) {
+                                        //             if (sendList[i] === ele) {
+                                        //                 sendList.splice(i, 1);
+                                        //             }
+                                        //         }
+                                        //     }
+                                        //     console.log(sendList)
+                                        // }
                                     }}
                                 />
                             </div>
                             <div className='col-11'>{ele}</div>
                         </div>
                     })
-                }
+                } */}
+                <ul>
+                    {data.map((v) => (
+                            <div>
+                                <input
+                                    defaultChecked={true}
+                                    type="checkbox"
+                                    data-key={v._id}                  // 3
+                                    onChange={handleCheck}            // 4
+                                    checked={checkedItems.has(v._id)} // 5
+                                />
+                                <label>{v.label}</label>
+                            </div>
+                        
+                    ))}
+
+                </ul>
             </div>
         )
     }
