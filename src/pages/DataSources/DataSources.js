@@ -68,12 +68,12 @@ export default function DataSources() {
                                      }} />
                                 </div>
                                 <div className="row m-0 p-0">
-                                    <div className="col-2 m-0 p-0 d-flex" style={{ fontFamily: "Roboto" }}>
-                                        <img className='ms-4' src={excel_icon} />
+                                    <div className="col-4 m-0 p-0" style={{ fontFamily: "Roboto" }}>
+                                        <img src={excel_icon} height="120px" width="100%"/>
                                     </div>
-                                    <div class="col-10 m-0 p-0 text-center" style={{ fontFamily: "Roboto" }}>
-                                        <div class="row m-0 p-0 ms-2" style={{ fontFamily: "Roboto", color: blue_cloud }}>
-                                            <h3>{ele.Information}</h3>
+                                    <div class="col-8 m-0 p-0" style={{ fontFamily: "Roboto" }}>
+                                        <div class="row m-0 p-0" style={{ fontFamily: "Roboto", color: blue_cloud, fontSize: "28px" }}>
+                                            <p><span>{ele.Information}</span></p>
                                         </div>
                                         <div class="row  m-0 p-0 mt-1" style={{ fontFamily: "Roboto" }}>
                                             <p><span style={{ "color": "#868585" }}>date created: </span>{ele.CreateTime}</p>
