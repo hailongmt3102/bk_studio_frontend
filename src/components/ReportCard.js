@@ -159,6 +159,7 @@ export default function ReportCard(props) {
                                     <Form.Control size="sm" type="text" value={dataToUpdate.Hastag} onChange={(event) => {
                                         setDataToUpdate({ ...dataToUpdate, Hastag: event.target.value })
                                     }}
+                                        placeholder="#hastag"
                                         className="border-0"
                                         style={{
                                             fontSize: "20px",
@@ -171,7 +172,7 @@ export default function ReportCard(props) {
                             </div> :
                             <div>
                                 <div className='row mt-2' style={{ "color": deep_blue_primary, "fontSize": "28px", "fontWeight": "bold" }}>
-                                    {props.data.Name}
+                                    {props.data.Name.slice(0,20)}
                                 </div>
                                 <div className='row mb-2' style={{ "color": blue_cloud, "fontSize": "23px", "fontWeight": "bold" }}>
                                     {props.data.Hastag}

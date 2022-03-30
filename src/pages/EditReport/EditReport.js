@@ -34,9 +34,20 @@ export default function EditReport(props) {
 
 
     const [components, setComponents] = useState([])
-    const [reportInformation, setReportInformation] = useState({
-
-    })
+    const [reportInformation, setReportInformation] = useState(
+        {
+            "Id": 0,
+            "PId": 0,
+            "Hastag": "",
+            "Author": ".",
+            "CreateTime": "",
+            "LastModified": "",
+            "Description": "",
+            "TId": null,
+            "Type": "",
+            "Name": ""
+        }
+    )
 
 
 
@@ -46,10 +57,11 @@ export default function EditReport(props) {
             //GET INFORMATION CUA PROJECT 
             getReportInformation(currentProject, RId)
                 .then(res => {
-                    console.log("report in4:", res.data)
+                    setReportInformation(res.data)
+                    //console.log("report in4:", reportInformation)
                 })
                 .catch(res => {
-                    //alert(res.response.data)
+                    alert(res.response.data)
                 })
 
             getAllComponent(currentProject, RId)
@@ -76,13 +88,14 @@ export default function EditReport(props) {
     const newFileSubmit = () => {
         createNewReport(localStorage.getItem("currentProject"),
             {
-                Hastag: "2022",
-                Description: "example",
-                Name: "new"
+                Hastag: "",
+                Description: "",
+                Name: "New Report"
             })
             .then(res => {
                 console.log(res.data)
                 nav(`/project/gallery/${res.data.Id}/edit`)
+                window.location.reload()
             })
             .catch(err => {
                 alert(err.response.data)
@@ -320,7 +333,7 @@ export default function EditReport(props) {
                                         </button>
                                     </div>
                                     <div className="col-6" >
-                                        <Form.Control type="text" value="My report" onChange={(event) => {
+                                        <Form.Control type="text" value={reportInformation.Name} onChange={(event) => {
                                             // setprojectInformation({ ...projectInformation, Name: event.target.value })
                                         }}
                                             className="text-primary border-0 mb-2"
