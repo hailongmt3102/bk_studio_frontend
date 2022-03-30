@@ -84,7 +84,7 @@ export default function MenuBar(props) {
                         </div>
                     </button>
                     <button className='btn-lg btn-success text-center border-0 ms-3' style={{ backgroundColor: "#3B97C6" }}
-                        onClick={() => { }}>
+                        onClick={() => {props.updateSubmit()}}>
                         <div className='row p-2 text-center'>
                             <div className='col-2 text-center me-1'>
                                 <img src={save_white} width="20px" height="20px" />

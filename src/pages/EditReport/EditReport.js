@@ -11,17 +11,21 @@ import align_right from "resources/icons/align_right.svg"
 import align_center from "resources/icons/align_center.svg"
 import align_justify from "resources/icons/align_justify.svg"
 import bold from "resources/icons/bold.svg"
+
+import edit from "resources/icons/edit.svg"
 import underline from "resources/icons/underline.svg"
 import italic from "resources/icons/italic.svg"
 
 import Autocomplete from '@mui/material/Autocomplete';
 import { GetTableColumns, QueryData } from "api/DataSources"
-
+import { Store } from 'react-notifications-component'
+import { content } from "utils/notification"
 import { Roboto, Poppins } from "../../utils/font"
 import SqlPopUp from "./components/SqlPopUp";
 
-import { createNewReport, getAllComponent, createNewComponent, getReportInformation } from 'api/Report'
+import { createNewReport, getAllComponent, createNewComponent, getReportInformation,updateReportInformation } from 'api/Report'
 import { useLocation, useNavigate } from "react-router-dom";
+import { deep_blue_primary } from "utils/color";
 
 
 
@@ -31,8 +35,26 @@ export default function EditReport(props) {
     const navigate = useNavigate()
     const nav = useNavigate()
     let RId = location.split('/')[3]
+    const currentProject = localStorage.getItem("currentProject")
 
+    
 
+    const updateSubmit = () => {
+        updateReportInformation(currentProject, RId, {
+            "Hastag":reportInformation.Hastag,
+            "Description": "",
+            "Name": reportInformation.Name
+        })
+            .then(res => {
+                Store.addNotification(content("Success", "Updated Report Information", "success"))
+                window.location.reload()
+            })
+            .catch(err => {
+                Store.addNotification(content("Fail", "Fail update", "danger"))
+                console.log(err.response.data)
+                
+            })
+    }
     const [components, setComponents] = useState([])
     const [reportInformation, setReportInformation] = useState(
         {
@@ -332,20 +354,39 @@ export default function EditReport(props) {
                                             <img src={back} />
                                         </button>
                                     </div>
-                                    <div className="col-6" >
+                                    <div className="col-5" >
                                         <Form.Control type="text" value={reportInformation.Name} onChange={(event) => {
-                                            // setprojectInformation({ ...projectInformation, Name: event.target.value })
+                                            setReportInformation({ ...reportInformation, Name: event.target.value })
+                                           
                                         }}
-                                            className="text-primary border-0 mb-2"
+                                            className="border-0 mb-2"
+                                            placeholder="Report Name"
                                             style={{
                                                 fontSize: "32px",
                                                 backgroundColor: "#F7F7F7",
-                                                fontFamily: "Poppins"
+                                                color: deep_blue_primary,
+                                                fontFamily: "Poppins",
+                                                fontWeight: "bold"
                                             }}
                                         />
                                     </div>
-
+                                    <div className="col-5 m-auto m-0 p-0 text-center">
+                                        <Form.Control type="text" value={reportInformation.Hastag} onChange={(event) => {
+                                            setReportInformation({ ...reportInformation, Hastag: event.target.value })
+                                           
+                                        }}
+                                            className="text-primary border-0 mb-2"
+                                            placeholder="#Hastag"
+                                            style={{
+                                                fontSize: "23px",
+                                                backgroundColor: "#F7F7F7",
+                                                fontFamily: "Poppins",
+                                                fontWeight: "bold"
+                                            }}
+                                        />
+                                    </div>
                                 </div>
+
 
                             </div>
                         </div>
@@ -353,6 +394,7 @@ export default function EditReport(props) {
                             newFileSubmit={() => {
                                 newFileSubmit()
                             }}
+                            updateSubmit={()=>updateSubmit()}
                             showSqlPopUpFunction={showSqlPopUpFunction}
                         />
 
