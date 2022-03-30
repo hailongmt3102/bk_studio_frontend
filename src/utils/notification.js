@@ -8,7 +8,8 @@ const content = (title, message, type) => {
         animationIn: ["animated", "fadeIn"],     // animate.css classes that's applied
         animationOut: ["animated", "fadeOut"],   // animate.css classes that's applied
         dismiss: {
-            duration: 5000
+            duration: 2000,
+            onScreen: true
         }
     }
 }
