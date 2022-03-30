@@ -19,6 +19,17 @@ import { content } from "utils/notification"
 
 import { getListPeopleByProjectID } from '../../../api/People'
 import { getRoleListOfAPeople } from "api/Project"
+
+
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import Checkbox from '@mui/material/Checkbox';
+import IconButton from '@mui/material/IconButton';
+import CommentIcon from '@mui/icons-material/Comment';
+
 const orangeStyle = {
     color: "black",
     fontFamily: Poppins
@@ -28,7 +39,26 @@ const orangeStyle = {
 
 export default function RolePopUp(props) {
 
+    const [checked, setChecked] = React.useState([0]);
 
+    const newChecked = [...checked];
+
+
+    const handleToggle = (value) => () => {
+        const currentIndex = checked.indexOf(value);
+
+        if (currentIndex === -1) {
+            newChecked.push(value);
+        } else {
+            newChecked.splice(currentIndex, 1);
+        }
+
+        setChecked(newChecked);
+        setDataToSend({ ...dataToSend, Permission: newChecked })
+
+    };
+
+    const [getList, setGetList]= useState([])
     const [show_list, setshow_list] = useState([
         "Invite",
         "Import data to project",
@@ -38,29 +68,12 @@ export default function RolePopUp(props) {
         "Delete member",
         "Edit member information"])
 
-    const data = [
-        { _id: 1, label: 'item 1' },
-        { _id: 2, label: 'item 2' },
-        { _id: 3, label: 'item 3' },
-    ]
-
-    const { handleCheck, checkedItems } = useChecklist(data, {
-        key: '_id',
-        keyType: 'number',
-    });
-
-     // Set(0) - handling with Set
-    console.log([...checkedItems]);
-
-    const [getList, setGetList] = useState([])
-
-    const [sendList, setSendList] = useState([])
-
     const [dataToSend, setDataToSend] = useState({
         Email: "",
-        Permission: []
+        Permission: newChecked
     })
     useEffect(() => {
+        setDataToSend({...dataToSend, Email: props.Email})
         getRoleListOfAPeople({
             Email: props.Email,
             Id: props.PId
@@ -74,28 +87,13 @@ export default function RolePopUp(props) {
             })
     }, [props.Email])
 
-    useEffect(() => {
-
-        setDataToSend(
-            {
-                Email: props.Email,
-                Permission: sendList
-            }
-        )
-    }, [sendList, props.Email])
-
-
-
-
-
     const onsubmit = () => {
-        console.log("gui len", dataToSend)
         editPeopleRoleWithProject(props.PId, dataToSend)
             .then(response => {
                 console.log(response.data)
                 Store.addNotification(content("Success", "Editted role", "success"))
                 props.handleClose()
-                //window.location.reload()
+                window.location.reload()
 
             })
             .catch(
@@ -107,66 +105,33 @@ export default function RolePopUp(props) {
 
     }
 
-    const handleChange = (e) => {
-        if (e.target.checked === true) {
-            setDataToSend(
-                ...dataToSend, e
-            )
-        }
-    };
-
     const body = () => {
         return (
             <div>
-                {/* {
-                    show_list.map((ele) => {
-                        return <div className='row mt-2'>
-                            <div className='col-1'>
-                                <input
-                                    class="form-check-input me-2"
-                                    type="checkbox"
-                                    id="form2Example3c"
-                                    defaultChecked={getList.includes(ele) ? true : false}
-                                    onChange={() => handleChange(ele)}
-                                    onClick={() => {
-                                        // if (e.target.checked === true) {
-                                        //     if (!sendList.includes(ele))
-                                        //         sendList.push(ele)
-                                        //     console.log(sendList)
-                                        // }
-                                        // else if (e.target.checked === false) {
-                                        //     if (sendList.includes(ele)) {
-                                        //         for (var i = sendList.length - 1; i >= 0; i--) {
-                                        //             if (sendList[i] === ele) {
-                                        //                 sendList.splice(i, 1);
-                                        //             }
-                                        //         }
-                                        //     }
-                                        //     console.log(sendList)
-                                        // }
-                                    }}
-                                />
-                            </div>
-                            <div className='col-11'>{ele}</div>
-                        </div>
-                    })
-                } */}
-                <ul>
-                    {data.map((v) => (
-                            <div>
-                                <input
-                                    defaultChecked={true}
-                                    type="checkbox"
-                                    data-key={v._id}                  // 3
-                                    onChange={handleCheck}            // 4
-                                    checked={checkedItems.has(v._id)} // 5
-                                />
-                                <label>{v.label}</label>
-                            </div>
-                        
-                    ))}
-
-                </ul>
+                <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+                    {show_list.map((value) => {
+                        const labelId = `checkbox-list-label-${value}`;
+                        return (
+                            <ListItem
+                                key={value}
+                                disablePadding
+                            >
+                                <ListItemButton role={undefined} onClick={handleToggle(value)} dense>
+                                    <ListItemIcon>
+                                        <Checkbox
+                                            edge="start"
+                                            checked={checked.indexOf(value) !== -1}
+                                            tabIndex={-1}
+                                            disableRipple
+                                            inputProps={{ 'aria-labelledby': labelId }}
+                                        />
+                                    </ListItemIcon>
+                                    <ListItemText id={labelId} primary={value} />
+                                </ListItemButton>
+                            </ListItem>
+                        );
+                    })}
+                </List>
             </div>
         )
     }

@@ -348,18 +348,18 @@ export default function EditReport(props) {
                     <div className="rightColumn p-3">
                         <div className="row m-0 p-0">
                             <div className="col-7 m-0 p-0">
-                                <div className="row" >
-                                    <div className="col-1 mt-1">
+                                <div className="row m-0 p-0" >
+                                    <div className="col-1 m-0 p-0 mt-1">
                                         <button type="button" class="btn btn-sm" onClick={() => { navigate(-1) }}>
                                             <img src={back} />
                                         </button>
                                     </div>
-                                    <div className="col-5" >
+                                    <div className="col-8 m-0 p-0" >
                                         <Form.Control type="text" value={reportInformation.Name} onChange={(event) => {
                                             setReportInformation({ ...reportInformation, Name: event.target.value })
                                            
                                         }}
-                                            className="border-0 mb-2"
+                                            className="border-0 mb-2 m-0 p-0"
                                             placeholder="Report Name"
                                             style={{
                                                 fontSize: "32px",
@@ -370,22 +370,25 @@ export default function EditReport(props) {
                                             }}
                                         />
                                     </div>
-                                    <div className="col-5 m-auto m-0 p-0 text-center">
-                                        <Form.Control type="text" value={reportInformation.Hastag} onChange={(event) => {
-                                            setReportInformation({ ...reportInformation, Hastag: event.target.value })
-                                           
-                                        }}
-                                            className="text-primary border-0 mb-2"
-                                            placeholder="#Hastag"
-                                            style={{
-                                                fontSize: "23px",
-                                                backgroundColor: "#F7F7F7",
-                                                fontFamily: "Poppins",
-                                                fontWeight: "bold"
-                                            }}
-                                        />
-                                    </div>
+                                    
                                 </div>
+                                <div className="row ms-5 m-0 p-0 text-center">
+                                        <div className="col-5">
+                                            <Form.Control type="text" value={reportInformation.Hastag} onChange={(event) => {
+                                                setReportInformation({ ...reportInformation, Hastag: event.target.value })
+                                            
+                                            }}
+                                                className="text-primary border-0  m-0 p-0 ms-4"
+                                                placeholder="#Hastag"
+                                                style={{
+                                                    fontSize: "22px",
+                                                    backgroundColor: "#F7F7F7",
+                                                    fontFamily: "Poppins",
+                                                    fontWeight: "bold"
+                                                }}
+                                            />
+                                        </div>
+                                    </div>
 
 
                             </div>
