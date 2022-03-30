@@ -45,7 +45,9 @@ export default function MenuBar(props) {
                 <div className='col-1' >
                     <div className='mt-3 ms-2'>
                         <ThreeDotButton className="col-1 p-4 btn" style={{ "minHeight": "80px", "text-align": "center" }} title={'File'} items={file_option} icons_list={file_option_icon_list} onClick={(val) => {
-                            
+                            if (val="New"){
+                                props.newFileSubmit()
+                            }
                         }} />
                     </div>
                 </div>

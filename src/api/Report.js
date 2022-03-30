@@ -30,6 +30,10 @@ const updateReportInformation = (PId, RId, data) => {
     return axiosClient.post(`/project/${PId}/${RId}/update`, data)
 }
 
+const getReportInformation = (PId, RId) => {
+    return axiosClient.get(`/project/${PId}/${RId}/info`)
+}
+
 export {
     createNewReport,
     getAllReport,
@@ -38,5 +42,6 @@ export {
     like,
     unlike,
     deleteReport,
-    updateReportInformation
+    updateReportInformation,
+    getReportInformation
 }

@@ -20,26 +20,38 @@ import { GetTableColumns, QueryData } from "api/DataSources"
 import { Roboto, Poppins } from "../../utils/font"
 import SqlPopUp from "./components/SqlPopUp";
 
-import { createNewReport, getAllComponent, createNewComponent} from 'api/Report'
+import { createNewReport, getAllComponent, createNewComponent, getReportInformation } from 'api/Report'
 import { useLocation, useNavigate } from "react-router-dom";
 
 
 
 export default function EditReport(props) {
-    const [components, setComponents] = useState([])
+
     const location = useLocation().pathname
     const navigate = useNavigate()
-    // this function will be call when loaded page
-
     const nav = useNavigate()
-
     let RId = location.split('/')[3]
+
+
+    const [components, setComponents] = useState([])
+    const [reportInformation, setReportInformation] = useState({
+
+    })
+
+
 
     useEffect(() => {
         let currentProject = localStorage.getItem("currentProject")
         if (currentProject != null) {
+            //GET INFORMATION CUA PROJECT 
+            getReportInformation(currentProject, RId)
+                .then(res => {
+                    console.log("report in4:", res.data)
+                })
+                .catch(res => {
+                    //alert(res.response.data)
+                })
 
-            console.log(RId)
             getAllComponent(currentProject, RId)
                 .then(res => {
                     setComponents(res.data)
@@ -56,15 +68,14 @@ export default function EditReport(props) {
             .catch(err => {
                 console.log(err)
             })
-        
+
 
     }, [])
 
 
-    const createCopyReport = () => {
+    const newFileSubmit = () => {
         createNewReport(localStorage.getItem("currentProject"),
             {
-                TId: "1",
                 Hastag: "2022",
                 Description: "example",
                 Name: "new"
@@ -74,7 +85,7 @@ export default function EditReport(props) {
                 nav(`/project/gallery/${res.data.Id}/edit`)
             })
             .catch(err => {
-                //alert(err.response.data)
+                alert(err.response.data)
             })
     }
 
@@ -186,7 +197,102 @@ export default function EditReport(props) {
         }
     }
     // render components
+    const tab_component = () => {
+        return <div className="col-2 ">
+            <Tabs className="p-2" activeKey={key} onSelect={(k) => setKey(k)}>
+                <Tab className="p-4" eventKey="Data" label="Data">
+                    <h4>Script</h4>
+                    <div className="m-4">SELECT* FROM </div>
+                    <div className="mt-3">
+                        <h4>Data sources:</h4>
+                    </div>
+                    <div className="row mt-5">
+                        <div className="col">
+                            <h4>Field:</h4>
+                        </div>
+                        <div className="col">
+                            <h4>Type</h4>
+                        </div>
+                    </div>
+                </Tab>
+                <Tab className="p-4" eventKey="Format" label="Style">
+                    <div className="mt-2">Text</div>
+                    <div className="row mt-2">
+                        <div className="col">
+                            <Autocomplete
+                                id="custom-input-demo"
+                                options={fonts}
+                                renderInput={(params) => (
+                                    <div ref={params.InputProps.ref}>
+                                        <input type="text" {...params.inputProps} />
+                                    </div>
+                                )}
+                            />
+                        </div>
+                    </div>
+                    <div className="mt-2">Size</div>
+                    <div className="row mt-2">
+                        <div className="col">
+                            <Autocomplete
+                                id="custom-input-demo"
+                                options={size}
+                                renderInput={(params) => (
+                                    <div ref={params.InputProps.ref}>
+                                        <input type="text" {...params.inputProps} />
+                                    </div>
+                                )}
+                            />
+                        </div>
+                    </div>
+                    <div className="row m-2 m-0 p-0 mt-2  h-100  align-items-center">
+                        <div className="col-1 m-0 p-0 text-center" >
+                            <button type="button" class="btn btn-sm ms-2 p-2" onClick={() => { }}><img src={bold} height="15px" width="15px" /></button>
+                        </div>
+                        <div className="col-1 m-0 p-0 ms-5" onClick={() => { }}>
+                            <button type="button" class="btn m-0 p-0 btn-sm ms-2" onClick={() => { }}> <img src={italic} height="30px" width="30px" /></button>
+                        </div>
+                        <div className="col-1 m-0 p-0 ms-5" onClick={() => { }}>
+                            <button type="button" class="btn m-0 p-0 btn-sm ms-2" onClick={() => { }}> <img src={underline} height="20px" width="20px" /></button>
+                        </div>
 
+                    </div>
+                    <div>Alignment</div>
+                    <div className="row m-3">
+                        <div className="col">
+                            <img src={align_left} height="20px" width="20px" />
+                        </div>
+                        <div className="col">
+                            <img src={align_right} height="20px" width="20px" />
+                        </div>
+                        <div className="col">
+                            <img src={align_center} height="20px" width="20px" />
+                        </div>
+                        <div className="col">
+                            <img src={align_justify} height="20px" width="20px" />
+                        </div>
+
+                    </div>
+                    <div>Fill</div>
+                    <Form.Control
+                        type="color"
+                        id="exampleColorInput"
+                        defaultValue="#563d7c"
+                        title="Choose your color"
+                    />
+
+                    <div>Stroke</div>
+                    <Form.Control
+                        type="color"
+                        id="exampleColorInput"
+                        defaultValue="#563d7c"
+                        title="Choose your color"
+                    />
+
+                </Tab>
+
+            </Tabs>
+        </div>
+    }
     return (
         <div>
             <SqlPopUp
@@ -202,101 +308,7 @@ export default function EditReport(props) {
                 dataSource={dataSource}
             />
             <div className="row">
-
-                <div className="col-2 ">
-                    <Tabs className="p-2" activeKey={key} onSelect={(k) => setKey(k)}>
-                        <Tab className="p-4" eventKey="Data" label="Data">
-                            <h4>Script</h4>
-                            <div className="m-4">SELECT* FROM </div>
-                            <div className="mt-3">
-                                <h4>Data sources:</h4>
-                            </div>
-                            <div className="row mt-5">
-                                <div className="col">
-                                    <h4>Field:</h4>
-                                </div>
-                                <div className="col">
-                                    <h4>Type</h4>
-                                </div>
-                            </div>
-                        </Tab>
-                        <Tab className="p-4" eventKey="Format" label="Style">
-                            <div className="mt-2">Text</div>
-                            <div className="row mt-2">
-                                <div className="col">
-                                    <Autocomplete
-                                        id="custom-input-demo"
-                                        options={fonts}
-                                        renderInput={(params) => (
-                                            <div ref={params.InputProps.ref}>
-                                                <input type="text" {...params.inputProps} />
-                                            </div>
-                                        )}
-                                    />
-                                </div>
-                            </div>
-                            <div className="mt-2">Size</div>
-                            <div className="row mt-2">
-                                <div className="col">
-                                    <Autocomplete
-                                        id="custom-input-demo"
-                                        options={size}
-                                        renderInput={(params) => (
-                                            <div ref={params.InputProps.ref}>
-                                                <input type="text" {...params.inputProps} />
-                                            </div>
-                                        )}
-                                    />
-                                </div>
-                            </div>
-                            <div className="row m-2 m-0 p-0 mt-2  h-100  align-items-center">
-                                <div className="col-1 m-0 p-0 text-center" >
-                                    <button type="button" class="btn btn-sm ms-2 p-2" onClick={() => { }}><img src={bold} height="15px" width="15px" /></button>
-                                </div>
-                                <div className="col-1 m-0 p-0 ms-5" onClick={() => { }}>
-                                    <button type="button" class="btn m-0 p-0 btn-sm ms-2" onClick={() => { }}> <img src={italic} height="30px" width="30px" /></button>
-                                </div>
-                                <div className="col-1 m-0 p-0 ms-5" onClick={() => { }}>
-                                    <button type="button" class="btn m-0 p-0 btn-sm ms-2" onClick={() => { }}> <img src={underline} height="20px" width="20px" /></button>
-                                </div>
-
-                            </div>
-                            <div>Alignment</div>
-                            <div className="row m-3">
-                                <div className="col">
-                                    <img src={align_left} height="20px" width="20px" />
-                                </div>
-                                <div className="col">
-                                    <img src={align_right} height="20px" width="20px" />
-                                </div>
-                                <div className="col">
-                                    <img src={align_center} height="20px" width="20px" />
-                                </div>
-                                <div className="col">
-                                    <img src={align_justify} height="20px" width="20px" />
-                                </div>
-
-                            </div>
-                            <div>Fill</div>
-                            <Form.Control
-                                type="color"
-                                id="exampleColorInput"
-                                defaultValue="#563d7c"
-                                title="Choose your color"
-                            />
-
-                            <div>Stroke</div>
-                            <Form.Control
-                                type="color"
-                                id="exampleColorInput"
-                                defaultValue="#563d7c"
-                                title="Choose your color"
-                            />
-
-                        </Tab>
-
-                    </Tabs>
-                </div>
+                {tab_component()}
                 <div className="col-10 h-200">
                     <div className="rightColumn p-3">
                         <div className="row m-0 p-0">
@@ -324,10 +336,15 @@ export default function EditReport(props) {
 
                             </div>
                         </div>
-                        <MenuBar showSqlPopUpFunction={showSqlPopUpFunction} />
+                        <MenuBar
+                            newFileSubmit={() => {
+                                newFileSubmit()
+                            }}
+                            showSqlPopUpFunction={showSqlPopUpFunction}
+                        />
 
                         <ToolBar
-                            
+
                         />
                         <div className="m-2 content">
                             <Content components={components} />
