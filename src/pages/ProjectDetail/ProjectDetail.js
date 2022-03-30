@@ -253,7 +253,7 @@ export default function ProjectDetail() {
         })
             .then((res) => {
                 // Store.addNotification(content("Success", "Edited Project successful", "sucess"))
-                window.location.reload()
+                setTimeout(() => window.location.reload(), 1000);
             })
             .catch((e) => {
                 //console.log(e.response)

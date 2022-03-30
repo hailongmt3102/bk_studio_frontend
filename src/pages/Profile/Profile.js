@@ -86,7 +86,7 @@ export default function Profile() {
 
                 localStorage.setItem("username", information.UserName)
                 Store.addNotification(content("Success", "Updated information", "success"))
-                window.location.reload()
+                setTimeout(() => window.location.reload(), 1000);
                 return
             })
             .catch((e) => {

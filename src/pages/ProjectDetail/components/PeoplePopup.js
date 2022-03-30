@@ -74,7 +74,7 @@ export default function PeoplePopup(props) {
             .then(res => {
                 props.handleClose()
                 Store.addNotification(content("Success", "Added member", "success", {duration: 100000}))
-                window.location.reload()
+                setTimeout(() => window.location.reload(), 1000);
                 setPeopleListToAdd([])
                 props.onComplete()
             })

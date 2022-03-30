@@ -47,7 +47,7 @@ export default function EditReport(props) {
         })
             .then(res => {
                 Store.addNotification(content("Success", "Updated Report Information", "success"))
-                window.location.reload()
+                setTimeout(() => window.location.reload(), 1000);
             })
             .catch(err => {
                 Store.addNotification(content("Fail", "Fail update", "danger"))
@@ -117,7 +117,7 @@ export default function EditReport(props) {
             .then(res => {
                 console.log(res.data)
                 nav(`/project/gallery/${res.data.Id}/edit`)
-                window.location.reload()
+                setTimeout(() => window.location.reload(), 1000);
             })
             .catch(err => {
                 alert(err.response.data)

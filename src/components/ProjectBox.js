@@ -78,7 +78,7 @@ export default function ProjectBox(props) {
         deleteProject(props.data.Id)
             .then((res) => {
                 Store.addNotification(content("Successful", "Deleted Project", "success"))
-                window.location.reload()
+                setTimeout(() => window.location.reload(), 1000);
             })
             .catch((e) => {
                 Store.addNotification(content("Error", "Delete Fail", "danger"))
@@ -95,7 +95,7 @@ export default function ProjectBox(props) {
         })
             .then((res) => {
                 // Store.addNotification(content("Success", "Edited Project successful", "sucess"))
-                window.location.reload()
+                setTimeout(() => window.location.reload(), 1000);
             })
             .catch((e) => {
                 //console.log(e.response)

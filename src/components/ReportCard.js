@@ -69,7 +69,7 @@ export default function ReportCard(props) {
         deleteReport(currentProject, RId)
             .then(res => {
                 Store.addNotification(content("Success", "Deleted Report", "success"))
-                window.location.reload()
+                setTimeout(() => window.location.reload(), 1000);
             })
             .catch(err => {
                 Store.addNotification(content("Warning", err.response.data, "danger"))
@@ -88,7 +88,7 @@ export default function ReportCard(props) {
         updateReportInformation(currentProject, RId, dataToUpdate)
             .then(res => {
                 Store.addNotification(content("Success", "Updated Report Information", "success"))
-                window.location.reload()
+                setTimeout(() => window.location.reload(), 1000);
             })
             .catch(err => {
                 Store.addNotification(content("Fail", "Fail update", "danger"))

@@ -40,7 +40,7 @@ export default function PeopleCard(props) {
         deleteMemberInAProject(props.project_id, { Email: props.email })
             .then(res => {
                 Store.addNotification(content("Success", "Deleted Member", "success"))
-                window.location.reload()
+                setTimeout(() => window.location.reload(), 2000);
             })
             .catch(err => {
                 Store.addNotification(content("Warning", "You don't delete member's role because you also are member position", "warning"))
