@@ -113,7 +113,7 @@ export default function ReportCard(props) {
                 <div className='col  m-0 p-0'>
                     <div class="d-flex flex-row-reverse me-3">
                         <button type="button" class="btn btn-sm" onClick={() => {
-                            if (heart === false) {
+                            if (heart == false) {
                                 likeSubmit()
                             }
                             else {
@@ -130,10 +130,6 @@ export default function ReportCard(props) {
                                     setPressEdit(true)
                                     
                                 }
-                                // else {
-                                //     setPressRename(true)
-                                //     RenameProjectSubmit()
-                                //}
                             }} />
                         </div>
                     </div>
