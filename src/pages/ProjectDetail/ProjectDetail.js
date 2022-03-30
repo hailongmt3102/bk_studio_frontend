@@ -20,7 +20,7 @@ import { Store } from 'react-notifications-component'
 import { content } from "utils/notification"
 import { updateStatus, deleteProject, editProject, canUpdatePermission } from 'api/Project'
 
-import { SendToWorkspace} from 'api/DataSources'
+import { SendToWorkspace } from 'api/DataSources'
 import add_round from "resources/icons/add_round.svg"
 import edit from "resources/icons/edit.svg"
 import delete_icon from "resources/icons/delete.svg"
@@ -43,7 +43,7 @@ export default function ProjectDetail() {
     var project_id = array[array.length - 1]
     const [peopleInProject, setPeopleListInProject] = useState([])
     const [showPeoplePopUp, setshowPeoplePopUp] = useState(false)
-    
+
     const [showRolePopUp, setshowRolePopUp] = useState(false)
     const timeCaster = (time) => {
         return time.substring(0, 19).replace('T', " ")
@@ -79,7 +79,7 @@ export default function ProjectDetail() {
     }, [])
 
     const [datasourceslist, setDatasourceslist] = useState([])
-    const option_list = ["Send to Workspace","Edit information","Share", "Download", "Delete"]
+    const option_list = ["Send to Workspace", "Edit information", "Share", "Download", "Delete"]
     useEffect(() => {
         //console.log("Lấy data nè")
         // get list people
@@ -191,8 +191,9 @@ export default function ProjectDetail() {
                                                     setshowRolePopUp(false)
                                                     Store.addNotification(content("Warning", "You don't edit member's role because you also are member position", "warning"))
                                                 }}
-                                                getEmail = {()=>{
-                                                    setEmail(ele.Email)}}
+                                                getEmail={() => {
+                                                    setEmail(ele.Email)
+                                                }}
 
                                             />
                                         }
@@ -220,8 +221,9 @@ export default function ProjectDetail() {
                                                 Store.addNotification(content("Warning", "You don't edit member's role because you also are member position", "warning"))
 
                                             }}
-                                            getEmail = {()=>{
-                                                setEmail(ele.Email)}}
+                                            getEmail={() => {
+                                                setEmail(ele.Email)
+                                            }}
                                         />
                                         </div>
 
@@ -332,20 +334,19 @@ export default function ProjectDetail() {
                             </div>
                         </div>
                         <div className='m-3 m-0 p-0'>
-                            <div class=" row text-center m-0 p-0">
-                                <div className='col-1 m-auto m-0 p-0'>
+                            <div class="row m-0 p-0">
+                                <div className='col-1 text-center m-auto m-0 p-0'>
                                     <img src={MemberSvg} height="24px" width="22px" />
                                 </div>
                                 <div className='col-3 m-auto m-0 p-0' style={{ "text-align": "left" }} >
-                                    <div className='ms-2'>
-                                        <div style={orangeStyle}>Joined member :</div>
-                                    </div>
+                                    <div style={orangeStyle}>Joined member :</div>
                                 </div>
-                                <div className='col-7 m-auto  m-0 p-0' >
-                                    <Form.Control type="text" value={projectInformation.NumOfMember} onChange={(event) => {
+                                <div className='col-7 m-0 p-0' >
+                                    {/* <Form.Control type="text" value={projectInformation.NumOfMember} onChange={(event) => {
                                         setprojectInformation({ ...projectInformation, NumOfMember: event.target.value })
                                     }}
-                                    />
+                                    /> */}
+                                    <div>{projectInformation.NumOfMember}</div>
                                 </div>
                             </div>
                         </div>
@@ -384,13 +385,13 @@ export default function ProjectDetail() {
     }
 
     const sendToWorkspaceSubmit = () => {
-        SendToWorkspace(project_id, {"Type":"Workspace"})
+        SendToWorkspace(project_id, { "Type": "Workspace" })
             .then((res) => {
                 console.log("dadx chuyeenr sang thanh cong")
             })
             .catch((e) => {
                 console.log(e.response.data)
-               
+
             })
     }
     const dataSourcesComponent = () => {
@@ -407,9 +408,9 @@ export default function ProjectDetail() {
                                     <ThreeDotButton title={'adđ'}
                                         items={option_list}
                                         icon={three_dot}
-                                        icons_list={[sendTo,edit,share_blue, download_blue, delete_icon]}
-                                        onClick={(val) => { 
-                                            if (val === "Send to Workspace"){
+                                        icons_list={[sendTo, edit, share_blue, download_blue, delete_icon]}
+                                        onClick={(val) => {
+                                            if (val === "Send to Workspace") {
                                                 sendToWorkspaceSubmit()
                                             }
                                         }} />
