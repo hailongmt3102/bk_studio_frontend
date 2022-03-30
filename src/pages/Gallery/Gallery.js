@@ -20,7 +20,7 @@ export default function Gallery(props) {
         if (currentProject != null) {
             getAllReportApi(currentProject)
                 .then(res => {
-                    //console.log(res.data)
+                    console.log(res.data)
                     setReports(res.data)
                 })
                 .catch(err => {

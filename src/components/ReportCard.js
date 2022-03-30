@@ -36,7 +36,7 @@ export default function ReportCard(props) {
     const nav = useNavigate()
     const RId = props.data.Id
     const currentProject = localStorage.getItem("currentProject")
-    const [heart, setHeart] = useState(false)
+    const [heart, setHeart] = useState(props.data.Favorite)
     const likeSubmit = () => {
         if (currentProject != null) {
             like(currentProject, RId)
