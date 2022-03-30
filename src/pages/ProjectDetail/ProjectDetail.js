@@ -280,7 +280,7 @@ export default function ProjectDetail() {
                     </div>
                 </div>
             </div>
-            <div className='m-3 p-4  bg-white' style={{ height: "350px" }}>
+            <div className='m-3 p-4  bg-white' style={{ height: "250px" }}>
                 <div className='row m-0 p-0'>
                     <div className='col-6'>
                         <div className='m-3 m-0 p-0'>
@@ -331,23 +331,23 @@ export default function ProjectDetail() {
                                         />
                                     </Form.Group>
                                 </div>
+
                             </div>
                         </div>
                         <div className='m-3 m-0 p-0'>
-                            <div class="row m-0 p-0">
-                                <div className='col-1 text-center m-auto m-0 p-0'>
-                                    <img src={MemberSvg} height="24px" width="22px" />
+                            <div class=" row text-center m-0 p-0">
+                                <div className='col-1 m-auto  m-0 p-0'>
+                                    <img src={MemberSvg} height="25px" />
                                 </div>
                                 <div className='col-3 m-auto m-0 p-0' style={{ "text-align": "left" }} >
-                                    <div style={orangeStyle}>Joined member :</div>
-                                </div>
-                                <div className='col-7 m-0 p-0' >
-                                    {/* <Form.Control type="text" value={projectInformation.NumOfMember} onChange={(event) => {
-                                        setprojectInformation({ ...projectInformation, NumOfMember: event.target.value })
-                                    }}
-                                    /> */}
+                                    <div className='ms-2'>
+                                        <div style={orangeStyle}>Joined member :</div>
+                                    </div>
+                                </div> 
+                                <div className='col-7 m-auto  m-0 p-0 text-start'  >
                                     <div>{projectInformation.NumOfMember}</div>
                                 </div>
+
                             </div>
                         </div>
                     </div>
