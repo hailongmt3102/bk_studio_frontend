@@ -1,5 +1,5 @@
 import React from 'react'
-import CustomDropdownButton from './CustomDropdownButton'
+import CustomDropdownButton from '../CustomDropdownButton'
 
 import plus from "resources/icons/plus.svg";
 import dataBoard from "resources/icons/dataBoard.svg";
@@ -14,10 +14,9 @@ import save from "resources/icons/save.svg";
 import share from "resources/icons/share.svg";
 import shareWith from "resources/icons/addPeople.svg";
 
-import CircleModel from './AddShapeModel/CircleModel';
-import TableModel from './AddShapeModel/TableModel';
 
-import './css/toolbar.css'
+
+import "./css/toolbar.css"
 export default function ToolBar(props) {
     return (
         <div>

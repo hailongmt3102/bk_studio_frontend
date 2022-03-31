@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { Modal, Button } from 'react-bootstrap'
-import { deep_blue_primary } from "../../../utils/color"
+import { deep_blue_primary } from "../../../../utils/color"
 import { Poppins } from "utils/font"
-import { editPeopleRoleWithProject } from "../../../api/Project"
+import { editPeopleRoleWithProject } from "../../../../api/Project"
 import { getListPeopleByProjectID } from "api/People"
 
 import { Store } from 'react-notifications-component'

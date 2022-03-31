@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Content from "./components/Content";
 import MenuBar from "./components/MenuBar";
-import ToolBar from "./components/ToolBar";
+import ToolBar from "./components/Bar/ToolBar";
 import "./EditReport.css";
 import { Tabs, Tab } from 'react-bootstrap-tabs';
 import { Form, InputGroup, Col, Button, FormControl } from 'react-bootstrap'
@@ -21,8 +21,8 @@ import { GetTableColumns, QueryData } from "api/DataSources"
 import { Store } from 'react-notifications-component'
 import { content } from "utils/notification"
 import { Roboto, Poppins } from "../../utils/font"
-import SqlPopUp from "./components/SqlPopUp";
-import SharePopUp from "./components/SharePopUp";
+import SqlPopUp from "./components/PopUp/SqlPopUp";
+import SharePopUp from "./components/PopUp/SharePopUp";
 
 import { createNewReport, getAllComponent, createNewComponent, getReportInformation, updateReportInformation } from 'api/Report'
 import { useLocation, useNavigate } from "react-router-dom";
