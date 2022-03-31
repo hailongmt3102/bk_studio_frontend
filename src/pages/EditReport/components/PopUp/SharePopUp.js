@@ -5,18 +5,21 @@ import { Poppins } from "utils/font"
 import { editPeopleRoleWithProject } from "../../../../api/Project"
 import { getListPeopleByProjectID } from "api/People"
 import shareWith from "resources/icons/share_with_primary.svg";
+import edit from 'resources/icons/edit.svg'
+
+import eye_bluecloud from 'resources/icons/eye_bluecloud.svg'
+import DropdownWithIndex0 from 'components/DropdownWithIndex0'
+
 import { Store } from 'react-notifications-component'
 import { content } from "utils/notification"
-import { getRoleListOfAPeople } from "api/Project"
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import Checkbox from '@mui/material/Checkbox';
 
+import Autocomplete from '@mui/material/Autocomplete';
+import TextField from '@mui/material/TextField';
 export default function SharePopUp(props) {
 
+
+    const status_list = ["View", "Edit"]
+    const staus_icon_list = [eye_bluecloud, edit]
     const [listPeopInProject, setListPeopInProject] = useState([])
     const listRoleVsProject = ["View", "Edit"]
     const [listRoleToSend, setListRoleToSend] = useState([])
@@ -48,15 +51,39 @@ export default function SharePopUp(props) {
         //     })
     }
 
+    const [role, setRole] = useState("View")
+    const [selectPeople, setSelectPeople] = useState([])
+    const selectMailComponent = () => {
+        return <div className='text-center row m-auto m-0 p-0 p-4'>
+            <Autocomplete
+                className='col-10'
+                multiple
+                id="tags-standard"
+                options={listPeopInProject.map((ele) => ele.Email)}
+                renderInput={(params) => (
+                    <TextField
+                        {...params}
+                        variant="standard"
+                        placeholder="Email"
+                    />
+                )}
+                onChange={(e, val) => {
+                    setSelectPeople(val)
+                    console.log(selectPeople)
+                }}
+            />
+            <div className='col-2 m-auto'>
+                <DropdownWithIndex0 title={role} items={status_list} icons_list={staus_icon_list} onClick={(val) => {
+                    setRole(val)
+                }} />
+            </div>
+        </div>
+    }
     const body = () => {
         return (
-            <div>
-                {
-                    listPeopInProject.map((ele) =>{
-                        return <div>{ele.UserName}</div>
-                    })
-                }
-            </div>
+
+            selectMailComponent()
+
         )
     }
 
@@ -65,7 +92,9 @@ export default function SharePopUp(props) {
             show={props.show}
             onHide={props.handleClose}
             backdrop="static"
-            size="lg"
+            size="xl"
+            aria-labelledby="contained-modal-title-vcenter"
+            centered
         >
             <Modal.Header closeButton>
                 <Modal.Title>
@@ -73,7 +102,7 @@ export default function SharePopUp(props) {
                         className='d-flex align-items-center'
                         style={{ fontFamily: Poppins, color: deep_blue_primary, "fontWeight": "bold", fontSize: "30px" }}
                     >
-                        <div className='m-auto me-2'><img src={shareWith} width="30px" height="30px"/></div>
+                        <div className='m-auto me-2'><img src={shareWith} width="30px" height="30px" /></div>
                         <div className='m-auto'>Share with</div>
                     </div>
                 </Modal.Title>
