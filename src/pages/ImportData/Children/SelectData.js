@@ -66,7 +66,7 @@ export default function SelectData(props) {
                         </ReactFileReader>
                     </div>
                     <div className='col-4 ms-4 m-0 p-0' style={{ maxWidth: "240px"}}>
-                        <ReactFileReader handleFiles={(file) => { handleFiles(file) }} fileTypes={'.csv'}>
+                        <ReactFileReader handleFiles={(file) => { handleFiles(file) }} fileTypes={'.json'}>
                             <ImportButton text="Import json file" image={json_file} />
                         </ReactFileReader>
                     </div>
