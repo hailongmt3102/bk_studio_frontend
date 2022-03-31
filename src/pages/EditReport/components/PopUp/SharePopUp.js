@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { Modal, Button } from 'react-bootstrap'
-import { deep_blue_primary } from "../../../../utils/color"
+import { blue_cloud, deep_blue_primary } from "../../../../utils/color"
 import { Poppins } from "utils/font"
 import { editPeopleRoleWithProject } from "../../../../api/Project"
 import { getListPeopleByProjectID } from "api/People"
-
+import shareWith from "resources/icons/share_with_primary.svg";
 import { Store } from 'react-notifications-component'
 import { content } from "utils/notification"
 import { getRoleListOfAPeople } from "api/Project"
@@ -73,7 +73,8 @@ export default function SharePopUp(props) {
                         className='d-flex align-items-center'
                         style={{ fontFamily: Poppins, color: deep_blue_primary, "fontWeight": "bold", fontSize: "30px" }}
                     >
-                        Share with
+                        <div className='m-auto me-2'><img src={shareWith} width="30px" height="30px"/></div>
+                        <div className='m-auto'>Share with</div>
                     </div>
                 </Modal.Title>
             </Modal.Header>
