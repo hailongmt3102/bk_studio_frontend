@@ -2,9 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { Roboto, Poppins } from "../../utils/font"
 import { blue_cloud } from "../../utils/color"
 import { deep_blue_primary } from "../../utils/color"
-import { Form, InputGroup, Col, Row, Container, Button } from 'react-bootstrap'
 import avt_people from "resources/icons/avt_people.svg"
-import tick from "resources/icons/tick.svg"
+
 
 import PeopleCard from "components/PeopleCard/PeopleCard"
 

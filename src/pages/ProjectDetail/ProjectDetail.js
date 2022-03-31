@@ -20,7 +20,7 @@ import { Store } from 'react-notifications-component'
 import { content } from "utils/notification"
 import { updateStatus, deleteProject, editProject, canUpdatePermission } from 'api/Project'
 
-import { SendToWorkspace } from 'api/DataSources'
+import { SendToWorkspace, GetDataSourcesListInformationInProject } from 'api/DataSources'
 import add_round from "resources/icons/add_round.svg"
 import edit from "resources/icons/edit.svg"
 import delete_icon from "resources/icons/delete.svg"
@@ -79,14 +79,14 @@ export default function ProjectDetail() {
     }, [])
 
     const [datasourceslist, setDatasourceslist] = useState([])
-    const option_list = ["Send to Workspace", "Edit information", "Share", "Download", "Delete"]
+    const option_list = ["Send to Workspace", "Rename", "Share", "Download", "Delete"]
     useEffect(() => {
         //console.log("Lấy data nè")
         // get list people
-        GetDataSourcesListInformation()
+        GetDataSourcesListInformationInProject({PId:project_id})
             .then(res => {
                 setDatasourceslist(res.data)
-                //console.log(res.data)
+                console.log(res.data)
             })
             .catch(err => {
                 console.log(err)
@@ -252,7 +252,7 @@ export default function ProjectDetail() {
             PredictEndtime: projectInformation.PredictEndtime.substring(0, 10)
         })
             .then((res) => {
-                // Store.addNotification(content("Success", "Edited Project successful", "sucess"))
+                Store.addNotification(content("Success", "Edited Project successful", "success"))
                 setTimeout(() => window.location.reload(), 1000);
             })
             .catch((e) => {
@@ -382,13 +382,17 @@ export default function ProjectDetail() {
         </div>
     }
 
-    const sendToWorkspaceSubmit = () => {
-        SendToWorkspace(project_id, { "Type": "Workspace" })
+    const sendToWorkspaceSubmit = (id) => {
+        SendToWorkspace(id, { "Type": "Workspace" })
             .then((res) => {
-                console.log("dadx chuyeenr sang thanh cong")
+                Store.addNotification(content("Success", "Edited Project successful", "success"))
+                navigate("/datasources")
+                
             })
             .catch((e) => {
+                Store.addNotification(content("Failure","Send failed","danger"))
                 console.log(e.response.data)
+                return 
 
             })
     }
@@ -409,7 +413,7 @@ export default function ProjectDetail() {
                                         icons_list={[sendTo, edit, share_blue, download_blue, delete_icon]}
                                         onClick={(val) => {
                                             if (val === "Send to Workspace") {
-                                                sendToWorkspaceSubmit()
+                                                sendToWorkspaceSubmit(ele.Id)
                                             }
                                         }} />
                                 </div>

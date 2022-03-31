@@ -72,7 +72,9 @@ export default function ToolBar(props) {
                     <img src={share} width="20px" height="20px" />
                     <p className="p-0 m-0">share</p>
                 </button>
-                <button className="col m-0 p-0 btn btn-sm" style={{ "minWidth": "80px", "minHeight": "50px" }}>
+                <button className="col m-0 p-0 btn btn-sm" style={{ "minWidth": "80px", "minHeight": "50px" }}
+                     onClick={()=>props.OpenSharePopUp()}
+                    >
                     <img src={shareWith} width="20px" height="20px" />
                     <p className="p-0 m-0">share with</p>
                 </button>

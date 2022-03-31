@@ -1,3 +1,4 @@
+import { idID } from "@mui/material/locale"
 import axiosClient from "./axios"
 
 const ImportDataApi = (tableName, data) => {
@@ -12,10 +13,13 @@ const GetTableColumns = () => {
 }
 
 
-const GetDataSourcesListInformation = () => {
-    return axiosClient.get("/data/info")
+const GetDataSourcesListInformationInWorkSpace = () => {
+    return axiosClient.get("/data/workspace")
 }
 
+const GetDataSourcesListInformationInProject = (pid) => {
+    return axiosClient.post("/data/project",pid)
+}
 const QueryData = (query) => {
     return axiosClient.post("/data/query", {
         query: query
@@ -30,6 +34,7 @@ export {
     ImportDataApi,
     GetTableColumns,
     QueryData,
-    GetDataSourcesListInformation,
-    SendToWorkspace
+    SendToWorkspace,
+    GetDataSourcesListInformationInWorkSpace,
+    GetDataSourcesListInformationInProject
 }

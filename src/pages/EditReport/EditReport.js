@@ -22,8 +22,9 @@ import { Store } from 'react-notifications-component'
 import { content } from "utils/notification"
 import { Roboto, Poppins } from "../../utils/font"
 import SqlPopUp from "./components/SqlPopUp";
+import SharePopUp from "./components/SharePopUp";
 
-import { createNewReport, getAllComponent, createNewComponent, getReportInformation,updateReportInformation } from 'api/Report'
+import { createNewReport, getAllComponent, createNewComponent, getReportInformation, updateReportInformation } from 'api/Report'
 import { useLocation, useNavigate } from "react-router-dom";
 import { deep_blue_primary } from "utils/color";
 
@@ -37,22 +38,22 @@ export default function EditReport(props) {
     let RId = location.split('/')[3]
     const currentProject = localStorage.getItem("currentProject")
 
-    
+
 
     const updateSubmit = () => {
         updateReportInformation(currentProject, RId, {
-            "Hastag":reportInformation.Hastag,
+            "Hastag": reportInformation.Hastag,
             "Description": "",
             "Name": reportInformation.Name
         })
             .then(res => {
                 Store.addNotification(content("Success", "Updated Report Information", "success"))
-                setTimeout(() => window.location.reload(), 1000);
+                window.location.reload()
             })
             .catch(err => {
                 Store.addNotification(content("Fail", "Fail update", "danger"))
                 console.log(err.response.data)
-                
+
             })
     }
     const [components, setComponents] = useState([])
@@ -117,7 +118,7 @@ export default function EditReport(props) {
             .then(res => {
                 console.log(res.data)
                 nav(`/project/gallery/${res.data.Id}/edit`)
-                setTimeout(() => window.location.reload(), 1000);
+                window.location.reload()
             })
             .catch(err => {
                 alert(err.response.data)
@@ -328,6 +329,11 @@ export default function EditReport(props) {
             </Tabs>
         </div>
     }
+
+
+    const [showSharePopUp, setshowSharePopUp] = useState(false)
+
+
     return (
         <div>
             <SqlPopUp
@@ -341,6 +347,17 @@ export default function EditReport(props) {
                     createNewComponentInReport(sql)
                 }}
                 dataSource={dataSource}
+            />
+            <SharePopUp
+                currentProject={currentProject}
+                show={showSharePopUp}
+                handleOpen={() => {
+                    setshowSharePopUp(true)
+                }}
+                handleClose={() => {
+                    setshowSharePopUp(false)
+                }}
+
             />
             <div className="row">
                 {tab_component()}
@@ -357,7 +374,7 @@ export default function EditReport(props) {
                                     <div className="col-8 m-0 p-0" >
                                         <Form.Control type="text" value={reportInformation.Name} onChange={(event) => {
                                             setReportInformation({ ...reportInformation, Name: event.target.value })
-                                           
+
                                         }}
                                             className="border-0 mb-2 m-0 p-0"
                                             placeholder="Report Name"
@@ -370,25 +387,25 @@ export default function EditReport(props) {
                                             }}
                                         />
                                     </div>
-                                    
+
                                 </div>
                                 <div className="row ms-5 m-0 p-0 text-center">
-                                        <div className="col-5">
-                                            <Form.Control type="text" value={reportInformation.Hastag} onChange={(event) => {
-                                                setReportInformation({ ...reportInformation, Hastag: event.target.value })
-                                            
+                                    <div className="col-5">
+                                        <Form.Control type="text" value={reportInformation.Hastag} onChange={(event) => {
+                                            setReportInformation({ ...reportInformation, Hastag: event.target.value })
+
+                                        }}
+                                            className="text-primary border-0  m-0 p-0 ms-4"
+                                            placeholder="#Hastag"
+                                            style={{
+                                                fontSize: "22px",
+                                                backgroundColor: "#F7F7F7",
+                                                fontFamily: "Poppins",
+                                                fontWeight: "bold"
                                             }}
-                                                className="text-primary border-0  m-0 p-0 ms-4"
-                                                placeholder="#Hastag"
-                                                style={{
-                                                    fontSize: "22px",
-                                                    backgroundColor: "#F7F7F7",
-                                                    fontFamily: "Poppins",
-                                                    fontWeight: "bold"
-                                                }}
-                                            />
-                                        </div>
+                                        />
                                     </div>
+                                </div>
 
 
                             </div>
@@ -397,12 +414,13 @@ export default function EditReport(props) {
                             newFileSubmit={() => {
                                 newFileSubmit()
                             }}
-                            updateSubmit={()=>updateSubmit()}
+                            updateSubmit={() => updateSubmit()}
                             showSqlPopUpFunction={showSqlPopUpFunction}
+
                         />
 
                         <ToolBar
-
+                            OpenSharePopUp={() => setshowSharePopUp(true)}
                         />
                         <div className="m-2 content">
                             <Content components={components} />

@@ -59,7 +59,7 @@ export default function PeopleCard(props) {
             {!props.isManager ? <div className='d-flex m-0 p-0 justify-content-end'>
                 {props.showThreeDotButton ? <ThreeDotButton title={'adđ'} items={option_list} icons_list={icons_list} icon={three_dot} onClick={(val) => {
                     if (val === "Edit role") {
-                        if (props.peopleCanEditRoleList == true) {
+                        if (props.peopleCanEditRoleList === true) {
                             props.getEmail()
                             props.setshowRolePopUp();
                         }

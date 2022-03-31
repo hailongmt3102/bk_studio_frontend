@@ -15,19 +15,19 @@ import { orange } from "../../utils/color"
 import ThreeDotButton from 'components/ThreeDotButton'
 import CustomDropdownButton from 'pages/EditReport/components/CustomDropdownButton'
 
-import { GetDataSourcesListInformation } from '../../api/DataSources'
+import { GetDataSourcesListInformationInWorkSpace } from '../../api/DataSources'
 
 const orangeStyle = {
     color: "#FF7F0D",
 }
-const option_list = ["Share", "Edit", "Download", "Delete"]
+const option_list = ["Share", "Rename", "Download", "Delete"]
 
 export default function DataSources() {
     const [datasourceslist, setDatasourceslist] = useState([])
     useEffect(() => {
         console.log("Lấy data nè")
         // get list people
-        GetDataSourcesListInformation()
+        GetDataSourcesListInformationInWorkSpace()
             .then(res => {
                 setDatasourceslist(res.data)
                 console.log(res.data)
@@ -59,34 +59,36 @@ export default function DataSources() {
                     <h1 className='m-2 mt-4' style={{ fontFamily: Poppins, color: blue_cloud, "font-weight": "bold" }}>User Sources</h1>
                     <div className='row'>
                         {
-                        datasourceslist.map((ele) => {
-                            return <div className='col-3 ms-4 mt-3 pt-2 mb-5' style={{ "height": "200px", width: "400px", "border-radius": "20px", "backgroundColor": "#F7F7F7" }}>
-                                <div className='row ms-3' style={{ "paddingLeft": "310px" }}>
-                                    <ThreeDotButton title={'adđ'} items={option_list} icon={three_dot} icons_list={[share_blue, edit, download_blue, delete_icon]} 
-                                    onClick={(val) => {
-                                        
-                                     }} />
-                                </div>
-                                <div className="row m-0 p-0">
-                                    <div className="col-4 m-0 p-0" style={{ fontFamily: "Roboto" }}>
-                                        <img src={excel_icon} height="120px" width="100%"/>
+                            datasourceslist.map((ele) => {
+                                return <div className='col-3 ms-4 mt-3 pt-2 mb-5' style={{ "height": "200px", width: "400px", "border-radius": "20px", "backgroundColor": "#F7F7F7" }}>
+                                    <div className='row ms-3' style={{ "paddingLeft": "310px" }}>
+                                        <ThreeDotButton title={'adđ'}
+                                            items={option_list}
+                                            icon={three_dot}
+                                            icons_list={[ share_blue, edit, download_blue, delete_icon]}
+                                            onClick={(val) => {
+                                            }} />
                                     </div>
-                                    <div class="col-8 m-0 p-0" style={{ fontFamily: "Roboto" }}>
-                                        <div class="row m-0 p-0" style={{ fontFamily: "Roboto", color: blue_cloud, fontSize: "28px" }}>
-                                            <p><span>{ele.Information}</span></p>
+                                    <div className="row m-0 p-0">
+                                        <div className="col-4 m-0 p-0" style={{ fontFamily: "Roboto" }}>
+                                            <img src={excel_icon} height="120px" width="100%" />
                                         </div>
-                                        <div class="row  m-0 p-0 mt-1" style={{ fontFamily: "Roboto" }}>
-                                            <p><span style={{ "color": "#868585" }}>date created: </span>{ele.CreateTime}</p>
-                                        </div>
-                                        <div class="row m-0 p-0" style={{ fontFamily: "Roboto" }}>
-                                            <p><span style={{ "color": "#868585" }}>last modified: </span>{ele.LastModified}</p>
+                                        <div class="col-8 m-0 p-0" style={{ fontFamily: "Roboto" }}>
+                                            <div class="row m-0 p-0" style={{ fontFamily: "Roboto", color: blue_cloud, fontSize: "28px" }}>
+                                                <p><span>{ele.Information}</span></p>
+                                            </div>
+                                            <div class="row  m-0 p-0 mt-1" style={{ fontFamily: "Roboto" }}>
+                                                <p><span style={{ "color": "#868585" }}>date created: </span>{ele.CreateTime}</p>
+                                            </div>
+                                            <div class="row m-0 p-0" style={{ fontFamily: "Roboto" }}>
+                                                <p><span style={{ "color": "#868585" }}>last modified: </span>{ele.LastModified}</p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        })
+                            })
 
-                    }
+                        }
                     </div>
                 </div>
                 <div className='col-5 m-4 bg-white'>

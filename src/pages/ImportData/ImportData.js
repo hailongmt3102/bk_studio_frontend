@@ -19,6 +19,7 @@ export default function ImportData() {
         // navigate to next step, execute data file
         setStep(2)
     }
+    let currentProjectId = localStorage.getItem("currentProject")
 
     // send data to server
     const submit = (name, columns) => {
@@ -36,7 +37,7 @@ export default function ImportData() {
                 Store.addNotification(content("Success", "Imported data", "success"), {
                     duration: 5000
                 })
-                navigate("/datasources")
+                navigate("/pDetail/"+currentProjectId)
                 setStep(1)
             })
             .catch(err => {
