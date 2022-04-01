@@ -2,6 +2,7 @@ import React from 'react'
 import ReactFileReader from 'react-file-reader'
 import ImportFileImage from 'resources/images/importFile.png'
 import json_file from 'resources/icons/json_file.svg'
+import db from "resources/icons/db.svg"
 import ImportButton from '../Components/ImportButton'
 import { Roboto, Poppins } from "../../../utils/font"
 import { deep_blue_primary } from "../../../utils/color"
@@ -60,15 +61,18 @@ export default function SelectData(props) {
                     </h2>
                 </div>
                 <div className='row ms-4 p-4 m-0 p-0 bg-white'>
-                <div className='col-4 m-0 p-0' style={{  width:"240px"}}>
-                        <ReactFileReader  handleFiles={(file) => { handleFiles(file) }} fileTypes={'.csv'}>
+                    <div className='col-4 m-0 p-0' style={{ width: "240px" }}>
+                        <ReactFileReader handleFiles={(file) => { handleFiles(file) }} fileTypes={'.csv'}>
                             <ImportButton text="Import file" image={ImportFileImage} />
                         </ReactFileReader>
                     </div>
-                    <div className='col-4 ms-4 m-0 p-0' style={{ maxWidth: "240px"}}>
+                    <div className='col-4 ms-4 m-0 p-0' style={{ maxWidth: "240px" }}>
                         <ReactFileReader handleFiles={(file) => { handleFiles(file) }} fileTypes={'.json'}>
                             <ImportButton text="Import json file" image={json_file} />
                         </ReactFileReader>
+                    </div>
+                    <div className='col-4 ms-4 m-0 p-0' style={{ maxWidth: "240px" }}>
+                        <ImportButton text="Connect to database" image={db} onClick={()=>{}} />
                     </div>
                 </div>
 
