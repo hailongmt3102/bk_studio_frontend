@@ -120,27 +120,7 @@ export default function NewProjectModel(props) {
                             }}
                         />
                     </Form.Group>
-                    
-                    <Form.Group controlId="duedate" className='mt-4'>
-                        <Form.Label> 
-                            <div className='d-flex flex-row'>
-                                <img src={MemberSvg} width="30px" height="20px"/>
-                                <div style={orangeStyle} className="ms-4">
-                                    Num of member: <strong className='text-danger'>*</strong>
-                                </div>
-                            </div>
-                        </Form.Label>
-                        <Form.Control
-                            type="number"
-                            value={projectInfo.NumOfMember}   
-                            onChange={(e) => {
-                                setProjectInfo({
-                                    ...projectInfo, NumOfMember: parseInt(e.target.value)   
-                                })
-                                console.log(projectInfo)
-                            }}
-                        />
-                    </Form.Group>
+                
 
                     <Form.Group controlId="duedate" className='mt-4'>
                         <Form.Label> 
