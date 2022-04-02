@@ -366,10 +366,10 @@ export default function EditReport(props) {
                 RId={RId}
                 show={showShareLinkPopUp}
                 handleOpen={() => {
-                    showShareLinkPopUp(true)
+                    setshowShareLinkPopUp(true)
                 }}
                 handleClose={() => {
-                    showShareLinkPopUp(false)
+                    setshowShareLinkPopUp(false)
                 }}
 
             />

@@ -122,7 +122,7 @@ export default function ShareLinkPopUp(props) {
     return (
         <Modal
             show={props.show}
-            onHide={props.handleClose}
+            onHide={()=>props.handleClose()}
             backdrop="static"
             size="xl"
             aria-labelledby="contained-modal-title-vcenter"
