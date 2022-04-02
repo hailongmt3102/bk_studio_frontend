@@ -34,6 +34,15 @@ const getReportInformation = (PId, RId) => {
     return axiosClient.get(`/project/${PId}/${RId}/info`)
 }
 
+const shareReport = (PId, RId, data) => {
+    return axiosClient.post(`/project/${PId}/${RId}/share`, data)
+}
+
+const getShardListPeople = (PId, RId) => {
+    return axiosClient.get(`/project/${PId}/${RId}/getshare`)
+}
+
+
 export {
     createNewReport,
     getAllReport,
@@ -43,5 +52,7 @@ export {
     unlike,
     deleteReport,
     updateReportInformation,
-    getReportInformation
+    getReportInformation,
+    shareReport,
+    getShardListPeople
 }

@@ -22,7 +22,8 @@ import { Store } from 'react-notifications-component'
 import { content } from "utils/notification"
 import { Roboto, Poppins } from "../../utils/font"
 import SqlPopUp from "./components/PopUp/SqlPopUp";
-import SharePopUp from "./components/PopUp/SharePopUp";
+import ShareWithPopUp from "./components/PopUp/ShareWithPopUp";
+import ShareLinkPopUp from "./components/PopUp/ShareLinkPopUp";
 
 import { createNewReport, getAllComponent, createNewComponent, getReportInformation, updateReportInformation } from 'api/Report'
 import { useLocation, useNavigate } from "react-router-dom";
@@ -332,7 +333,7 @@ export default function EditReport(props) {
 
 
     const [showSharePopUp, setshowSharePopUp] = useState(false)
-
+    const [showShareLinkPopUp, setshowShareLinkPopUp] = useState(false)
 
     return (
         <div>
@@ -348,14 +349,27 @@ export default function EditReport(props) {
                 }}
                 dataSource={dataSource}
             />
-            <SharePopUp
+            <ShareWithPopUp
                 currentProject={currentProject}
+                RId={RId}
                 show={showSharePopUp}
                 handleOpen={() => {
                     setshowSharePopUp(true)
                 }}
                 handleClose={() => {
                     setshowSharePopUp(false)
+                }}
+
+            />
+              <ShareLinkPopUp
+                currentProject={currentProject}
+                RId={RId}
+                show={showShareLinkPopUp}
+                handleOpen={() => {
+                    showShareLinkPopUp(true)
+                }}
+                handleClose={() => {
+                    showShareLinkPopUp(false)
                 }}
 
             />
@@ -421,6 +435,7 @@ export default function EditReport(props) {
 
                         <ToolBar
                             OpenSharePopUp={() => setshowSharePopUp(true)}
+                            OpenShareLinkPopUp={()=> setshowShareLinkPopUp(true)}
                         />
                         <div className="m-2 content">
                             <Content components={components} />

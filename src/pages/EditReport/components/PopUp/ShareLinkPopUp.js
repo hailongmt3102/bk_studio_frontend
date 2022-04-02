@@ -4,7 +4,9 @@ import { blue_cloud, deep_blue_primary } from "../../../../utils/color"
 import { Poppins } from "utils/font"
 import { editPeopleRoleWithProject } from "../../../../api/Project"
 import { getListPeopleByProjectID } from "api/People"
-import shareWith from "resources/icons/share_with_primary.svg";
+
+import { shareReport, getShardListPeople } from "api/Report"
+import link from "resources/icons/link.svg";
 import edit from 'resources/icons/edit.svg'
 
 import eye_bluecloud from 'resources/icons/eye_bluecloud.svg'
@@ -15,14 +17,14 @@ import { content } from "utils/notification"
 
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
-export default function SharePopUp(props) {
+export default function ShareLinkPopUp(props) {
 
 
     const status_list = ["View", "Edit"]
     const staus_icon_list = [eye_bluecloud, edit]
     const [listPeopInProject, setListPeopInProject] = useState([])
-    const listRoleVsProject = ["View", "Edit"]
-    const [listRoleToSend, setListRoleToSend] = useState([])
+    const [listSharedPeople, setListSharedPeople] = useState([])
+
     useEffect(() => {
         getListPeopleByProjectID(props.currentProject)
             .then(res => {
@@ -30,29 +32,40 @@ export default function SharePopUp(props) {
                 console.log(res.data)
             })
             .catch(err => {
-                // Store.addNotification(content("Warning", err.response.data, "danger"))
-                // props.handleClose()
+                Store.addNotification(content("Warning", "Can't show list people in this project", "danger"))
+                console.log(err.response.data)
             })
-    }, [props.Email])
+        getShardListPeople(props.currentProject, props.RId)
+            .then(res => {
+                setListSharedPeople(res.data)
+                console.log(res.data)
+            })
+            .catch(err => {
+                // Store.addNotification(content("Warning","Can't show list people in this project", "danger"))
+                // console.log( err.response.data)
+            })
 
-    const onsubmit = () => {
-        // let permissions = Object.keys(showList).filter(ele => showList[ele])
-        // editPeopleRoleWithProject(props.PId, {
-        //     Email: props.Email,
-        //     Permission: permissions
-        // })
-        //     .then(response => {
-        //         Store.addNotification(content("Success", "Editted role", "success"))
-        //         props.handleClose()
-        //     })
-        //     .catch(error => {
-        //         Store.addNotification(content("Warning", error.data, "danger"))
-        //         props.handleClose()
-        //     })
-    }
+
+    }, [props.Email])
 
     const [role, setRole] = useState("View")
     const [selectPeople, setSelectPeople] = useState([])
+    const shareSubmit = () => {
+        shareReport(props.currentProject, props.RId, {
+            Email: selectPeople,
+            Permission: role
+        })
+            .then(response => {
+                Store.addNotification(content("Success", "Editted role", "success"))
+                props.handleClose()
+            })
+            .catch(error => {
+                Store.addNotification(content("Warning", error.data, "danger"))
+                props.handleClose()
+            })
+    }
+
+
     const selectMailComponent = () => {
         return <div className='text-center row m-auto m-0 p-0 p-4'>
             <Autocomplete
@@ -79,10 +92,29 @@ export default function SharePopUp(props) {
             </div>
         </div>
     }
+
+    const listSharedPeopleComponent = () => {
+        return <div>
+            <div className='row'>
+                <div className='col ms-5'>
+                    {listSharedPeople.map((ele) => ele.Email)}
+                </div>
+                <div className='col'>
+                    {listSharedPeople.map((ele) => ele.Permission)}
+                </div>
+            </div>
+
+        </div>
+    }
     const body = () => {
         return (
 
-            selectMailComponent()
+            <div>
+                {selectMailComponent()}
+
+
+                {listSharedPeopleComponent()}
+            </div>
 
         )
     }
@@ -99,14 +131,15 @@ export default function SharePopUp(props) {
             <Modal.Header closeButton>
                 <Modal.Title>
                     <div
-                        className='d-flex align-items-center'
+                        className='d-flex m-auto align-items-center'
                         style={{ fontFamily: Poppins, color: deep_blue_primary, "fontWeight": "bold", fontSize: "30px" }}
                     >
-                        <div className='m-auto me-2'><img src={shareWith} width="30px" height="30px" /></div>
-                        <div className='m-auto'>Share with</div>
+                        <div className='m-auto me-2'><img src={link} width="42px" height="42px" /></div>
+                        <div className='m-auto ms-2'>Share by link</div>
                     </div>
                 </Modal.Title>
             </Modal.Header>
+
             <Modal.Body>
                 {
                     body()
@@ -114,9 +147,9 @@ export default function SharePopUp(props) {
             </Modal.Body>
             <Modal.Footer>
                 <Button onClick={() => {
-                    onsubmit()
+                    shareSubmit()
                 }}>
-                    Done
+                    Share
                 </Button>
             </Modal.Footer>
         </Modal>
