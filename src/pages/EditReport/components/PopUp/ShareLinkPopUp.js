@@ -96,12 +96,12 @@ export default function ShareLinkPopUp(props) {
     const listSharedPeopleComponent = () => {
         return <div>
             <div className='row'>
-                <div className='col ms-5'>
+                {/* <div className='col ms-5'>
                     {listSharedPeople.map((ele) => ele.Email)}
                 </div>
                 <div className='col'>
                     {listSharedPeople.map((ele) => ele.Permission)}
-                </div>
+                </div> */}
             </div>
 
         </div>
@@ -110,10 +110,10 @@ export default function ShareLinkPopUp(props) {
         return (
 
             <div>
-                {selectMailComponent()}
+                {/* {selectMailComponent()}
 
 
-                {listSharedPeopleComponent()}
+                {listSharedPeopleComponent()} */}
             </div>
 
         )
