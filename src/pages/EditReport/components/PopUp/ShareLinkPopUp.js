@@ -29,7 +29,7 @@ export default function ShareLinkPopUp(props) {
         getListPeopleByProjectID(props.currentProject)
             .then(res => {
                 setListPeopInProject(res.data)
-                console.log(res.data)
+                //console.log(res.data)
             })
             .catch(err => {
                 Store.addNotification(content("Warning", "Can't show list people in this project", "danger"))
@@ -38,7 +38,7 @@ export default function ShareLinkPopUp(props) {
         getShardListPeople(props.currentProject, props.RId)
             .then(res => {
                 setListSharedPeople(res.data)
-                console.log(res.data)
+                //console.log(res.data)
             })
             .catch(err => {
                 // Store.addNotification(content("Warning","Can't show list people in this project", "danger"))
