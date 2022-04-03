@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
 import { Roboto, Poppins } from "../../utils/font"
 import { deep_blue_primary } from "../../utils/color"
 import { getListProject } from 'api/Project'
@@ -7,8 +6,6 @@ import { getListPeople } from 'api/People'
 import ProjectBox from '../../components/ProjectBox'
 import PeopleCardMini from "components/PeopleCardMini/PeopleCardMini"
 export default function Dashboard() {
-    const navigate = useNavigate()
-
     const [projectList, setProjectList] = useState([])
     const [peopleList, setPeopleList] = useState([])
     useEffect(() => {
@@ -19,7 +16,6 @@ export default function Dashboard() {
             })
             .catch(
                 error => {
-                    // if (error.response.status === 403) navigate('/account/login')
                 }
             )
         getListPeople()
