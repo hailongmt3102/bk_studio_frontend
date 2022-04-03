@@ -17,10 +17,14 @@ import { content } from "utils/notification"
 
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
+import Box from '@mui/material/Box';
+import InputLabel from '@mui/material/InputLabel';
+import FormControl from '@mui/material/FormControl';
+import NativeSelect from '@mui/material/NativeSelect';
 export default function ShareWithPopUp(props) {
 
 
-    const status_list = ["View", "Edit"]
+    const roleList = ["View", "Edit"]
     const staus_icon_list = [eye_bluecloud, edit]
     const [listShowPeople, setListShowPeople] = useState([])
     const [listSharedPeople, setListSharedPeople] = useState([])
@@ -34,14 +38,14 @@ export default function ShareWithPopUp(props) {
                 //console.log("list share", res.data.map((e) => e.Email))
             })
             .catch(err => {
-                Store.addNotification(content("Warning","Can't show list shared people in this project", "danger"))
+                Store.addNotification(content("Warning", "Can't show list shared people in this project", "danger"))
                 // console.log( err.response.data)
             })
     }, [])
     useEffect(() => {
         getListPeopleByProjectID(props.currentProject)
             .then(res => {
-                setListShowPeople(res.data.map((e)=>e.Email).filter(item => !listSharedName.includes(item)))
+                setListShowPeople(res.data.map((e) => e.Email).filter(item => !listSharedName.includes(item)))
                 //console.log("list show",res.data.map((e)=>e.Email).filter(item => !listSharedName.includes(item)))
             })
             .catch(err => {
@@ -89,12 +93,14 @@ export default function ShareWithPopUp(props) {
                 }}
             />
             <div className='col-2 m-auto'>
-                <DropdownWithIndex0 title={role} items={status_list} icons_list={staus_icon_list} onClick={(val) => {
+                <DropdownWithIndex0 title={role} items={roleList} icons_list={staus_icon_list} onClick={(val) => {
                     setRole(val)
                 }} />
             </div>
         </div>
     }
+
+
 
     const listSharedPeopleComponent = () => {
         return <div>
@@ -106,13 +112,22 @@ export default function ShareWithPopUp(props) {
                                 {e.Email}
                             </div>
                             <div className='col'>
-                                {e.Permission}
+                                <FormControl fullWidth>
+                                    <NativeSelect
+                                        defaultValue={1}
+                                        inputProps={{
+                                            name: 'age',
+                                            id: 'uncontrolled-native',
+                                        }}
+                                    >
+                                        <option value={1}>{e.Permission}</option>
+                                        <option value={2}>{e.Permission==="Edit"?"View":"Edit"}</option>
+                                    </NativeSelect>
+                                </FormControl>
                             </div>
                         </div>
                     })
                 }
-
-
             </div>
 
         </div>
