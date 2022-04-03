@@ -52,7 +52,7 @@ export default function ShareWithPopUp(props) {
     const [selectPeople, setSelectPeople] = useState([])
     const shareSubmit = () => {
         shareReport(props.currentProject, props.RId, {
-            Email: selectPeople,
+            Emails: selectPeople,
             Permission: role
         })
             .then(response => {
