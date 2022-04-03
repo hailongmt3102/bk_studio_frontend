@@ -18,7 +18,7 @@ import { Store } from 'react-notifications-component'
 import { content } from "utils/notification"
 import { Rename, GetDataSourcesListInformationInWorkSpace, deleteDatasource } from '../../api/DataSources'
 
-import {newNameTextField} from "./component/newNameTextField"
+
 
 const orangeStyle = {
     color: "#FF7F0D",
@@ -53,12 +53,13 @@ export default function DataSources() {
             })
     }
 
-    const RenameHandle = (id,oldname) => {
+    const RenameHandle = (id,newname) => {
         Rename(id, {
-            "Name": oldname,
-            "newName": ""
+            "newName":newname
         })
             .then(res => {
+                console.log(res.data)
+                Store.addNotification(content("Success", "Renamed", "success"))
                 setTimeout(() => window.location.reload(), 1000);
             })
             .catch(err => {
@@ -68,6 +69,10 @@ export default function DataSources() {
     }
     const [pressRename, setPressRename] = useState(false)
    
+    const setNewName = (value, index) => {
+        setDatasourceslist([...datasourceslist.splice(0,index), {...datasourceslist[index],Information: value}, ...datasourceslist.splice(index+1) ])
+        
+    }
     return (
         <div>
             <div className='d-flex flex-row pt-2'>
@@ -90,7 +95,7 @@ export default function DataSources() {
                     <h1 className='m-2 mt-4' style={{ fontFamily: Poppins, color: blue_cloud, "font-weight": "bold" }}>User Sources</h1>
                     <div className='row'>
                         {
-                            datasourceslist.map((ele) => {
+                            datasourceslist.map((ele, index) => {
                                 return <div className='col-3 ms-4 mt-3 pt-2 mb-5' style={{ "height": "200px", width: "400px", "border-radius": "20px", "backgroundColor": "#F7F7F7" }}>
                                     <div className='row ms-3' style={{ "paddingLeft": "310px" }}>
                                         <ThreeDotButton title={'adđ'}
@@ -114,17 +119,17 @@ export default function DataSources() {
                                             <div class="row m-0 p-0" style={{ fontFamily: "Roboto", color: blue_cloud, fontSize: "28px" }}>
                                                 {
                                                     pressRename == false ? <p><span>{ele.Information}</span></p> : 
-                                                    <newNameTextField/>
-                                                        // <Form.Group className='m-0 p-0 ms-2 pe-2'>
-                                                        //     <Form.Control
-                                                        //         type="text"
-                                                        //         placeholder=""
-                                                        //         value={newName}
-                                                        //         onChange={(e) => {
-                                                        //             setNewName(e.target.value)
-                                                        //         }}
-                                                        //     />
-                                                        // </Form.Group>
+                                                    // <newNameTextField/>
+                                                        <Form.Group className='m-0 p-0 ms-2 pe-2'>
+                                                            <Form.Control
+                                                                type="text"
+                                                                placeholder=""
+                                                                value={ele.Information}
+                                                                onChange={(e) => {
+                                                                    setNewName(e.target.value, index)
+                                                                }}
+                                                            />
+                                                        </Form.Group>
                                                 }
                                             </div>
                                             <div class="row  m-0 p-0 mt-1" style={{ fontFamily: "Roboto" }}>
