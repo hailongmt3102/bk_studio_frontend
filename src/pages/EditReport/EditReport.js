@@ -140,7 +140,7 @@ export default function EditReport(props) {
             console.log(query.replaceAll('\n', " "))
             createNewComponent(currentProject, RId, {
                 Title: "example",
-                Type: "Table",
+                Type: "BarChart",
                 QueryCommand: query.replaceAll('\n', " "),
                 Height: "600",
                 Width: "600",
