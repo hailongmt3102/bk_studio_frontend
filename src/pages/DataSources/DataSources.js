@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Roboto, Poppins } from "../../utils/font"
 import { blue_cloud } from "../../utils/color"
 import { deep_blue_primary } from "../../utils/color"
-
+import { Form } from 'react-bootstrap'
 import add_round from "resources/icons/add_round.svg"
 import edit from "resources/icons/edit.svg"
 import delete_icon from "resources/icons/delete.svg"
@@ -14,8 +14,11 @@ import three_dot from "resources/icons/three-dot.svg"
 import { orange } from "../../utils/color"
 import ThreeDotButton from 'components/ThreeDotButton'
 import CustomDropdownButton from 'pages/EditReport/components/CustomDropdownButton'
+import { Store } from 'react-notifications-component'
+import { content } from "utils/notification"
+import { Rename, GetDataSourcesListInformationInWorkSpace, deleteDatasource } from '../../api/DataSources'
 
-import { GetDataSourcesListInformationInWorkSpace } from '../../api/DataSources'
+import {newNameTextField} from "./component/newNameTextField"
 
 const orangeStyle = {
     color: "#FF7F0D",
@@ -37,6 +40,34 @@ export default function DataSources() {
             })
 
     }, [])
+
+    const deleteHandle = (id) => {
+        deleteDatasource(id)
+            .then(res => {
+                Store.addNotification(content("Success", "Deleted Datasource", "success"))
+                setTimeout(() => window.location.reload(), 1000);
+            })
+            .catch(err => {
+                Store.addNotification(content("Fail", "Delete Fail", "danger"))
+                console.log(err.response.data)
+            })
+    }
+
+    const RenameHandle = (id,oldname) => {
+        Rename(id, {
+            "Name": oldname,
+            "newName": ""
+        })
+            .then(res => {
+                setTimeout(() => window.location.reload(), 1000);
+            })
+            .catch(err => {
+                Store.addNotification(content("Fail", "Rename Fail", "danger"))
+                console.log(err.response.data)
+            })
+    }
+    const [pressRename, setPressRename] = useState(false)
+   
     return (
         <div>
             <div className='d-flex flex-row pt-2'>
@@ -65,8 +96,14 @@ export default function DataSources() {
                                         <ThreeDotButton title={'adđ'}
                                             items={option_list}
                                             icon={three_dot}
-                                            icons_list={[ share_blue, edit, download_blue, delete_icon]}
+                                            icons_list={[share_blue, edit, download_blue, delete_icon]}
                                             onClick={(val) => {
+                                                if (val == "Delete") {
+                                                    deleteHandle(ele.Id)
+                                                }
+                                                else if (val === "Rename") {
+                                                    setPressRename(true)
+                                                }
                                             }} />
                                     </div>
                                     <div className="row m-0 p-0">
@@ -75,7 +112,20 @@ export default function DataSources() {
                                         </div>
                                         <div class="col-8 m-0 p-0" style={{ fontFamily: "Roboto" }}>
                                             <div class="row m-0 p-0" style={{ fontFamily: "Roboto", color: blue_cloud, fontSize: "28px" }}>
-                                                <p><span>{ele.Information}</span></p>
+                                                {
+                                                    pressRename == false ? <p><span>{ele.Information}</span></p> : 
+                                                    <newNameTextField/>
+                                                        // <Form.Group className='m-0 p-0 ms-2 pe-2'>
+                                                        //     <Form.Control
+                                                        //         type="text"
+                                                        //         placeholder=""
+                                                        //         value={newName}
+                                                        //         onChange={(e) => {
+                                                        //             setNewName(e.target.value)
+                                                        //         }}
+                                                        //     />
+                                                        // </Form.Group>
+                                                }
                                             </div>
                                             <div class="row  m-0 p-0 mt-1" style={{ fontFamily: "Roboto" }}>
                                                 <p><span style={{ "color": "#868585" }}>date created: </span>{ele.CreateTime}</p>
@@ -83,7 +133,20 @@ export default function DataSources() {
                                             <div class="row m-0 p-0" style={{ fontFamily: "Roboto" }}>
                                                 <p><span style={{ "color": "#868585" }}>last modified: </span>{ele.LastModified}</p>
                                             </div>
+                                            {
+                                                pressRename == false ? null :
+                                                    <div className='d-flex justify-content-center'>
+                                                        <button
+                                                            onClick={() => {
+                                                                RenameHandle(ele.Id, ele.Information)
+                                                            }} type="button" class="btn btn-primary btn-sm">
+                                                            Save
+                                                        </button>
+                                                    </div>
+                                            }
+                                           
                                         </div>
+
                                     </div>
                                 </div>
                             })

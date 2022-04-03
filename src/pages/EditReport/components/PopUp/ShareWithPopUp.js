@@ -101,29 +101,37 @@ export default function ShareWithPopUp(props) {
     }
 
 
+    const [roleOfAPeople, setRoleOfAPeople] = useState("Edit")
+
+    const updateShareHandle = (email, permission) => {
+        getListPeopleByProjectID(props.currentProject, props.RId, {
+            Email: email,
+            Permission: permission
+        })
+            .then(res => {
+               console.log(res.data)
+            })
+            .catch(err => {
+                // Store.addNotification(content("Warning", "Can't show list people in this project", "danger"))
+                // //console.log(err.response.data)
+            })
+    }
 
     const listSharedPeopleComponent = () => {
         return <div>
             <div className='row'>
                 {
+
                     listSharedPeople.map((e) => {
                         return <div className='row'>
                             <div className='col ms-5'>
                                 {e.Email}
                             </div>
                             <div className='col'>
-                                <FormControl fullWidth>
-                                    <NativeSelect
-                                        defaultValue={1}
-                                        inputProps={{
-                                            name: 'age',
-                                            id: 'uncontrolled-native',
-                                        }}
-                                    >
-                                        <option value={1}>{e.Permission}</option>
-                                        <option value={2}>{e.Permission==="Edit"?"View":"Edit"}</option>
-                                    </NativeSelect>
-                                </FormControl>
+                                <DropdownWithIndex0 title={roleOfAPeople} items={[e.Permission, e.Permission == "View" ? "View" : "Edit"]} icons_list={e.Permission === "View" ? [eye_bluecloud, edit] : [edit, eye_bluecloud]} onClick={(val) => {
+                                    setRoleOfAPeople(val)
+                                    //updateShareHandle(e.Email, e.Permission)
+                                }} />
                             </div>
                         </div>
                     })

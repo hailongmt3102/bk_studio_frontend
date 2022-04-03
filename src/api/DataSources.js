@@ -30,11 +30,23 @@ const SendToWorkspace = (id, data) => {
     return axiosClient.post("/data/"+id+"/switchtype", data)
 }
 
+const deleteDatasource = (id) => {
+    return axiosClient.get("/data/"+id+"/delete")
+}
+const Rename = (id, data) => {
+    return axiosClient.post("/data/"+id+"/rename", data)
+}
+
+
+
+
 export {
     ImportDataApi,
     GetTableColumns,
     QueryData,
     SendToWorkspace,
     GetDataSourcesListInformationInWorkSpace,
-    GetDataSourcesListInformationInProject
+    GetDataSourcesListInformationInProject,
+    deleteDatasource,
+    Rename
 }

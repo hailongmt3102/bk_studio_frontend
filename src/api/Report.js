@@ -41,6 +41,9 @@ const shareReport = (PId, RId, data) => {
 const getShardListPeople = (PId, RId) => {
     return axiosClient.get(`/project/${PId}/${RId}/getshare`)
 }
+const updateSharePermission = (PId, RId, data) => {
+    return axiosClient.post(`/project/${PId}/${RId}/share/update`, data)
+}
 
 
 export {
@@ -54,5 +57,6 @@ export {
     updateReportInformation,
     getReportInformation,
     shareReport,
-    getShardListPeople
+    getShardListPeople,
+    updateSharePermission
 }
