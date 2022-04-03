@@ -59,8 +59,8 @@ export default function SelectData(props) {
                         Import data:
                     </h2>
                 </div>
-                <div className='row ms-4 p-4 m-0 p-0 bg-white'>
-                    <div className='col-4 m-0 p-0' style={{ width: "240px" }}>
+                <div className='row p-4 ms-4 p-4 m-0 p-0 bg-white'>
+                    <div className='col-4 m-0 p-0' style={{ maxWidth: "240px" }}>
                         <input
                             ref={inputFile}
                             type={"file"}
@@ -69,20 +69,35 @@ export default function SelectData(props) {
                             onChange={handleOnChange}
                             style={{ display: "none" }}
                         />
-                        <ImportButton text="Import file" image={ImportFileImage} onClick={() => {
+                        <ImportButton text="Import csv file" image={ImportFileImage} onClick={() => {
                             openFile()
                         }} />
                     </div>
-                    {/* <div className='col-4 ms-4 m-0 p-0' style={{ maxWidth: "240px" }}>
-                        <ReactFileReader handleFiles={(file) => { handleFiles(file) }} fileTypes={'.json'}>
-                            <ImportButton text="Import json file" image={json_file} />
-                        </ReactFileReader>
+                    <div className='col-4 ms-4 m-0 p-0' style={{ maxWidth: "240px" }}>
+                        <input
+                            type={"file"}
+                            id={"jsonFileInput"}
+                            accept={".json"}
+                            //onChange={handleOnChange}
+                            style={{ display: "none" }}
+                        />
+                        <ImportButton text="Import json file" image={json_file} onClick={() => {
+                            //openFile()
+                        }} />
                     </div>
                     <div className='col-4 ms-4 m-0 p-0' style={{ maxWidth: "240px" }}>
-                        <ImportButton text="Connect to database" image={db} onClick={()=>{}} />
-                    </div> */}
+                        <input
+                            type={"file"}
+                            id={"jsonFileInput"}
+                            accept={".json"}
+                            //onChange={handleOnChange}
+                            style={{ display: "none" }}
+                        />
+                        <ImportButton text="Connect to database" image={db} onClick={() => {
+                            // openFile()
+                        }} />
+                    </div>
                 </div>
-
             </div>
         </div>
     )
