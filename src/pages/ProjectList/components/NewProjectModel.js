@@ -5,9 +5,9 @@ import MemberSvg from 'resources/icons/two_people.svg'
 import { getListProject } from 'api/Project'
 import { Roboto, Poppins } from "utils/font"
 import {createNewProject} from 'api/Project'
-
 import { Store } from 'react-notifications-component'
-import { content } from "../../../utils/notification"
+import { content } from "utils/notification"
+
 
 
 const orangeStyle = {
@@ -37,10 +37,10 @@ export default function NewProjectModel(props) {
     const onsubmit = () => {
         // check input field
         if ([projectInfo.Name, projectInfo.StartTime, projectInfo.PredictEndtime].includes("") || isNaN(projectInfo.NumOfMember)){
-            alert("Some field is required")
+            Store.addNotification(content("Warning", "Some field is required", "warning"))
             return
         }else if (projectInfo.NumOfMember < 0) {
-            alert("Num of member must be positive number")
+            Store.addNotification(content("Warning", "Num of member must be positive number", "warning"))
             return
         }
 
@@ -54,6 +54,7 @@ export default function NewProjectModel(props) {
         .then(res => {
             props.handleClose()
             Store.addNotification(content("Successful", "Created a new project", "success"))
+            setTimeout(() => window.location.reload(), 1000);
             props.onComplete()
         })
         .catch(err => {
