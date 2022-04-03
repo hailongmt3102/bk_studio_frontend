@@ -1,12 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import DoughnutChart from './charts/DoughnutChart';
-import PieChart from './charts/PieChart'
 import TableComponent from './table/TableComponent'
 import { QueryData as QueryDataApi } from 'api/DataSources'
-
-// import { Chart, registerables } from 'chart.js';
-// Chart.register(...registerables);
-
 
 export default function Content(props) {
 
@@ -16,37 +10,40 @@ export default function Content(props) {
     //     console.log(tables)
     // }, 2000);
 
-    useEffect(() => {
-        props.components.map(component => {
-            // get data of each component
+    const fetchData = async () => {
+        let table = {}
+        for (let i = 0; i < props.components.length; i++) {
+            let component = props.components[i]
             switch (component.Type) {
                 case "Table":
-                    QueryDataApi(component.QueryCommand)
-                        .then(res => {
-                            try {
-                                let result = component
-                                result.data = res.data
-                                let positionString = result.Position.split(";")
-                                result.Position = {
-                                    x: positionString[0].substring(2),
-                                    y: positionString[1].substring(2)
-                                }
-                                let TextThemeArray = result.TextTheme.split(";")
-                                result.TextTheme = {}
-                                TextThemeArray.map(style => result.TextTheme[style.split(':')[0]] = style.split(':')[1])
-                                updateDataTable(result.Id, result)
-                            } catch (e) {
-                                alert(e)
-                            }
-                        })
-                        .catch(err => {
-                            console.log(err)
-                        })
+                    try {
+                        let res = await QueryDataApi(component.QueryCommand)
+                        let result = component
+                        result.data = res.data
+                        let positionString = result.Position.split(";")
+                        result.Position = {
+                            x: positionString[0].substring(2),
+                            y: positionString[1].substring(2)
+                        }
+                        let TextThemeArray = result.TextTheme.split(";")
+                        result.TextTheme = {}
+                        TextThemeArray.map(style => result.TextTheme[style.split(':')[0]] = style.split(':')[1])
+                        table[result.Id] = result
+                        console.log("step")
+                    }
+                    catch (err) {
+                        console.log(err.response.data)
+                    }
                     break
                 default:
                     break
             }
-        })
+            setTables({ ...tables, ...table })
+        }
+    }
+
+    useEffect(() => {
+        fetchData()
     }, [props.components])
 
     const updateDataTable = (key, data) => {
@@ -71,62 +68,5 @@ export default function Content(props) {
                 )
             }
         </div>
-        // <div className='row'>
-        //     <div className='col-4'>
-        //         {
-        //             props.reports.map(report => {
-        //                 switch (report.type) {
-        //                     case "Doughnut":
-        //                         return (
-        //                             <DoughnutChart data={report.data} option={report.option} />
-        //                         )
-        //                     case "Pie":
-        //                         return (
-        //                             <PieChart data={report.data} option={report.option} />
-        //                         )
-        //                     default:
-        //                         return null
-        //                 }
-        //             })
-        //         }
-        //     </div>
-        //     <div className='col-2'></div>
-        //     <div className='col-6'>
-        //         {
-        //             props.reports.map(report => {
-        //                 if (report.type === "Table")
-        //                 {
-        //                     if (report.data.length  === 0) return null
-        //                     let keys = Object.keys(report.data[0])
-        //                     return (
-        //                         <div class="overflow-scroll" style={{ maxHeight: "500px" }}>
-        //                             <table class="table table-success table-striped">
-        //                                 <thead>
-        //                                     {
-        //                                         keys.map(ele => <th scope='col'>{ele}</th>)
-        //                                     }
-        //                                 </thead>
-        //                                 <tbody>
-        //                                     {
-        //                                         report.data.map((row, index) => {
-        //                                             return(
-        //                                                 <tr key={index}>
-        //                                                     {
-        //                                                         keys.map(key => <td>{row[key]}</td>)
-        //                                                     }
-        //                                                 </tr>
-        //                                             )
-        //                                         })
-        //                                     }
-        //                                 </tbody>
-        //                             </table>
-        //                         </div>
-        //                     )
-        //                 }
-        //             })
-        //         }
-        //     </div>
-        // </div>
-
     )
 }
