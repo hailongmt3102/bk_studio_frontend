@@ -21,7 +21,7 @@ export default function TableComponent(props) {
             className="border component-container"
         >
             {
-                props.data.data != undefined ?
+                props.data.data !== undefined ?
                     <div>
                         <h4 className='ms-2'>{props.data.Title}</h4>
                         <table class='component-table'>

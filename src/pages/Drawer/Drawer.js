@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState, } from "react";
+import React, {useEffect, useState, } from "react";
 import { useLocation, useNavigate } from 'react-router-dom'
 import Project from "./Components/Project";
 import Workspace from "./Components/Workspace";
@@ -35,13 +35,8 @@ export default function Drawer(props) {
 				}
 			})
 			.catch(err => {
-				try {
-					if (err.response.status === 403 || err.response.status === 401) navigate("/account/login")
-				} catch {
-					navigate("/account/login")
-				}
 			})
-	}, [])
+	}, [localStorage.getItem("username")])
 
 	useEffect(() => {
 		// this function call when the url changed

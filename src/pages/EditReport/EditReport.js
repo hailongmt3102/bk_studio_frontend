@@ -4,27 +4,22 @@ import MenuBar from "./components/MenuBar";
 import ToolBar from "./components/Bar/ToolBar";
 import "./EditReport.css";
 import { Tabs, Tab } from 'react-bootstrap-tabs';
-import { Form, InputGroup, Col, Button, FormControl } from 'react-bootstrap'
+import { Form } from 'react-bootstrap'
 import back from "resources/icons/back_round_deep_blue.svg"
 import align_left from "resources/icons/align_left.svg"
 import align_right from "resources/icons/align_right.svg"
 import align_center from "resources/icons/align_center.svg"
 import align_justify from "resources/icons/align_justify.svg"
 import bold from "resources/icons/bold.svg"
-
-import edit from "resources/icons/edit.svg"
 import underline from "resources/icons/underline.svg"
 import italic from "resources/icons/italic.svg"
-
 import Autocomplete from '@mui/material/Autocomplete';
 import { GetTableColumns, QueryData } from "api/DataSources"
 import { Store } from 'react-notifications-component'
 import { content } from "utils/notification"
-import { Roboto, Poppins } from "../../utils/font"
 import SqlPopUp from "./components/PopUp/SqlPopUp";
 import ShareWithPopUp from "./components/PopUp/ShareWithPopUp";
 import ShareLinkPopUp from "./components/PopUp/ShareLinkPopUp";
-
 import { createNewReport, getAllComponent, createNewComponent, getReportInformation, updateReportInformation } from 'api/Report'
 import { useLocation, useNavigate } from "react-router-dom";
 import { deep_blue_primary } from "utils/color";
@@ -38,8 +33,6 @@ export default function EditReport(props) {
     const nav = useNavigate()
     let RId = location.split('/')[3]
     const currentProject = localStorage.getItem("currentProject")
-
-
 
     const updateSubmit = () => {
         updateReportInformation(currentProject, RId, {
@@ -57,7 +50,9 @@ export default function EditReport(props) {
 
             })
     }
+
     const [components, setComponents] = useState([])
+
     const [reportInformation, setReportInformation] = useState(
         {
             "Id": 0,
@@ -72,8 +67,6 @@ export default function EditReport(props) {
             "Name": ""
         }
     )
-
-
 
     useEffect(() => {
         let currentProject = localStorage.getItem("currentProject")
@@ -104,10 +97,7 @@ export default function EditReport(props) {
             .catch(err => {
                 console.log(err)
             })
-
-
     }, [])
-
 
     const newFileSubmit = () => {
         createNewReport(localStorage.getItem("currentProject"),
@@ -126,78 +116,12 @@ export default function EditReport(props) {
             })
     }
 
-
-
-
-
-
-    // define some color template
-    const colorTemplate = ['rgb(255, 99, 132)',
-        'rgb(54, 162, 235)',
-        'rgb(255, 205, 86)',
-        'rgb(54, 162, 235)',
-        'rgb(255, 205, 86)',
-        'rgb(54, 162, 235)',
-        'rgb(255, 205, 86)',
-    ]
     // list data sources of the report
     const [dataSource, setDataSource] = useState({
         user_details_csv: ["user_id", "username", "first_name", "last_name", "gender", "password", "status"]
     })
 
-    // list components in the report
-    const [reports, setReports] = useState([
-    ])
-
-    // receive data from model
-    // send it to server and wait respone
-    const addShape = (shapeType, table, query) => {
-        QueryData(table, query)
-            .then(res => {
-                switch (shapeType) {
-                    case "Doughnut":
-                        doughnutShape(res)
-                        break;
-                    case "Table":
-                        tableShape(res)
-                    default:
-                        break;
-                }
-            })
-            .catch(err => {
-                alert("create failure")
-                console.log(err)
-            })
-    }
-
-    // add new doughnut chart
-    const doughnutShape = (res) => {
-        let dataResponse = res.data.body.length > 1 ? res.data.body.reduce((pre, cur) => [...pre, ...cur]) : res.data.body
-        setReports([...reports, {
-            type: 'Doughnut',
-            data: {
-                labels: dataResponse.map(field => Object.keys(field)[0]),
-                datasets: [
-                    {
-                        label: "report",
-                        data: dataResponse.map(field => Object.values(field)[0]),
-                        backgroundColor: Object.values(dataResponse).map((_, i) => i < colorTemplate.length ? colorTemplate[i] : colorTemplate[colorTemplate.length - 1]),
-                        hoverOffset: 5
-                    }
-                ]
-            }
-        }])
-    }
-
-    // add new table data
-    const tableShape = (res) => {
-        setReports([...reports, {
-            type: "Table",
-            data: res.data.body
-        }])
-    }
     const [key, setKey] = useState('Data');
-
     const fonts = ['Roboto', 'Poppins'];
     const size = ['14', '16', "32", '45'];
     const [showSqlPopUp, setshowSqlPopUp] = useState(false)
@@ -233,6 +157,7 @@ export default function EditReport(props) {
                 })
         }
     }
+
     // render components
     const tab_component = () => {
         return <div className="col-2 ">
@@ -324,9 +249,7 @@ export default function EditReport(props) {
                         defaultValue="#563d7c"
                         title="Choose your color"
                     />
-
                 </Tab>
-
             </Tabs>
         </div>
     }
@@ -401,7 +324,6 @@ export default function EditReport(props) {
                                             }}
                                         />
                                     </div>
-
                                 </div>
                                 <div className="row ms-5 m-0 p-0 text-center">
                                     <div className="col-5">
@@ -420,8 +342,6 @@ export default function EditReport(props) {
                                         />
                                     </div>
                                 </div>
-
-
                             </div>
                         </div>
                         <MenuBar
@@ -430,7 +350,6 @@ export default function EditReport(props) {
                             }}
                             updateSubmit={() => updateSubmit()}
                             showSqlPopUpFunction={showSqlPopUpFunction}
-
                         />
 
                         <ToolBar

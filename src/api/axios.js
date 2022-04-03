@@ -32,9 +32,12 @@ axiosClient.interceptors.response.use(
         })
     },
     error => {
-        if (error.response.status === 401 || error.response.status === 403) {
+        if ((error.response.status === 401 || error.response.status === 403) && !window.location.href.includes('/login')) {
             // remove username in local storage
             localStorage.removeItem("username")
+            localStorage.removeItem("currentProject")
+            window.location.assign('/account/login')
+            return
         }
         return new Promise((resolve, reject) => {
             reject(error)
