@@ -127,11 +127,12 @@ export default function SqlPopUp(props) {
                     <TextField
                         {...params}
                         variant="standard"
-                        placeholder="Fields"
+                        // label="Multiple values"
+                        placeholder="Data sources"
                     />
                 )}
                 onChange={(e, val) => {
-                    setSelectTable(val)
+                    setSelectFrom(val)
                 }}
             />
         </div>
@@ -536,7 +537,7 @@ export default function SqlPopUp(props) {
     }
     const buildSQLComponent = () => {
         return <div>
-            {fromClause()}
+            {/* {fromClause()} */}
             {selectClause()}
             {whereClause()}
             {groupByClause()}
