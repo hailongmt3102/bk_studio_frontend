@@ -5,7 +5,7 @@ import { Poppins } from "utils/font"
 import { editPeopleRoleWithProject } from "../../../../api/Project"
 import { getListPeopleByProjectID } from "api/People"
 
-import { shareReport, getShardListPeople } from "api/Report"
+import { shareReport, getShardListPeople, updateSharePermission } from "api/Report"
 import shareWith from "resources/icons/share_with_primary.svg";
 import edit from 'resources/icons/edit.svg'
 
@@ -62,8 +62,8 @@ export default function ShareWithPopUp(props) {
             Permission: role
         })
             .then(response => {
-                Store.addNotification(content("Success", "Editted role", "success"))
-                setTimeout(() => window.location.reload(), 1000);
+                //Store.addNotification(content("Success", "Editted role", "success"))
+                //setTimeout(() => window.location.reload(), 1000);
                 props.handleClose()
             })
             .catch(error => {
@@ -101,20 +101,20 @@ export default function ShareWithPopUp(props) {
     }
 
 
-    const [roleOfAPeople, setRoleOfAPeople] = useState("Edit")
+    const updateShareHandle = async () => {
+        try{
+            for(let i = 0; i < listSharedPeople.length; i++){
+                await updateSharePermission(props.currentProject, props.RId, {
+                    Email: listSharedPeople[i].Email,
+                    Permission: listSharedPeople[i].Permission
+                })
+            }
+            Store.addNotification(content("Success", "Shared with member", "success"))
+            props.handleClose()
 
-    const updateShareHandle = (email, permission) => {
-        getListPeopleByProjectID(props.currentProject, props.RId, {
-            Email: email,
-            Permission: permission
-        })
-            .then(res => {
-               console.log(res.data)
-            })
-            .catch(err => {
-                // Store.addNotification(content("Warning", "Can't show list people in this project", "danger"))
-                // //console.log(err.response.data)
-            })
+        }catch(err){
+            console.log(err)
+        }
     }
 
     const listSharedPeopleComponent = () => {
@@ -122,15 +122,15 @@ export default function ShareWithPopUp(props) {
             <div className='row'>
                 {
 
-                    listSharedPeople.map((e) => {
+                    listSharedPeople.map((e, index) => {
                         return <div className='row'>
                             <div className='col ms-5'>
                                 {e.Email}
                             </div>
                             <div className='col'>
-                                <DropdownWithIndex0 title={roleOfAPeople} items={[e.Permission, e.Permission == "View" ? "View" : "Edit"]} icons_list={e.Permission === "View" ? [eye_bluecloud, edit] : [edit, eye_bluecloud]} onClick={(val) => {
-                                    setRoleOfAPeople(val)
-                                    //updateShareHandle(e.Email, e.Permission)
+                                <DropdownWithIndex0 title={e.Permission} items={[e.Permission, e.Permission == "View" ? "Edit" : "View"]} icons_list={e.Permission === "View" ? [eye_bluecloud, edit] : [edit, eye_bluecloud]} 
+                                onClick={(val) => {
+                                    setListSharedPeople([...listSharedPeople.slice(0, index), {...listSharedPeople[index], Permission:val}, ...listSharedPeople.slice(index+1)])
                                 }} />
                             </div>
                         </div>
@@ -182,6 +182,7 @@ export default function ShareWithPopUp(props) {
             <Modal.Footer>
                 <Button onClick={() => {
                     shareSubmit()
+                    updateShareHandle()
                 }}>
                     Share
                 </Button>
