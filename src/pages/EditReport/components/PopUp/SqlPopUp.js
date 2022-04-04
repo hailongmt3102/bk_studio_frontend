@@ -93,7 +93,7 @@ export default function SqlPopUp(props) {
     const submit = () => {
         let query = `
             select 
-                ${fieldList.join(',')},
+                ${selectedField.join(',')},
                 ${function_clause.map(clause => `${clause.op}(${clause.field})`).join(',')}
             from ${selectFrom}
             where ${where_clause.map(where => `${where.field} ${where.op} ${where.value}`).join(' and ')}
