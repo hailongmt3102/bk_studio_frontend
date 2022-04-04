@@ -102,67 +102,27 @@ export default function Content(props) {
     //     ],
     // };
 
+    // const Linedata = {
+    //     labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+    //     datasets: [
+    //         {
+    //             label: "First dataset",
+    //             data: ["asdfasdf", "asdf", "asdf", "zxcv", "qwer", "dfgh"],
+    //             fill: true,
+    //             backgroundColor: "rgba(75,192,192,0.2)",
+    //             borderColor: "rgba(75,192,192,1)"
+    //         },
+    //         {
+    //             label: "Second dataset",
+    //             data: [33, 25, 35, 51, 54, 76],
+    //             fill: false,
+    //             borderColor: "#742774"
+    //         }
+    //     ]
+    // };
 
-
-    const Linedata = {
-        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
-        datasets: [
-            {
-                label: "First dataset",
-                data: ["asdfasdf", "asdf", "asdf", "zxcv", "qwer", "dfgh"],
-                fill: true,
-                backgroundColor: "rgba(75,192,192,0.2)",
-                borderColor: "rgba(75,192,192,1)"
-            },
-            {
-                label: "Second dataset",
-                data: [33, 25, 35, 51, 54, 76],
-                fill: false,
-                borderColor: "#742774"
-            }
-        ]
-    };
-
-    const abc = {
-        "labels": [
-            [
-                "rogers63",
-                "mike28",
-                "rivera92",
-                "ross95",
-                "paul85",
-                "smith34",
-                "james84",
-                "daniel53",
-                "brooks80"
-            ]
-        ],
-        "datasets": [
-            {
-                "label": "user_id",
-                "data": [
-                    1,
-                    2,
-                    3,
-                    4,
-                    5,
-                    6,
-                    7,
-                    8,
-                    9
-                ],
-                "fill": true,
-                "backgroundColor": "rgba(75,192,192,0.2)",
-                "borderColor": "rgba(75,192,192,1)"
-            }
-        ]
-    }
     const [tables, setTables] = useState({})
     const [lineDataSet, setLineDataset] = useState({})
-
-    // setInterval(() => {
-    //     console.log(tables)
-    // }, 2000);
 
     const fetchData = async () => {
         let table = {}
