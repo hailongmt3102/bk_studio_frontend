@@ -107,6 +107,7 @@ export default function SqlPopUp(props) {
     }
 
     useEffect(() => {
+        console.log("datasource trong popup", props.dataSource)
         set_data_source(Object.keys(props.dataSource))
 
         Object.keys(props.dataSource).map(key => {
@@ -545,6 +546,80 @@ export default function SqlPopUp(props) {
             {orderByClause()}
         </div>
     }
+    const titleComponent = () => {
+        switch (step) {
+            case 1:
+                return <div>Select table</div>
+            case 2:
+                return <div>Select X column</div>
+            case 3:
+                return <div>SQL function</div>
+        }
+    }
+    
+    const selectXColumnCoponent = () => {
+        return <Autocomplete
+            className='ms-5'
+            id="size-small-standard"
+            size="small"
+            options={fieldList}
+            renderInput={(params) =>
+                <TextField
+                    {...params}
+                    variant="standard"
+                    placeholder="Fx"
+                />
+            }
+            onChange={(e, value) => {
+                // updateFunctionClause(index, { ...clause, op: value ?? "" })
+            }}
+        />
+    }
+    const bodyComponent = () => {
+        switch (step) {
+            case 1:
+                return selectTableComponent()
+            case 2:
+                return selectXColumnCoponent()
+            case 3:
+                return buildSQLComponent()
+        }
+    }
+    const footerComponent = () => {
+        switch (step) {
+            case 1:
+                return <Button onClick={() => {
+                    if (props.type === "Table")
+                        setStep(3)
+                    else setStep(2)
+                }} >Next
+                </Button>
+            case 2:
+                return <div>
+                    <Button onClick={() => {
+                        setStep(1)
+                    }} >Back
+                    </Button>
+                    <Button onClick={() => {
+                        setStep(3)
+                    }} >Next
+                    </Button>
+                </div>
+            case 3:
+                return <div>
+                    <Button onClick={() => {
+                        if (props.type === "Table")
+                            setStep(1)
+                        else setStep(2)
+                    }} >Back
+                    </Button>
+                    <Button onClick={() => {
+                        submit()
+                        window.location.reload()
+                    }} >Done
+                    </Button></div>
+        }
+    }
     return (
         <Modal
             show={props.show}
@@ -556,49 +631,18 @@ export default function SqlPopUp(props) {
         >
             <Modal.Header closeButton>
                 <Modal.Title>
-                    {step == 1 ?
-                        <div>Select table</div>
-                        : <div>SQL function</div>
+                    {
+                        titleComponent()
                     }
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 {
-                    step == 1 ?
-                        selectTableComponent()
-                        : buildSQLComponent()
+                    bodyComponent()
                 }
             </Modal.Body >
             <Modal.Footer>
-                {
-                    step == 1 ?
-                        null
-                        :
-                        <Button onClick={() => {
-                            setStep(1)
-                        }}>
-                            Back to step 1
-                        </Button>
-
-
-                }
-                {
-                    step == 1 ?
-                        <Button onClick={() => {
-                            setStep(2)
-                        }}>
-                            Next
-                        </Button>
-                        :
-                        <Button onClick={() => {
-                            submit()
-                        }}>
-                            Done
-                        </Button>
-
-
-                }
-
+                {footerComponent()}
             </Modal.Footer>
         </Modal >
     )

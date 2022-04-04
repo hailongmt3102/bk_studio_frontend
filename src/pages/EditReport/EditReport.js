@@ -94,6 +94,7 @@ export default function EditReport(props) {
         GetTableColumns()
             .then(res => {
                 setDataSource(res.data)
+                console.log("dataSource", res.data)
             })
             .catch(err => {
                 console.log(err)
@@ -118,9 +119,7 @@ export default function EditReport(props) {
     }
 
     // list data sources of the report
-    const [dataSource, setDataSource] = useState({
-        user_details_csv: ["user_id", "username", "first_name", "last_name", "gender", "password", "status"]
-    })
+    const [dataSource, setDataSource] = useState({})
 
     const [key, setKey] = useState('Data');
     const fonts = ['Roboto', 'Poppins'];
