@@ -8,6 +8,8 @@ import { Doughnut } from 'react-chartjs-2';
 import { Line } from 'react-chartjs-2';
 import { Bar } from 'react-chartjs-2';
 
+import { Rnd } from 'react-rnd'
+
 ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -36,7 +38,7 @@ export default function Content(props) {
                     'rgba(54, 162, 235, 0.2)',
                     'rgba(255, 206, 86, 0.2)',
                     'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)'
+                    'rgba(153, 102, 255, 0.2)',
                     // 'rgba(255, 159, 64, 0.2)',
                 ],
                 borderColor: [
@@ -44,7 +46,7 @@ export default function Content(props) {
                     'rgba(54, 162, 235, 1)',
                     'rgba(255, 206, 86, 1)',
                     'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)'
+                    'rgba(153, 102, 255, 1)',
                     // 'rgba(255, 159, 64, 1)',
                 ],
                 borderWidth: 1,
@@ -100,14 +102,14 @@ export default function Content(props) {
     //     ],
     // };
 
-    
+
 
     const Linedata = {
         labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
         datasets: [
             {
                 label: "First dataset",
-                data: [33, 53, 85, 41, 44, 65],
+                data: ["asdfasdf", "asdf", "asdf", "zxcv", "qwer", "dfgh"],
                 fill: true,
                 backgroundColor: "rgba(75,192,192,0.2)",
                 borderColor: "rgba(75,192,192,1)"
@@ -120,7 +122,43 @@ export default function Content(props) {
             }
         ]
     };
+
+    const abc = {
+        "labels": [
+            [
+                "rogers63",
+                "mike28",
+                "rivera92",
+                "ross95",
+                "paul85",
+                "smith34",
+                "james84",
+                "daniel53",
+                "brooks80"
+            ]
+        ],
+        "datasets": [
+            {
+                "label": "user_id",
+                "data": [
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9
+                ],
+                "fill": true,
+                "backgroundColor": "rgba(75,192,192,0.2)",
+                "borderColor": "rgba(75,192,192,1)"
+            }
+        ]
+    }
     const [tables, setTables] = useState({})
+    const [lineDataSet, setLineDataset] = useState({})
 
     // setInterval(() => {
     //     console.log(tables)
@@ -128,6 +166,7 @@ export default function Content(props) {
 
     const fetchData = async () => {
         let table = {}
+        let lineCharts = {}
         for (let i = 0; i < props.components.length; i++) {
             let component = props.components[i]
             switch (component.Type) {
@@ -173,10 +212,52 @@ export default function Content(props) {
                         console.log(err.response.data)
                     }
                     break
+                case "Line Chart":
+                    try {
+                        let res = await QueryDataApi(component.QueryCommand)
+
+                        if (res.data.length == 0) return
+                        let result = component
+                        let positionString = result.Position.split(";")
+                        result.Position = {
+                            x: positionString[0].substring(2),
+                            y: positionString[1].substring(2)
+                        }
+                        let keys = Object.keys(res.data[0])
+                        if (keys.length == 0) return
+
+                        // convert data to array
+                        let arrayData = {}
+                        keys.map(key => arrayData[key] = [])
+
+                        res.data.map(row => {
+                            keys.map((key, index) => index == 0 ? arrayData[key].push(row[key]) : arrayData[key].push(parseInt(row[key])))
+                        })
+
+                        result.lineData = {
+                            labels: arrayData[keys[0]],
+                            datasets: keys.slice(1).map(key => {
+                                return {
+                                    label: key,
+                                    data: arrayData[key],
+                                    fill: true,
+                                    backgroundColor: 'rgba(75,192,192,0.2)',
+                                    borderColor: 'rgba(75,192,192,1)'
+                                }
+                            })
+                        }
+                        console.log(result)
+                        lineCharts[result.Id] = result
+                    }
+                    catch (err) {
+                        console.log(err.response.data)
+                    }
+                    break;
                 default:
                     break
             }
             setTables({ ...tables, ...table })
+            setLineDataset({ ...lineDataSet, ...lineCharts })
         }
     }
 
@@ -186,6 +267,10 @@ export default function Content(props) {
 
     const updateDataTable = (key, data) => {
         setTables({ ...tables, [key]: data })
+    }
+
+    const updateLineChart = (key, data) => {
+        setLineDataset({ ...tables, [key]: data })
     }
 
     return (
@@ -207,10 +292,32 @@ export default function Content(props) {
                     </div>
                 )
             }
+            {
+                Object.keys(lineDataSet).map((key, index) =>
+                    <div>
+                        <Rnd
+                            size={{ width: lineDataSet[key].Width, height: lineDataSet[key].Height }}
+                            position={{ x: lineDataSet[key].Position.x, y: lineDataSet[key].Position.y }}
+                        onDragStop={(e, d) => {
+                            updateLineChart(index, {
+                                ...lineDataSet[key], Position: {
+                                    x: d.x,
+                                    y: d.y
+                                }
+                            })
+                        }}
+                        onResizeStop={(e, direction, ref, delta, position) => {
+                            updateDataTable(index, { ...lineDataSet[key], Width: ref.style.width, Height: ref.style.height })
+                        }}
+                        >
+                            <Line data={lineDataSet[key].lineData} />
+                        </Rnd>
+                    </div>
+                )
+            }
             <div>
                 {/* <Pie data={PieData} /> */}
                 {/* <Doughnut data={PieData} /> */}
-                {/* <Line data={Linedata} /> */}
                 {/* <Bar options={Baroptions} data={Linedata} /> */}
                 {/* <Bar options={BarNgangoptions} data={Linedata} /> */}
 
