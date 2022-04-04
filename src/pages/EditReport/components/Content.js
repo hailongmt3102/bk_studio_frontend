@@ -23,29 +23,29 @@ ChartJS.register(
 
 export default function Content(props) {
 
-
+    const [pieDataSet, setPieDataSet] = useState([])
 
     const PieData = {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        // labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
         datasets: [
             {
                 label: '# of Votes',
-                data: [12, 19, 3, 5, 2, 3],
+                data: pieDataSet,
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
                     'rgba(54, 162, 235, 0.2)',
                     'rgba(255, 206, 86, 0.2)',
                     'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)',
+                    'rgba(153, 102, 255, 0.2)'
+                    // 'rgba(255, 159, 64, 0.2)',
                 ],
                 borderColor: [
                     'rgba(255, 99, 132, 1)',
                     'rgba(54, 162, 235, 1)',
                     'rgba(255, 206, 86, 1)',
                     'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)',
+                    'rgba(153, 102, 255, 1)'
+                    // 'rgba(255, 159, 64, 1)',
                 ],
                 borderWidth: 1,
             },
@@ -66,23 +66,23 @@ export default function Content(props) {
         },
     };
     const BarNgangoptions = {
-        indexAxis: 'y' ,
+        indexAxis: 'y',
         elements: {
-          bar: {
-            borderWidth: 2,
-          },
+            bar: {
+                borderWidth: 2,
+            },
         },
         responsive: true,
         plugins: {
-          legend: {
-            position: 'right' ,
-          },
-          title: {
-            display: true,
-            text: 'Chart.js Horizontal Bar Chart',
-          },
+            legend: {
+                position: 'right',
+            },
+            title: {
+                display: true,
+                text: 'Chart.js Horizontal Bar Chart',
+            },
         },
-      };
+    };
 
     //  const Bardata = {
     //     labels:['January', 'February', 'March', 'April', 'May', 'June'],
@@ -100,6 +100,7 @@ export default function Content(props) {
     //     ],
     // };
 
+    
 
     const Linedata = {
         labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
@@ -150,11 +151,23 @@ export default function Content(props) {
                         console.log(err.response.data)
                     }
                     break
-                case "BarChart":
+                case "Pie Chart":
                     try {
                         let res = await QueryDataApi(component.QueryCommand)
                         //res.data is list json 
                         console.log("data trả về từ api", res.data)
+                        setPieDataSet(res.data.map((e) => e.user_id))
+                    }
+                    catch (err) {
+                        console.log(err.response.data)
+                    }
+                    break
+                case "Doughnut Chart":
+                    try {
+                        let res = await QueryDataApi(component.QueryCommand)
+                        //res.data is list json 
+                        console.log("data trả về từ api", res.data)
+                        setPieDataSet(res.data.map((e) => e.user_id))
                     }
                     catch (err) {
                         console.log(err.response.data)
@@ -190,17 +203,17 @@ export default function Content(props) {
                             data={tables[key]}
                             updateDataTable={(data) => { updateDataTable(key, data) }}
                         />
-                        {/* <Pie data={PieData} /> */}
+
                     </div>
                 )
             }
             <div>
-                
+                {/* <Pie data={PieData} /> */}
                 {/* <Doughnut data={PieData} /> */}
                 {/* <Line data={Linedata} /> */}
                 {/* <Bar options={Baroptions} data={Linedata} /> */}
                 {/* <Bar options={BarNgangoptions} data={Linedata} /> */}
-               
+
             </div>
         </div>
     )

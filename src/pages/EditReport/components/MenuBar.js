@@ -32,30 +32,30 @@ export default function MenuBar(props) {
     const closeModal = (name) => {
         setModelState({ ...modelState, [name]: false })
     };
-    const file_option = ['New','Open','Upload', 'Rename', 'Save', 'Download', 'Print', 'Delete']
-    const file_option_icon_list = [new_file,open_file,upload,edit_grey,save_grey, save,print,remove_file]
-    const edit_option_icon_list = [undo, redo, keo, copy,paste, done_round]
-    const edit_option = ['Undo','Redo','Cut', 'Copy', 'Paste', 'Select All']
+    const file_option = ['New', 'Open', 'Upload', 'Rename', 'Save', 'Download', 'Print', 'Delete']
+    const file_option_icon_list = [new_file, open_file, upload, edit_grey, save_grey, save, print, remove_file]
+    const edit_option_icon_list = [undo, redo, keo, copy, paste, done_round]
+    const edit_option = ['Undo', 'Redo', 'Cut', 'Copy', 'Paste', 'Select All']
     const function_option = ['SUM', 'MAX', 'MIN', 'AVERAGE']
-    const insert_option = ['Table','Bar Chart', 'Pie Char']
-    const insert_option_icon_list = [table,bar_chart,pie_chart] 
+    const insert_option = ['Table', 'Bar Chart', 'Pie Chart', 'Doughnut Chart', 'Line Chart']
+    const insert_option_icon_list = [table, bar_chart, pie_chart]
 
-    
+
     return (
         <div>
             <div className="row justify-content-center m-0 p-0">
                 <div className='col-1' >
                     <div className='mt-3 ms-2'>
                         <ThreeDotButton className="col-1 p-4 btn" style={{ "minHeight": "80px", "text-align": "center" }} title={'File'} items={file_option} icons_list={file_option_icon_list} onClick={(val) => {
-                            if (val="New"){
+                            if (val = "New") {
                                 props.newFileSubmit()
                             }
                         }} />
                     </div>
                 </div>
                 <div className='col-1' >
-                    <div className='mt-3 ms-2'> 
-                        <ThreeDotButton className="col-1 p-4 btn" style={{ "minHeight": "80px", "text-align": "center" }} title={'Edit'} items={edit_option}  icons_list={edit_option_icon_list} onClick={(val) => {
+                    <div className='mt-3 ms-2'>
+                        <ThreeDotButton className="col-1 p-4 btn" style={{ "minHeight": "80px", "text-align": "center" }} title={'Edit'} items={edit_option} icons_list={edit_option_icon_list} onClick={(val) => {
                         }} />
                     </div>
                 </div>
@@ -67,14 +67,11 @@ export default function MenuBar(props) {
                 </div>
                 <div className='col-1' >
                     <div className='mt-3 ms-2'>
-                        <ThreeDotButton className="col-1 p-4 btn" style={{ "minHeight": "80px", "text-align": "center" }} title={'Insert'} items={insert_option} icons_list={insert_option_icon_list} 
-                        onClick={(val) => {
-                            if (val === "Table"){
+                        <ThreeDotButton className="col-1 p-4 btn" style={{ "minHeight": "80px", "text-align": "center" }} title={'Insert'} items={insert_option} icons_list={insert_option_icon_list}
+                            onClick={(val) => {
                                 props.showSqlPopUpFunction(val)
                                 props.componentTypeHandle(val)
-                            }
-                                
-                        }} />
+                            }} />
                     </div>
                 </div>
                 <div className='col-5 m-0 p-0'></div>
@@ -90,7 +87,7 @@ export default function MenuBar(props) {
                         </div>
                     </button>
                     <button className='btn-lg btn-success text-center border-0 ms-3' style={{ backgroundColor: "#3B97C6" }}
-                        onClick={() => {props.updateSubmit()}}>
+                        onClick={() => { props.updateSubmit() }}>
                         <div className='row p-2 text-center'>
                             <div className='col-2 text-center me-1'>
                                 <img src={save_white} width="20px" height="20px" />
