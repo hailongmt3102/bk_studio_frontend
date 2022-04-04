@@ -190,11 +190,12 @@ export default function Content(props) {
                             data={tables[key]}
                             updateDataTable={(data) => { updateDataTable(key, data) }}
                         />
+                        {/* <Pie data={PieData} /> */}
                     </div>
                 )
             }
             <div>
-                {/* <Pie data={PieData} /> */}
+                
                 {/* <Doughnut data={PieData} /> */}
                 {/* <Line data={Linedata} /> */}
                 {/* <Bar options={Baroptions} data={Linedata} /> */}

@@ -83,6 +83,7 @@ export default function EditReport(props) {
 
             getAllComponent(currentProject, RId)
                 .then(res => {
+                    console.log("all component",res.data )
                     setComponents(res.data)
                 })
                 .catch(res => {
@@ -140,7 +141,7 @@ export default function EditReport(props) {
             console.log(query.replaceAll('\n', " "))
             createNewComponent(currentProject, RId, {
                 Title: "example",
-                Type: "BarChart",
+                Type: componentType,
                 QueryCommand: query.replaceAll('\n', " "),
                 Height: "600",
                 Width: "600",
@@ -254,6 +255,11 @@ export default function EditReport(props) {
         </div>
     }
 
+    const [componentType, setComponentType] = useState("")
+
+    const componentTypeHandle = (type) => {
+        setComponentType(type)
+    }
 
     const [showSharePopUp, setshowSharePopUp] = useState(false)
     const [showShareLinkPopUp, setshowShareLinkPopUp] = useState(false)
@@ -350,6 +356,7 @@ export default function EditReport(props) {
                             }}
                             updateSubmit={() => updateSubmit()}
                             showSqlPopUpFunction={showSqlPopUpFunction}
+                            componentTypeHandle={componentTypeHandle}
                         />
 
                         <ToolBar

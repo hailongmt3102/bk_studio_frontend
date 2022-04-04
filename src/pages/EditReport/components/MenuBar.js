@@ -39,6 +39,8 @@ export default function MenuBar(props) {
     const function_option = ['SUM', 'MAX', 'MIN', 'AVERAGE']
     const insert_option = ['Table','Bar Chart', 'Pie Char']
     const insert_option_icon_list = [table,bar_chart,pie_chart] 
+
+    
     return (
         <div>
             <div className="row justify-content-center m-0 p-0">
@@ -67,7 +69,11 @@ export default function MenuBar(props) {
                     <div className='mt-3 ms-2'>
                         <ThreeDotButton className="col-1 p-4 btn" style={{ "minHeight": "80px", "text-align": "center" }} title={'Insert'} items={insert_option} icons_list={insert_option_icon_list} 
                         onClick={(val) => {
-                            props.showSqlPopUpFunction(val)
+                            if (val === "Table"){
+                                props.showSqlPopUpFunction(val)
+                                props.componentTypeHandle(val)
+                            }
+                                
                         }} />
                     </div>
                 </div>
