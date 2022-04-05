@@ -123,10 +123,12 @@ export default function Content(props) {
 
     const [tables, setTables] = useState({})
     const [lineDataSet, setLineDataset] = useState({})
+    const [barDataSet, setBarDataset] = useState({})
 
     const fetchData = async () => {
         let table = {}
         let lineCharts = {}
+        let barCharts = {}
         for (let i = 0; i < props.components.length; i++) {
             let component = props.components[i]
             switch (component.Type) {
@@ -211,11 +213,52 @@ export default function Content(props) {
                         console.log(err.response.data)
                     }
                     break;
+                case "Bar Chart":
+                    try {
+                        let res = await QueryDataApi(component.QueryCommand)
+
+                        if (res.data.length == 0) return
+                        let result = component
+                        let positionString = result.Position.split(";")
+                        result.Position = {
+                            x: positionString[0].substring(2),
+                            y: positionString[1].substring(2)
+                        }
+                        let keys = Object.keys(res.data[0])
+                        if (keys.length == 0) return
+
+                        // convert data to array
+                        let arrayData = {}
+                        keys.map(key => arrayData[key] = [])
+
+                        res.data.map(row => {
+                            keys.map((key, index) => index == 0 ? arrayData[key].push(row[key]) : arrayData[key].push(parseInt(row[key])))
+                        })
+
+                        result.barData = {
+                            labels: arrayData[keys[0]],
+                            datasets: keys.slice(1).map(key => {
+                                return {
+                                    label: key,
+                                    data: arrayData[key],
+                                    fill: true,
+                                    backgroundColor: 'rgba(75,192,192,0.2)',
+                                    borderColor: 'rgba(75,192,192,1)'
+                                }
+                            })
+                        }
+                        barCharts[result.Id] = result
+                    }
+                    catch (err) {
+                        console.log(err.response.data)
+                    }
+                    break;
                 default:
                     break
             }
             setTables({ ...tables, ...table })
             setLineDataset({ ...lineDataSet, ...lineCharts })
+            setBarDataset({ ...barDataSet, ...barCharts })
         }
     }
 
@@ -229,6 +272,10 @@ export default function Content(props) {
 
     const updateLineChart = (key, data) => {
         setLineDataset({ ...lineDataSet, [key]: data })
+    }
+
+    const updateBarChart = (key, data) => {
+        setBarDataset({ ...barDataSet, [key]: data })
     }
 
     return (
@@ -256,25 +303,65 @@ export default function Content(props) {
                         <Rnd
                             size={{ width: lineDataSet[key].Width, height: lineDataSet[key].Height }}
                             position={{ x: lineDataSet[key].Position.x, y: lineDataSet[key].Position.y }}
-                        onDragStop={(e, d) => {
-                            updateLineChart(key, {
-                                ...lineDataSet[key], Position: {
-                                    x: d.x,
-                                    y: d.y
-                                }
-                            })
-                        }}
-                        onResizeStop={(e, direction, ref, delta, position) => {
-                            updateLineChart(key, { ...lineDataSet[key], Width: ref.style.width, Height: ref.style.height })
-                        }}
+                            onDragStop={(e, d) => {
+                                updateLineChart(key, {
+                                    ...lineDataSet[key], Position: {
+                                        x: d.x,
+                                        y: d.y
+                                    }
+                                })
+
+                            }}
+                            onResizeStop={(e, direction, ref, delta, position) => {
+                                updateLineChart(key, { ...lineDataSet[key], Width: ref.style.width, Height: ref.style.height })
+                            }}
+                            className="border"
                         >
+                            {lineDataSet[key].Title}
                             <Line data={lineDataSet[key].lineData} />
                         </Rnd>
                     </div>
                 )
             }
+            {
+                Object.keys(barDataSet).map((key, index) =>
+                    <div>
+                        <Rnd
+                            size={{ width: barDataSet[key].Width, height: barDataSet[key].Height }}
+                            position={{ x: barDataSet[key].Position.x, y: barDataSet[key].Position.y }}
+                            onDragStop={(e, d) => {
+                                updateBarChart(key, {
+                                    ...barDataSet[key], Position: {
+                                        x: d.x,
+                                        y: d.y
+                                    }
+                                })
+
+                            }}
+                            onResizeStop={(e, direction, ref, delta, position) => {
+                                updateBarChart(key, { ...barDataSet[key], Width: ref.style.width, Height: ref.style.height })
+                            }}
+                            className="border"
+                        >
+                            {barDataSet[key].Title}
+                            <Bar data={barDataSet[key].barData} />
+                        </Rnd>
+                    </div>
+                )
+            }
+            {/* {
+                <Rnd
+                    size={{ width: 1000, height: 1000 }}
+                    position={{ x: 0, y: 0 }}
+
+                    className="border"
+                >
+                    <Pie data={PieData} />
+
+                </Rnd>
+            } */}
+
             <div>
-                <Pie data={PieData} />
                 {/* <Doughnut data={PieData} /> */}
                 {/* <Bar options={Baroptions} data={Linedata} /> */}
                 {/* <Bar options={BarNgangoptions} data={Linedata} /> */}
