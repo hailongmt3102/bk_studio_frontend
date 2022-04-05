@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { Form, InputGroup, Col, Button, FormControl } from 'react-bootstrap'
+import { Form } from 'react-bootstrap'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { getListPeopleByProjectID } from '../../api/People'
-import { inviteMember } from '../../api/Project'
-import { Roboto, Poppins } from "../../utils/font"
+import { Poppins } from "../../utils/font"
 import { blue_cloud } from "../../utils/color"
 import { deep_blue_primary } from "../../utils/color"
 import add_people from "resources/icons/add_people.svg"
@@ -18,10 +17,9 @@ import MemberSvg from 'resources/icons/two_people.svg'
 import moment from 'moment';
 import { Store } from 'react-notifications-component'
 import { content } from "utils/notification"
-import { updateStatus, deleteProject, editProject, canUpdatePermission } from 'api/Project'
+import { editProject, canUpdatePermission } from 'api/Project'
 
 import { SendToWorkspace, GetDataSourcesListInformationInProject } from 'api/DataSources'
-import add_round from "resources/icons/add_round.svg"
 import edit from "resources/icons/edit.svg"
 import delete_icon from "resources/icons/delete.svg"
 import download_blue from "resources/icons/download_blue.svg"
@@ -29,12 +27,10 @@ import share_blue from "resources/icons/share_blue.svg"
 import excel_icon from "resources/icons/excel_icon.svg"
 
 import three_dot from "resources/icons/three-dot.svg"
-import { orange } from "../../utils/color"
 import ThreeDotButton from 'components/ThreeDotButton'
 
 
 
-import { GetDataSourcesListInformation } from '../../api/DataSources'
 export default function ProjectDetail() {
     let getEmail = localStorage.getItem("email") ?? ""
     var location = useLocation()
@@ -81,12 +77,10 @@ export default function ProjectDetail() {
     const [datasourceslist, setDatasourceslist] = useState([])
     const option_list = ["Send to Workspace", "Rename", "Share", "Download", "Delete"]
     useEffect(() => {
-        //console.log("Lấy data nè")
-        // get list people
         GetDataSourcesListInformationInProject({PId:project_id})
             .then(res => {
-                setDatasourceslist(res.data)
-                console.log(res.data)
+                let result  = res.data.filter(d => d.Type != "Workspace")
+                setDatasourceslist(result)
             })
             .catch(err => {
                 console.log(err)

@@ -14,7 +14,7 @@ import bold from "resources/icons/bold.svg"
 import underline from "resources/icons/underline.svg"
 import italic from "resources/icons/italic.svg"
 import Autocomplete from '@mui/material/Autocomplete';
-import { GetTableColumns, QueryData } from "api/DataSources"
+import { GetDataSourcesListInformationInProject, GetTableColumns, QueryData, getColumnsOfTable } from "api/DataSources"
 import { Store } from 'react-notifications-component'
 import { content } from "utils/notification"
 import SqlPopUp from "./components/PopUp/SqlPopUp";
@@ -68,6 +68,23 @@ export default function EditReport(props) {
         }
     )
 
+    const getDataFields = async (PId) => {
+        try {
+            let dataSourceList = await GetDataSourcesListInformationInProject({
+                PId: PId
+            })
+            // get all field for each table
+            let result = {}
+            for (let i = 0; i < dataSourceList.data.length; i++) {
+                let columns = await getColumnsOfTable(dataSourceList.data[i].Information)
+                result[dataSourceList.data[i].Information] = columns.data.Columns
+            }
+            setDataSource(result)
+        } catch (err) {
+            console.log("list datasource", err)
+        }
+    }
+
     useEffect(() => {
         let currentProject = localStorage.getItem("currentProject")
         if (currentProject != null) {
@@ -83,7 +100,7 @@ export default function EditReport(props) {
 
             getAllComponent(currentProject, RId)
                 .then(res => {
-                    console.log("all component",res.data )
+                    console.log("all component", res.data)
                     setComponents(res.data)
                 })
                 .catch(res => {
@@ -91,14 +108,9 @@ export default function EditReport(props) {
                 })
         }
 
-        GetTableColumns()
-            .then(res => {
-                setDataSource(res.data)
-                console.log("dataSource", res.data)
-            })
-            .catch(err => {
-                console.log(err)
-            })
+        if (currentProject != null) {
+            getDataFields(currentProject)
+        }
     }, [])
 
     const newFileSubmit = () => {
@@ -291,7 +303,7 @@ export default function EditReport(props) {
                 }}
 
             />
-              <ShareLinkPopUp
+            <ShareLinkPopUp
                 currentProject={currentProject}
                 RId={RId}
                 show={showShareLinkPopUp}
@@ -362,7 +374,7 @@ export default function EditReport(props) {
 
                         <ToolBar
                             OpenSharePopUp={() => setshowSharePopUp(true)}
-                            OpenShareLinkPopUp={()=> setshowShareLinkPopUp(true)}
+                            OpenShareLinkPopUp={() => setshowShareLinkPopUp(true)}
                         />
                         <div className="m-2 content">
                             <Content components={components} />

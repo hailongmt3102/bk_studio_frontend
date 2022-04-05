@@ -31,20 +31,21 @@ export default function ImportData() {
             })
             return row
         })
-        // send it to server
-        ImportDataApi(name, data)
-            .then(res => {
-                Store.addNotification(content("Success", "Imported data", "success"), {
-                    duration: 5000
+        if (currentProjectId != null) {
+            // send it to server
+            ImportDataApi(name, data, currentProjectId)
+                .then(res => {
+                    Store.addNotification(content("Success", "Imported data", "success"), {
+                        duration: 5000
+                    })
+                    navigate("/pDetail/" + currentProjectId)
+                    setStep(1)
                 })
-                navigate("/pDetail/"+currentProjectId)
-                setStep(1)
-            })
-            .catch(err => {
-                Store.addNotification(content("Warning", err.response.data, "danger"))
-                return
-            })
-
+                .catch(err => {
+                    Store.addNotification(content("Warning", err.response.data, "danger"))
+                    return
+                })
+        }
     }
 
     switch (step) {
