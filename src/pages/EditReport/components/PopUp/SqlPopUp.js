@@ -143,14 +143,14 @@ export default function SqlPopUp(props) {
                     <div className='col-1 m-auto p-0'>
                         <div className='row m-0 p-0 '>
                             <div className='col m-0 p-0 '>
-                                <input
+                                {/* <input
                                     class="form-check-input ms-3"
                                     type="checkbox"
                                     id="form2Example3c"
                                     onClick={(e) => {
                                     }}
                                     checked={true}
-                                />
+                                /> */}
                             </div>
                             <div className='col m-0 p-0'>
                                 <div className='col-1  m-auto p-0' >
@@ -183,14 +183,14 @@ export default function SqlPopUp(props) {
                 <div className='col-3 p-0'>
                     <div className='row '>
                         <div className='col-1  m-auto'>
-                            <input
+                            {/* <input
                                 class="form-check-input ms-3"
                                 type="checkbox"
                                 id="form2Example3c"
                                 onClick={(e) => {
                                 }}
                                 checked={true}
-                            />
+                            /> */}
                         </div>
                         <div className='col m-auto p-0' >
                             <div className='ms-5'>Function</div>
