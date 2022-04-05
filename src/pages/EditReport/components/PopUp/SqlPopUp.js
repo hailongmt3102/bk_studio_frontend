@@ -239,7 +239,7 @@ export default function SqlPopUp(props) {
                             <Autocomplete
                                 id="function"
                                 size="small"
-                                options={fieldList}
+                                options={selectFrom.reduce((pre, cur) => [...pre, ...props.dataSource[cur]], [])}
                                 renderInput={(params) =>
                                     <TextField
                                         {...params}
@@ -288,7 +288,7 @@ export default function SqlPopUp(props) {
                                 className='ms-5'
                                 id="size-small-standard"
                                 size="small"
-                                options={fieldList}
+                                options={selectFrom.reduce((pre, cur) => [...pre, ...props.dataSource[cur]], [])}
                                 renderInput={(params) =>
                                     <TextField
                                         {...params}
@@ -355,7 +355,7 @@ export default function SqlPopUp(props) {
                         className='ms-5 me-5'
                         multiple
                         id="tags-standard"
-                        options={fieldList}
+                        options={selectFrom.reduce((pre, cur) => [...pre, ...props.dataSource[cur]], [])}
                         renderInput={(params) => (
                             <TextField
                                 {...params}
@@ -396,7 +396,7 @@ export default function SqlPopUp(props) {
                                 <Autocomplete
                                     id="size-small-standard"
                                     size="small"
-                                    options={fieldList}
+                                    options={selectedField}
                                     renderInput={(params) => (
                                         <TextField
                                             {...params}
@@ -503,7 +503,7 @@ export default function SqlPopUp(props) {
                                 <Autocomplete
                                     id="size-small-standard"
                                     size="small"
-                                    options={fieldList}
+                                    options={selectFrom.reduce((pre, cur) => [...pre, ...props.dataSource[cur]], [])}
                                     renderInput={(params) => (
                                         <TextField
                                             {...params}
