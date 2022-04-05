@@ -144,7 +144,6 @@ export default function Content(props) {
                         result.TextTheme = {}
                         TextThemeArray.map(style => result.TextTheme[style.split(':')[0]] = style.split(':')[1])
                         table[result.Id] = result
-                        console.log("step")
                     }
                     catch (err) {
                         console.log(err.response.data)
@@ -206,7 +205,6 @@ export default function Content(props) {
                                 }
                             })
                         }
-                        console.log(result)
                         lineCharts[result.Id] = result
                     }
                     catch (err) {
@@ -230,7 +228,7 @@ export default function Content(props) {
     }
 
     const updateLineChart = (key, data) => {
-        setLineDataset({ ...tables, [key]: data })
+        setLineDataset({ ...lineDataSet, [key]: data })
     }
 
     return (
@@ -259,7 +257,7 @@ export default function Content(props) {
                             size={{ width: lineDataSet[key].Width, height: lineDataSet[key].Height }}
                             position={{ x: lineDataSet[key].Position.x, y: lineDataSet[key].Position.y }}
                         onDragStop={(e, d) => {
-                            updateLineChart(index, {
+                            updateLineChart(key, {
                                 ...lineDataSet[key], Position: {
                                     x: d.x,
                                     y: d.y
@@ -267,7 +265,7 @@ export default function Content(props) {
                             })
                         }}
                         onResizeStop={(e, direction, ref, delta, position) => {
-                            updateDataTable(index, { ...lineDataSet[key], Width: ref.style.width, Height: ref.style.height })
+                            updateLineChart(key, { ...lineDataSet[key], Width: ref.style.width, Height: ref.style.height })
                         }}
                         >
                             <Line data={lineDataSet[key].lineData} />
