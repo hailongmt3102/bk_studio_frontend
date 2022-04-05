@@ -19,7 +19,7 @@ export default function DataSourceBox(props) {
 
     const navigate = useNavigate()
 
-  
+
 
     const deleteHandle = (id) => {
         deleteDatasource(id)
@@ -35,7 +35,7 @@ export default function DataSourceBox(props) {
 
     const RenameHandle = (id, newname) => {
 
-        console.log("id gui len ne,",id)
+        console.log("id gui len ne,", id)
         Rename(id, {
             "newName": newname
         })
@@ -51,8 +51,9 @@ export default function DataSourceBox(props) {
     }
 
     const setNewName = (value, index) => {
-        props.setDatasourceslist([...props.datasourceslist.splice(0, index), { ...props.datasourceslist[index], Information: value }, ...props.datasourceslist.splice(index + 1)])
-
+        let newElement = props.datasourceslist[index]
+        newElement.Information = value
+        props.setDatasourceslist([...props.datasourceslist.splice(0, index), newElement, ...props.datasourceslist.splice(index + 1)])
     }
     const [pressRename, setPressRename] = useState(false)
     const sendToWorkspaceSubmit = (id) => {
