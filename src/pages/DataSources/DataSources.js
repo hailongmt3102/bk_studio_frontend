@@ -2,28 +2,18 @@ import React, { useEffect, useState } from 'react'
 import { Roboto, Poppins } from "../../utils/font"
 import { blue_cloud } from "../../utils/color"
 import { deep_blue_primary } from "../../utils/color"
-import { Form } from 'react-bootstrap'
+import { GetDataSourcesListInformationInWorkSpace } from '../../api/DataSources'
+import DataSourceBox from './component/DataSourceBox'
 import add_round from "resources/icons/add_round.svg"
 import edit from "resources/icons/edit.svg"
 import delete_icon from "resources/icons/delete.svg"
 import download_blue from "resources/icons/download_blue.svg"
 import share_blue from "resources/icons/share_blue.svg"
-import excel_icon from "resources/icons/excel_icon.svg"
-
-import three_dot from "resources/icons/three-dot.svg"
-import { orange } from "../../utils/color"
-import ThreeDotButton from 'components/ThreeDotButton'
-import CustomDropdownButton from 'pages/EditReport/components/CustomDropdownButton'
-import { Store } from 'react-notifications-component'
-import { content } from "utils/notification"
-import { Rename, GetDataSourcesListInformationInWorkSpace, deleteDatasource } from '../../api/DataSources'
-
-
 
 const orangeStyle = {
     color: "#FF7F0D",
 }
-const option_list = ["Share", "Rename", "Download", "Delete"]
+
 
 export default function DataSources() {
     const [datasourceslist, setDatasourceslist] = useState([])
@@ -40,39 +30,8 @@ export default function DataSources() {
             })
 
     }, [])
-
-    const deleteHandle = (id) => {
-        deleteDatasource(id)
-            .then(res => {
-                Store.addNotification(content("Success", "Deleted Datasource", "success"))
-                setTimeout(() => window.location.reload(), 1000);
-            })
-            .catch(err => {
-                Store.addNotification(content("Fail", "Delete Fail", "danger"))
-                console.log(err.response.data)
-            })
-    }
-
-    const RenameHandle = (id,newname) => {
-        Rename(id, {
-            "newName":newname
-        })
-            .then(res => {
-                console.log(res.data)
-                Store.addNotification(content("Success", "Renamed", "success"))
-                setTimeout(() => window.location.reload(), 1000);
-            })
-            .catch(err => {
-                Store.addNotification(content("Fail", "Rename Fail", "danger"))
-                console.log(err.response.data)
-            })
-    }
-    const [pressRename, setPressRename] = useState(false)
-   
-    const setNewName = (value, index) => {
-        setDatasourceslist([...datasourceslist.splice(0,index), {...datasourceslist[index],Information: value}, ...datasourceslist.splice(index+1) ])
-        
-    }
+    const option_list = ["Share", "Rename", "Download", "Delete"]
+    const icon_list = [share_blue, edit, download_blue, delete_icon]
     return (
         <div>
             <div className='d-flex flex-row pt-2'>
@@ -96,64 +55,13 @@ export default function DataSources() {
                     <div className='row'>
                         {
                             datasourceslist.map((ele, index) => {
-                                return <div className='col-3 ms-4 mt-3 pt-2 mb-5' style={{ "height": "200px", width: "400px", "border-radius": "20px", "backgroundColor": "#F7F7F7" }}>
-                                    <div className='row ms-3' style={{ "paddingLeft": "310px" }}>
-                                        <ThreeDotButton title={'adđ'}
-                                            items={option_list}
-                                            icon={three_dot}
-                                            icons_list={[share_blue, edit, download_blue, delete_icon]}
-                                            onClick={(val) => {
-                                                if (val == "Delete") {
-                                                    deleteHandle(ele.Id)
-                                                }
-                                                else if (val === "Rename") {
-                                                    setPressRename(true)
-                                                }
-                                            }} />
-                                    </div>
-                                    <div className="row m-0 p-0">
-                                        <div className="col-4 m-0 p-0" style={{ fontFamily: "Roboto" }}>
-                                            <img src={excel_icon} height="120px" width="100%" />
-                                        </div>
-                                        <div class="col-8 m-0 p-0" style={{ fontFamily: "Roboto" }}>
-                                            <div class="row m-0 p-0" style={{ fontFamily: "Roboto", color: blue_cloud, fontSize: "28px" }}>
-                                                {
-                                                    pressRename == false ? <p><span>{ele.Information}</span></p> : 
-                                                    // <newNameTextField/>
-                                                        <Form.Group className='m-0 p-0 ms-2 pe-2'>
-                                                            <Form.Control
-                                                                type="text"
-                                                                placeholder=""
-                                                                value={ele.Information}
-                                                                onChange={(e) => {
-                                                                    setNewName(e.target.value, index)
-                                                                }}
-                                                            />
-                                                        </Form.Group>
-                                                }
-                                            </div>
-                                            <div class="row  m-0 p-0 mt-1" style={{ fontFamily: "Roboto" }}>
-                                                <p><span style={{ "color": "#868585" }}>date created: </span>{ele.CreateTime}</p>
-                                            </div>
-                                            <div class="row m-0 p-0" style={{ fontFamily: "Roboto" }}>
-                                                <p><span style={{ "color": "#868585" }}>last modified: </span>{ele.LastModified}</p>
-                                            </div>
-                                            {
-                                                pressRename == false ? null :
-                                                    <div className='d-flex justify-content-center'>
-                                                        <button
-                                                            onClick={() => {
-                                                                RenameHandle(ele.Id, ele.Information)
-                                                            }} type="button" class="btn btn-primary btn-sm">
-                                                            Save
-                                                        </button>
-                                                    </div>
-                                            }
-                                           
-                                        </div>
-
-                                    </div>
-                                </div>
+                                return <DataSourceBox
+                                    option_list={option_list}
+                                    icon_list={icon_list}
+                                    setDatasourceslist={setDatasourceslist}
+                                    datasourceslist={datasourceslist}
+                                    ele={ele}
+                                    index={index} />
                             })
 
                         }
