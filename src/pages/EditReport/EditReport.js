@@ -14,7 +14,7 @@ import bold from "resources/icons/bold.svg"
 import underline from "resources/icons/underline.svg"
 import italic from "resources/icons/italic.svg"
 import Autocomplete from '@mui/material/Autocomplete';
-import { GetDataSourcesListInformationInProject, GetTableColumns, QueryData, getColumnsOfTable } from "api/DataSources"
+import { GetDataSourcesListInformationInProject, getColumnsOfTable } from "api/DataSources"
 import { Store } from 'react-notifications-component'
 import { content } from "utils/notification"
 import SqlPopUp from "./components/PopUp/SqlPopUp";
@@ -77,7 +77,7 @@ export default function EditReport(props) {
             let result = {}
             for (let i = 0; i < dataSourceList.data.length; i++) {
                 let columns = await getColumnsOfTable(dataSourceList.data[i].Information)
-                result[dataSourceList.data[i].Information] = columns.data.Columns
+                result[dataSourceList.data[i].Information] = columns.data.Columns.filter(ele => ele != "DataSource_Id")
             }
             setDataSource(result)
         } catch (err) {
