@@ -19,6 +19,8 @@ import pie_chart from "resources/icons/pie_chart.svg";
 import table from "resources/icons/table.svg";
 import edit_grey from "resources/icons/edit_grey.svg";
 import print from "resources/icons/print.svg";
+import linechart from "resources/icons/linechart.svg";
+import donut from "resources/icons/donut.svg";
 export default function MenuBar(props) {
 
     // variable for add shape button
@@ -38,7 +40,7 @@ export default function MenuBar(props) {
     const edit_option = ['Undo', 'Redo', 'Cut', 'Copy', 'Paste', 'Select All']
     const function_option = ['SUM', 'MAX', 'MIN', 'AVERAGE']
     const insert_option = ['Table', 'Bar Chart', 'Pie Chart', 'Doughnut Chart', 'Line Chart']
-    const insert_option_icon_list = [table, bar_chart, pie_chart]
+    const insert_option_icon_list = [table, bar_chart, pie_chart, donut ,linechart]
 
 
     return (
