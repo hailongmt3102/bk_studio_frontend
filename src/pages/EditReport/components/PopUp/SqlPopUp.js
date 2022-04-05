@@ -1,61 +1,25 @@
 import React, { useEffect, useState } from 'react'
-import { Modal, Button, Form } from 'react-bootstrap'
-import NestedDropDown from 'components/NestedDropDown'
+import { Modal, Button } from 'react-bootstrap'
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import add_grey from 'resources/icons/add_grey.svg'
 import substract from 'resources/icons/substract.svg'
-import { Roboto, Poppins } from "utils/font"
+import { Poppins } from "utils/font"
 import { blue_cloud } from "utils/color"
-import { deep_blue_primary } from "utils/color"
-import Divider from '@mui/material/Divider';
 export default function SqlPopUp(props) {
     const [step, setStep] = useState(1)
-    const [selectComponent, setSelectComponent] = useState([])
-    const [fieldAdd, setfieldAdd] = useState(["username", "id"])
 
     const op = ['=', "!=", ">", "<", ">=", "<="];
-    const [value, setValue] = useState(op[0]);
-    const [inputValue, setInputValue] = useState('');
 
     const [groupBy, setGroupBy] = useState([])
 
-    const [function_clause, setFunction_clause] = useState(
-        [
-            {
-                field: "",
-                op: "",
-            },
-        ]
-    )
+    const [function_clause, setFunction_clause] = useState([])
 
-    const [where_clause, setWhere_clause] = useState(
-        [
-            {
-                field: "",
-                op: "",
-                value: 0
-            }
-        ]
-    )
-    const [having_clause, setHaving_clause] = useState(
-        [
-            {
-                field: "",
-                op: "",
-                value: 0
-            }
-        ]
-    )
+    const [where_clause, setWhere_clause] = useState([])
 
-    const [order_clause, setOrder_clause] = useState(
-        [
-            {
-                fx: "ASC",
-                field: "a",
-            }
-        ]
-    )
+    const [having_clause, setHaving_clause] = useState([])
+
+    const [order_clause, setOrder_clause] = useState([])
 
     const [fieldList, setFieldList] = useState([])
 
@@ -95,19 +59,44 @@ export default function SqlPopUp(props) {
     }
 
     const submit = () => {
-        let query = `
-            select 
-                ${selectedField.join(',')},
-                ${function_clause.map(clause => `${clause.op}(${clause.field})`).join(',')}
-            from ${selectFrom}
-            where ${where_clause.map(where => `${where.field} ${where.op} ${where.value}`).join(' and ')}
-            group by ${groupBy.join(',')}
-            having ${having_clause.map(having => `${having.field} ${having.op} ${having.value}`).join(' and ')}
-            order by ${order_clause.map(order => `${order.field} ${order.fx}`).join(',')} 
-            ;
-        `
+        if (selectedField.length == 0 && function_clause.length == 0) {
+            alert("Nothing to compute")
+            return
+        }
+        if (selectFrom.length > 1) {
+            alert("Multi table now is not available")
+            return
+        }
+        let query = ""
+        // select fields component
+        if (selectedField.length > 0 && function_clause.length == 0) {
+            query += `select ${selectedField.join(',')}`
+        } else if (selectedField.length == 0 && function_clause.length > 0) {
+            query += `select ${function_clause.map(clause => `${clause.op}(${clause.field})`).join(',')}`
+        } else {
+            query += `select ${selectedField.join(',')} ,${function_clause.map(clause => `${clause.op}(${clause.field})`).join(',')}`
+        }
+        // from component
+        query += ` from ${selectFrom[0]}`
+        // where
+        if (where_clause.length > 0) {
+            query += ` where ${where_clause.map(where => `${where.field} ${where.op} ${where.value}`).join(' and ')}`
+        }
+        // group by
+        if (groupBy.length > 0) {
+            query += ` group by ${groupBy.join(',')}`
+        }
+        // having
+        if (having_clause.length > 0) {
+            query += ` having ${having_clause.map(having => `${having.field} ${having.op} ${having.value}`).join(' and ')}`
+        }
+        // order by
+        if (order_clause.length > 0) {
+            query += ` order by ${order_clause.map(order => `${order.field} ${order.fx}`).join(',')}`
+        }
         props.onComplete(query)
         props.handleClose()
+        window.location.reload()
     }
 
     useEffect(() => {
@@ -200,7 +189,7 @@ export default function SqlPopUp(props) {
                             className='ms-5 me-5'
                             multiple
                             id="tags-standard"
-                            options={fieldList}
+                            options={selectFrom.reduce((pre, cur) => [...pre, ...props.dataSource[cur]], [])}
                             renderInput={(params) => (
                                 <TextField
                                     {...params}
@@ -513,7 +502,7 @@ export default function SqlPopUp(props) {
 
             <div className='row p-0 m-0 mt-3'>
                 {
-                    function_clause.map((clause, index) =>
+                    order_clause.map((clause, index) =>
                         <div className='row'>
                             <div className='col-5 m-auto'>
                                 <div className='ms-3'>
@@ -587,6 +576,8 @@ export default function SqlPopUp(props) {
                 return <div>Select X column</div>
             case 3:
                 return <div>SQL function</div>
+            default:
+                return null
         }
     }
 
@@ -615,7 +606,9 @@ export default function SqlPopUp(props) {
             case 2:
                 return selectXColumnCoponent()
             case 3:
-                return  buildSQLComponent()
+                return buildSQLComponent()
+            default:
+                return null
         }
     }
     const footerComponent = () => {
@@ -648,9 +641,10 @@ export default function SqlPopUp(props) {
                     </Button>
                     <Button className='ms-2' onClick={() => {
                         submit()
-                        window.location.reload()
                     }} >Done
                     </Button></div>
+            default:
+                return null
         }
     }
     return (
