@@ -1,10 +1,10 @@
-import { idID } from "@mui/material/locale"
 import axiosClient from "./axios"
 
-const ImportDataApi = (tableName, data) => {
+const ImportDataApi = (tableName, data, PId) => {
     return axiosClient.post("/data/new", {
         table: tableName,
-        data : data
+        data: data,
+        PId: PId
     })
 }
 
@@ -18,8 +18,13 @@ const GetDataSourcesListInformationInWorkSpace = () => {
 }
 
 const GetDataSourcesListInformationInProject = (pid) => {
-    return axiosClient.post("/data/project",pid)
+    return axiosClient.post("/data/project", pid)
 }
+
+const getColumnsOfTable = (table) => {
+    return axiosClient.get(`/data/columns?table=${table}`)
+}
+
 const QueryData = (query) => {
     return axiosClient.post("/data/query", {
         query: query
@@ -27,14 +32,14 @@ const QueryData = (query) => {
 }
 
 const SendToWorkspace = (id, data) => {
-    return axiosClient.post("/data/"+id+"/switchtype", data)
+    return axiosClient.post("/data/" + id + "/switchtype", data)
 }
 
 const deleteDatasource = (id) => {
-    return axiosClient.get("/data/"+id+"/delete")
+    return axiosClient.get("/data/" + id + "/delete")
 }
 const Rename = (id, data) => {
-    return axiosClient.post("/data/"+id+"/rename", data)
+    return axiosClient.post("/data/" + id + "/rename", data)
 }
 
 
@@ -47,6 +52,7 @@ export {
     SendToWorkspace,
     GetDataSourcesListInformationInWorkSpace,
     GetDataSourcesListInformationInProject,
+    getColumnsOfTable,
     deleteDatasource,
     Rename
 }
