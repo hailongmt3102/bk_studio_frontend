@@ -37,7 +37,7 @@ export default function SqlPopUp(props) {
         'DESC',
     ];
 
-    const [selectTable, setSelectTable] = useState([])
+    const [selectXAxis, setSelectXAxis] = useState(null)
 
     const [selectedField, setSelectedField] = useState([])
     const [selectFrom, setSelectFrom] = useState([])
@@ -67,14 +67,15 @@ export default function SqlPopUp(props) {
             alert("Multi table now is not available")
             return
         }
-        let query = ""
+        let query = "select"
+        if (selectXAxis != null) query += ` ${selectXAxis},`
         // select fields component
         if (selectedField.length > 0 && function_clause.length == 0) {
-            query += `select ${selectedField.join(',')}`
+            query += ` ${selectedField.join(',')}`
         } else if (selectedField.length == 0 && function_clause.length > 0) {
-            query += `select ${function_clause.map(clause => `${clause.op}(${clause.field})`).join(',')}`
+            query += ` ${function_clause.map(clause => `${clause.op}(${clause.field})`).join(',')}`
         } else {
-            query += `select ${selectedField.join(',')} ,${function_clause.map(clause => `${clause.op}(${clause.field})`).join(',')}`
+            query += ` ${selectedField.join(',')} ,${function_clause.map(clause => `${clause.op}(${clause.field})`).join(',')}`
         }
         // from component
         query += ` from ${selectFrom[0]}`
@@ -132,32 +133,6 @@ export default function SqlPopUp(props) {
         </div>
     }
 
-    const fromClause = () => {
-        return <div className='row m-auto'>
-            <div className='col-1 m-auto'>
-                <div>From</div>
-            </div>
-            <div className='col-11 '>
-                <Autocomplete
-                    className='ms-5 me-5'
-                    multiple
-                    id="tags-standard"
-                    options={data_source}
-                    renderInput={(params) => (
-                        <TextField
-                            {...params}
-                            variant="standard"
-                            // label="Multiple values"
-                            placeholder="Data sources"
-                        />
-                    )}
-                    onChange={(e, val) => {
-                        setSelectFrom(val)
-                    }}
-                />
-            </div>
-        </div>
-    }
     const selectClause = () => {
         return <div>
             <div className='row m-0 p-0'>
@@ -584,18 +559,17 @@ export default function SqlPopUp(props) {
     const selectXColumnCoponent = () => {
         return <Autocomplete
             className='ms-5 me-5'
-            id="size-small-standard"
-            size="small"
-            options={fieldList}
-            renderInput={(params) =>
+            id="tags-standard"
+            options={selectFrom.reduce((pre, cur) => [...pre, ...props.dataSource[cur]], [])}
+            renderInput={(params) => (
                 <TextField
                     {...params}
                     variant="standard"
-                    placeholder="Select X column"
+                    placeholder="Fields"
                 />
-            }
-            onChange={(e, value) => {
-                // updateFunctionClause(index, { ...clause, op: value ?? "" })
+            )}
+            onChange={(e, val) => {
+                setSelectXAxis(val)
             }}
         />
     }
