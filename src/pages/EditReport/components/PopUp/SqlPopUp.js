@@ -6,6 +6,7 @@ import add_grey from 'resources/icons/add_grey.svg'
 import substract from 'resources/icons/substract.svg'
 import { Poppins } from "utils/font"
 import { blue_cloud } from "utils/color"
+import { Form } from 'react-bootstrap'
 export default function SqlPopUp(props) {
     const [step, setStep] = useState(1)
 
@@ -133,6 +134,7 @@ export default function SqlPopUp(props) {
         </div>
     }
 
+    const [showField, setShowField] = useState(true)
     const selectClause = () => {
         return <div>
             <div className='row m-0 p-0'>
@@ -143,6 +145,16 @@ export default function SqlPopUp(props) {
                     <div className='col-1 m-auto p-0'>
                         <div className='row m-0 p-0 '>
                             <div className='col m-0 p-0 '>
+                                <Form.Check
+                                    onClick={(e) => {
+                                        setShowField(true)
+                                    }}
+                                    label="Field"
+                                    name="group1"
+                                    type='radio'
+                                    id="MaleGender"
+                                    checked={showField}
+                                />
                                 {/* <input
                                     class="form-check-input ms-3"
                                     type="checkbox"
@@ -152,14 +164,14 @@ export default function SqlPopUp(props) {
                                     checked={true}
                                 /> */}
                             </div>
-                            <div className='col m-0 p-0'>
+                            {/* <div className='col m-0 p-0'>
                                 <div className='col-1  m-auto p-0' >
                                     <div>Field</div>
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
-                    <div className='col-11 m-auto'>
+                    {showField === true ? <div className='col-11 m-auto'>
                         <Autocomplete
                             className='ms-5 me-5'
                             multiple
@@ -176,44 +188,44 @@ export default function SqlPopUp(props) {
                                 setSelectedField(val)
                             }}
                         />
-                    </div>
+                    </div> : <div className='col-11 m-auto'></div>}
                 </div>
             </div>
             <div className='row mt-5 m-auto m-0 p-0'>
-                <div className='col-3 p-0'>
+                <div className='col p-0'>
                     <div className='row '>
                         <div className='col-1  m-auto'>
-                            {/* <input
-                                class="form-check-input ms-3"
-                                type="checkbox"
-                                id="form2Example3c"
+                            <Form.Check
                                 onClick={(e) => {
+                                    setShowField(false)
                                 }}
-                                checked={true}
-                            /> */}
+                                label="Function"
+                                name="group1"
+                                type='radio'
+                                id="MaleGender"
+                            />
                         </div>
-                        <div className='col m-auto p-0' >
-                            <div className='ms-5'>Function</div>
+                        <div className='col-11 m-auto p-0' >
+                            {showField === false ?
+                                <button type="button" class="btn btn-sm ms-2 p-2" onClick={() => {
+                                    setFunction_clause([...function_clause, {
+                                        field: "",
+                                        op: "",
+                                        value: 0
+                                    }])
+                                }}><img src={add_grey} height="30px" width="30px" /></button>
+                                : <div className='col m-auto'></div>
+                            }
                         </div>
-                        <div className='col  m-auto'>
-                            <button type="button" class="btn btn-sm ms-2 p-2 m-auto" onClick={() => {
-                                setFunction_clause([...function_clause, {
-                                    field: "",
-                                    op: "",
-                                    value: 0
-                                }])
-                            }}>
-                                <img src={add_grey} height="30px" width="30px" />
-                            </button>
-                        </div>
+
                     </div>
 
                 </div>
-                <div className='col-10'></div>
+
 
             </div>
             {
-                function_clause.map((clause, index) =>
+                showField===false ? function_clause.map((clause, index) =>
                     <div className='row'>
                         <div className='col-5 m-auto'>
                             <div className='ms-3'>
@@ -258,7 +270,7 @@ export default function SqlPopUp(props) {
                             }}><img src={substract} height="30px" width="30px" /></button>
                         </div>
                     </div>
-                )
+                ): null
             }
 
         </div>
