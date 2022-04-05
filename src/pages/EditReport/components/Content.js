@@ -283,13 +283,13 @@ export default function Content(props) {
 
                         result.lineData = {
                             labels: arrayData[keys[0]],
-                            datasets: keys.slice(1).map(key => {
+                            datasets: keys.slice(1).map((key, index) => {
                                 return {
                                     label: key,
                                     data: arrayData[key],
                                     fill: true,
-                                    backgroundColor: 'rgba(75,192,192,0.2)',
-                                    borderColor: 'rgba(75,192,192,1)'
+                                    backgroundColor: backgroundColors[index % backgroundColors.length],
+                                    borderColor: borderColors[index % borderColors.length]
                                 }
                             })
                         }
@@ -323,13 +323,13 @@ export default function Content(props) {
 
                         result.barData = {
                             labels: arrayData[keys[0]],
-                            datasets: keys.slice(1).map(key => {
+                            datasets: keys.slice(1).map((key, index) => {
                                 return {
                                     label: key,
                                     data: arrayData[key],
                                     fill: true,
-                                    backgroundColor: 'rgba(75,192,192,0.2)',
-                                    borderColor: 'rgba(75,192,192,1)'
+                                    backgroundColor: backgroundColors[index % backgroundColors.length],
+                                    borderColor: borderColors[index % borderColors.length]
                                 }
                             })
                         }
