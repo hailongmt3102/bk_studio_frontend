@@ -18,8 +18,8 @@ import moment from 'moment';
 import { Store } from 'react-notifications-component'
 import { content } from "utils/notification"
 import { editProject, canUpdatePermission } from 'api/Project'
-
-import {Rename, SendToWorkspace,deleteDatasource, GetDataSourcesListInformationInProject } from 'api/DataSources'
+import DataSourceBox from '../../pages/DataSources/component/DataSourceBox'
+import { Rename, SendToWorkspace, deleteDatasource, GetDataSourcesListInformationInProject } from 'api/DataSources'
 import edit from "resources/icons/edit.svg"
 import delete_icon from "resources/icons/delete.svg"
 import download_blue from "resources/icons/download_blue.svg"
@@ -75,7 +75,7 @@ export default function ProjectDetail() {
     }, [])
 
     const [datasourceslist, setDatasourceslist] = useState([])
-    const option_list = ["Send to Workspace", "Rename", "Share", "Download", "Delete"]
+
     useEffect(() => {
         GetDataSourcesListInformationInProject({ PId: project_id })
             .then(res => {
@@ -421,6 +421,8 @@ export default function ProjectDetail() {
         setDatasourceslist([...datasourceslist.splice(0, index), { ...datasourceslist[index], Information: value }, ...datasourceslist.splice(index + 1)])
 
     }
+    const option_list = ["Send to Workspace", "Rename", "Share", "Download", "Delete"]
+    const icon_list = [sendTo, share_blue, edit, download_blue, delete_icon]
     const dataSourcesComponent = () => {
         return <div>
             <div className='row m-0 p-0 mt-3' >
@@ -430,67 +432,7 @@ export default function ProjectDetail() {
                 <div className='row'>
                     {
                         datasourceslist.map((ele, index) => {
-                            return <div className='col-3 ms-4 mt-3 pt-2 mb-5' style={{ "height": "200px", width: "400px", "border-radius": "20px", "backgroundColor": "#F7F7F7" }}>
-                                <div className='row ms-3' style={{ "paddingLeft": "310px" }}>
-                                    <ThreeDotButton title={'adđ'}
-                                        items={option_list}
-                                        icon={three_dot}
-                                        icons_list={[sendTo,share_blue, edit, download_blue, delete_icon]}
-                                        onClick={(val) => {
-                                            if (val == "Delete") {
-                                                deleteHandle(ele.Id)
-                                            }
-                                            else if (val === "Rename") {
-                                                setPressRename(true)
-                                            }
-                                            else if (val === "Send to Workspace") {
-                                                sendToWorkspaceSubmit(ele.Id)
-                                            }
-                                        }} />
-                                </div>
-                                <div className="row m-0 p-0">
-                                    <div className="col-4 m-0 p-0" style={{ fontFamily: "Roboto" }}>
-                                        <img src={excel_icon} height="120px" width="100%" />
-                                    </div>
-                                    <div class="col-8 m-0 p-0" style={{ fontFamily: "Roboto" }}>
-                                        <div class="row m-0 p-0" style={{ fontFamily: "Roboto", color: blue_cloud, fontSize: "28px" }}>
-                                            {
-                                                pressRename == false ? <p><span>{ele.Information}</span></p> :
-                                                    // <newNameTextField/>
-                                                    <Form.Group className='m-0 p-0 ms-2 pe-2'>
-                                                        <Form.Control
-                                                            type="text"
-                                                            placeholder=""
-                                                            value={ele.Information}
-                                                            onChange={(e) => {
-                                                                setNewName(e.target.value, index)
-                                                            }}
-                                                        />
-                                                    </Form.Group>
-                                            }
-                                        </div>
-                                        <div class="row  m-0 p-0 mt-1" style={{ fontFamily: "Roboto" }}>
-                                            <p><span style={{ "color": "#868585" }}>date created: </span>{ele.CreateTime}</p>
-                                        </div>
-                                        <div class="row m-0 p-0" style={{ fontFamily: "Roboto" }}>
-                                            <p><span style={{ "color": "#868585" }}>last modified: </span>{ele.LastModified}</p>
-                                        </div>
-                                        {
-                                            pressRename == false ? null :
-                                                <div className='d-flex justify-content-center'>
-                                                    <button
-                                                        onClick={() => {
-                                                            RenameHandle(ele.Id, ele.Information)
-                                                        }} type="button" class="btn btn-primary btn-sm">
-                                                        Save
-                                                    </button>
-                                                </div>
-                                        }
-
-                                    </div>
-
-                                </div>
-                            </div>
+                            return  <DataSourceBox option_list={option_list} icon_list={icon_list}  setDatasourceslist={setDatasourceslist} datasourceslist={datasourceslist} ele = {ele} index ={index}/>
                         })
 
                     }
