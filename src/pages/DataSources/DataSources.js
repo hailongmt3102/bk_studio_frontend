@@ -78,13 +78,13 @@ export default function DataSources() {
             <div className='d-flex flex-row pt-2'>
 
                 <h2 class="ms-4 mt-1" style={{ fontFamily: Poppins, color: deep_blue_primary, "font-weight": "bold", fontSize: "40px" }}> Data Sources:</h2>
-                <button className='btn btn-default btn-lg ms-3 p-0'
+                {/* <button className='btn btn-default btn-lg ms-3 p-0'
                     onClick={() => {
                         //setShowPModel(true)
                     }}
                 >
                     <img src={add_round} width="40px" height="40px" />
-                </button>
+                </button> */}
 
 
 
