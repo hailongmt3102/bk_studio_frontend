@@ -276,7 +276,7 @@ export default function Content(props) {
                 )
             }
             <div>
-                {/* <Pie data={PieData} /> */}
+                <Pie data={PieData} />
                 {/* <Doughnut data={PieData} /> */}
                 {/* <Bar options={Baroptions} data={Linedata} /> */}
                 {/* <Bar options={BarNgangoptions} data={Linedata} /> */}
