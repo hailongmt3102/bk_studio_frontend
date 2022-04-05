@@ -135,7 +135,9 @@ export default function SqlPopUp(props) {
     }
 
     const [showField, setShowField] = useState(true)
-    const selectClause = () => {
+
+
+    const selectClauseTypeLineAndBar = () => {
         return <div>
             <div className='row m-0 p-0'>
                 <div style={{ fontFamily: Poppins, color: blue_cloud, fontWeight: "bold", fontSize: "20px" }}>
@@ -145,33 +147,15 @@ export default function SqlPopUp(props) {
                     <div className='col-1 m-auto p-0'>
                         <div className='row m-0 p-0 '>
                             <div className='col m-0 p-0 '>
-                                <Form.Check
-                                    onClick={(e) => {
-                                        setShowField(true)
-                                    }}
-                                    label="Field"
-                                    name="group1"
-                                    type='radio'
-                                    id="MaleGender"
-                                    checked={showField}
-                                />
-                                {/* <input
-                                    class="form-check-input ms-3"
-                                    type="checkbox"
-                                    id="form2Example3c"
-                                    onClick={(e) => {
-                                    }}
-                                    checked={true}
-                                /> */}
                             </div>
-                            {/* <div className='col m-0 p-0'>
+                            <div className='col m-0 p-0'>
                                 <div className='col-1  m-auto p-0' >
                                     <div>Field</div>
                                 </div>
-                            </div> */}
+                            </div>
                         </div>
                     </div>
-                    {showField === true ? <div className='col-11 m-auto'>
+                    <div className='col-11 m-auto'>
                         <Autocomplete
                             className='ms-5 me-5'
                             multiple
@@ -188,44 +172,36 @@ export default function SqlPopUp(props) {
                                 setSelectedField(val)
                             }}
                         />
-                    </div> : <div className='col-11 m-auto'></div>}
+                    </div>
                 </div>
             </div>
             <div className='row mt-5 m-auto m-0 p-0'>
-                <div className='col p-0'>
+                <div className='col-3 p-0'>
                     <div className='row '>
                         <div className='col-1  m-auto'>
-                            <Form.Check
-                                onClick={(e) => {
-                                    setShowField(false)
-                                }}
-                                label="Function"
-                                name="group1"
-                                type='radio'
-                                id="MaleGender"
-                            />
                         </div>
-                        <div className='col-11 m-auto p-0' >
-                            {showField === false ?
-                                <button type="button" class="btn btn-sm ms-2 p-2" onClick={() => {
-                                    setFunction_clause([...function_clause, {
-                                        field: "",
-                                        op: "",
-                                        value: 0
-                                    }])
-                                }}><img src={add_grey} height="30px" width="30px" /></button>
-                                : <div className='col m-auto'></div>
-                            }
+                        <div className='col m-auto p-0' >
+                            <div className='ms-5'>Function</div>
                         </div>
-
+                        <div className='col  m-auto'>
+                            <button type="button" class="btn btn-sm ms-2 p-2 m-auto" onClick={() => {
+                                setFunction_clause([...function_clause, {
+                                    field: "",
+                                    op: "",
+                                    value: 0
+                                }])
+                            }}>
+                                <img src={add_grey} height="30px" width="30px" />
+                            </button>
+                        </div>
                     </div>
 
                 </div>
-
+                <div className='col-10'></div>
 
             </div>
             {
-                showField===false ? function_clause.map((clause, index) =>
+                function_clause.map((clause, index) =>
                     <div className='row'>
                         <div className='col-5 m-auto'>
                             <div className='ms-3'>
@@ -270,9 +246,141 @@ export default function SqlPopUp(props) {
                             }}><img src={substract} height="30px" width="30px" /></button>
                         </div>
                     </div>
-                ): null
+                )
             }
 
+        </div>
+    }
+
+    const selectClauseTypePieandDonut = () => {
+        return <div>
+            <div className='row m-0 p-0'>
+                <div style={{ fontFamily: Poppins, color: blue_cloud, fontWeight: "bold", fontSize: "20px" }}>
+                    SELECT
+                </div>
+                <div className='row mt-3 m-0 p-0'>
+                    <div className='col-12 m-auto p-0'>
+                        <div className='row m-0 p-0 '>
+                            <div className='col m-0 p-0 '>
+                                <Form.Check
+                                    onClick={(e) => {
+                                        setShowField(true)
+                                    }}
+                                    label="Field"
+                                    name="group1"
+                                    type='radio'
+                                    id="MaleGender"
+                                    checked={showField}
+                                />
+                                {/* <div className='col m-0 p-0'>
+                                <div className='col-1  m-auto p-0' >
+                                    <div>Field</div>
+                                </div>
+                            </div> */}
+                            </div>
+                        </div>
+                        {showField === true ? <div className='col-11 m-auto'>
+                            <Autocomplete
+                                className='ms-4 me-5'
+                                multiple
+                                id="tags-standard"
+                                options={selectFrom.reduce((pre, cur) => [...pre, ...props.dataSource[cur]], [])}
+                                renderInput={(params) => (
+                                    <TextField
+                                        {...params}
+                                        variant="standard"
+                                        placeholder="Fields"
+                                    />
+                                )}
+                                onChange={(e, val) => {
+                                    setSelectedField(val)
+                                }}
+                            />
+                        </div> : <div className='col-11 m-auto'></div>}
+                    </div>
+                </div>
+                <div className='row mt-5 m-auto m-0 p-0'>
+                    <div className='col p-0'>
+                        <div className='row '>
+                            <div className='col-1  m-auto'>
+                                <Form.Check
+                                    onClick={(e) => {
+                                        setShowField(false)
+                                    }}
+                                    label="Function"
+                                    name="group1"
+                                    type='radio'
+                                    id="MaleGender"
+                                />
+                            </div>
+                            <div className='col-11 m-auto p-0' >
+                                {showField === false ?
+                                    <button type="button" class="btn btn-sm ms-2 p-2" onClick={() => {
+                                        setFunction_clause([...function_clause, {
+                                            field: "",
+                                            op: "",
+                                            value: 0
+                                        }])
+                                    }}><img src={add_grey} height="30px" width="30px" /></button>
+                                    : <div className='col m-auto'></div>
+                                }
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+                {
+                    showField === false ? function_clause.map((clause, index) =>
+                        <div className='row'>
+                            <div className='col-5 m-auto'>
+                                <div className='ms-3'>
+                                    <Autocomplete
+                                        className='ms-5'
+                                        id="size-small-standard"
+                                        size="small"
+                                        options={function_list}
+                                        renderInput={(params) =>
+                                            <TextField
+                                                {...params}
+                                                variant="standard"
+                                                placeholder="Fx"
+                                            />
+                                        }
+                                        onChange={(e, value) => {
+                                            updateFunctionClause(index, { ...clause, op: value ?? "" })
+                                        }}
+                                    />
+                                </div>
+                            </div>
+                            <div className='col-5 m-auto'>
+                                <Autocomplete
+                                    id="function"
+                                    size="small"
+                                    options={selectFrom.reduce((pre, cur) => [...pre, ...props.dataSource[cur]], [])}
+                                    renderInput={(params) =>
+                                        <TextField
+                                            {...params}
+                                            variant="standard"
+                                            placeholder="Field "
+                                        />
+                                    }
+                                    onChange={(e, value) => {
+                                        updateFunctionClause(index, { ...clause, field: value ?? "" })
+                                    }}
+                                />
+                            </div>
+                            <div className='col-2 m-auto'>
+                                <button type="button" class="btn btn-sm ms-2 p-2" onClick={() => {
+                                    setFunction_clause([...function_clause.slice(0, index), ...function_clause.slice(index + 1)])
+                                }}><img src={substract} height="30px" width="30px" /></button>
+                            </div>
+                        </div>
+                    ) : null
+                }
+            </div>
         </div>
     }
     const whereClause = () => {
@@ -545,10 +653,26 @@ export default function SqlPopUp(props) {
             </div>
         </div>
     }
+
+    const selectWayShow = () => {
+        switch (props.type) {
+            case "Table":
+                return selectClauseTypeLineAndBar()
+            case "Bar Chart":
+                return selectClauseTypeLineAndBar()
+            case "Line Chart":
+                return selectClauseTypeLineAndBar()
+            case "Pie Chart":
+                return selectClauseTypePieandDonut()
+            case "Doughnut Chart":
+                return selectClauseTypePieandDonut()
+
+        }
+    }
     const buildSQLComponent = () => {
         return <div>
             {/* {fromClause()} */}
-            {selectClause()}
+            {selectWayShow()}
             {whereClause()}
             {groupByClause()}
             {havingByClause()}
