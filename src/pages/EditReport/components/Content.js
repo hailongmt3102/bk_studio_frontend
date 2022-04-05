@@ -27,12 +27,29 @@ export default function Content(props) {
 
     const [pieDataSet, setPieDataSet] = useState([])
 
+    const backgroundColors = [
+        'rgba(255, 99, 132, 0.2)',
+        'rgba(54, 162, 235, 0.2)',
+        'rgba(255, 206, 86, 0.2)',
+        'rgba(75, 192, 192, 0.2)',
+        'rgba(153, 102, 255, 0.2)',
+    ]
+
+    const borderColors = [
+        'rgba(255, 99, 132, 1)',
+        'rgba(54, 162, 235, 1)',
+        'rgba(255, 206, 86, 1)',
+        'rgba(75, 192, 192, 1)',
+        'rgba(153, 102, 255, 1)',
+        'rgba(255, 159, 64, 1)',
+    ]
+
     const PieData = {
-        // labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
         datasets: [
             {
                 label: '# of Votes',
-                data: pieDataSet,
+                data: [1, 2, 3, 4, 5],
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
                     'rgba(54, 162, 235, 0.2)',
@@ -53,6 +70,7 @@ export default function Content(props) {
             },
         ],
     };
+
 
 
     const Baroptions = {
@@ -122,11 +140,15 @@ export default function Content(props) {
     // };
 
     const [tables, setTables] = useState({})
+    const [pies, setPies] = useState({})
+    const [doughnuts, setDoughnuts] = useState({})
     const [lineDataSet, setLineDataset] = useState({})
     const [barDataSet, setBarDataset] = useState({})
 
     const fetchData = async () => {
         let table = {}
+        let pieCharts = {}
+        let doughnutCharts = {}
         let lineCharts = {}
         let barCharts = {}
         for (let i = 0; i < props.components.length; i++) {
@@ -154,9 +176,41 @@ export default function Content(props) {
                 case "Pie Chart":
                     try {
                         let res = await QueryDataApi(component.QueryCommand)
-                        //res.data is list json 
-                        console.log("data trả về từ api", res.data)
-                        setPieDataSet(res.data.map((e) => e.user_id))
+                        let result = component
+                        let positionString = result.Position.split(";")
+                        result.Position = {
+                            x: positionString[0].substring(2),
+                            y: positionString[1].substring(2)
+                        }
+                        let TextThemeArray = result.TextTheme.split(";")
+                        result.TextTheme = {}
+                        TextThemeArray.map(style => result.TextTheme[style.split(':')[0]] = style.split(':')[1])
+
+                        let keys = Object.keys(res.data[0])
+                        if (keys.length < 2) return
+
+                        // convert data to array
+                        let arrayData = {}
+                        keys.map(key => arrayData[key] = [])
+
+                        res.data.map(row => {
+                            keys.map((key, index) => index == 0 ? arrayData[key].push(row[key]) : arrayData[key].push(parseInt(row[key])))
+                        })
+
+                        let pieData = {
+                            labels: arrayData[keys[0]],
+                            datasets: [
+                                {
+                                    label: result.title,
+                                    data: arrayData[keys[1]],
+                                    backgroundColor: arrayData[keys[0]].map((_, index) => backgroundColors[index % backgroundColors.length]),
+                                    borderColor: arrayData[keys[0]].map((_, index) => borderColors[index % borderColors.length]),
+                                    borderWidth: 1,
+                                }
+                            ]
+                        }
+                        result.pieData = pieData
+                        pieCharts[result.Id] = result
                     }
                     catch (err) {
                         console.log(err.response.data)
@@ -165,9 +219,41 @@ export default function Content(props) {
                 case "Doughnut Chart":
                     try {
                         let res = await QueryDataApi(component.QueryCommand)
-                        //res.data is list json 
-                        console.log("data trả về từ api", res.data)
-                        setPieDataSet(res.data.map((e) => e.user_id))
+                        let result = component
+                        let positionString = result.Position.split(";")
+                        result.Position = {
+                            x: positionString[0].substring(2),
+                            y: positionString[1].substring(2)
+                        }
+                        let TextThemeArray = result.TextTheme.split(";")
+                        result.TextTheme = {}
+                        TextThemeArray.map(style => result.TextTheme[style.split(':')[0]] = style.split(':')[1])
+
+                        let keys = Object.keys(res.data[0])
+                        if (keys.length < 2) return
+
+                        // convert data to array
+                        let arrayData = {}
+                        keys.map(key => arrayData[key] = [])
+
+                        res.data.map(row => {
+                            keys.map((key, index) => index == 0 ? arrayData[key].push(row[key]) : arrayData[key].push(parseInt(row[key])))
+                        })
+
+                        let doughnutData = {
+                            labels: arrayData[keys[0]],
+                            datasets: [
+                                {
+                                    label: result.title,
+                                    data: arrayData[keys[1]],
+                                    backgroundColor: arrayData[keys[0]].map((_, index) => backgroundColors[index % backgroundColors.length]),
+                                    borderColor: arrayData[keys[0]].map((_, index) => borderColors[index % borderColors.length]),
+                                    borderWidth: 1,
+                                }
+                            ]
+                        }
+                        result.doughnutData = doughnutData
+                        doughnutCharts[result.Id] = result
                     }
                     catch (err) {
                         console.log(err.response.data)
@@ -257,6 +343,8 @@ export default function Content(props) {
                     break
             }
             setTables({ ...tables, ...table })
+            setPies({ ...pies, ...pieCharts })
+            setDoughnuts({ ...doughnuts, ...doughnutCharts })
             setLineDataset({ ...lineDataSet, ...lineCharts })
             setBarDataset({ ...barDataSet, ...barCharts })
         }
@@ -268,6 +356,14 @@ export default function Content(props) {
 
     const updateDataTable = (key, data) => {
         setTables({ ...tables, [key]: data })
+    }
+
+    const updatePieChart = (key, data) => {
+        setPies({ ...pies, [key]: data })
+    }
+
+    const updateDoughnutChart = (key, data) => {
+        setDoughnuts({ ...doughnuts, [key]: data })
     }
 
     const updateLineChart = (key, data) => {
@@ -349,24 +445,58 @@ export default function Content(props) {
                     </div>
                 )
             }
-            {/* {
-                <Rnd
-                    size={{ width: 1000, height: 1000 }}
-                    position={{ x: 0, y: 0 }}
+            {
+                Object.keys(pies).map((key, index) =>
+                    <div>
+                        <Rnd
+                            size={{ width: pies[key].Width, height: pies[key].Height }}
+                            position={{ x: pies[key].Position.x, y: pies[key].Position.y }}
+                            onDragStop={(e, d) => {
+                                updatePieChart(key, {
+                                    ...pies[key], Position: {
+                                        x: d.x,
+                                        y: d.y
+                                    }
+                                })
 
-                    className="border"
-                >
-                    <Pie data={PieData} />
+                            }}
+                            onResizeStop={(e, direction, ref, delta, position) => {
+                                updatePieChart(key, { ...pies[key], Width: ref.style.width, Height: ref.style.height })
+                            }}
+                            className="border"
+                        >
+                            {pies[key].Title}
+                            <Pie data={pies[key].pieData} />
+                        </Rnd>
+                    </div>
+                )
+            }
 
-                </Rnd>
-            } */}
-
-            <div>
-                {/* <Doughnut data={PieData} /> */}
-                {/* <Bar options={Baroptions} data={Linedata} /> */}
-                {/* <Bar options={BarNgangoptions} data={Linedata} /> */}
-
-            </div>
+            {
+                Object.keys(doughnuts).map((key, index) =>
+                    <div>
+                        <Rnd
+                            size={{ width: doughnuts[key].Width, height: doughnuts[key].Height }}
+                            position={{ x: doughnuts[key].Position.x, y: doughnuts[key].Position.y }}
+                            onDragStop={(e, d) => {
+                                updateDoughnutChart(key, {
+                                    ...doughnuts[key], Position: {
+                                        x: d.x,
+                                        y: d.y
+                                    }
+                                })
+                            }}
+                            onResizeStop={(e, direction, ref, delta, position) => {
+                                updateDoughnutChart(key, { ...doughnuts[key], Width: ref.style.width, Height: ref.style.height })
+                            }}
+                            className="border"
+                        >
+                            {doughnuts[key].Title}
+                            <Doughnut data={doughnuts[key].doughnutData} />
+                        </Rnd>
+                    </div>
+                )
+            }
         </div>
     )
 }
