@@ -1,21 +1,21 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import "@fontsource/roboto";
-import { Form, InputGroup, Col, Row, Container, Button } from 'react-bootstrap'
+import { Form, Col, Row, Button } from 'react-bootstrap'
 import tick from "resources/icons/tick.svg"
-import lock from "resources/icons/lock.svg"
-import { Roboto, Poppins } from "../../utils/font"
+import { Poppins } from "../../utils/font"
 import { deep_blue_primary } from "../../utils/color"
 import "@fontsource/poppins";
 import Drop from 'pages/EditReport/components/Drop';
-export default function Setting() {
-    const [language, setlanguage] = useState("Vietnamese")
+export default function Setting(props) {
+    const languageSaved = localStorage.getItem('language') ?? 'English'
+    const [language, setlanguage] = useState(languageSaved)
     return (
         <div>
-            <h2 class="mt-3 mb-3 ms-4" style={{fontFamily: Poppins, color: deep_blue_primary, "font-weight": "bold",fontSize:"40px"}}> Setting:</h2>
+            <h2 class="mt-3 mb-3 ms-4" style={{ fontFamily: Poppins, color: deep_blue_primary, "font-weight": "bold", fontSize: "40px" }}> Setting:</h2>
             <div style={{ backgroundColor: "white", paddingBottom: "25px", height: "700px" }}>
                 <Form.Group as={Row} className="mb-3 mt-3 ms-4 align-items-center" controlId="formPlaintextPassword">
                     <Form.Label column sm="2">
-                        <h5 className='mt-4' style={{fontFamily: Poppins, "font-weight": "bold", fontSize:16}}>Darkmode </h5>
+                        <h5 className='mt-4' style={{ fontFamily: Poppins, "font-weight": "bold", fontSize: 16 }}>Darkmode </h5>
                     </Form.Label>
                     <Col className='mt-4' sm="5">
                         <Form.Check
@@ -27,11 +27,12 @@ export default function Setting() {
                 </Form.Group>
                 <Form.Group as={Row} className="mb-7 ms-4 ms-2 align-items-center" controlId="formPlaintextPassword">
                     <Form.Label column sm="2" >
-                        <h5 style={{fontFamily: Poppins, "font-weight": "bold", fontSize:16}}>Language </h5>
+                        <h5 style={{ fontFamily: Poppins, "font-weight": "bold", fontSize: 16 }}>Language </h5>
                     </Form.Label>
                     <Col sm="2" >
-                        <Drop  title={language} items={["French", "American"]} onClick={(val, index) => {
+                        <Drop title={language} items={["English", "Vietnamese"]} onClick={(val, index) => {
                             setlanguage(val)
+                            props.setLanguage(val)
                         }} />
                     </Col>
                 </Form.Group>
@@ -74,7 +75,7 @@ export default function Setting() {
                                 <div class=" justify-content-center  col-1">
                                     <img src={tick} style={{ height: 10, width: 10 }} />
                                 </div>
-                                <div class="col-7" style={{ fontFamily: "Roboto", color:"grey"}}>
+                                <div class="col-7" style={{ fontFamily: "Roboto", color: "grey" }}>
                                     multiple projects
                                 </div>
                             </div>
@@ -84,7 +85,7 @@ export default function Setting() {
                                 <div class=" justify-content-center  col-1">
                                     <img src={tick} style={{ height: 10, width: 10 }} />
                                 </div>
-                                <div class="col-7" style={{ fontFamily: "Roboto" , color:"grey"}}>
+                                <div class="col-7" style={{ fontFamily: "Roboto", color: "grey" }}>
                                     block ads
                                 </div>
                             </div>
@@ -94,7 +95,7 @@ export default function Setting() {
                                 <div class=" justify-content-center  col-1">
                                     <img src={tick} style={{ height: 10, width: 10 }} />
                                 </div>
-                                <div class="col-7" style={{ fontFamily: "Roboto" ,color:"grey"}}>
+                                <div class="col-7" style={{ fontFamily: "Roboto", color: "grey" }}>
                                     no limit reports
                                 </div>
                             </div>

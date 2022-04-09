@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import { Form, InputGroup, Col, Button, FormControl } from 'react-bootstrap'
+import React, { useContext, useEffect, useState } from 'react'
+import { Form, InputGroup, Col } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import login_image from "resources/images/login_image.png"
 import { GoogleLoginApi, LoginApi } from "api/Account"
@@ -10,15 +10,18 @@ import visible from "resources/icons/visible.svg"
 import invisible from "resources/icons/invisible.svg"
 import { Link } from "react-router-dom";
 import { deep_blue_primary } from "../../utils/color"
-import { Roboto, Poppins } from "../../utils/font"
+import { Poppins } from "../../utils/font"
 import GoogleLogin from 'react-google-login';
 import "@fontsource/poppins";
-
-import {Store} from 'react-notifications-component'
-import {content} from "../../utils/notification"
+import { Store } from 'react-notifications-component'
+import { content } from "../../utils/notification"
+import { localizationContext } from '../../App'
 
 
 export default function Login() {
+    // use localization
+    const localization = useContext(localizationContext)
+
     const [isVisible, setisVisible] = useState(false)
     const [information, setinformation] = useState({
         Email: "",
@@ -30,7 +33,7 @@ export default function Login() {
         if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail)) {
             return (true)
         }
-        
+
         return (false)
     }
     const onSubmitHandler = () => {
@@ -58,7 +61,7 @@ export default function Login() {
                     localStorage.removeItem("password")
                     localStorage.removeItem("remember")
                 }
-                
+
                 navigate("/")
             })
             .catch((e) => {
@@ -73,7 +76,7 @@ export default function Login() {
         let getpassword = localStorage.getItem("password") ?? ""
         let getremember = localStorage.getItem("remember") ?? false
         setinformation({ ...information, Email: "getusername" })
-        setinformation({ Email : getusername, Password: getpassword})
+        setinformation({ Email: getusername, Password: getpassword })
         setRemember(getremember)
     }, [])
 
@@ -110,15 +113,15 @@ export default function Login() {
                                     </div>
                                     <div class="col-md-10 col-lg-6 col-xl-5 order-1 order-lg-2 mt-5 ">
 
-                                        <p class="h1 fw-bold mb-2 mx-1 mx-md-4 mt-5" style={{ color: deep_blue_primary, fontFamily: "Poppins" }}>Sign in</p>
+                                        <p class="h1 fw-bold mb-2 mx-1 mx-md-4 mt-5" style={{ color: deep_blue_primary, fontFamily: "Poppins" }}>{localization.signIn}</p>
 
 
                                         <div class="form-check mb-4">
                                             <div class="form-check-label" style={{ fontFamily: Poppins }}>
-                                                If you don’t have an account register
+                                                {localization.signInIf}
                                             </div>
                                             <label class="form-check-label" style={{ fontFamily: Poppins }} >
-                                                You can <Link to="/account/register" class="border-0 " style={{ color: deep_blue_primary, fontFamily: Poppins, "font-weight": "bold" }}> Register here !
+                                                {localization.youCan} <Link to="/account/register" class="border-0 " style={{ color: deep_blue_primary, fontFamily: Poppins, "font-weight": "bold" }}>{localization.registerHere}
                                                 </Link>
                                             </label>
 
@@ -138,16 +141,16 @@ export default function Login() {
                                                             })
                                                         }}
                                                         type="email"
-                                                        placeholder="Enter your email address"
+                                                        placeholder={localization.EnterEmail}
                                                         value={information.Email}
                                                         aria-describedby="inputGroupPrepend"
                                                         required
                                                     />
-                                                
+
                                                 </InputGroup>
                                             </Form.Group>
                                             <Form.Group md="12">
-                                                <Form.Label>Password</Form.Label>
+                                                <Form.Label>{localization.Password}</Form.Label>
                                                 <InputGroup>
                                                     <InputGroup.Text id="inputGroupPrepend "><img src={lock}></img></InputGroup.Text>
                                                     <Form.Control
@@ -157,7 +160,7 @@ export default function Login() {
                                                             })
                                                         }}
                                                         type={isVisible ? "text" : "password"}
-                                                        placeholder="Enter your password"
+                                                        placeholder={localization.EnterPassword}
                                                         value={information.Password}
                                                     />
                                                     <a class="btn shadow-none border-top border-bottom border-end" onClick={() => { setisVisible(!isVisible) }}><img width="20px" height="20px" src={isVisible ? visible : invisible}></img></a>
@@ -174,24 +177,24 @@ export default function Login() {
                                                     checked={remember}
                                                 />
                                                 <label class="form-check-label" style={{ fontFamily: Poppins, fontSize: 14 }}>
-                                                    Remember me
+                                                    {localization.RememberMe}
                                                 </label>
                                             </div>
 
 
                                             <div class="col-4 text-end">
-                                                <Link to="/account/forgetPassword" class="border-0" style={{ color: deep_blue_primary, fontFamily: Poppins, "font-weight": "bold" }}> Forgot Password !</Link>
+                                                <Link to="/account/forgetPassword" class="border-0" style={{ color: deep_blue_primary, fontFamily: Poppins, "font-weight": "bold" }}> {localization.ForgotPass}</Link>
                                             </div>
 
 
 
                                         </div>
                                         <div class="d-grid gap-2 ms-4 me-4 ">
-                                            <button class="btn btn-primary p-2" type="button" style={{ backgroundColor: "#034078", borderRadius: "25px ", fontFamily: Poppins }} onClick={onSubmitHandler}>Login</button>
+                                            <button class="btn btn-primary p-2" type="button" style={{ backgroundColor: "#034078", borderRadius: "25px ", fontFamily: Poppins }} onClick={onSubmitHandler}>{localization.Login}</button>
 
                                         </div>
                                         <div class="text-center  gap-2 justify-content-center ">
-                                            <p class="mx-1 mt-5 me-1 mx-md-4 mt-4" style={{ fontFamily: Poppins, fontSize: 14 }}>or continue with</p>
+                                            <p class="mx-1 mt-5 me-1 mx-md-4 mt-4" style={{ fontFamily: Poppins, fontSize: 14 }}>{localization.OrContinue}</p>
                                             <GoogleLogin
                                                 clientId={process.env.REACT_APP_GOOGLE_LOGIN}
                                                 render={renderProps => (
@@ -204,7 +207,7 @@ export default function Login() {
                                                 onFailure={responseGoogle}
                                                 cookiePolicy={'single_host_origin'}
                                             />,
-                                            <p class=" mt-3 mb-2 mx-1 mx-md-4 " style={{ fontFamily: Poppins, fontSize: 14 }}>Google account</p>
+                                            <p class=" mt-3 mb-2 mx-1 mx-md-4 " style={{ fontFamily: Poppins, fontSize: 14 }}>{localization.GGAccount}</p>
 
 
 
