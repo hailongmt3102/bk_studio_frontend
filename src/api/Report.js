@@ -15,6 +15,11 @@ const getAllComponent = (PId, RId) => {
 const createNewComponent = (PId, RId, data) => {
     return axiosClient.post(`/project/${PId}/${RId}/insert`, data)
 }
+
+const updateAComponent = (PId, RId, data) => {
+    return axiosClient.post(`/project/${PId}/${RId}/component/update`, data)
+}
+
 const like = (PId, RId) => {
     return axiosClient.get(`/project/${PId}/${RId}/favorite`)
 }
@@ -51,6 +56,7 @@ export {
     getAllReport,
     getAllComponent,
     createNewComponent,
+    updateAComponent,
     like,
     unlike,
     deleteReport,

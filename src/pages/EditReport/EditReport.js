@@ -25,7 +25,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { deep_blue_primary } from "utils/color";
 
 
-
 export default function EditReport(props) {
 
     const location = useLocation().pathname
@@ -377,7 +376,7 @@ export default function EditReport(props) {
                             OpenShareLinkPopUp={() => setshowShareLinkPopUp(true)}
                         />
                         <div className="m-2 content">
-                            <Content components={components} />
+                            <Content RId={RId} />
                         </div>
                     </div>
                 </div>
