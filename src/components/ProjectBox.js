@@ -14,7 +14,7 @@ import active_icon from 'resources/icons/status/active.svg'
 import closed_icon from 'resources/icons/status/closed.svg'
 import now_icon from 'resources/icons/status/now.svg'
 
-import { Roboto, Poppins } from "utils/font"
+
 import { updateStatus, deleteProject, editProject } from 'api/Project'
 
 

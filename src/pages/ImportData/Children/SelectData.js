@@ -3,7 +3,7 @@ import ImportFileImage from 'resources/images/importFile.png'
 import json_file from 'resources/icons/json_file.svg'
 import db from "resources/icons/db.svg"
 import ImportButton from '../Components/ImportButton'
-import { Poppins } from "../../../utils/font"
+
 import { deep_blue_primary } from "../../../utils/color"
 export default function SelectData(props) {
     const executeStringResult = (result) => {

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { getListProject } from 'api/Project'
 import ProjectBox from '../../components/ProjectBox'
 import NewProjectModel from './components/NewProjectModel'
-import { Roboto, Poppins } from "utils/font"
+
 import { deep_blue_primary } from "../../utils/color"
 import add_round from "resources/icons/add_round.svg"
 import { useNavigate } from 'react-router-dom'

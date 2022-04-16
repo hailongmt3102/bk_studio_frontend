@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
-import "@fontsource/roboto";
+
 import { Form, Col, Row, Button } from 'react-bootstrap'
 import tick from "resources/icons/tick.svg"
-import { Poppins } from "../../utils/font"
+
 import { deep_blue_primary } from "../../utils/color"
-import "@fontsource/poppins";
+
 import Drop from 'pages/EditReport/components/Drop';
 export default function Setting(props) {
     const languageSaved = localStorage.getItem('language') ?? 'English'
@@ -40,47 +40,47 @@ export default function Setting(props) {
                 <Row>
                     <Col className="mt-4 ms-5" md={3} style={{ backgroundColor: "#F7F7F7", borderRadius: "20px", marginRight: "40px" }}>
                         <Col className=" text-center me-2 align-items-end "> <h3 class=" align-self-center mt-3 mb-3" > Free</h3></Col>
-                        <div style={{ paddingLeft: "100px", fontFamily: "Roboto" }}>
+                        <div className='customFontRoboto' style={{ paddingLeft: "100px" }}>
                             <div className="row  ">
                                 <div class=" justify-content-center  col-1">
                                     <img src={tick} style={{ height: 10, width: 10 }} />
                                 </div>
-                                <div class="col-7" style={{ fontFamily: "Roboto" }}>
+                                <div class="col-7 customFontRoboto">
                                     use tool
                                 </div>
                             </div>
                         </div>
-                        <div style={{ paddingLeft: "100px", fontFamily: "Roboto" }}>
+                        <div className='customFontRoboto' style={{ paddingLeft: "100px" }}>
                             <div className="row  ">
                                 <div class=" justify-content-center  col-1">
                                     <img src={tick} style={{ height: 10, width: 10 }} />
                                 </div>
-                                <div class="col-7" style={{ fontFamily: "Roboto" }}>
+                                <div class="col-7 customFontRoboto">
                                     create reports
                                 </div>
                             </div>
                         </div>
-                        <div style={{ paddingLeft: "100px", fontFamily: "Roboto" }}>
+                        <div className='customFontRoboto' style={{ paddingLeft: "100px" }}>
                             <div className="row  ">
                                 <div class=" justify-content-center  col-1">
                                     <img src={tick} style={{ height: 10, width: 10 }} />
                                 </div>
-                                <div class="col-7" style={{ fontFamily: "Roboto" }}>
+                                <div class="col-7 customFontRoboto">
                                     share reports
                                 </div>
                             </div>
                         </div>
-                        <div style={{ paddingLeft: "100px", fontFamily: "Roboto" }}>
+                        <div className='customFontRoboto' style={{ paddingLeft: "100px" }}>
                             <div className="row  ">
                                 <div class=" justify-content-center  col-1">
                                     <img src={tick} style={{ height: 10, width: 10 }} />
                                 </div>
-                                <div class="col-7" style={{ fontFamily: "Roboto", color: "grey" }}>
+                                <div class="col-7 customFontRoboto" style={{  color: "grey" }}>
                                     multiple projects
                                 </div>
                             </div>
                         </div>
-                        <div style={{ paddingLeft: "100px", fontFamily: "Roboto" }}>
+                        <div className='customFontRoboto' style={{ paddingLeft: "100px"}}>
                             <div className="row  ">
                                 <div class=" justify-content-center  col-1">
                                     <img src={tick} style={{ height: 10, width: 10 }} />
@@ -90,17 +90,17 @@ export default function Setting(props) {
                                 </div>
                             </div>
                         </div>
-                        <div style={{ paddingLeft: "100px", fontFamily: "Roboto" }}>
+                        <div className='customFontRoboto' style={{ paddingLeft: "100px" }}>
                             <div className="row  ">
                                 <div class=" justify-content-center  col-1">
                                     <img src={tick} style={{ height: 10, width: 10 }} />
                                 </div>
-                                <div class="col-7" style={{ fontFamily: "Roboto", color: "grey" }}>
+                                <div class="col-7 customFontRoboto" style={{  color: "grey" }}>
                                     no limit reports
                                 </div>
                             </div>
                         </div>
-                        <div className="text-center gap-2 mt-4 mb-4 " style={{ fontFamily: "Roboto" }} >
+                        <div className="text-center gap-2 mt-4 mb-4  customFontRoboto" >
                             <Button variant="success" size="sm" style={{ width: "200px", borderRadius: "20px" }}>
                                 Used
                             </Button>
@@ -114,7 +114,7 @@ export default function Setting(props) {
                                 <div class=" justify-content-center  col-1">
                                     <img src={tick} style={{ height: 10, width: 10 }} />
                                 </div>
-                                <div class="col-7" style={{ fontFamily: "Roboto" }}>
+                                <div class="col-7 customFontRoboto" >
                                     use tool
                                 </div>
                             </div>
@@ -124,7 +124,7 @@ export default function Setting(props) {
                                 <div class=" justify-content-center  col-1">
                                     <img src={tick} style={{ height: 10, width: 10 }} />
                                 </div>
-                                <div class="col-7" style={{ fontFamily: "Roboto" }}>
+                                <div class="col-7 customFontRoboto" >
                                     create reports
                                 </div>
                             </div>
@@ -134,7 +134,7 @@ export default function Setting(props) {
                                 <div class=" justify-content-center  col-1">
                                     <img src={tick} style={{ height: 10, width: 10 }} />
                                 </div>
-                                <div class="col-7" style={{ fontFamily: "Roboto" }}>
+                                <div class="col-7 customFontRoboto" >
                                     share reports
                                 </div>
                             </div>
@@ -144,7 +144,7 @@ export default function Setting(props) {
                                 <div class=" justify-content-center  col-1">
                                     <img src={tick} style={{ height: 10, width: 10 }} />
                                 </div>
-                                <div class="col-7" style={{ fontFamily: "Roboto" }}>
+                                <div class="col-7 customFontRoboto" >
                                     multiple projects
                                 </div>
                             </div>
@@ -154,7 +154,7 @@ export default function Setting(props) {
                                 <div class=" justify-content-center  col-1">
                                     <img src={tick} style={{ height: 10, width: 10 }} />
                                 </div>
-                                <div class="col-7" style={{ fontFamily: "Roboto" }}>
+                                <div class="col-7 customFontRoboto" >
                                     block ads
                                 </div>
                             </div>
@@ -164,12 +164,12 @@ export default function Setting(props) {
                                 <div class=" justify-content-center  col-1">
                                     <img src={tick} style={{ height: 10, width: 10 }} />
                                 </div>
-                                <div class="col-7" style={{ fontFamily: "Roboto" }}>
+                                <div class="col-7 customFontRoboto">
                                     no limit reports
                                 </div>
                             </div>
                         </div>
-                        <div className="text-center gap-2 mt-4 mb-4" style={{ fontFamily: "Roboto" }} >
+                        <div className="text-center gap-2 mt-4 mb-4 customFontRoboto"   >
                             <Button variant="warning" size="sm" style={{ width: "200px", borderRadius: "15px" }} >
                                 <div className='text-white'> Get Premium </div>
                             </Button>

@@ -10,9 +10,9 @@ import visible from "resources/icons/visible.svg"
 import invisible from "resources/icons/invisible.svg"
 import { Link } from "react-router-dom";
 import { deep_blue_primary } from "../../utils/color"
-import { Poppins } from "../../utils/font"
+
 import GoogleLogin from 'react-google-login';
-import "@fontsource/poppins";
+
 import { Store } from 'react-notifications-component'
 import { content } from "../../utils/notification"
 import { localizationContext } from '../../App'
@@ -113,7 +113,7 @@ export default function Login() {
                                     </div>
                                     <div class="col-md-10 col-lg-6 col-xl-5 order-1 order-lg-2 mt-5 ">
 
-                                        <h1 class=" mb-2 mx-1 mx-md-4 mt-5" style={{ color: deep_blue_primary }}>{localization.signIn}</h1>
+                                        <h1 class=" mb-2 mx-1 mx-md-4 mt-5 customFontBold "  style={{ color: deep_blue_primary }}>{localization.signIn}</h1>
 
 
                                         <div class="form-check mb-4">
@@ -190,7 +190,7 @@ export default function Login() {
 
                                         </div>
                                         <div class="d-grid gap-2 ms-4 me-4 ">
-                                            <button class="btn btn-primary p-2" type="button" style={{ backgroundColor: "#034078", borderRadius: "25px " }} onClick={onSubmitHandler}>{localization.Login}</button>
+                                            <button class="btn btn-primary p-2 " type="button" style={{ backgroundColor: "#034078", borderRadius: "25px " }} onClick={onSubmitHandler}>{localization.Login}</button>
 
                                         </div>
                                         <div class="text-center  gap-2 justify-content-center ">

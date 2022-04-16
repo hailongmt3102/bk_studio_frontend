@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Form } from 'react-bootstrap'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { getListPeopleByProjectID } from '../../api/People'
-import { Poppins } from "../../utils/font"
+
 import { blue_cloud } from "../../utils/color"
 import { deep_blue_primary } from "../../utils/color"
 import add_people from "resources/icons/add_people.svg"

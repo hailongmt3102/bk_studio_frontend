@@ -6,7 +6,7 @@ import { updatePasswordAPI } from "api/Account"
 import lock from "resources/icons/lock.svg";
 import invisible from "resources/icons/invisible.svg"
 import email from "resources/icons/email.svg";
-import { Roboto, Poppins } from "../../utils/font"
+
 import visible from "resources/icons/visible.svg"
 import { Link } from "react-router-dom";
 import { deep_blue_primary } from "../../utils/color"

@@ -7,7 +7,7 @@ import PeopleCard from "components/PeopleCard/PeopleCard"
 import { getListPeople } from '../../../api/People'
 import { inviteMember } from '../../../api/Project'
 import { deep_blue_primary } from "../../../utils/color"
-import { Roboto, Poppins } from "utils/font"
+
 import { createNewProject } from 'api/Project'
 import PeopleCardMini from 'components/PeopleCardMini/PeopleCardMini'
 

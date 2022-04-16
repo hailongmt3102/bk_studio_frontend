@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import './peopleCard.css'
-import { Roboto, Poppins } from "../../utils/font"
+
 import { useLocation, useNavigate } from 'react-router-dom'
 import people_default from "resources/icons/people_default.svg"
 import three_dot from "resources/icons/three-dot.svg"
@@ -12,9 +12,6 @@ import {  deleteMemberInAProject } from "api/Project"
 import { Store } from 'react-notifications-component'
 import { content } from "../../utils/notification"
 import ConfirmDialog from "../ConfirmDialog";
-const textStyle = {
-    fontFamily: Roboto,
-}
 
 
 
@@ -82,17 +79,17 @@ export default function PeopleCard(props) {
                         : <img src={props.avatar} height="100px" width="100px" style={{ "border-radius": "50%" }} />}
                 </div>
                 <div className='col-9'>
-                    <div className='ms-5 mb-3'>
-                        <h2 style={{ textStyle, "fontWeight": "bold", fontSize: "30px" }}>
+                    <div className=' ms-5 mb-3'>
+                        <h2 className='customFontRoboto' style={{  "fontWeight": "bold", fontSize: "30px" }}>
                             {props.name}
                         </h2>
-                        <div style={{ textStyle }}>
+                        <div  className='customFontRoboto' >
                             Email: {props.email.substring(0, 18)+"..."}
                         </div>
-                        <div style={{ textStyle }}>
+                        <div className='customFontRoboto' >
                             Rank: {props.rank}
                         </div>
-                        <div style={{ textStyle }}>
+                        <div className='customFontRoboto' >
                             Online: 6 hour later
                         </div>
                         {/* <div style={{ textStyle }}>

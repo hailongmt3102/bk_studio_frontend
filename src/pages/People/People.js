@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Roboto, Poppins } from "../../utils/font"
+
 import { blue_cloud } from "../../utils/color"
 import { deep_blue_primary } from "../../utils/color"
 import avt_people from "resources/icons/avt_people.svg"
@@ -10,9 +10,7 @@ import PeopleCard from "components/PeopleCard/PeopleCard"
 
 import { getListPeople } from '../../api/People'
 
-const textStyle = {
-    fontFamily: Roboto,
-}
+
 export default function People() {
 
     let getEmail = localStorage.getItem("email") ?? ""

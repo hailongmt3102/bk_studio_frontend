@@ -8,8 +8,6 @@ import visible from "resources/icons/visible.svg"
 import invisible from "resources/icons/invisible.svg"
 import { Link } from "react-router-dom";
 import { deep_blue_primary } from "../../utils/color"
-import "@fontsource/poppins";
-import { Poppins } from 'utils/font'
 import { Store } from 'react-notifications-component'
 import { content } from "../../utils/notification"
 

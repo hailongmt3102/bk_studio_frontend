@@ -2,7 +2,7 @@ import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import BlankReportIcon from 'resources/icons/blankReport.svg'
 import { getListProject } from 'api/Project'
-import { Roboto, Poppins } from "utils/font"
+
 import { deep_blue_primary, blue_cloud } from "../../utils/color"
 import { createNewReport as CreateReportApi } from 'api/Report'
 

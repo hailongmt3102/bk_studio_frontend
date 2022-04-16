@@ -3,7 +3,7 @@ import { Form, InputGroup, Col, Button, FormControl } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import login_image from "resources/images/login_image.png"
 import { ForgotPasswordAPI } from "api/Account"
-import { Roboto, Poppins } from "../../utils/font"
+
 import email from "resources/icons/email.svg";
 
 import { Link } from "react-router-dom";
@@ -61,7 +61,7 @@ export default function ForgetPassword() {
                                     </div>
                                     <div class="col-md-10 col-lg-6 col-xl-5 order-1 order-lg-2 mt-5 ">
                                         {/* <div class="text-center"> <img src={logo}></img></div> */}
-                                        <p class="h1 fw-bold mb-2 mx-1 mx-md-4 mt-5" style={{ color: deep_blue_primary,fontFamily: Poppins }}>Forget Password</p>
+                                        <p class="h1 fw-bold mb-2 mx-1 mx-md-4 mt-5" style={{ color: deep_blue_primary}}>Forget Password</p>
 
 
                                         <div class="form-check mb-5">

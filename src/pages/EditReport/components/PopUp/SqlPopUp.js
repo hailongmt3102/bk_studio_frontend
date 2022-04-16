@@ -4,7 +4,7 @@ import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import add_grey from 'resources/icons/add_grey.svg'
 import substract from 'resources/icons/substract.svg'
-import { Poppins } from "utils/font"
+
 import { blue_cloud } from "utils/color"
 import { Form } from 'react-bootstrap'
 export default function SqlPopUp(props) {

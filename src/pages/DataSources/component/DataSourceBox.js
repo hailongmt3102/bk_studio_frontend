@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Form } from 'react-bootstrap'
 
 import excel_icon from "resources/icons/excel_icon.svg"
-import { Roboto, Poppins } from "utils/font"
+
 import { blue_cloud } from "utils/color"
 import { deep_blue_primary } from "utils/color"
 import three_dot from "resources/icons/three-dot.svg"
@@ -91,11 +91,11 @@ export default function DataSourceBox(props) {
                     }} />
             </div>
             <div className="row m-0 p-0">
-                <div className="col-4 m-0 p-0" style={{ fontFamily: "Roboto" }}>
+                <div className="col-4 m-0 p-0 customFontRoboto" >
                     <img src={excel_icon} height="120px" width="100%" />
                 </div>
-                <div class="col-8 m-0 p-0" style={{ fontFamily: "Roboto" }}>
-                    <div class="row m-0 p-0" style={{ fontFamily: "Roboto", color: blue_cloud, fontSize: "28px" }}>
+                <div className="col-8 m-0 p-0 customFontRoboto" >
+                    <div className="row m-0 p-0 customFontRoboto" style={{ color: blue_cloud, fontSize: "28px" }}>
                         {
                             pressRename == false ? <p><span>{props.ele.Information}</span></p> :
                                 // <newNameTextField/>
@@ -111,10 +111,10 @@ export default function DataSourceBox(props) {
                                 </Form.Group>
                         }
                     </div>
-                    <div class="row  m-0 p-0 mt-1" style={{ fontFamily: "Roboto" }}>
+                    <div class="row  m-0 p-0 mt-1" >
                         <p><span style={{ "color": "#868585" }}>date created: </span>{props.ele.CreateTime}</p>
                     </div>
-                    <div class="row m-0 p-0" style={{ fontFamily: "Roboto" }}>
+                    <div class="row m-0 p-0" >
                         <p><span style={{ "color": "#868585" }}>last modified: </span>{props.ele.LastModified}</p>
                     </div>
                     {

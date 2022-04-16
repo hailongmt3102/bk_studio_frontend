@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Roboto, Poppins } from "../../utils/font"
+
 import { deep_blue_primary } from "../../utils/color"
 import { getListProject } from 'api/Project'
 import { getListPeople } from 'api/People'

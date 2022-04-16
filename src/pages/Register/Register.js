@@ -12,7 +12,6 @@ import invisible from "resources/icons/invisible.svg"
 import { Link } from "react-router-dom";
 import CustomDropdownButton from 'pages/EditReport/components/CustomDropdownButton';
 import { getListCompanies } from "api/ListCompanies"
-import { Poppins } from "../../utils/font"
 import NoIconDropDownButton from "../../components/NoIconDropDownButton"
 import "@fontsource/poppins";
 

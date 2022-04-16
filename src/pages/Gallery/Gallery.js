@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { getAllReport as getAllReportApi } from 'api/Report'
 import ReportCard from "components/ReportCard"
 import ReportImg from 'resources/images/report.png'
-import { Roboto, Poppins } from "utils/font"
+
 import { deep_blue_primary } from "../../utils/color"
 import {Store} from 'react-notifications-component'
 import {content} from "../../utils/notification"

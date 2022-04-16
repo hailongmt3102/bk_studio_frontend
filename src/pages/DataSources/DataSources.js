@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Roboto, Poppins } from "../../utils/font"
+
 import { blue_cloud } from "../../utils/color"
 import { deep_blue_primary } from "../../utils/color"
 import { GetDataSourcesListInformationInWorkSpace } from '../../api/DataSources'

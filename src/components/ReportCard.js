@@ -15,7 +15,7 @@ import { Store } from 'react-notifications-component'
 import { content } from "../utils/notification"
 import { like, unlike, deleteReport, updateReportInformation } from 'api/Report'
 
-import { Roboto, Poppins } from "utils/font"
+
 import ConfirmDialog from "components/ConfirmDialog";
 
 export default function ReportCard(props) {
