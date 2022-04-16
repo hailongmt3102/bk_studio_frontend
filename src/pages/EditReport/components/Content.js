@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useImperativeHandle, useRef, useState } from 'react'
 import { getAllComponent } from 'api/Report'
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, ArcElement, LineElement, Title, Tooltip, Legend, BarElement } from 'chart.js';
 import Shape from './Shape';
@@ -16,13 +16,15 @@ ChartJS.register(
 );
 
 
-export default function Content(props) {
+const Content = React.forwardRef((props, ref) => {
     const [components, setComponents] = useState([])
     const ShapeRef = useRef([]);
     ShapeRef.current = []
     const addToRefs = (el, index) => {
         if (el && !ShapeRef.current.includes(el) && !Object.keys(ShapeRef.current).includes(index.toString())) {
             ShapeRef.current.push(el);
+        }else {
+            ShapeRef.current[index] = el
         }
     };
 
@@ -136,20 +138,30 @@ export default function Content(props) {
         }
     }
 
+    useImperativeHandle(ref,
+        () => (
+            {
+                saveAllShape() {
+                    saveAllShape()
+                }
+            }
+        ))
+
+    const saveAllShape = () => {
+        ShapeRef.current.map(shape => shape.SaveShape())
+    }
+
     useEffect(() => {
         getComponents()
     }, [])
     return (
         <React.Fragment>
-            <button onClick={() => {
-                ShapeRef.current.map(shape => shape.SaveShape())
-            }}>
-                save
-            </button>
             {
                 components.map((component, index) => <Shape ref={el => addToRefs(el, index)} data={component} key={index} />)
             }
 
         </React.Fragment>
     )
-}
+})
+
+export default Content
