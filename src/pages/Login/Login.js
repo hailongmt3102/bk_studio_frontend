@@ -113,7 +113,7 @@ export default function Login() {
                                     </div>
                                     <div class="col-md-10 col-lg-6 col-xl-5 order-1 order-lg-2 mt-5 ">
 
-                                        <p class="h1 fw-bold mb-2 mx-1 mx-md-4 mt-5" style={{ color: deep_blue_primary, fontFamily: "Poppins" }}>{localization.signIn}</p>
+                                        <h1 class=" mb-2 mx-1 mx-md-4 mt-5" style={{ color: deep_blue_primary }}>{localization.signIn}</h1>
 
 
                                         <div class="form-check mb-4">

@@ -189,6 +189,9 @@ const Shape = React.forwardRef((props, ref) => {
         () => ({
             SaveShape() {
                 SaveShape()
+            },
+            getShapeInfo() {
+                getShapeInfo()
             }
         }),
     )
@@ -215,6 +218,24 @@ const Shape = React.forwardRef((props, ref) => {
                 console.log(err)
             })
         }
+    }
+
+    const getShapeInfo = () => {
+        return {
+            Title: componentData.Title,
+            Type: componentData.Type,
+            QueryCommand: componentData.QueryCommand,
+            Height: componentData.Height,
+            Width:componentData.Width,
+            Position: componentData.Position,
+            TitleTheme: componentData.TitleTheme,
+            TextTheme: componentData.TextTheme,
+            FrameTheme: componentData.FrameTheme
+        }
+    }
+
+    const callParentWhenClick = () => {
+        props.onComponentHasClick(getShapeInfo())
     }
 
     useEffect(() => {
@@ -273,6 +294,9 @@ const Shape = React.forwardRef((props, ref) => {
                         }}
                         onResizeStop={(e, direction, ref, delta, position) => {
                             setComponentData({ ...componentData, Width: ref.style.width, Height: ref.style.height })
+                        }}
+                        onMouseDown={()=> {
+                            callParentWhenClick()
                         }}
                         className="border border-5"
                     >

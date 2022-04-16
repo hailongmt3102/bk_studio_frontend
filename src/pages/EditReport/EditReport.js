@@ -156,6 +156,23 @@ export default function EditReport(props) {
         }
     }
 
+    const [tabData, setTabData] = useState({
+        data : "",
+        style : {
+            font: "Roboto",
+            size : 14,
+            decoration: "",
+            alignment: "",
+            fill: "",
+            stroke: ""
+        }
+    })
+
+    // trigger on change of tabData
+    useEffect(() => {
+        console.log(tabData)
+    }, [tabData])
+
     // render components
     const tab_component = () => {
         return <div className="col-2 ">
@@ -366,7 +383,7 @@ export default function EditReport(props) {
                             OpenShareLinkPopUp={() => setshowShareLinkPopUp(true)}
                         />
                         <div className="m-2 content">
-                            <Content RId={RId} ref={contentRef} />
+                            <Content RId={RId} ref={contentRef} setTabData={setTabData} tabData={tabData}/>
                         </div>
                     </div>
                 </div>

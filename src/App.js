@@ -1,4 +1,5 @@
 import "../src/style.scss";
+import "@fontsource/prompt";
 import "../src/App.css"
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import React, { useEffect, useState } from "react";
@@ -25,7 +26,6 @@ import { ReactNotifications } from 'react-notifications-component';
 import 'react-notifications-component/dist/theme.css';
 import LocalizedStrings from 'react-localization';
 import { data } from './utils/localizationData'
-
 const translations = new LocalizedStrings(data);
 const localizationContext = React.createContext(translations);
 

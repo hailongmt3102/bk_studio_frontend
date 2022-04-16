@@ -154,10 +154,38 @@ const Content = React.forwardRef((props, ref) => {
     useEffect(() => {
         getComponents()
     }, [])
+
+    // this function will be called when a component has clicked
+    const onComponentHasClick = (componentData) => {
+        console.log(componentData)
+        updateTabData()
+    }
+
+    const updateTabData = () => {
+        props.setTabData({
+            data : "",  
+            style : {
+                font: "Roboto1",
+                size : 14,
+                decoration: "",
+                alignment: "",
+                fill: "",
+                stroke: ""
+            }
+        })
+    }
+
+    // declare variable and function to update style of component 
+    const [followingIndexComponent, setFollowingIndexComponent] = useState(-1)
+    const updateStyleOfComponent = () => {
+        if (followingIndexComponent != -1) {
+            // do something
+        }
+    }
     return (
         <React.Fragment>
             {
-                components.map((component, index) => <Shape ref={el => addToRefs(el, index)} data={component} key={index} />)
+                components.map((component, index) => <Shape ref={el => addToRefs(el, index)} data={component} key={index} onComponentHasClick={onComponentHasClick}/>)
             }
 
         </React.Fragment>

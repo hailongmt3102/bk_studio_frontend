@@ -8,6 +8,19 @@ div,
 a,
 tr,
 th,
-td {
-    font-family: 'Roboto'
+td,
+p {
+    font-family: "Prompt";
+}
+
+.customFontRoboto{
+    font-family: "Roboto";
+}
+
+.customFontBold{
+    font-weight: 900;
+}
+
+.redColor{
+    color: red;
 }
