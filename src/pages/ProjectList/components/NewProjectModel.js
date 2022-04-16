@@ -72,7 +72,6 @@ export default function NewProjectModel(props) {
                     className="text-primary border-0 mb-2"
                     style={{
                         fontSize : "30px",
-                        fontFamily: Poppins
                     }}
                     />
 

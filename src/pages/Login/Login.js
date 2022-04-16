@@ -117,18 +117,18 @@ export default function Login() {
 
 
                                         <div class="form-check mb-4">
-                                            <div class="form-check-label" style={{ fontFamily: Poppins }}>
+                                            <div class="form-check-label">
                                                 {localization.signInIf}
                                             </div>
-                                            <label class="form-check-label" style={{ fontFamily: Poppins }} >
-                                                {localization.youCan} <Link to="/account/register" class="border-0 " style={{ color: deep_blue_primary, fontFamily: Poppins, "font-weight": "bold" }}>{localization.registerHere}
+                                            <label class="form-check-label"  >
+                                                {localization.youCan} <Link to="/account/register" class="border-0 " style={{ color: deep_blue_primary, "font-weight": "bold" }}>{localization.registerHere}
                                                 </Link>
                                             </label>
 
 
                                         </div>
 
-                                        <form class="mx-1 mx-md-4" style={{ color: deep_blue_primary, fontFamily: Poppins }}>
+                                        <form class="mx-1 mx-md-4" style={{ color: deep_blue_primary}}>
 
                                             <Form.Group as={Col} md="12" controlId="validationCustomUsername">
                                                 <Form.Label>Email</Form.Label>
@@ -176,25 +176,25 @@ export default function Login() {
                                                     onClick={(e) => { setRemember(e.target.checked) }}
                                                     checked={remember}
                                                 />
-                                                <label class="form-check-label" style={{ fontFamily: Poppins, fontSize: 14 }}>
+                                                <label class="form-check-label" style={{ fontSize: 14 }}>
                                                     {localization.RememberMe}
                                                 </label>
                                             </div>
 
 
                                             <div class="col-4 text-end">
-                                                <Link to="/account/forgetPassword" class="border-0" style={{ color: deep_blue_primary, fontFamily: Poppins, "font-weight": "bold" }}> {localization.ForgotPass}</Link>
+                                                <Link to="/account/forgetPassword" class="border-0" style={{ color: deep_blue_primary, "font-weight": "bold" }}> {localization.ForgotPass}</Link>
                                             </div>
 
 
 
                                         </div>
                                         <div class="d-grid gap-2 ms-4 me-4 ">
-                                            <button class="btn btn-primary p-2" type="button" style={{ backgroundColor: "#034078", borderRadius: "25px ", fontFamily: Poppins }} onClick={onSubmitHandler}>{localization.Login}</button>
+                                            <button class="btn btn-primary p-2" type="button" style={{ backgroundColor: "#034078", borderRadius: "25px " }} onClick={onSubmitHandler}>{localization.Login}</button>
 
                                         </div>
                                         <div class="text-center  gap-2 justify-content-center ">
-                                            <p class="mx-1 mt-5 me-1 mx-md-4 mt-4" style={{ fontFamily: Poppins, fontSize: 14 }}>{localization.OrContinue}</p>
+                                            <p class="mx-1 mt-5 me-1 mx-md-4 mt-4" style={{ fontSize: 14 }}>{localization.OrContinue}</p>
                                             <GoogleLogin
                                                 clientId={process.env.REACT_APP_GOOGLE_LOGIN}
                                                 render={renderProps => (
@@ -207,7 +207,7 @@ export default function Login() {
                                                 onFailure={responseGoogle}
                                                 cookiePolicy={'single_host_origin'}
                                             />,
-                                            <p class=" mt-3 mb-2 mx-1 mx-md-4 " style={{ fontFamily: Poppins, fontSize: 14 }}>{localization.GGAccount}</p>
+                                            <p class=" mt-3 mb-2 mx-1 mx-md-4 " style={{ fontSize: 14 }}>{localization.GGAccount}</p>
 
 
 

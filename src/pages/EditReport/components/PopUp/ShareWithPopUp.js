@@ -166,7 +166,7 @@ export default function ShareWithPopUp(props) {
                 <Modal.Title>
                     <div
                         className='d-flex m-auto align-items-center'
-                        style={{ fontFamily: Poppins, color: deep_blue_primary, "fontWeight": "bold", fontSize: "30px" }}
+                        style={{ color: deep_blue_primary, "fontWeight": "bold", fontSize: "30px" }}
                     >
                         <div className='m-auto me-2'><img src={shareWith} width="42px" height="42px" /></div>
                         <div className='m-auto ms-2'>Share with</div>

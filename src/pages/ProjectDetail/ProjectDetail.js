@@ -108,7 +108,7 @@ export default function ProjectDetail() {
                 <div className='row m-0 p-0 bg-light'>
                     <div className='col-4 m-0 p-0 '>
                         <div className='m-4 p-4 bg-white' style={{ height: "100%" }}>
-                            <h1 className='row ' style={{ fontFamily: Poppins, color: blue_cloud, "font-weight": "bold" }}>Manager</h1>
+                            <h1 className='row ' style={{ color: blue_cloud, "font-weight": "bold" }}>Manager</h1>
                             <div class="p-2 col-1"> {
                                 peopleInProject.map((ele, index) => {
                                     if (ele.Email === getEmail) {
@@ -159,7 +159,7 @@ export default function ProjectDetail() {
                     </div>
                     <div className='col-8 m-0 p-0' >
                         <div className='m-4 p-4 bg-white' style={{ height: "100%" }}>
-                            <h1 style={{ fontFamily: Poppins, color: blue_cloud, "font-weight": "bold" }}>Member</h1>
+                            <h1 style={{ color: blue_cloud, "font-weight": "bold" }}>Member</h1>
                             <div className='row ms-3'>{
                                 peopleInProject.map((ele, index) => {
                                     if (ele.Email === getEmail) {
@@ -236,7 +236,7 @@ export default function ProjectDetail() {
     const orangeStyle = {
         color: "#FF7F0D",
         fontWeight: "bold",
-        fontFamily: Poppins,
+       
         fontSize: "17px"
     }
     const EditProjectSubmit = () => {
@@ -261,7 +261,7 @@ export default function ProjectDetail() {
     const aboutComponent = () => {
         return <div>
             <div className='row m-0 p-0 mt-3' >
-                <div className=' col-10' style={{ fontFamily: Poppins, color: deep_blue_primary, "font-weight": "bold", fontSize: "40px" }}>About:</div>
+                <div className=' col-10' style={{ color: deep_blue_primary, "font-weight": "bold", fontSize: "40px" }}>About:</div>
                 <div className='col-2 m-0 p-0 m-auto text-right align-self-end'>
                     <div className='ms-3'>
                         <button class="btn btn-primary btn-lg ms-5 p-3 "
@@ -426,7 +426,7 @@ export default function ProjectDetail() {
     const dataSourcesComponent = () => {
         return <div>
             <div className='row m-0 p-0 mt-3' >
-                <div className=' col-10' style={{ fontFamily: Poppins, color: deep_blue_primary, "font-weight": "bold", fontSize: "40px" }}>Data Sources:</div>
+                <div className=' col-10' style={{ color: deep_blue_primary, "font-weight": "bold", fontSize: "40px" }}>Data Sources:</div>
             </div>
             <div className='m-3 p-4  bg-white' style={{ height: "350px" }}>
                 <div className='row'>
@@ -465,15 +465,15 @@ export default function ProjectDetail() {
             <div className='row mt-2 m-0 p-0'>
                 {dataSourcesComponent()}
                 {aboutComponent()}
-                <h2 class="col-10  m-0 p-0" style={{ fontFamily: Poppins, color: deep_blue_primary, "font-weight": "bold", fontSize: "40px" }}>
+                <h2 class="col-10  m-0 p-0" style={{ color: deep_blue_primary, "font-weight": "bold", fontSize: "40px" }}>
                     <div className='ms-4'>My team:</div>
                 </h2>
                 <div className='col-2 ml-auto m-0 p-0 text-right align-self-end'>
-                    <button class=" btn p-3 ms-5 " type="button" style={{ color: "white", backgroundColor: deep_blue_primary, borderRadius: "30px ", fontFamily: Poppins, fontSize: 16 }} onClick={() => {
+                    <button class=" btn p-3 ms-5 " type="button" style={{ color: "white", backgroundColor: deep_blue_primary, borderRadius: "30px ", fontSize: 16 }} onClick={() => {
                         setshowPeoplePopUp(true)
                         //inviteMemberSubmit()
                     }}><div className='d-flex'>
-                            <div className='d-flex justify-content-center me-2' style={{ color: "white", fontFamily: Poppins, fontSize: 17 }}>Invite People</div>
+                            <div className='d-flex justify-content-center me-2' style={{ color: "white", fontSize: 17 }}>Invite People</div>
                             <div className='d-flex justify-content-center'><img src={add_people} height="20px" width="20px" /></div>
                         </div>
                     </button>

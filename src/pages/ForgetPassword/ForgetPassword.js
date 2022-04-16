@@ -65,16 +65,16 @@ export default function ForgetPassword() {
 
 
                                         <div class="form-check mb-5">
-                                            <div class="form-check-label" style={{ fontFamily: Poppins}}>
+                                            <div class="form-check-label" >
                                                 If you already have an account register
                                             </div>
                                             <label class="form-check-label" for="form2Example3">
-                                                You can <Link to="/account/login" class="border-0" style={{color: deep_blue_primary, fontFamily: Poppins,"font-weight": "bold"}}>  Login here !
+                                                You can <Link to="/account/login" class="border-0" style={{color: deep_blue_primary,"font-weight": "bold"}}>  Login here !
                                                 </Link>
                                             </label>
 
                                         </div>
-                                        <form class="mx-1 mx-md-4 mt-2 "  style={{ fontFamily: Poppins, fontSize: 14}}>
+                                        <form class="mx-1 mx-md-4 mt-2 "  style={{ fontSize: 14}}>
 
                                             <Form.Group as={Col} md="12" controlId="validationCustomUsername">
                                                 <Form.Label>Email</Form.Label>
@@ -98,7 +98,7 @@ export default function ForgetPassword() {
                                             
 
                                           
-                                            <div class="d-grid gap-2  mt-5 "  style={{ fontFamily: Poppins, fontSize: 14}}>
+                                            <div class="d-grid gap-2  mt-5 "  style={{ fontSize: 14}}>
                                                 <a class="btn btn-primary p-2" type="button" style={{ backgroundColor: "#034078", borderRadius: "25px " }} onClick={onSubmitHandler}>Send Email</a>
 
                                             </div>

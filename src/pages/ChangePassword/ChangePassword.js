@@ -59,20 +59,20 @@ export default function ChangePassword() {
                                     </div>
                                     <div class="col-md-10 col-lg-6 col-xl-5 order-1 order-lg-2 mt-5 ">
 
-                                        <p class="h1 fw-bold mb-2 mx-1 mx-md-4 mt-5" style={{ color: deep_blue_primary, fontFamily: Poppins }}>Change Password</p>
+                                        <p class="h1 fw-bold mb-2 mx-1 mx-md-4 mt-5" style={{ color: deep_blue_primary}}>Change Password</p>
 
 
                                         <div class="form-check mb-5">
-                                            <div class="form-check-label" style={{ fontFamily: Poppins }}>
+                                            <div class="form-check-label" >
                                                 If you already have an account register
                                             </div>
-                                            <label class="form-check-label" style={{ fontFamily: Poppins }}>
+                                            <label class="form-check-label" >
                                                 You can <Link to="/account/login" class="border-0" style={{ color: deep_blue_primary, "font-weight": "bold" }}>  Login here !
                                                 </Link>
                                             </label>
 
                                         </div>
-                                        <form class="mx-1 mx-md-4 mt-2 " style={{ fontFamily: Poppins }}>
+                                        <form class="mx-1 mx-md-4 mt-2 " >
                                             <Form.Group as={Col} md="12" controlId="validationCustomUsername">
                                                 <Form.Label>New Password</Form.Label>
                                                 <InputGroup hasValidation>
@@ -98,7 +98,7 @@ export default function ChangePassword() {
 
 
                                             <div class="d-grid gap-2  mt-5">
-                                                <button class="btn btn-primary p-2" type="button" style={{ backgroundColor: "#034078", borderRadius: "25px", fontFamily: Poppins }} onClick={onSubmitHandler}>Send</button>
+                                                <button class="btn btn-primary p-2" type="button" style={{ backgroundColor: "#034078", borderRadius: "25px" }} onClick={onSubmitHandler}>Send</button>
 
                                             </div>
                                             {/* <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4 m-2">

@@ -115,7 +115,7 @@ export default function Profile() {
     //}
     return (
         <div>
-            <h3 class="mt-3 mb-3 ms-5" style={{ fontFamily: Poppins, color: deep_blue_primary, "font-weight": "bold", fontSize: "40px" }}> Profile:</h3>
+            <h3 class="mt-3 mb-3 ms-5" style={{ color: deep_blue_primary, "font-weight": "bold", fontSize: "40px" }}> Profile:</h3>
             <div class="row rounded bg-white p-4 m-4" style={{ height: 750 }}>
                 <div class="col-2 me-5 ms-4 justify-content-center ">
 
@@ -145,7 +145,7 @@ export default function Profile() {
 
                         </div>
                         : < div class="mt-2 ms-5 ">
-                            <button class=" btn sm mt-2 ms-4 p-3" type="button" style={{ color: "white", backgroundColor: "#FF7F0D", borderRadius: "30px ", fontFamily: Poppins, fontSize: 14 }} onClick={() => navigate("/account/changePassword")}>
+                            <button class=" btn sm mt-2 ms-4 p-3" type="button" style={{ color: "white", backgroundColor: "#FF7F0D", borderRadius: "30px ", fontSize: 14 }} onClick={() => navigate("/account/changePassword")}>
                                 Change Password
                             </button>
                         </div>
@@ -155,7 +155,7 @@ export default function Profile() {
                 <div class="ms-5 col-8">
                     <div class=" justify-content-start align-items-center py-2">
                         <Form.Group as={Row} controlId="formPlaintextPassword">
-                            <Form.Label style={{ fontFamily: Poppins, fontSize: 14 }} >User name</Form.Label>
+                            <Form.Label style={{ fontSize: 14 }} >User name</Form.Label>
                             <Col sm="5" onChange={(e) => {
                                 setinformation({
                                     ...information, UserName: e.target.value
@@ -167,7 +167,7 @@ export default function Profile() {
                     </div>
                     <div class=" justify-content-start align-items-center py-2">
                         <Form.Group as={Row} controlId="formPlaintextPassword">
-                            <Form.Label style={{ fontFamily: Poppins, fontSize: 14 }} >Email</Form.Label>
+                            <Form.Label style={{ fontSize: 14 }} >Email</Form.Label>
                             <Col sm="5" onChange={(e) => {
                                 setinformation({
                                     ...information, Email: e.target.value
@@ -178,7 +178,7 @@ export default function Profile() {
                         </Form.Group>
                     </div>
                     <div class="d-md-flex justify-content-start align-items-center py-2 mt-1 mb-1">
-                        <div class="mb-0 me-4" style={{ fontFamily: Poppins, fontSize: 14 }}>Gender: </div>
+                        <div class="mb-0 me-4" style={{ fontSize: 14 }}>Gender: </div>
 
                         <Form.Check
                             onClick={(e) => {
@@ -213,7 +213,7 @@ export default function Profile() {
                     </div>
                     <div class=" justify-content-start align-items-center py-2">
                         <Form.Group as={Row} controlId="formPlaintextPassword">
-                            <Form.Label style={{ fontFamily: Poppins, fontSize: 14 }} >Birthday</Form.Label>
+                            <Form.Label style={{ fontSize: 14 }} >Birthday</Form.Label>
                             <Col sm="5">
                                 <Form.Group controlId="duedate">
                                     <Form.Control
@@ -233,7 +233,7 @@ export default function Profile() {
 
                     <div class=" justify-content-start align-items-center py-2">
                         <Form.Group as={Row} controlId="formPlaintextPassword">
-                            <Form.Label style={{ fontFamily: Poppins, fontSize: 14 }} >Company</Form.Label>
+                            <Form.Label style={{ fontSize: 14 }} >Company</Form.Label>
                             <Col sm="5" onChange={(e) => {
                                 setinformation({
                                     ...information, Company: e.target.value
@@ -245,7 +245,7 @@ export default function Profile() {
                     </div>
                     <div class=" justify-content-start align-items-center py-2">
                         <Form.Group as={Row} controlId="formPlaintextPassword">
-                            <Form.Label style={{ fontFamily: Poppins, fontSize: 14 }} >Address</Form.Label>
+                            <Form.Label style={{ fontSize: 14 }} >Address</Form.Label>
                             <Col sm="5" onChange={(e) => {
                                 setinformation({
                                     ...information, Address: e.target.value
@@ -257,16 +257,16 @@ export default function Profile() {
                     </div>
                     <div class=" justify-content-start align-content-center py-2">
                         <Form.Group as={Row} c controlId="formPlaintextPassword">
-                            <Form.Label column sm="1" style={{ fontFamily: Poppins, fontSize: 14 }}>
+                            <Form.Label column sm="1" style={{ fontSize: 14 }}>
                                 Position:
                             </Form.Label>
                             <Col className='mt-2' sm="5" >
-                                <h5 style={{ fontSize: "15px", fontFamily: Poppins }}>{information.Position}</h5>
+                                <h5 style={{ fontSize: "15px" }}>{information.Position}</h5>
                             </Col>
                         </Form.Group>
                     </div>
                     <div className='d-flex align-items-center justify-content-between ms-5'>
-                        <button class=" btn btn-primary p- btn-lg mt-4 ms-5 ms-5" type="button" style={{ backgroundColor: "#034078", borderRadius: "30px ", fontFamily: Poppins, fontSize: 14 }} onClick={() => {
+                        <button class=" btn btn-primary p- btn-lg mt-4 ms-5 ms-5" type="button" style={{ backgroundColor: "#034078", borderRadius: "30px ", fontSize: 14 }} onClick={() => {
                             submitUpdate()
                         }}>Save Changes</button>
                     </div>

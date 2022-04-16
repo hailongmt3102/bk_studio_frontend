@@ -100,7 +100,7 @@ export default function RolePopUp(props) {
             size="lg"
         >
             <Modal.Header closeButton>
-                <Modal.Title><div className='d-flex align-items-center' style={{ fontFamily: Poppins, color: deep_blue_primary, "font-weight": "bold", fontSize: "30px" }}>Edit Role</div></Modal.Title>
+                <Modal.Title><div className='d-flex align-items-center' style={{ color: deep_blue_primary, "font-weight": "bold", fontSize: "30px" }}>Edit Role</div></Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 {
