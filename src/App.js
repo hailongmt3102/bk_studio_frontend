@@ -1,5 +1,5 @@
 import "../src/style.scss";
-import "@fontsource/prompt";
+import "@fontsource/mulish";
 import "../src/App.css"
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import React, { useEffect, useState } from "react";

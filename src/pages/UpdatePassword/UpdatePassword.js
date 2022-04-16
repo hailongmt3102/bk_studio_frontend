@@ -76,7 +76,7 @@ export default function UpdatePassword() {
                                             </label>
 
                                         </div>
-                                        <form class="mx-1 mx-md-4 mt-2 " style={{ fontSize: 16 }}>
+                                        <form class="mx-1 mx-md-4 mt-2 " style={{fontSize: 16 }}>
                                             <Form.Group as={Col} md="12" controlId="validationCustomUsername">
                                                 <Form.Label>Code from email</Form.Label>
                                                 <InputGroup hasValidation>
