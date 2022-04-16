@@ -38,7 +38,7 @@ export default function People() {
                         <div className='m-4 p-4 bg-white' style={{ height: "100%" }}>
                             <h1 className='row ' style={{ color: blue_cloud, "font-weight": "bold" }}>Manager</h1>
                             <div class="p-2"> {
-                                people.map((ele, index) => {
+                                people.map((ele) => {
                                     if (ele.Email === getEmail) {
                                         if (ele.Position !== "Manager") return null
                                         else {
@@ -85,7 +85,7 @@ export default function People() {
                             <h1 style={{ color: blue_cloud, "font-weight": "bold" }}>Member</h1>
                             <div className='row ms-3'>
                                 {
-                                    people.map((ele, index) => {
+                                    people.map((ele) => {
                                         if (ele.Email === getEmail) {
                                             if (ele.Position !== "Member") return null
                                             else {
