@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Content from "./components/Content";
 import MenuBar from "./components/MenuBar";
 import ToolBar from "./components/Bar/ToolBar";
@@ -25,7 +25,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { deep_blue_primary } from "utils/color";
 
 
-
 export default function EditReport(props) {
 
     const location = useLocation().pathname
@@ -34,24 +33,21 @@ export default function EditReport(props) {
     let RId = location.split('/')[3]
     const currentProject = localStorage.getItem("currentProject")
 
-    const updateSubmit = () => {
-        updateReportInformation(currentProject, RId, {
-            "Hastag": reportInformation.Hastag,
-            "Description": "",
-            "Name": reportInformation.Name
-        })
-            .then(res => {
-                Store.addNotification(content("Success", "Updated Report Information", "success"))
-                window.location.reload()
+    const updateSubmit = async () => {
+        try {
+            await  updateReportInformation(currentProject, RId, {
+                "Hastag": reportInformation.Hastag,
+                "Description": "",
+                "Name": reportInformation.Name
             })
-            .catch(err => {
-                Store.addNotification(content("Fail", "Fail update", "danger"))
-                console.log(err.response.data)
-
-            })
+            saveAllShapeComponents() 
+            Store.addNotification(content("Success", "Saved", "success"))
+        }
+        catch (err) {
+            Store.addNotification(content("Fail", "Fail update", "danger"))
+            console.log(err.response.data)
+        }
     }
-
-    const [components, setComponents] = useState([])
 
     const [reportInformation, setReportInformation] = useState(
         {
@@ -97,15 +93,6 @@ export default function EditReport(props) {
                 .catch(res => {
                     alert(res.response.data)
                 })
-
-            getAllComponent(currentProject, RId)
-                .then(res => {
-                    console.log("all component", res.data)
-                    setComponents(res.data)
-                })
-                .catch(res => {
-                    alert(res.response.data)
-                })
         }
 
         if (currentProject != null) {
@@ -131,9 +118,7 @@ export default function EditReport(props) {
     }
 
     // list data sources of the report
-    const [dataSource, setDataSource] = useState({
-        user_details_csv: ["user_id", "username", "first_name", "last_name", "gender", "password", "status"]
-    })
+    const [dataSource, setDataSource] = useState({})
 
     const [key, setKey] = useState('Data');
     const fonts = ['Roboto', 'Poppins'];
@@ -151,7 +136,6 @@ export default function EditReport(props) {
         let currentProject = localStorage.getItem("currentProject")
         if (currentProject != null) {
             let RId = location.split('/')[3]
-            console.log(query.replaceAll('\n', " "))
             createNewComponent(currentProject, RId, {
                 Title: "example",
                 Type: componentType,
@@ -171,6 +155,23 @@ export default function EditReport(props) {
                 })
         }
     }
+
+    const [tabData, setTabData] = useState({
+        data : "",
+        style : {
+            font: "Roboto",
+            size : 14,
+            decoration: "",
+            alignment: "",
+            fill: "",
+            stroke: ""
+        }
+    })
+
+    // trigger on change of tabData
+    useEffect(() => {
+        console.log(tabData)
+    }, [tabData])
 
     // render components
     const tab_component = () => {
@@ -277,6 +278,12 @@ export default function EditReport(props) {
     const [showSharePopUp, setshowSharePopUp] = useState(false)
     const [showShareLinkPopUp, setshowShareLinkPopUp] = useState(false)
 
+    // ref to content component of report
+    const contentRef = useRef()
+    const saveAllShapeComponents = () => {
+        contentRef.current.saveAllShape()
+    }
+
     return (
         <div>
             <SqlPopUp
@@ -364,12 +371,11 @@ export default function EditReport(props) {
                             </div>
                         </div>
                         <MenuBar
-                            newFileSubmit={() => {
-                                newFileSubmit()
-                            }}
-                            updateSubmit={() => updateSubmit()}
+                            newFileSubmit={newFileSubmit}
+                            updateSubmit={updateSubmit}
                             showSqlPopUpFunction={showSqlPopUpFunction}
                             componentTypeHandle={componentTypeHandle}
+                            saveAllShapeComponents={saveAllShapeComponents}
                         />
 
                         <ToolBar
@@ -377,7 +383,7 @@ export default function EditReport(props) {
                             OpenShareLinkPopUp={() => setshowShareLinkPopUp(true)}
                         />
                         <div className="m-2 content">
-                            <Content components={components} />
+                            <Content RId={RId} ref={contentRef} setTabData={setTabData} tabData={tabData}/>
                         </div>
                     </div>
                 </div>

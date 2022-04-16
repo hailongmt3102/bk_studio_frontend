@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react'
+import React, { useState } from 'react'
 import ThreeDotButton from 'components/ThreeDotButton'
 import view from "resources/icons/eye.svg";
 import undo from "resources/icons/undo.svg";

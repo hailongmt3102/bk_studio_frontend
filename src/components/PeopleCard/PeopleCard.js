@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import '../css/TextFont.css'
 import './peopleCard.css'
 import { Roboto, Poppins } from "../../utils/font"
 import { useLocation, useNavigate } from 'react-router-dom'
