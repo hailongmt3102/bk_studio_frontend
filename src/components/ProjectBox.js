@@ -206,6 +206,7 @@ export default function ProjectBox(props) {
                                             <div>{props.data.NumOfMember}</div>
                                         </div>
                                     </div>
+                                    
                                 </div>
                             </div>
                             : <div>
@@ -264,24 +265,6 @@ export default function ProjectBox(props) {
                                                     }}
                                                 />
                                             </Form.Group>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className='m-3 m-0 p-0'>
-                                    <div class=" row text-center m-0 p-0">
-                                        <div className='col-1  m-0 p-0'>
-                                            <img src={MemberSvg} height="24px" width="22px" />
-                                        </div>
-                                        <div className='col-6 m-0 p-0' style={{ "text-align": "left" }} >
-                                            <div className='ms-2'>
-                                                <div style={orangeStyle}>Joined member :</div>
-                                            </div>
-                                        </div>
-                                        <div className='col-5  m-0 p-0' >
-                                            <Form.Control type="text" value={projectInformation.NumOfMember} onChange={(event) => {
-                                                setprojectInformation({ ...projectInformation, NumOfMember: event.target.value })
-                                            }}
-                                            />
                                         </div>
                                     </div>
                                 </div>

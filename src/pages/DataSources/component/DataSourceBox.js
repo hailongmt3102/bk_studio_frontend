@@ -100,7 +100,7 @@ export default function DataSourceBox(props) {
                 <div className="col-8 m-0 p-0 customFontRoboto" >
                     <div className="row m-0 p-0 customFontRoboto" style={{ color: blue_cloud, fontSize: "28px" }}>
                         {
-                            pressRename == false ? <p><span>{props.ele.Information}</span></p> :
+                            pressRename == false ? <p><span>{props.ele.Information.substring(0,15)}</span></p> :
                                 // <newNameTextField/>
                                 <Form.Group className='m-0 p-0 ms-2 pe-2'>
                                     <Form.Control
