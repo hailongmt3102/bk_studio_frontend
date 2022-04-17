@@ -50,6 +50,10 @@ const updateSharePermission = (PId, RId, data) => {
     return axiosClient.post(`/project/${PId}/${RId}/share/update`, data)
 }
 
+const deleteShape = (PId,RId, CId) => {
+    return axiosClient.get(`/project/${PId}/${RId}/component/${CId}/delete`)
+}
+
 
 export {
     createNewReport,
@@ -64,5 +68,6 @@ export {
     getReportInformation,
     shareReport,
     getShardListPeople,
-    updateSharePermission
+    updateSharePermission,
+    deleteShape
 }

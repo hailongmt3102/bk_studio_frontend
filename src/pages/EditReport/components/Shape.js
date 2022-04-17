@@ -1,13 +1,10 @@
-import React, { useEffect, useImperativeHandle, useState } from 'react'
-import { QueryData as QueryDataApi } from 'api/DataSources'
-import { updateAComponent } from 'api/Report'
+import { QueryData as QueryDataApi } from 'api/DataSources';
+import { updateAComponent } from 'api/Report';
+import React, { useEffect, useImperativeHandle, useState } from 'react';
+import { Bar, Doughnut, Line, Pie } from 'react-chartjs-2';
+import { Rnd } from 'react-rnd';
 import { useLocation } from "react-router-dom";
-import TableComponent from './table/TableComponent'
-import { Rnd } from 'react-rnd'
-import { Pie } from 'react-chartjs-2';
-import { Doughnut } from 'react-chartjs-2';
-import { Line } from 'react-chartjs-2';
-import { Bar } from 'react-chartjs-2';
+import TableComponent from './table/TableComponent';
 
 
 const backgroundColors = [
@@ -39,15 +36,11 @@ const Shape = React.forwardRef((props, ref) => {
         try {
             var result = props.data
             // parse position
-            let positionString = result.Position.split(";")
-            result.Position = {
-                x: positionString[0].substring(2),
-                y: positionString[1].substring(2)
-            }
+            result.Position = JSON.parse(result.Position)
             // parse theme from server
-            let TextThemeArray = result.TextTheme.split(";")
-            result.TextTheme = {}
-            TextThemeArray.map(style => result.TextTheme[style.split(':')[0]] = style.split(':')[1])
+            result.TextTheme = JSON.parse(result.TextTheme)
+            result.FrameTheme = JSON.parse(result.FrameTheme)
+
             let res, keys, arrayData
             // get data
             switch (props.data.Type) {
@@ -84,14 +77,6 @@ const Shape = React.forwardRef((props, ref) => {
                     break
                 case "Doughnut Chart":
                     res = await QueryDataApi(props.data.QueryCommand)
-                    positionString = result.Position.split(";")
-                    result.Position = {
-                        x: positionString[0].substring(2),
-                        y: positionString[1].substring(2)
-                    }
-                    TextThemeArray = result.TextTheme.split(";")
-                    result.TextTheme = {}
-                    TextThemeArray.map(style => result.TextTheme[style.split(':')[0]] = style.split(':')[1])
 
                     keys = Object.keys(res.data[0])
                     if (keys.length < 2) return
@@ -175,14 +160,18 @@ const Shape = React.forwardRef((props, ref) => {
                 default:
                     break
             }
-
             // put to component data
             setComponentData(result)
         }
         catch (err) {
+            setComponentData({})
             // error shape
         }
     }
+
+    useEffect(() => {
+        getData()
+    }, [props.data])
 
     useImperativeHandle(
         ref,
@@ -191,47 +180,45 @@ const Shape = React.forwardRef((props, ref) => {
                 SaveShape()
             },
             getShapeInfo() {
-                getShapeInfo()
+                return getShapeInfo()
             }
         }),
     )
 
-    const SaveShape = () => {
+    const SaveShape = async () => {
         console.log("shape", componentData.Id, "is saving")
         if (currentProject != null) {
-            let positionString = Object.keys(componentData.Position).map(key => `${key}:${componentData.Position[key]}`).join(';')
-            let TextThemeString = Object.keys(componentData.TextTheme).map(key => `${key}:${componentData.TextTheme[key]}`).join(';')
-            updateAComponent(currentProject, RId, {
-                CId: componentData.Id,
-                Title: componentData.Title,
-                Type: componentData.Type,
-                QueryCommand: componentData.QueryCommand,
-                Height: parseInt(componentData.Height),
-                Width: parseInt(componentData.Width),
-                Position: positionString,
-                TitleTheme: componentData.TitleTheme,
-                TextTheme: TextThemeString,
-                FrameTheme: componentData.FrameTheme
-            }).then(res => {
-
-            }).catch(err => {
-                console.log(err)
-            })
+            try {
+                await updateAComponent(currentProject, RId, {
+                    CId: componentData.Id,
+                    Title: componentData.Title,
+                    Type: componentData.Type,
+                    QueryCommand: componentData.QueryCommand,
+                    Height: parseInt(componentData.Height),
+                    Width: parseInt(componentData.Width),
+                    Position: JSON.stringify(componentData.Position),
+                    TitleTheme: componentData.TitleTheme,
+                    TextTheme: JSON.stringify(componentData.TextTheme),
+                    FrameTheme: JSON.stringify(componentData.FrameTheme)
+                })
+            }
+            catch (err) {
+            }
         }
     }
 
     const getShapeInfo = () => {
-        return {
+        return JSON.stringify({
             Title: componentData.Title,
             Type: componentData.Type,
             QueryCommand: componentData.QueryCommand,
             Height: componentData.Height,
-            Width:componentData.Width,
+            Width: componentData.Width,
             Position: componentData.Position,
             TitleTheme: componentData.TitleTheme,
             TextTheme: componentData.TextTheme,
             FrameTheme: componentData.FrameTheme
-        }
+        })
     }
 
     const callParentWhenClick = () => {
@@ -240,6 +227,7 @@ const Shape = React.forwardRef((props, ref) => {
 
     useEffect(() => {
         getData()
+        console.log("shpe", props.data.Type)
     }, [])
 
     const RenderShape = () => {
@@ -255,6 +243,7 @@ const Shape = React.forwardRef((props, ref) => {
                         <TableComponent
                             data={componentData}
                             updateDataTable={setComponentData}
+                            classstyle={props.focus ? "border border-5 customBorder" : "border border-5"}
                         />
                     </div>
                 )
@@ -273,7 +262,7 @@ const Shape = React.forwardRef((props, ref) => {
                     onResizeStop={(e, direction, ref, delta, position) => {
                         setComponentData({ ...componentData, Width: ref.style.width, Height: ref.style.height })
                     }}
-                    className="border"
+                    className={props.focus ? "border border-5 customBorder" : "border border-5"}
                 >
                     {componentData.Title}
                     <Doughnut data={componentData.doughnutData} />
@@ -295,14 +284,15 @@ const Shape = React.forwardRef((props, ref) => {
                         onResizeStop={(e, direction, ref, delta, position) => {
                             setComponentData({ ...componentData, Width: ref.style.width, Height: ref.style.height })
                         }}
-                        onMouseDown={()=> {
+                        onMouseDown={() => {
                             callParentWhenClick()
                         }}
-                        className="border border-5"
+                        className={props.focus ? "border border-5 customBorder" : "border border-5"}
                     >
                         {componentData.Title}
                         <Line data={componentData.lineData} />
-                    </Rnd>)
+                    </Rnd>
+                )
             case "Bar Chart":
                 return (
                     <Rnd
@@ -320,7 +310,7 @@ const Shape = React.forwardRef((props, ref) => {
                         onResizeStop={(e, direction, ref, delta, position) => {
                             setComponentData({ ...componentData, Width: ref.style.width, Height: ref.style.height })
                         }}
-                        className="border"
+                        className={props.focus ? "border border-5 customBorder" : "border border-5"}
                     >
                         {componentData.Title}
                         <Bar data={componentData.barData} />
@@ -343,7 +333,7 @@ const Shape = React.forwardRef((props, ref) => {
                         onResizeStop={(e, direction, ref, delta, position) => {
                             setComponentData({ ...componentData, Width: ref.style.width, Height: ref.style.height })
                         }}
-                        className="border"
+                        className={props.focus ? "border border-5 customBorder" : "border border-5"}
                     >
                         {componentData.Title}
                         <Pie data={componentData.pieData} />

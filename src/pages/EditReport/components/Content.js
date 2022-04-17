@@ -1,7 +1,9 @@
-import React, { useEffect, useImperativeHandle, useRef, useState } from 'react'
-import { getAllComponent } from 'api/Report'
-import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, ArcElement, LineElement, Title, Tooltip, Legend, BarElement } from 'chart.js';
+import { createNewComponent, deleteShape as deleteShapeApi, getAllComponent } from 'api/Report';
+import { ArcElement, BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, LineElement, PointElement, Title, Tooltip } from 'chart.js';
+import React, { useEffect, useImperativeHandle, useRef, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import Shape from './Shape';
+
 
 ChartJS.register(
     CategoryScale,
@@ -19,14 +21,18 @@ ChartJS.register(
 const Content = React.forwardRef((props, ref) => {
     const [components, setComponents] = useState([])
     const ShapeRef = useRef([]);
+    const currentProject = localStorage.getItem("currentProject")
+
     ShapeRef.current = []
     const addToRefs = (el, index) => {
         if (el && !ShapeRef.current.includes(el) && !Object.keys(ShapeRef.current).includes(index.toString())) {
             ShapeRef.current.push(el);
-        }else {
+        } else {
             ShapeRef.current[index] = el
         }
     };
+    const location = useLocation().pathname
+    const RId = parseInt(location.split('/')[3])
 
     // const PieData = {
     //     labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
@@ -126,7 +132,6 @@ const Content = React.forwardRef((props, ref) => {
 
     // get all components in report
     const getComponents = async () => {
-        let currentProject = localStorage.getItem("currentProject")
         if (currentProject != null) {
             getAllComponent(currentProject, props.RId)
                 .then(res => {
@@ -138,11 +143,22 @@ const Content = React.forwardRef((props, ref) => {
         }
     }
 
+    // define ref to parent
+    // parent can call some methods bellow by useRef hook
     useImperativeHandle(ref,
         () => (
             {
                 saveAllShape() {
                     saveAllShape()
+                },
+                pushNewComponent(newComponent) {
+                    pushNewComponent(newComponent)
+                },
+                pasteShape() {
+                    pasteShape()
+                },
+                deleteShape(){
+                    deleteShape()
                 }
             }
         ))
@@ -157,16 +173,20 @@ const Content = React.forwardRef((props, ref) => {
 
     // this function will be called when a component has clicked
     const onComponentHasClick = (componentData) => {
-        console.log(componentData)
-        updateTabData()
+        updateTabData(componentData)
     }
 
-    const updateTabData = () => {
+    // push new component 
+    const pushNewComponent = (component) => {
+        setComponents([...components, component])
+    }
+
+    const updateTabData = (componentData) => {
         props.setTabData({
-            data : "",  
-            style : {
+            data: "",
+            style: {
                 font: "Roboto1",
-                size : 14,
+                size: 14,
                 decoration: "",
                 alignment: "",
                 fill: "",
@@ -179,13 +199,68 @@ const Content = React.forwardRef((props, ref) => {
     const [followingIndexComponent, setFollowingIndexComponent] = useState(-1)
     const updateStyleOfComponent = () => {
         if (followingIndexComponent != -1) {
-            // do something
+
         }
     }
+
+    useEffect(() => {
+        console.log(components)
+    }, [components])
+
+    // copy and paste new shape
+    const pasteShape = async () => {
+        let currentProject = localStorage.getItem("currentProject")
+        if (currentProject == null) return
+        let RId = location.split('/')[3]
+        try {
+            if (followingIndexComponent == -1) {
+                return
+            }
+            let newShape = JSON.parse(ShapeRef.current[followingIndexComponent].getShapeInfo())
+            newShape.Position.x += 50
+            newShape.Position.y += 50
+            newShape.Position = JSON.stringify(newShape.Position)
+            newShape.TextTheme = JSON.stringify(newShape.TextTheme)
+            newShape.FrameTheme = JSON.stringify(newShape.FrameTheme)
+            let result = await createNewComponent(currentProject, RId, newShape)
+            newShape.RId = RId
+            newShape.Id = result.data.id
+            pushNewComponent(newShape)
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
+    const deleteShape = async () => {
+        if (followingIndexComponent == -1) return
+        console.log(followingIndexComponent)
+        console.log(components)
+        deleteShapeApi(currentProject, RId, parseInt(components[followingIndexComponent].Id))
+            .then(res => {
+                setComponents([...components.slice(0, followingIndexComponent), {}, ...components.slice(followingIndexComponent + 1)])
+                setFollowingIndexComponent(-1)
+            })
+            .catch(err => {
+                alert(err.response.data)
+            })
+    }
+
+    // -------------------------------------------------------
     return (
         <React.Fragment>
             {
-                components.map((component, index) => <Shape ref={el => addToRefs(el, index)} data={component} key={index} onComponentHasClick={onComponentHasClick}/>)
+                components.map((component, index) =>
+                    <div onMouseDown={() => {
+                        setFollowingIndexComponent(index)
+                    }}>
+                        <Shape
+                            ref={el => addToRefs(el, index)}
+                            data={component}
+                            key={index}
+                            focus={followingIndexComponent === index}
+                            onComponentHasClick={onComponentHasClick}
+                        />
+                    </div>)
             }
 
         </React.Fragment>

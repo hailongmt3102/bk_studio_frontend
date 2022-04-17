@@ -20,9 +20,10 @@ import { content } from "utils/notification"
 import SqlPopUp from "./components/PopUp/SqlPopUp";
 import ShareWithPopUp from "./components/PopUp/ShareWithPopUp";
 import ShareLinkPopUp from "./components/PopUp/ShareLinkPopUp";
-import { createNewReport, getAllComponent, createNewComponent, getReportInformation, updateReportInformation } from 'api/Report'
+import { createNewReport, createNewComponent, getReportInformation, updateReportInformation } from 'api/Report'
 import { useLocation, useNavigate } from "react-router-dom";
 import { deep_blue_primary } from "utils/color";
+import { textStyleDefault, widthDefault, heightDefault, frameStyleDefault, positionDefault } from 'utils/shape'
 
 
 export default function EditReport(props) {
@@ -35,12 +36,12 @@ export default function EditReport(props) {
 
     const updateSubmit = async () => {
         try {
-            await  updateReportInformation(currentProject, RId, {
+            await updateReportInformation(currentProject, RId, {
                 "Hastag": reportInformation.Hastag,
                 "Description": "",
                 "Name": reportInformation.Name
             })
-            saveAllShapeComponents() 
+            saveAllShapeComponents()
             Store.addNotification(content("Success", "Saved", "success"))
         }
         catch (err) {
@@ -136,19 +137,21 @@ export default function EditReport(props) {
         let currentProject = localStorage.getItem("currentProject")
         if (currentProject != null) {
             let RId = location.split('/')[3]
-            createNewComponent(currentProject, RId, {
+            let newShape = {
                 Title: "example",
                 Type: componentType,
                 QueryCommand: query.replaceAll('\n', " "),
-                Height: "600",
-                Width: "600",
-                Position: "x:100;y:100",
-                TitleTheme: "light",
-                TextTheme: "font:Roboto;size:12",
-                FrameTheme: "light"
-            })
+                Height: heightDefault,
+                Width: widthDefault,
+                Position: JSON.stringify(positionDefault),
+                TitleTheme: "",
+                TextTheme: JSON.stringify(textStyleDefault),
+                FrameTheme: JSON.stringify(frameStyleDefault)
+            }
+            createNewComponent(currentProject, RId, newShape)
                 .then(res => {
                     alert(res.data)
+                    sendNewComponentInfoToContent(newShape)
                 })
                 .catch(err => {
                     console.log(err.response.data)
@@ -157,16 +160,22 @@ export default function EditReport(props) {
     }
 
     const [tabData, setTabData] = useState({
-        data : "",
-        style : {
+        data: "",
+        style: {
             font: "Roboto",
-            size : 14,
+            size: 14,
             decoration: "",
             alignment: "",
             fill: "",
             stroke: ""
         }
     })
+
+    // after create new component by sql popup, send it to content
+    // content will be get new data from server and render new shape 
+    const sendNewComponentInfoToContent = (newComponent) => {
+        contentRef.current.pushNewComponent(newComponent)
+    }
 
     // trigger on change of tabData
     useEffect(() => {
@@ -283,6 +292,12 @@ export default function EditReport(props) {
     const saveAllShapeComponents = () => {
         contentRef.current.saveAllShape()
     }
+    const pasteShape = () => {
+        contentRef.current.pasteShape()
+    }
+    const deleteShape = () => {
+        contentRef.current.deleteShape()
+    }
 
     return (
         <div>
@@ -376,6 +391,8 @@ export default function EditReport(props) {
                             showSqlPopUpFunction={showSqlPopUpFunction}
                             componentTypeHandle={componentTypeHandle}
                             saveAllShapeComponents={saveAllShapeComponents}
+                            pasteShape={pasteShape}
+                            deleteShape={deleteShape}
                         />
 
                         <ToolBar
@@ -383,7 +400,13 @@ export default function EditReport(props) {
                             OpenShareLinkPopUp={() => setshowShareLinkPopUp(true)}
                         />
                         <div className="m-2 content">
-                            <Content RId={RId} ref={contentRef} setTabData={setTabData} tabData={tabData}/>
+                            <Content
+                                RId={RId}
+                                ref={contentRef}
+                                setTabData={setTabData}
+                                tabData={tabData}
+                                createNewComponentInReport={createNewComponentInReport}
+                            />
                         </div>
                     </div>
                 </div>

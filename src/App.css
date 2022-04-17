@@ -24,3 +24,7 @@ p {
 .redColor{
     color: red;
 }
+
+.customBorder {
+    box-shadow: 0px 0px 10px #0085ff;
+}
