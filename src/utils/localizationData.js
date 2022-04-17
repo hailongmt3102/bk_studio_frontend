@@ -12,7 +12,33 @@ const data = {
         Login : "Login",
         ForgotPass : "Forgot Password !",
         OrContinue: "or continue with",
-        GGAccount : "Google account"
+        GGAccount : "Google account",
+        Profile: "Profile",
+        CreateAt: "Created at",
+        Starttime: "Start time", 
+        EsTime: "Estimated end time", 
+        JoinMember: "Joined member", 
+        Project: "Project",
+        People: "People", 
+        Templates: "Templates", 
+        Setting: "Setting",
+        DarkMode: "Darkmode",
+        Language: "Language",
+        Free: "Free", 
+        VIP: "Premium",
+        usetool: "use tool", 
+        createreports: "create reports",
+        sharereports:"share reports",
+        multipleprojects:"multiple projects",
+        blockads:"block ads",
+        nolimitreports:"nolimit reports",
+        used: "Used",
+        getPremiun: "Get Premium", 
+        English: "English",
+        Vietnamese: "Vietnamese"
+        
+
+
     },
     Vietnamese: {
         signIn: "Đăng nhập",
@@ -27,7 +53,30 @@ const data = {
         Login : "Đăng nhập",
         ForgotPass : "Quên mật khẩu !",
         OrContinue: "hoặc tiếp tục với",
-        GGAccount : "tài khoản Google"
+        GGAccount : "tài khoản Google", 
+        Profile: "Trang cá nhân",
+        CreateAt: "Thời gian tạo",
+        Starttime: "Thời gian bắt đầu", 
+        EsTime: "Dự đoán kết thúc", 
+        JoinMember: "Số người tham gia",
+        Project: "Các dự án", 
+        People: "Mọi người", 
+        Templates: "Mẫu báo cáo",
+        Setting: "Cài đặt",
+        DarkMode: "Giao diện tối",
+        Language: "Ngôn ngữ",
+        Free: "Miễn phí", 
+        VIP: "VIP",
+        usetool: "Sử dụng tool", 
+        createreports: "Tạo nhiều dự án",
+        sharereports:"Chia sẻ nhiều báo cáo",
+        multipleprojects:"Làm việc cùng lúc nhiều dự án",
+        blockads:"Chặn quảng cáo",
+        nolimitreports:"Không giới hạn số lượng báo cáo",
+        used: "Đã sử dụng",
+        getPremiun: "Nâng cấp VIP",
+        English: "Tiếng Anh",
+        Vietnamese: "Tiếng Việt"
     }
 };
 

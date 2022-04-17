@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Form, InputGroup, Col, Button, FormControl } from 'react-bootstrap'
 import ClockSvg from 'resources/icons/clock.svg'
 import MemberSvg from 'resources/icons/two_people.svg'
@@ -13,7 +13,7 @@ import edit from 'resources/icons/edit.svg'
 import active_icon from 'resources/icons/status/active.svg'
 import closed_icon from 'resources/icons/status/closed.svg'
 import now_icon from 'resources/icons/status/now.svg'
-
+import { localizationContext } from 'App'
 
 import { updateStatus, deleteProject, editProject } from 'api/Project'
 
@@ -37,7 +37,7 @@ const timeCaster = (time) => {
 
 export default function ProjectBox(props) {
 
-
+    const localization = useContext(localizationContext)
     const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: '', subTitle: '' })
     const option_list = ["Edit Project", "Delete Project"]
 
@@ -154,7 +154,7 @@ export default function ProjectBox(props) {
                                         </div>
                                         <div className='col-7 m-0 p-0' style={{ "text-align": "left" }} >
                                             <div className='ms-2'>
-                                                <div style={orangeStyle}>  Created at:</div>
+                                                <div style={orangeStyle}>{localization.CreateAt}</div>
                                             </div>
                                         </div>
                                         <div className='col-4  m-0 p-0' >
@@ -169,7 +169,7 @@ export default function ProjectBox(props) {
                                         </div>
                                         <div className='col-7 m-0 p-0' style={{ "text-align": "left" }} >
                                             <div className='ms-2'>
-                                                <div style={orangeStyle}>Start time :</div>
+                                                <div style={orangeStyle}>{localization.Starttime}</div>
                                             </div>
                                         </div>
                                         <div className='col-4  m-0 p-0' >
@@ -184,7 +184,7 @@ export default function ProjectBox(props) {
                                         </div>
                                         <div className='col-7 m-0 p-0' style={{ "text-align": "left" }} >
                                             <div className='ms-2'>
-                                                <div style={orangeStyle}>Estimated end time:</div>
+                                                <div style={orangeStyle}>{localization.EsTime}</div>
                                             </div>
                                         </div>
                                         <div className='col-4  m-0 p-0' >
@@ -199,7 +199,7 @@ export default function ProjectBox(props) {
                                         </div>
                                         <div className='col-7 m-0 p-0' style={{ "text-align": "left" }} >
                                             <div className='ms-2'>
-                                                <div style={orangeStyle}>Joined member :</div>
+                                                <div style={orangeStyle}>{localization.JoinMember}</div>
                                             </div>
                                         </div>
                                         <div className='col-4  m-0 p-0' >
@@ -224,7 +224,7 @@ export default function ProjectBox(props) {
                                         </div>
                                         <div className='col-6 m-0 p-0' style={{ "text-align": "left" }} >
                                             <div className='ms-2'>
-                                                <div style={orangeStyle}>Start time:</div>
+                                                <div style={orangeStyle}>{localization.Starttime}</div>
                                             </div>
                                         </div>
                                         <div className='col-5  m-0 p-0' >
