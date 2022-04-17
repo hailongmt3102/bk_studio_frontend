@@ -85,6 +85,9 @@ export default function DataSourceBox(props) {
                         else if (val === "Rename") {
                             setPressRename(true)
                         }
+                        else if (val == "Share"){
+                            props.showSharePopUpHandle(props.ele.Id)
+                        }
                         else if (val === "Send to Workspace") {
                             sendToWorkspaceSubmit(props.ele.Id)
                         }

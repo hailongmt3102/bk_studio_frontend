@@ -42,6 +42,15 @@ const Rename = (id, data) => {
     return axiosClient.post("/data/" + id + "/rename", data)
 }
 
+const getDataSourcesSharedListPeople = (id) => {
+    return axiosClient.get("/data/" + id + "/getshare")
+}
+
+const shareDataSources = (id, data) => {
+    return axiosClient.post("/data/" + id + "/share", data)
+}
+
+
 
 
 
@@ -54,5 +63,7 @@ export {
     GetDataSourcesListInformationInProject,
     getColumnsOfTable,
     deleteDatasource,
+    getDataSourcesSharedListPeople,
+    shareDataSources,
     Rename
 }

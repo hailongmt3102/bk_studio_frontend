@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 
 import { blue_cloud } from "../../utils/color"
 import { deep_blue_primary } from "../../utils/color"
@@ -9,21 +9,22 @@ import edit from "resources/icons/edit.svg"
 import delete_icon from "resources/icons/delete.svg"
 import download_blue from "resources/icons/download_blue.svg"
 import share_blue from "resources/icons/share_blue.svg"
-
-const orangeStyle = {
-    color: "#FF7F0D",
-}
-
+import { useLocation, useNavigate } from "react-router-dom";
+import ShareDataSourcesPopUp from "../DataSources/component/ShareDataSourcesPopUp"
 
 export default function DataSources() {
     const [datasourceslist, setDatasourceslist] = useState([])
+    const location = useLocation().pathname
+    let RId = location.split('/')[3]
+    const [showSharePopUp, setshowSharePopUp] = useState(false)
+    const currentProject = localStorage.getItem("currentProject")
     useEffect(() => {
-        console.log("Lấy data nè")
+       // console.log("Lấy data nè")
         // get list people
         GetDataSourcesListInformationInWorkSpace()
             .then(res => {
                 setDatasourceslist(res.data)
-                console.log(res.data)
+                //console.log(res.data)
             })
             .catch(err => {
                 console.log(err)
@@ -32,8 +33,25 @@ export default function DataSources() {
     }, [])
     const option_list = ["Share", "Rename", "Download", "Delete"]
     const icon_list = [share_blue, edit, download_blue, delete_icon]
+
+    const showSharePopUpHandle = (DId) => {
+        setshowSharePopUp(true)
+        setDId(DId)
+    }
+    const [DId, setDId] = useState(-1)
     return (
         <div>
+            <ShareDataSourcesPopUp
+                type="Workspace"
+                show={showSharePopUp}
+                handleOpen={() => {
+                    setshowSharePopUp(true)
+                }}
+                handleClose={() => {
+                    setshowSharePopUp(false)
+                }}
+                DId={DId}
+            />
             <div className='d-flex flex-row pt-2'>
 
                 <h2 class="ms-4 mt-1" style={{ color: deep_blue_primary, "font-weight": "bold", fontSize: "40px" }}> Data Sources:</h2>
@@ -60,6 +78,7 @@ export default function DataSources() {
                                     icon_list={icon_list}
                                     setDatasourceslist={setDatasourceslist}
                                     datasourceslist={datasourceslist}
+                                    showSharePopUpHandle={showSharePopUpHandle}
                                     ele={ele}
                                     index={index} />
                             })

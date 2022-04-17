@@ -25,7 +25,7 @@ import delete_icon from "resources/icons/delete.svg"
 import download_blue from "resources/icons/download_blue.svg"
 import share_blue from "resources/icons/share_blue.svg"
 import excel_icon from "resources/icons/excel_icon.svg"
-
+import ShareDataSourcesPopUp from "../DataSources/component/ShareDataSourcesPopUp"
 import three_dot from "resources/icons/three-dot.svg"
 import ThreeDotButton from 'components/ThreeDotButton'
 
@@ -35,6 +35,14 @@ export default function ProjectDetail() {
     let getEmail = localStorage.getItem("email") ?? ""
     var location = useLocation()
     var navigate = useNavigate()
+
+    const currentProject = localStorage.getItem("currentProject")
+    const [showSharePopUp, setshowSharePopUp] = useState(false)
+    const [DId, setDId] = useState(-1)
+    const showSharePopUpHandle = (DId) =>{
+        setshowSharePopUp(true)
+        setDId(DId)
+    }
     const array = location.pathname.split("/");
     var project_id = array[array.length - 1]
     const [peopleInProject, setPeopleListInProject] = useState([])
@@ -236,7 +244,7 @@ export default function ProjectDetail() {
     const orangeStyle = {
         color: "#FF7F0D",
         fontWeight: "bold",
-       
+
         fontSize: "17px"
     }
     const EditProjectSubmit = () => {
@@ -422,9 +430,22 @@ export default function ProjectDetail() {
 
     }
     const option_list = ["Send to Workspace", "Rename", "Share", "Download", "Delete"]
-    const icon_list = [sendTo, share_blue, edit, download_blue, delete_icon]
+    const icon_list = [sendTo,edit, share_blue,  download_blue, delete_icon]
     const dataSourcesComponent = () => {
         return <div>
+            <ShareDataSourcesPopUp
+                type="ProjectDetail"
+                currentProject={currentProject}
+                show={showSharePopUp}
+                handleOpen={() => {
+                    setshowSharePopUp(true)
+                }}
+                handleClose={() => {
+                    setshowSharePopUp(false)
+                }}
+                DId={DId}
+
+            />
             <div className='row m-0 p-0 mt-3' >
                 <div className=' col-10' style={{ color: deep_blue_primary, "font-weight": "bold", fontSize: "40px" }}>Data Sources:</div>
             </div>
@@ -432,7 +453,14 @@ export default function ProjectDetail() {
                 <div className='row'>
                     {
                         datasourceslist.map((ele, index) => {
-                            return  <DataSourceBox option_list={option_list} icon_list={icon_list}  setDatasourceslist={setDatasourceslist} datasourceslist={datasourceslist} ele = {ele} index ={index}/>
+                            return <DataSourceBox 
+                            option_list={option_list} 
+                            icon_list={icon_list} 
+                            setDatasourceslist={setDatasourceslist} 
+                            datasourceslist={datasourceslist} 
+                            ele={ele} 
+                            index={index}
+                            showSharePopUpHandle={showSharePopUpHandle} />
                         })
 
                     }
