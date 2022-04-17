@@ -93,7 +93,7 @@ export default function ReportCard(props) {
             .catch(err => {
                 Store.addNotification(content("Fail", "Fail update", "danger"))
                 console.log(err.response.data)
-                
+
             })
     }
 
@@ -128,7 +128,7 @@ export default function ReportCard(props) {
                                     handleOpen()
                                 else if (val === "Edit information") {
                                     setPressEdit(true)
-                                    
+
                                 }
                             }} />
                         </div>
@@ -145,7 +145,7 @@ export default function ReportCard(props) {
                                         className="border-0"
                                         style={{
                                             fontSize: "28px",
-                                        
+
                                             "color": deep_blue_primary,
                                             "fontWeight": "bold"
                                         }}
@@ -159,7 +159,7 @@ export default function ReportCard(props) {
                                         className="border-0"
                                         style={{
                                             fontSize: "20px",
-                                           
+
                                             "color": blue_cloud,
                                             "fontWeight": "bold"
                                         }}
@@ -168,7 +168,7 @@ export default function ReportCard(props) {
                             </div> :
                             <div>
                                 <div className='row mt-2' style={{ "color": deep_blue_primary, "fontSize": "28px", "fontWeight": "bold" }}>
-                                    {props.data.Name.slice(0,20)}
+                                    {props.data.Name.slice(0, 20)}
                                 </div>
                                 <div className='row mb-2' style={{ "color": blue_cloud, "fontSize": "23px", "fontWeight": "bold" }}>
                                     {props.data.Hastag}
@@ -186,13 +186,15 @@ export default function ReportCard(props) {
                     <div className='row mt-2'>
                         <p className='m-0 p-0'> <span style={{ "color": "#868585" }}> Created Date: </span>  {props.data.CreateTime} </p>
                     </div>
-                    <div className='row mt-2'>
-                        <p className='m-0 p-0'> <span style={{ "color": "#868585" }}>  Modified Date:  </span>    {props.data.LastModified} </p>
-                    </div>
+                    {
+                        props.type === "Galary" ? null : <div className='row mt-2'>
+                            <p className='m-0 p-0'> <span style={{ "color": "#868585" }}>  Modified Date:  </span>    {props.data.LastModified} </p>
+                        </div>
+                    }
                     {
                         pressEdit ?
                             <div className='text-center row me-5  justify-content-center mt-3 mb-4'>
-                                <button onClick={() => {updateSubmit()}} type="button" class="btn btn-primary">
+                                <button onClick={() => { updateSubmit() }} type="button" class="btn btn-primary">
                                     Save
                                 </button>
                             </div>

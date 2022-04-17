@@ -38,7 +38,7 @@ export default function ToolBar(props) {
                     <p className="p-0 m-0">add text</p>
                 </button>
                 <button className="col m-0 p-0 btn btn-sm" style={{ "minWidth": "80px", "minHeight": "50px" }}>
-                    <CustomDropdownButton title="add shape" icon={addShape} items={["Doughnut", "Table"]} onClick={(val) => {
+                    <CustomDropdownButton title="add shape" icon={addShape} items={["Rectangle", "Circle"]} onClick={(val) => {
                         // openModal(val)
                     }} />
                     {/* <CircleModel show={modelState["Doughnut"]} handleClose={() => { closeModal("Doughnut") }} dataSource={props.dataSource} addShape={props.addShape} />
