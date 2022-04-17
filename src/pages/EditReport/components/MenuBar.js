@@ -37,10 +37,10 @@ export default function MenuBar(props) {
     const file_option = ['New', 'Open', 'Upload', 'Rename', 'Save', 'Download', 'Print', 'Delete']
     const file_option_icon_list = [new_file, open_file, upload, edit_grey, save_grey, save, print, remove_file]
     const edit_option_icon_list = [undo, redo, keo, copy, paste, done_round]
-    const edit_option = ['Undo', 'Redo', 'Cut', 'Copy', 'Paste', 'Select All']
+    const edit_option = ['Undo', 'Redo', 'Cut', 'Copy', 'Paste', 'Delete']
     const function_option = ['SUM', 'MAX', 'MIN', 'AVERAGE']
     const insert_option = ['Table', 'Bar Chart', 'Pie Chart', 'Doughnut Chart', 'Line Chart']
-    const insert_option_icon_list = [table, bar_chart, pie_chart, donut ,linechart]
+    const insert_option_icon_list = [table, bar_chart, pie_chart, donut, linechart]
 
 
     return (
@@ -57,8 +57,19 @@ export default function MenuBar(props) {
                 </div>
                 <div className='col-1' >
                     <div className='mt-3 ms-2'>
-                        <ThreeDotButton className="col-1 p-4 btn" style={{ "minHeight": "80px", "text-align": "center" }} title={'Edit'} items={edit_option} icons_list={edit_option_icon_list} onClick={(val) => {
-                        }} />
+                        <ThreeDotButton className="col-1 p-4 btn" style={{ "minHeight": "80px", "text-align": "center" }} title={'Edit'} items={edit_option} icons_list={edit_option_icon_list}
+                            onClick={(val) => {
+                                switch (val) {
+                                    case 'Paste':
+                                        props.pasteShape()
+                                        break
+                                    case 'Delete':
+                                        props.deleteShape()
+                                        break
+                                    default:
+                                        break
+                                }
+                            }} />
                     </div>
                 </div>
                 <div className='col-1' >

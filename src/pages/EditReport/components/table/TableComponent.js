@@ -18,7 +18,7 @@ export default function TableComponent(props) {
             onResizeStop={(e, direction, ref, delta, position) => {
                 props.updateDataTable({ ...props.data, Width: ref.style.width, Height: ref.style.height })
             }}
-            className="border component-container"
+            className={`${props.classstyle} component-container` }
         >
             {
                 props.data.data !== undefined ?
@@ -38,7 +38,7 @@ export default function TableComponent(props) {
                                         <tr key={index}>
                                             {
                                                 Object.values(ele).map((value, i) =>
-                                                        <td>{value}</td>
+                                                    <td>{value}</td>
                                                 )
                                             }
                                         </tr>
