@@ -3,7 +3,7 @@ import { Modal, Button, Form } from 'react-bootstrap'
 import ClockSvg from 'resources/icons/clock.svg'
 import MemberSvg from 'resources/icons/two_people.svg'
 import { getListProject } from 'api/Project'
-import { Roboto, Poppins } from "utils/font"
+
 import {createNewProject} from 'api/Project'
 import { Store } from 'react-notifications-component'
 import { content } from "utils/notification"
@@ -12,7 +12,6 @@ import { content } from "utils/notification"
 
 const orangeStyle = {
     color: "black",
-    fontFamily:Poppins
 }
 
 export default function NewProjectModel(props) {
@@ -72,7 +71,6 @@ export default function NewProjectModel(props) {
                     className="text-primary border-0 mb-2"
                     style={{
                         fontSize : "30px",
-                        fontFamily: Poppins
                     }}
                     />
 

@@ -15,7 +15,7 @@ import { Store } from 'react-notifications-component'
 import { content } from "../utils/notification"
 import { like, unlike, deleteReport, updateReportInformation } from 'api/Report'
 
-import { Roboto, Poppins } from "utils/font"
+
 import ConfirmDialog from "components/ConfirmDialog";
 
 export default function ReportCard(props) {
@@ -145,7 +145,7 @@ export default function ReportCard(props) {
                                         className="border-0"
                                         style={{
                                             fontSize: "28px",
-                                            fontFamily: Poppins,
+                                        
                                             "color": deep_blue_primary,
                                             "fontWeight": "bold"
                                         }}
@@ -159,7 +159,7 @@ export default function ReportCard(props) {
                                         className="border-0"
                                         style={{
                                             fontSize: "20px",
-                                            fontFamily: Poppins,
+                                           
                                             "color": blue_cloud,
                                             "fontWeight": "bold"
                                         }}

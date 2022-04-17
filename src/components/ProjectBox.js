@@ -14,7 +14,7 @@ import active_icon from 'resources/icons/status/active.svg'
 import closed_icon from 'resources/icons/status/closed.svg'
 import now_icon from 'resources/icons/status/now.svg'
 
-import { Roboto, Poppins } from "utils/font"
+
 import { updateStatus, deleteProject, editProject } from 'api/Project'
 
 
@@ -26,7 +26,6 @@ import ConfirmDialog from "./ConfirmDialog";
 const orangeStyle = {
     color: "#FF7F0D",
     fontWeight: "bold",
-    fontFamily: Poppins,
     fontSize: "17px"
 }
 
@@ -145,7 +144,7 @@ export default function ProjectBox(props) {
                     {
                         pressEdit === false ?
                             <div onClick={() => { navigate("/pDetail/" + props.data.Id) }}>
-                                <h3 className='d-flex justify-content-center' style={{ color: "#0085FF", fontFamily: Poppins, fontSize: "45px" }}>
+                                <h3 className='d-flex justify-content-center' style={{ color: "#0085FF", fontSize: "45px" }}>
                                     {props.data.Name}
                                 </h3>
                                 <div className='m-3 m-0 p-0 mt-3'>
@@ -216,7 +215,6 @@ export default function ProjectBox(props) {
                                     className="text-primary border-0 mb-2"
                                     style={{
                                         fontSize: "30px",
-                                        fontFamily: Poppins
                                     }}
                                 />
                                 <div className='m-3 m-0 p-0'>

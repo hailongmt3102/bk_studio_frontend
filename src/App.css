@@ -10,12 +10,14 @@ tr,
 th,
 td,
 p {
-    font-family: "Prompt";
+    font-family: "Mulish";
+   
 }
 
 .customFontRoboto{
     font-family: "Roboto";
 }
+
 
 .customFontBold{
     font-weight: 900;

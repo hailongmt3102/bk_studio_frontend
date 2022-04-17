@@ -14,7 +14,7 @@ export default function Header() {
     var url = useLocation().pathname
     const [visible, setVisible] = useState(true)
     var nav = useNavigate()
-    const fonts = ['Roboto', 'Poppins'];
+    const fonts = ['A', 'B'];
     useEffect(() => {
         let accountExp = /account\/[a-zA-Z]/
         if (accountExp.test(url)) {

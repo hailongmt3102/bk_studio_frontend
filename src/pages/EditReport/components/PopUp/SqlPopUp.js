@@ -4,7 +4,7 @@ import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import add_grey from 'resources/icons/add_grey.svg'
 import substract from 'resources/icons/substract.svg'
-import { Poppins } from "utils/font"
+
 import { blue_cloud } from "utils/color"
 import { Form } from 'react-bootstrap'
 export default function SqlPopUp(props) {
@@ -139,7 +139,7 @@ export default function SqlPopUp(props) {
     const selectClauseTypeLineAndBar = () => {
         return <div>
             <div className='row m-0 p-0'>
-                <div style={{ fontFamily: Poppins, color: blue_cloud, fontWeight: "bold", fontSize: "20px" }}>
+                <div style={{ color: blue_cloud, fontWeight: "bold", fontSize: "20px" }}>
                     SELECT
                 </div>
                 <div className='row mt-3 m-0 p-0'>
@@ -254,7 +254,7 @@ export default function SqlPopUp(props) {
     const selectClauseTypePieandDonut = () => {
         return <div>
             <div className='row m-0 p-0'>
-                <div style={{ fontFamily: Poppins, color: blue_cloud, fontWeight: "bold", fontSize: "20px" }}>
+                <div style={{ color: blue_cloud, fontWeight: "bold", fontSize: "20px" }}>
                     SELECT
                 </div>
                 <div className='row mt-3 m-0 p-0'>
@@ -385,7 +385,7 @@ export default function SqlPopUp(props) {
     const whereClause = () => {
         return <div>
             <div className='row mt-4'>
-                <div className='col-1 m-auto ms-3' style={{ fontFamily: Poppins, color: blue_cloud, fontWeight: "bold", fontSize: "20px" }}>
+                <div className='col-1 m-auto ms-3' style={{ color: blue_cloud, fontWeight: "bold", fontSize: "20px" }}>
                     WHERE
                 </div>
                 <div className='col m-auto '>
@@ -465,7 +465,7 @@ export default function SqlPopUp(props) {
     }
     const groupByClause = () => {
         return <div className='row  mt-5'>
-            <div className='ms-3' style={{ fontFamily: Poppins, color: blue_cloud, fontWeight: "bold", fontSize: "20px" }}>
+            <div className='ms-3' style={{ color: blue_cloud, fontWeight: "bold", fontSize: "20px" }}>
                 GROUP BY
             </div>
             <div className='row p-4 ms-2 mb-2'>
@@ -494,7 +494,7 @@ export default function SqlPopUp(props) {
         return <div>
 
             <div className='row mt-4'>
-                <div className='col-1 m-auto ms-3' style={{ fontFamily: Poppins, color: blue_cloud, fontWeight: "bold", fontSize: "20px" }}>
+                <div className='col-1 m-auto ms-3' style={{ color: blue_cloud, fontWeight: "bold", fontSize: "20px" }}>
                     HAVING
                 </div>
                 <div className='col m-auto '>
@@ -579,7 +579,7 @@ export default function SqlPopUp(props) {
             <div className='row mt-4'>
                 <div className='col-3 ms-3 '>
                     <div className='row  m-auto m-0 p-0'>
-                        <div className='col-5  m-auto m-0 p-0' style={{ fontFamily: Poppins, color: blue_cloud, fontWeight: "bold", fontSize: "20px" }}>
+                        <div className='col-5  m-auto m-0 p-0' style={{ color: blue_cloud, fontWeight: "bold", fontSize: "20px" }}>
                             ORDER BY
                         </div>
                         <div className='col m-auto m-0 p-0 '>

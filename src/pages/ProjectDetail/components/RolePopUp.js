@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Modal, Button } from 'react-bootstrap'
 import { deep_blue_primary } from "../../../utils/color"
-import { Poppins } from "utils/font"
+
 import { editPeopleRoleWithProject } from "../../../api/Project"
 import { Store } from 'react-notifications-component'
 import { content } from "utils/notification"
@@ -100,7 +100,7 @@ export default function RolePopUp(props) {
             size="lg"
         >
             <Modal.Header closeButton>
-                <Modal.Title><div className='d-flex align-items-center' style={{ fontFamily: Poppins, color: deep_blue_primary, "font-weight": "bold", fontSize: "30px" }}>Edit Role</div></Modal.Title>
+                <Modal.Title><div className='d-flex align-items-center' style={{ color: deep_blue_primary, "font-weight": "bold", fontSize: "30px" }}>Edit Role</div></Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 {

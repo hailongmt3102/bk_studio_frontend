@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { getListProject } from 'api/Project'
 import ProjectBox from '../../components/ProjectBox'
 import NewProjectModel from './components/NewProjectModel'
-import { Roboto, Poppins } from "utils/font"
+
 import { deep_blue_primary } from "../../utils/color"
 import add_round from "resources/icons/add_round.svg"
 import { useNavigate } from 'react-router-dom'
@@ -41,7 +41,7 @@ export default function ProjectList() {
         <div>
             <div className='d-flex flex-row pt-2'>
 
-            <h2 class="ms-4 mt-1" style={{ fontFamily: Poppins, color: deep_blue_primary, "font-weight": "bold", fontSize: "40px" }}> 
+            <h2 class="ms-4 mt-1" style={{ color: deep_blue_primary, "font-weight": "bold", fontSize: "40px" }}> 
             Project list
             </h2>
                 <div className='d-flex flex-row pt-1'>

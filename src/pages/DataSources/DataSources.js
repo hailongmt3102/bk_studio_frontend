@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Roboto, Poppins } from "../../utils/font"
+
 import { blue_cloud } from "../../utils/color"
 import { deep_blue_primary } from "../../utils/color"
 import { GetDataSourcesListInformationInWorkSpace } from '../../api/DataSources'
@@ -36,7 +36,7 @@ export default function DataSources() {
         <div>
             <div className='d-flex flex-row pt-2'>
 
-                <h2 class="ms-4 mt-1" style={{ fontFamily: Poppins, color: deep_blue_primary, "font-weight": "bold", fontSize: "40px" }}> Data Sources:</h2>
+                <h2 class="ms-4 mt-1" style={{ color: deep_blue_primary, "font-weight": "bold", fontSize: "40px" }}> Data Sources:</h2>
                 {/* <button className='btn btn-default btn-lg ms-3 p-0'
                     onClick={() => {
                         //setShowPModel(true)
@@ -51,7 +51,7 @@ export default function DataSources() {
 
             <div className='row bg-light'>
                 <div className='col-6 m-4 bg-white'>
-                    <h1 className='m-2 mt-4' style={{ fontFamily: Poppins, color: blue_cloud, "font-weight": "bold" }}>User Sources</h1>
+                    <h1 className='m-2 mt-4' style={{ color: blue_cloud, "font-weight": "bold" }}>User Sources</h1>
                     <div className='row'>
                         {
                             datasourceslist.map((ele, index) => {
@@ -69,7 +69,7 @@ export default function DataSources() {
                 </div>
                 <div className='col-5 m-4 bg-white'>
 
-                    <h1 className='m-2 mt-4' style={{ fontFamily: Poppins, color: blue_cloud, "font-weight": "bold" }}>Sample</h1>
+                    <h1 className='m-2 mt-4' style={{ color: blue_cloud, "font-weight": "bold" }}>Sample</h1>
                     {/* <div className='col-3 ms-4 mt-3 pt-2' style={{ "height": "190px", width: "370px", "border-radius": "20px", "backgroundColor": "#F7F7F7" }}>
                         <div className='row' style={{ "paddingLeft": "310px" }}>
 

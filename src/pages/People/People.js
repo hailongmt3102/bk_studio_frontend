@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Roboto, Poppins } from "../../utils/font"
+
 import { blue_cloud } from "../../utils/color"
 import { deep_blue_primary } from "../../utils/color"
 import avt_people from "resources/icons/avt_people.svg"
@@ -10,9 +10,7 @@ import PeopleCard from "components/PeopleCard/PeopleCard"
 
 import { getListPeople } from '../../api/People'
 
-const textStyle = {
-    fontFamily: Roboto,
-}
+
 export default function People() {
 
     let getEmail = localStorage.getItem("email") ?? ""
@@ -33,14 +31,14 @@ export default function People() {
     }, [])
     return (
         <div>
-            <h2 class="ms-4" style={{ fontFamily: Poppins, color: deep_blue_primary, "font-weight": "bold", fontSize: "40px" }}> People:</h2>
+            <h2 class="ms-4" style={{ color: deep_blue_primary, "font-weight": "bold", fontSize: "40px" }}> People:</h2>
             <div className='rounded-5 bg-white'>
                 <div className='row m-0 p-0 bg-light'>
                     <div className='col-4 m-0 p-0 '>
                         <div className='m-4 p-4 bg-white' style={{ height: "100%" }}>
-                            <h1 className='row ' style={{ fontFamily: Poppins, color: blue_cloud, "font-weight": "bold" }}>Manager</h1>
+                            <h1 className='row ' style={{ color: blue_cloud, "font-weight": "bold" }}>Manager</h1>
                             <div class="p-2"> {
-                                people.map((ele, index) => {
+                                people.map((ele) => {
                                     if (ele.Email === getEmail) {
                                         if (ele.Position !== "Manager") return null
                                         else {
@@ -84,10 +82,10 @@ export default function People() {
                     </div>
                     <div className='col-8 m-0 p-0' >
                         <div className='m-4 p-4 bg-white' style={{ height: "100%" }}>
-                            <h1 style={{ fontFamily: Poppins, color: blue_cloud, "font-weight": "bold" }}>Member</h1>
+                            <h1 style={{ color: blue_cloud, "font-weight": "bold" }}>Member</h1>
                             <div className='row ms-3'>
                                 {
-                                    people.map((ele, index) => {
+                                    people.map((ele) => {
                                         if (ele.Email === getEmail) {
                                             if (ele.Position !== "Member") return null
                                             else {

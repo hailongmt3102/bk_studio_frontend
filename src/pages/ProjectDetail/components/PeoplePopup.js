@@ -7,7 +7,7 @@ import PeopleCard from "components/PeopleCard/PeopleCard"
 import { getListPeople } from '../../../api/People'
 import { inviteMember } from '../../../api/Project'
 import { deep_blue_primary } from "../../../utils/color"
-import { Roboto, Poppins } from "utils/font"
+
 import { createNewProject } from 'api/Project'
 import PeopleCardMini from 'components/PeopleCardMini/PeopleCardMini'
 
@@ -17,7 +17,6 @@ import {content} from "../../../utils/notification"
 import { getListPeopleByProjectID } from '../../../api/People'
 const orangeStyle = {
     color: "black",
-    fontFamily: Poppins
 }
 
 export default function PeoplePopup(props) {
@@ -143,7 +142,7 @@ export default function PeoplePopup(props) {
             size="lg"
         >
             <Modal.Header closeButton>
-                <Modal.Title><div className='d-flex align-items-center' style={{ fontFamily: Poppins, color: deep_blue_primary, "font-weight": "bold", fontSize: "30px" }}>Invite member to project</div></Modal.Title>
+                <Modal.Title><div className='d-flex align-items-center' style={{ color: deep_blue_primary, "font-weight": "bold", fontSize: "30px" }}>Invite member to project</div></Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 {

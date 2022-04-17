@@ -3,7 +3,7 @@ import { Form, InputGroup, Col, Button, FormControl } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import login_image from "resources/images/login_image.png"
 import { ForgotPasswordAPI } from "api/Account"
-import { Roboto, Poppins } from "../../utils/font"
+
 import email from "resources/icons/email.svg";
 
 import { Link } from "react-router-dom";
@@ -61,20 +61,20 @@ export default function ForgetPassword() {
                                     </div>
                                     <div class="col-md-10 col-lg-6 col-xl-5 order-1 order-lg-2 mt-5 ">
                                         {/* <div class="text-center"> <img src={logo}></img></div> */}
-                                        <p class="h1 fw-bold mb-2 mx-1 mx-md-4 mt-5" style={{ color: deep_blue_primary,fontFamily: Poppins }}>Forget Password</p>
+                                        <p class="h1 fw-bold mb-2 mx-1 mx-md-4 mt-5" style={{ color: deep_blue_primary}}>Forget Password</p>
 
 
                                         <div class="form-check mb-5">
-                                            <div class="form-check-label" style={{ fontFamily: Poppins}}>
+                                            <div class="form-check-label" >
                                                 If you already have an account register
                                             </div>
                                             <label class="form-check-label" for="form2Example3">
-                                                You can <Link to="/account/login" class="border-0" style={{color: deep_blue_primary, fontFamily: Poppins,"font-weight": "bold"}}>  Login here !
+                                                You can <Link to="/account/login" class="border-0" style={{color: deep_blue_primary,"font-weight": "bold"}}>  Login here !
                                                 </Link>
                                             </label>
 
                                         </div>
-                                        <form class="mx-1 mx-md-4 mt-2 "  style={{ fontFamily: Poppins, fontSize: 14}}>
+                                        <form class="mx-1 mx-md-4 mt-2 "  style={{ fontSize: 14}}>
 
                                             <Form.Group as={Col} md="12" controlId="validationCustomUsername">
                                                 <Form.Label>Email</Form.Label>
@@ -98,7 +98,7 @@ export default function ForgetPassword() {
                                             
 
                                           
-                                            <div class="d-grid gap-2  mt-5 "  style={{ fontFamily: Poppins, fontSize: 14}}>
+                                            <div class="d-grid gap-2  mt-5 "  style={{ fontSize: 14}}>
                                                 <a class="btn btn-primary p-2" type="button" style={{ backgroundColor: "#034078", borderRadius: "25px " }} onClick={onSubmitHandler}>Send Email</a>
 
                                             </div>
