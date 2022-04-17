@@ -84,10 +84,11 @@ export default function Register() {
         }
         RegisterApi(information)
             .then((res) => {
+                Store.addNotification(content("Success", "Registered", "success"))
                 navigate("/account/login")
             })
             .catch((e) => {
-                Store.addNotification(content("Warning", "Change password fail", "danger"))
+                Store.addNotification(content("Fail", "Register Fail", "danger"))
                 console.log(e.response.data);
             })
 

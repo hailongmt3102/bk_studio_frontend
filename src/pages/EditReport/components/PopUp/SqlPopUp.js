@@ -62,6 +62,7 @@ export default function SqlPopUp(props) {
     }
 
     const submit = () => {
+        setStep(1)
         if (selectedField.length == 0 && function_clause.length == 0) {
             alert("Nothing to compute")
             return

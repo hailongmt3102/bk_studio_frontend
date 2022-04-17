@@ -65,7 +65,7 @@ export default function Login() {
                 navigate("/")
             })
             .catch((e) => {
-                Store.addNotification(content("Warning", "User name or password was wrong", "danger"))
+                Store.addNotification(content("Warning", e.response.data, "danger"))
                 return
                 //alert(e.response.data);
             })
