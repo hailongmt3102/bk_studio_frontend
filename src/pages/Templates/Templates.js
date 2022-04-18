@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { getAllReport as getAllReportApi } from 'api/Report'
+import ReportCard from "components/ReportCard/ReportCard"
+import ReportImg from 'resources/images/report.png'
+
 import { deep_blue_primary } from "../../utils/color"
 import {Store} from 'react-notifications-component'
 import {content} from "../../utils/notification"
-import TemplateCard from 'components/TemplateCard/TemplateCard'
 
 
 export default function Template(props) {
@@ -39,8 +41,8 @@ export default function Template(props) {
             <div className='bg-white'>
                 <div className='row p-4'>
                     {reports.map(ele =>
-                        <div className='col' style={{"Width":"300px", "Height": "300px"}} >
-                            <TemplateCard data={ele} type="Galary" />
+                        <div className='col' style={{"minWidth":"600px", "maxWidth": "600px"}} >
+                            <ReportCard data={ele} type="Templates"/>
                         </div>
                     )}
                 </div>

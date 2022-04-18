@@ -22,7 +22,7 @@ import ConfirmDialog from "components/ConfirmDialog";
 
 export default function ReportCard(props) {
 
-    
+
 
     const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: '', subTitle: '' })
     const handleCloseYes = () => {
@@ -145,7 +145,7 @@ export default function ReportCard(props) {
                                 else if (val === "Edit information") {
                                     setPressEdit(true)
                                 }
-                                else if (val === "Share"){
+                                else if (val === "Share") {
                                     setshowSharePopUp(true)
                                 }
                             }} />
@@ -205,9 +205,9 @@ export default function ReportCard(props) {
                         <p className='m-0 p-0'> <span style={{ "color": "#868585" }}> Created Date: </span>  {props.data.CreateTime} </p>
                     </div>
                     {
-                        props.type === "Galary" ? null : <div className='row mt-2'>
+                        props.type === "Galary" ? <div className='row mt-2'>
                             <p className='m-0 p-0'> <span style={{ "color": "#868585" }}>  Modified Date:  </span>    {props.data.LastModified} </p>
-                        </div>
+                        </div> : null
                     }
                     {
                         pressEdit ?
