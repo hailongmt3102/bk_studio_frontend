@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getListProject } from 'api/Project'
-import ProjectBox from '../../components/ProjectBox'
+import ProjectBox from '../../components/ProjectCard/ProjectBox'
 import NewProjectModel from './components/NewProjectModel'
 
 import { deep_blue_primary } from "../../utils/color"

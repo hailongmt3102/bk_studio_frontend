@@ -20,9 +20,9 @@ import { updateStatus, deleteProject, editProject } from 'api/Project'
 
 
 import { Store } from 'react-notifications-component'
-import { content } from "../utils/notification"
+import { content } from "../../utils/notification"
 
-import ConfirmDialog from "./ConfirmDialog";
+import ConfirmDialog from "../ConfirmDialog";
 const orangeStyle = {
     color: "#FF7F0D",
     fontWeight: "bold",

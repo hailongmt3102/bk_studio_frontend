@@ -1,31 +1,33 @@
 import React, { useState, useEffect } from 'react'
 import { Form } from 'react-bootstrap'
-import default_report_img from "../resources/icons/default_report_img.svg"
-import heart_img from "../resources/icons/heart.svg"
-import hearted from "../resources/icons/hearted.svg"
+
+import default_report_img from "../../resources/icons/default_report_img.svg"
+
+import heart_img from "../../resources/icons/heart.svg"
+import hearted from "../../resources/icons/hearted.svg"
 import { useNavigate } from 'react-router-dom'
-import ThreeDotButton from "../components/ThreeDotButton"
+import ThreeDotButton from "../ThreeDotButton"
 import delete_icon from 'resources/icons/delete.svg'
 import download_blue from "resources/icons/download_blue.svg"
 import share_blue from "resources/icons/share_blue.svg"
 import edit from 'resources/icons/edit.svg'
 import three_dot from "resources/icons/three-dot.svg"
-import { blue_cloud, deep_blue_primary } from "../utils/color"
+import { blue_cloud, deep_blue_primary } from "utils/color"
 import { Store } from 'react-notifications-component'
-import { content } from "../utils/notification"
+import { content } from "../../utils/notification"
 import { like, unlike, deleteReport, updateReportInformation } from 'api/Report'
 import ShareWithPopUp from "components/PopUp/ShareWithPopUp"
 
 import ConfirmDialog from "components/ConfirmDialog";
 
-export default function ReportCard(props) {
+export default function TemplateCard(props) {
 
-    
+
 
     const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: '', subTitle: '' })
     const handleCloseYes = () => {
         deleteSubmit()
-        console.log("close ne")
+        // console.log("close ne")
     }
     const handleCloseNo = () => {
         setConfirmDialog({ ...ConfirmDialog, isOpen: false })
@@ -120,11 +122,9 @@ export default function ReportCard(props) {
                 handleCloseYes={() => handleCloseYes()}
                 handleCloseNo={() => handleCloseNo()}
             />
+
             <div className="row m-0 p-0 mt-4 mb-4  shadow border border-light" style={{ "borderRadius": "20px" }}>
-                <div className='col m-0 p-0' onClick={() => { editReport(props.data.Id) }}>
-                    <img src={default_report_img} height="300" width="300" />
-                </div>
-                <div className='col  m-0 p-0'>
+                <div className='row m-0 p-0'>
                     <div class="d-flex flex-row-reverse me-3">
                         <button type="button" class="btn btn-sm" onClick={() => {
                             if (heart == false) {
@@ -143,7 +143,7 @@ export default function ReportCard(props) {
                                 else if (val === "Edit information") {
                                     setPressEdit(true)
                                 }
-                                else if (val === "Share"){
+                                else if (val === "Share") {
                                     setshowSharePopUp(true)
                                 }
                             }} />
@@ -154,7 +154,7 @@ export default function ReportCard(props) {
                     {
                         pressEdit ?
                             <div>
-                                <div className='row pe-4' style={{ maxHeight: "50px" }}>
+                                {/* <div className='row pe-4' style={{ maxHeight: "50px" }}>
                                     <Form.Control size="sm" type="text" value={dataToUpdate.Name} onChange={(event) => {
                                         setDataToUpdate({ ...dataToUpdate, Name: event.target.value })
                                     }}
@@ -180,20 +180,20 @@ export default function ReportCard(props) {
                                             "fontWeight": "bold"
                                         }}
                                     />
-                                </div>
+                                </div> */}
                             </div> :
                             <div>
-                                <div className='row mt-2' style={{ "color": deep_blue_primary, "fontSize": "28px", "fontWeight": "bold" }}>
+                                {/* <div className='row mt-2' style={{ "color": deep_blue_primary, "fontSize": "28px", "fontWeight": "bold" }}>
                                     {props.data.Name.slice(0, 20)}
                                 </div>
                                 <div className='row mb-2' style={{ "color": blue_cloud, "fontSize": "23px", "fontWeight": "bold" }}>
                                     {props.data.Hastag}
-                                </div>
+                                </div> */}
                             </div>
                     }
 
 
-                    <div className='row mt-4'>
+                    {/* <div className='row mt-4'>
                         <p className='m-0 p-0'> <span style={{ "color": "#868585" }}>Id:</span> {props.data.Id} </p>
                     </div>
                     <div className='row mt-2'>
@@ -201,7 +201,7 @@ export default function ReportCard(props) {
                     </div>
                     <div className='row mt-2'>
                         <p className='m-0 p-0'> <span style={{ "color": "#868585" }}> Created Date: </span>  {props.data.CreateTime} </p>
-                    </div>
+                    </div> */}
                     {
                         props.type === "Galary" ? null : <div className='row mt-2'>
                             <p className='m-0 p-0'> <span style={{ "color": "#868585" }}>  Modified Date:  </span>    {props.data.LastModified} </p>
@@ -217,7 +217,15 @@ export default function ReportCard(props) {
                             : null
                     }
                 </div>
+                <div className='row mt-2 ms-4 text-center' style={{ "color": deep_blue_primary, "fontSize": "28px", "fontWeight": "bold" }}>
+                    {props.data.Name.slice(0, 20)}
+                </div>
+                <div className='row m-0 p-0' onClick={() => { editReport(props.data.Id) }}>
+                    <img src={default_report_img} height="200" width="200" />
+                </div>
+
             </div >
+
         </div>
     )
 }

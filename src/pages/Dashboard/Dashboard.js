@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { deep_blue_primary } from "../../utils/color"
 import { getListProject } from 'api/Project'
 import { getListPeople } from 'api/People'
-import ProjectBox from '../../components/ProjectBox'
+import ProjectBox from '../../components/ProjectCard/ProjectBox'
 import PeopleCardMini from "components/PeopleCardMini/PeopleCardMini"
 import { localizationContext } from '../../App'
 export default function Dashboard() {
