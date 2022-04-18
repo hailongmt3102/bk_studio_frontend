@@ -2,6 +2,9 @@ import { createNewComponent, deleteShape as deleteShapeApi, getAllComponent } fr
 import { ArcElement, BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, LineElement, PointElement, Title, Tooltip } from 'chart.js';
 import React, { useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import FloatingCard from './FloatingCard';
+import FloatText from './FloatText';
+import LongCanvas from './LongCanvas';
 import Shape from './Shape';
 
 
@@ -22,7 +25,8 @@ const Content = React.forwardRef((props, ref) => {
     const [components, setComponents] = useState([])
     const ShapeRef = useRef([]);
     const currentProject = localStorage.getItem("currentProject")
-
+    const [mode, setMode] = useState("addText")
+    const [newFloatCard, setNewFloatCard] = useState(<FloatText />)
     ShapeRef.current = []
     const addToRefs = (el, index) => {
         if (el && !ShapeRef.current.includes(el) && !Object.keys(ShapeRef.current).includes(index.toString())) {
@@ -157,7 +161,7 @@ const Content = React.forwardRef((props, ref) => {
                 pasteShape() {
                     pasteShape()
                 },
-                deleteShape(){
+                deleteShape() {
                     deleteShape()
                 }
             }
@@ -244,10 +248,53 @@ const Content = React.forwardRef((props, ref) => {
                 alert(err.response.data)
             })
     }
+    // -------------------------------------
+    // drag area
+    const defaultLocation = {
+        size: {
+            width: 0,
+            height: 0
+        },
+        position: {
+            x: 0, y: 0
+        }
+    }
+    const [dragAreaLocation, setDragAreaLocation] = useState(defaultLocation)
+    const [isAdding, setIsAdding] = useState(true)
 
+    const adjustedMouseEvent = () => {
+        const canvas = this.current
+        if (canvas == null) return
+        console.log("asdfasdfadsf")
+        // let position
+        // const onMouseMove = (e) => {
+        //     const size = {
+        //         width: e.offsetX - position.x,
+        //         height: e.offsetY - position.y,
+        //     }
+        //     setDragAreaLocation(prev => ({ ...prev, size }))
+        // }
+        // canvas.addEventListener("mousedown", (e) => {
+        //     position = {
+        //         x: e.offsetX,
+        //         y: e.offsetY     
+        //     }
+        //     setDragAreaLocation(prev => ({ ...prev, position }))
+        //     setIsAdding(true)
+        //     canvas.addEventListener("mousemove", onMouseMove)
+        //     canvas.addEventListener("mouseup", () => {
+        //         canvas.removeEventListener("mousemove", onMouseMove)
+        //         setDragAreaLocation(defaultLocation)
+        //         setIsAdding(false)
+        //     })
+        // })
+    }
     // -------------------------------------------------------
     return (
         <React.Fragment>
+            <div style={{width: "100%", height:"100%", backgroundColor: "#000"}}>
+
+            </div>
             {
                 components.map((component, index) =>
                     <div onMouseDown={() => {
@@ -262,7 +309,8 @@ const Content = React.forwardRef((props, ref) => {
                         />
                     </div>)
             }
-
+            {/* <LongCanvas mode={mode}>
+            </LongCanvas> */}
         </React.Fragment>
     )
 })

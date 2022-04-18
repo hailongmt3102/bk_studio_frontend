@@ -24,6 +24,7 @@ import { createNewReport, createNewComponent, getReportInformation, updateReport
 import { useLocation, useNavigate } from "react-router-dom";
 import { deep_blue_primary } from "utils/color";
 import { textStyleDefault, widthDefault, heightDefault, frameStyleDefault, positionDefault } from 'utils/shape'
+import { Rnd } from "react-rnd";
 
 
 export default function EditReport(props) {
@@ -33,6 +34,8 @@ export default function EditReport(props) {
     const nav = useNavigate()
     let RId = location.split('/')[3]
     const currentProject = localStorage.getItem("currentProject")
+    const contentRef = useRef(null)
+
 
     const updateSubmit = async () => {
         try {
@@ -288,7 +291,6 @@ export default function EditReport(props) {
     const [showShareLinkPopUp, setshowShareLinkPopUp] = useState(false)
 
     // ref to content component of report
-    const contentRef = useRef()
     const saveAllShapeComponents = () => {
         contentRef.current.saveAllShape()
     }
@@ -298,6 +300,54 @@ export default function EditReport(props) {
     const deleteShape = () => {
         contentRef.current.deleteShape()
     }
+
+    // =======================================================
+    // drag area
+    const defaultLocation = {
+        size: {
+            width: 0,
+            height: 0
+        },
+        position: {
+            x: 0, y: 0
+        }
+    }
+    const [dragAreaLocation, setDragAreaLocation] = useState(defaultLocation)
+    const [isAdding, setIsAdding] = useState(true)
+
+    const adjustedMouseEvent = () => {
+        const canvas = contentRef.current
+        if (canvas == null) return
+        console.log("asdfasdfadsf")
+        // let position
+        // const onMouseMove = (e) => {
+        //     const size = {
+        //         width: e.offsetX - position.x,
+        //         height: e.offsetY - position.y,
+        //     }
+        //     setDragAreaLocation(prev => ({ ...prev, size }))
+        // }
+        // canvas.addEventListener("mousedown", (e) => {
+        //     position = {
+        //         x: e.offsetX,
+        //         y: e.offsetY     
+        //     }
+        //     setDragAreaLocation(prev => ({ ...prev, position }))
+        //     setIsAdding(true)
+        //     canvas.addEventListener("mousemove", onMouseMove)
+        //     canvas.addEventListener("mouseup", () => {
+        //         canvas.removeEventListener("mousemove", onMouseMove)
+        //         setDragAreaLocation(defaultLocation)
+        //         setIsAdding(false)
+        //     })
+        // })
+    }
+
+    useEffect(() => {
+        adjustedMouseEvent()
+    }, [contentRef.current])
+    // =======================================================
+
 
     return (
         <div>
@@ -411,6 +461,7 @@ export default function EditReport(props) {
                     </div>
                 </div>
             </div>
+            {/* {isAdding && <Rnd size={location.size} position={location.position} className="border" />} */}
         </div>
     );
 }
