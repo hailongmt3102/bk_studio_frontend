@@ -13,8 +13,11 @@ import {
 export default function DataSourceContent(props) {
     var location = useLocation()
     const [datasource, setDatasource] = useState([])
+
     const array = location.pathname.split("/");
     var DId = array[array.length - 2]
+    const role = array[array.length - 1]
+    console.log("role nè", role)
     const [dataFile, setDataFile] = useState([])
     // const [rows, setRows] = useState([])
     useEffect(() => {
@@ -142,9 +145,13 @@ export default function DataSourceContent(props) {
                 </div>
                 <div className='bg-white row m-2'>
                     <div className='col-9'>
-                        <div style={{ height: 300, width: '100%' }}>
-                            <DataGrid rows={rows} columns={columns} />
-                        </div>
+                        {
+                            role === "edit" ?
+                                <div style={{ height: 300, width: '100%' }}>
+                                    <DataGrid rows={rows} columns={columns} />
+                                </div>
+                                : null
+                        }
                         {/* <Table name={datasource.Information} data={dataFile} rows={rows} columns={columns} /> */}
                     </div>
                     <div className='col-3'>

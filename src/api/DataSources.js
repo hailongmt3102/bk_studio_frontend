@@ -58,6 +58,10 @@ const showDataSourceContent = (id) => {
     return axiosClient.get("/data/" + id + "/rows")
 }
 
+const checkPermissionWithDatasource = (id) => {
+    return axiosClient.get("/data/" + id + "/permission")
+}
+
 
 
 export {
@@ -73,5 +77,6 @@ export {
     shareDataSources,
     Rename,
     getDataSourcesInformationByDId,
-    showDataSourceContent
+    showDataSourceContent,
+    checkPermissionWithDatasource
 }
