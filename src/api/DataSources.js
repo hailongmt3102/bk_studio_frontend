@@ -51,6 +51,12 @@ const shareDataSources = (id, data) => {
 }
 
 
+const getDataSourcesInformationByDId = (id) => {
+    return axiosClient.get("/data/" + id + "/info")
+}
+const showDataSourceContent = (id) => {
+    return axiosClient.get("/data/" + id + "/rows")
+}
 
 
 
@@ -65,5 +71,7 @@ export {
     deleteDatasource,
     getDataSourcesSharedListPeople,
     shareDataSources,
-    Rename
+    Rename,
+    getDataSourcesInformationByDId,
+    showDataSourceContent
 }
