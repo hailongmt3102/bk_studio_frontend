@@ -28,7 +28,7 @@ import excel_icon from "resources/icons/excel_icon.svg"
 import ShareDataSourcesPopUp from "../DataSources/component/ShareDataSourcesPopUp"
 import three_dot from "resources/icons/three-dot.svg"
 import ThreeDotButton from 'components/ThreeDotButton'
-import { ScrollMenu, VisibilityContext } from 'react-horizontal-scrolling-menu';
+import { ScrollMenu } from 'react-horizontal-scrolling-menu';
 
 
 export default function ProjectDetail() {

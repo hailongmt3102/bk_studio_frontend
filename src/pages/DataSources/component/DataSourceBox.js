@@ -93,9 +93,9 @@ export default function DataSourceBox(props) {
                         }
                     }} />
             </div>
-            <div className="row m-0 p-0">
-                <div className="col-4 m-0 p-0 customFontRoboto" >
-                    <img src={excel_icon} height="120px" width="100%" />
+            <div className="row m-0 p-0" onClick={()=>{navigate(`/datasources/${props.ele.Id}/view`)}}>
+                <div className="col-4 m-0 p-0 customFontRoboto"   >
+                    <img src={excel_icon} height="120px" width="100%"  />
                 </div>
                 <div className="col-8 m-0 p-0 customFontRoboto" >
                     <div className="row m-0 p-0 customFontRoboto" style={{ color: blue_cloud, fontSize: "28px" }}>
