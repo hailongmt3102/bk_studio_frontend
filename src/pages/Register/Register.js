@@ -84,7 +84,7 @@ export default function Register() {
         }
         RegisterApi(information)
             .then((res) => {
-                Store.addNotification(content("Success", "Registered", "success"))
+                Store.addNotification(content("Success", "Registered and Please verify account from us email", "success"))
                 navigate("/account/login")
             })
             .catch((e) => {
