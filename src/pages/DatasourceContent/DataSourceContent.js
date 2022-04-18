@@ -17,12 +17,18 @@ export default function DataSourceContent(props) {
     const array = location.pathname.split("/");
     var DId = array[array.length - 2]
     const role = array[array.length - 1]
-    console.log("role nè", role)
     const [dataFile, setDataFile] = useState([])
-    // const [rows, setRows] = useState([])
+
+
+    const [rows, setRows] = useState([])
+    const [columns, setColumns] = useState([])
+
     useEffect(() => {
+        console.log(rows)
+        console.log(columns)
+    }, [rows, columns])
 
-
+    useEffect(() => {
         getDataSourcesInformationByDId(DId)
             .then(res => {
                 setDatasource(res.data)
@@ -33,9 +39,38 @@ export default function DataSourceContent(props) {
             })
         showDataSourceContent(DId)
             .then(res => {
-                setDataFile(res.data)
+                // set rows and columns
+                if (res.data.length == 0) return
+                const keys = Object.keys(res.data[0])
+                // parse keys to columns data
+                const isEdit = props.isEdit
+                const width = 150
 
-                console.log(res.data)
+                // TODO : parse type of content and set to Grid UI
+                let columns = keys.map(key => {
+                    if (key == "DataSource_Id")
+                        return {
+                            field: 'id',
+                            headerName: key,
+                            editable: isEdit,
+                            width : width
+                        }
+                    return {
+                        field: key,
+                        headerName: key,
+                        editable: isEdit,
+                        width : width
+                    }
+                })
+
+                setColumns(columns)
+                // set row data
+                let rows = res.data.map(row => {
+                    row.id = row.DataSource_Id
+                    delete row.DataSource_Id
+                    return row
+                })
+                setRows(rows)
             })
             .catch(err => {
                 console.log(err)
@@ -44,89 +79,62 @@ export default function DataSourceContent(props) {
     }, [])
 
 
-    const columns = [
-        { field: 'name', headerName: 'Name', width: 180, editable: true },
-        { field: 'age', headerName: 'Age', type: 'number', editable: true },
-        {
-            field: 'dateCreated',
-            headerName: 'Date Created',
-            type: 'date',
-            width: 180,
-            editable: true,
-        },
-        {
-            field: 'lastLogin',
-            headerName: 'Last Login',
-            type: 'dateTime',
-            width: 220,
-            editable: true,
-        },
-    ];
+    // const columns = [
+    //     { field: 'name', headerName: 'Name', width: 180, editable: true },
+    //     { field: 'age', headerName: 'Age', type: 'number', editable: true },
+    //     {
+    //         field: 'dateCreated',
+    //         headerName: 'Date Created',
+    //         type: 'date',
+    //         width: 180,
+    //         editable: true,
+    //     },
+    //     {
+    //         field: 'lastLogin',
+    //         headerName: 'Last Login',
+    //         type: 'dateTime',
+    //         width: 220,
+    //         editable: true,
+    //     },
+    // ];
 
-    const rows = [
-        {
-            id: 1,
-            name: randomTraderName(),
-            age: 25,
-            dateCreated: randomCreatedDate(),
-            lastLogin: randomUpdatedDate(),
-        },
-        {
-            id: 2,
-            name: randomTraderName(),
-            age: 36,
-            dateCreated: randomCreatedDate(),
-            lastLogin: randomUpdatedDate(),
-        },
-        {
-            id: 3,
-            name: randomTraderName(),
-            age: 19,
-            dateCreated: randomCreatedDate(),
-            lastLogin: randomUpdatedDate(),
-        },
-        {
-            id: 4,
-            name: randomTraderName(),
-            age: 28,
-            dateCreated: randomCreatedDate(),
-            lastLogin: randomUpdatedDate(),
-        },
-        {
-            id: 5,
-            name: randomTraderName(),
-            age: 23,
-            dateCreated: randomCreatedDate(),
-            lastLogin: randomUpdatedDate(),
-        },
-    ];
-
-
-
-
-    // useEffect(() => {
-    //     setColumns({
-    //         data: Object.keys(dataFile),
-    //         active: new Array(Object.keys(dataFile).length).fill(true)
-    //     })
-    //     setRows(Array.from({ length: dataFile.length }, (_, i) => i))
-    // }, [])
-
-    // rows, columns of table 1
-    // const [columns, setColumns] = useState({
-    //     data: [],
-    //     active: []
-    // })
-    // const [rows, setRows] = useState([])
-
-
-    // const editColumns = (index) => {
-    //     setColumns({...columns, active: columns.active.map((element, i) => {
-    //         if (i === index) return !element
-    //         else return element
-    //     })})
-    // }
-
+    // const rows = [
+    //     {
+    //         id: 1,
+    //         name: randomTraderName(),
+    //         age: 25,
+    //         dateCreated: randomCreatedDate(),
+    //         lastLogin: randomUpdatedDate(),
+    //     },
+    //     {
+    //         id: 2,
+    //         name: randomTraderName(),
+    //         age: 36,
+    //         dateCreated: randomCreatedDate(),
+    //         lastLogin: randomUpdatedDate(),
+    //     },
+    //     {
+    //         id: 3,
+    //         name: randomTraderName(),
+    //         age: 19,
+    //         dateCreated: randomCreatedDate(),
+    //         lastLogin: randomUpdatedDate(),
+    //     },
+    //     {
+    //         id: 4,
+    //         name: randomTraderName(),
+    //         age: 28,
+    //         dateCreated: randomCreatedDate(),
+    //         lastLogin: randomUpdatedDate(),
+    //     },
+    //     {
+    //         id: 5,
+    //         name: randomTraderName(),
+    //         age: 23,
+    //         dateCreated: randomCreatedDate(),
+    //         lastLogin: randomUpdatedDate(),
+    //     },
+    // ];
 
     return (
         <div>
@@ -146,11 +154,14 @@ export default function DataSourceContent(props) {
                 <div className='bg-white row m-2'>
                     <div className='col-9'>
                         {
-                            role === "edit" ?
-                                <div style={{ height: 300, width: '100%' }}>
-                                    <DataGrid rows={rows} columns={columns} />
-                                </div>
-                                : null
+                            <div style={{ height: 500, width: '100%' }}>
+                                <DataGrid rows={rows} columns={columns}
+                                    columnVisibilityModel={{
+                                        // Hide columns status and traderName, the other columns will remain visible
+                                        id: false,
+                                    }}
+                                />
+                            </div>
                         }
                         {/* <Table name={datasource.Information} data={dataFile} rows={rows} columns={columns} /> */}
                     </div>
