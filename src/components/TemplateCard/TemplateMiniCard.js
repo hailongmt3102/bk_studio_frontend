@@ -177,7 +177,7 @@ export default function TemplateMiniCard(props) {
                 handleCloseNo={() => handleCloseNo()}
             />
 
-            <div className="row text-center m-0 p-0 mt-4 mb-4  shadow border border-light" style={{ "borderRadius": "20px" }}>
+            <div className="row text-center m-0 p-0 ms-4 shadow border border-light" style={{ "borderRadius": "20px" }}>
                 {headComponent()}
                 <div className='row m-0 p-0' onClick={() => { editReport(props.data.Id) }}>
                     <img src={default_report_img} height="200" width="200" />

@@ -74,10 +74,10 @@ export default function Dashboard() {
                     <div className='col-7 m-0 p-0'>
                         <div className='me-4 mt-4 p-4 bg-white' style={{ "minHeight": "1000px" }}>
                             <h1 className='' style={{ color: deep_blue_primary, "font-weight": "bold", fontSize: "40px" }}>{localization.Templates}</h1>
-                            <p className=''>Variety template for your choice</p>
-                            <div className='row p-4'>
+                            <p className='m-0 p-0'>Variety template for your choice</p>
+                            <div className='row m-0 p-0'>
                                 {reports.map(ele =>
-                                    <div className='col' style={{ "minWidth": "300px", "maxWidth": "300px", maxHeight: "300px" }} >
+                                    <div className='col mt-4 m-0 p-0' style={{ "minWidth": "300px", "maxWidth": "300px", maxHeight: "300px" }} >
                                         <TemplateMiniCard data={ele} type="Templates" />
                                     </div>
                                 )}
@@ -88,10 +88,10 @@ export default function Dashboard() {
                     <div className='col-5 m-0 p-0'>
                         <div className=' mt-4 p-4 bg-white' style={{ "minHeight": "1000px" }}>
                             <h1 style={{ color: deep_blue_primary, "font-weight": "bold", fontSize: "40px" }}>{localization.People}</h1>
-                            <div className='row'>
+                            <div className='row mt-5'>
                                 {
                                     peopleList.slice(0).reverse().map((people, index) => {
-                                        return <div id={index} className="col m-2">
+                                        return <div id={index} className="col ms-2">
                                             <PeopleCardMini
                                                 name={people.UserName}
                                                 email={people.Email}
