@@ -14,11 +14,13 @@ import { blue_cloud, deep_blue_primary } from "../utils/color"
 import { Store } from 'react-notifications-component'
 import { content } from "../utils/notification"
 import { like, unlike, deleteReport, updateReportInformation } from 'api/Report'
-
+import ShareWithPopUp from "components/PopUp/ShareWithPopUp"
 
 import ConfirmDialog from "components/ConfirmDialog";
 
 export default function ReportCard(props) {
+
+    var myEmail = localStorage.getItem("email")
 
     const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: '', subTitle: '' })
     const handleCloseYes = () => {
@@ -83,7 +85,7 @@ export default function ReportCard(props) {
         "Description": "",
         "Name": props.data.Name
     })
-
+    const [showSharePopUp, setshowSharePopUp] = useState(false)
     const updateSubmit = () => {
         updateReportInformation(currentProject, RId, dataToUpdate)
             .then(res => {
@@ -100,6 +102,18 @@ export default function ReportCard(props) {
     return (
 
         <div>
+            <ShareWithPopUp
+                currentProject={currentProject}
+                RId={RId}
+                show={showSharePopUp}
+                handleOpen={() => {
+                    setshowSharePopUp(true)
+                }}
+                handleClose={() => {
+                    setshowSharePopUp(false)
+                }}
+
+            />
             <ConfirmDialog
                 confirmDialog={confirmDialog}
                 title="Are you sure you want to delete this project?"
@@ -128,7 +142,9 @@ export default function ReportCard(props) {
                                     handleOpen()
                                 else if (val === "Edit information") {
                                     setPressEdit(true)
-
+                                }
+                                else if (val === "Share"){
+                                    setshowSharePopUp(true)
                                 }
                             }} />
                         </div>

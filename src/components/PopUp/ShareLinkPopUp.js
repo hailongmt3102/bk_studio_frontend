@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { Modal, Button } from 'react-bootstrap'
-import { blue_cloud, deep_blue_primary } from "../../../../utils/color"
+import { blue_cloud, deep_blue_primary } from "../../utils/color"
 
-import { editPeopleRoleWithProject } from "../../../../api/Project"
+import { editPeopleRoleWithProject } from "../../api/Project"
 import { getListPeopleByProjectID } from "api/People"
 
 import { shareReport, getSharedListPeople } from "api/Report"

@@ -17,9 +17,9 @@ import Autocomplete from '@mui/material/Autocomplete';
 import { GetDataSourcesListInformationInProject, getColumnsOfTable } from "api/DataSources"
 import { Store } from 'react-notifications-component'
 import { content } from "utils/notification"
-import SqlPopUp from "./components/PopUp/SqlPopUp";
-import ShareWithPopUp from "./components/PopUp/ShareWithPopUp";
-import ShareLinkPopUp from "./components/PopUp/ShareLinkPopUp";
+import SqlPopUp from "../../components/PopUp/SqlPopUp";
+import ShareWithPopUp from "../../components/PopUp/ShareWithPopUp";
+import ShareLinkPopUp from "../../components/PopUp/ShareLinkPopUp";
 import { createNewReport, createNewComponent, getReportInformation, updateReportInformation } from 'api/Report'
 import { useLocation, useNavigate } from "react-router-dom";
 import { deep_blue_primary } from "utils/color";

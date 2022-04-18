@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { Modal, Button } from 'react-bootstrap'
-import { blue_cloud, deep_blue_primary } from "../../../../utils/color"
+import { blue_cloud, deep_blue_primary } from "../../utils/color"
 
-import { editPeopleRoleWithProject } from "../../../../api/Project"
+import { editPeopleRoleWithProject } from "../../api/Project"
 import { getListPeopleByProjectID } from "api/People"
 
 import { shareReport, getSharedListPeople, updateSharePermission } from "api/Report"
@@ -21,8 +21,13 @@ import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import NativeSelect from '@mui/material/NativeSelect';
+
 export default function ShareWithPopUp(props) {
 
+    
+
+    var myEmail = localStorage.getItem("email")
+    // console.log("email",myEmail)
 
     const roleList = ["View", "Edit"]
     const staus_icon_list = [eye_bluecloud, edit]
@@ -45,7 +50,7 @@ export default function ShareWithPopUp(props) {
     useEffect(() => {
         getListPeopleByProjectID(props.currentProject)
             .then(res => {
-                setListShowPeople(res.data.map((e) => e.Email).filter(item => !listSharedName.includes(item)))
+                setListShowPeople(res.data.map((e) => e.Email).filter(item => (!listSharedName.includes(item) && item !== myEmail)))
                 //console.log("list show",res.data.map((e)=>e.Email).filter(item => !listSharedName.includes(item)))
             })
             .catch(err => {
