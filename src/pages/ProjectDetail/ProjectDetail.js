@@ -115,26 +115,6 @@ export default function ProjectDetail() {
     }, [])
     const option_list = ["Send to Workspace", "Rename", "Share", "Download", "Delete"]
     const icon_list = [sendTo, edit, share_blue, download_blue, delete_icon]
-    // function LeftArrow() {
-    //     const { isFirstItemVisible, scrollPrev } =
-    //         React.useContext(VisibilityContext);
-
-    //     return (
-    //         <Arrow disabled={isFirstItemVisible} onClick={() => scrollPrev()}>
-    //             Left
-    //         </Arrow>
-    //     );
-    // }
-
-    // function RightArrow() {
-    //     const { isLastItemVisible, scrollNext } = React.useContext(VisibilityContext);
-
-    //     return (
-    //         <Arrow disabled={isLastItemVisible} onClick={() => scrollNext()}>
-    //             Right
-    //         </Arrow>
-    //     );
-    // }
     const dataSourcesComponent = () => {
         return <div>
             <ShareDataSourcesPopUp
@@ -153,24 +133,27 @@ export default function ProjectDetail() {
 
             <div className='row m-0 p-0 mt-3' >
                 <div className=' col-10' style={{ color: deep_blue_primary, "font-weight": "bold", fontSize: "40px" }}>Data Sources:</div>
+                <div className='m-3 p-4 bg-white' style={{ minheight: "300px" }}>
+                    <ScrollMenu>
+                        {datasourceslist.map((ele, index) => (
+                            <DataSourceBox
+                                option_list={option_list}
+                                icon_list={icon_list}
+                                setDatasourceslist={setDatasourceslist}
+                                datasourceslist={datasourceslist}
+                                ele={ele}
+                                index={index}
+                                showSharePopUpHandle={showSharePopUpHandle} />
+                        ))}
+                    </ScrollMenu>
+                </div>
             </div>
-            <ScrollMenu>
-                {datasourceslist.map(( ele, index ) => (
-                    <DataSourceBox
-                        option_list={option_list}
-                        icon_list={icon_list}
-                        setDatasourceslist={setDatasourceslist}
-                        datasourceslist={datasourceslist}
-                        ele={ele}
-                        index={index}
-                        showSharePopUpHandle={showSharePopUpHandle} />
-                ))}
-            </ScrollMenu>
-            
 
 
 
-        </div>
+
+
+        </div >
     }
 
     const peopleComponent = () => {
