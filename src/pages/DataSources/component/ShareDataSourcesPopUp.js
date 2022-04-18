@@ -22,7 +22,7 @@ import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import NativeSelect from '@mui/material/NativeSelect';
 export default function ShareDataSourcesPopUp(props) {
-
+    var myEmail = localStorage.getItem("email")
 
     const roleList = ["View", "Edit"]
     const staus_icon_list = [eye_bluecloud, edit]
@@ -48,7 +48,7 @@ export default function ShareDataSourcesPopUp(props) {
             getListPeopleByProjectID(props.currentProject)
                 .then(res => {
                     setListShowPeople(res.data.map((e) => e.Email).filter(item => !listSharedName.includes(item)))
-                    console.log("list show Detail", res.data.map((e) => e.Email).filter(item => !listSharedName.includes(item)))
+                    console.log("list show Detail", res.data.map((e) => e.Email).filter(item => !listSharedName.includes(item) && item !== myEmail))
                 })
                 .catch(err => {
                     Store.addNotification(content("Warning", "Can't show list people in this project", "danger"))
@@ -59,7 +59,7 @@ export default function ShareDataSourcesPopUp(props) {
             //People In workspacr
             getListPeople()
                 .then(res => {
-                    setListShowPeople(res.data.map((e) => e.Email).filter(item => !listSharedName.includes(item)))
+                    setListShowPeople(res.data.map((e) => e.Email).filter(item => !listSharedName.includes(item) && item !== myEmail))
                     //console.log("list show workspace", res.data.map((e) => e.Email).filter(item => !listSharedName.includes(item)))
                 })
                 .catch(err => {

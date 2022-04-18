@@ -20,7 +20,7 @@ import ConfirmDialog from "components/ConfirmDialog";
 
 export default function ReportCard(props) {
 
-    var myEmail = localStorage.getItem("email")
+    
 
     const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: '', subTitle: '' })
     const handleCloseYes = () => {
