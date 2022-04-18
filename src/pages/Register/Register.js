@@ -88,7 +88,7 @@ export default function Register() {
                 navigate("/account/login")
             })
             .catch((e) => {
-                Store.addNotification(content("Fail", "Register Fail", "danger"))
+                Store.addNotification(content("Fail", e.response.data, "danger"))
                 console.log(e.response.data);
             })
 
