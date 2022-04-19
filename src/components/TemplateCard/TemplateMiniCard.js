@@ -130,7 +130,7 @@ export default function TemplateMiniCard(props) {
             {
                 pressEdit ?
                     <div>
-                        {<div className='row text-center ms-4 pe-5' style={{ maxHeight: "50px" }}>
+                        {<div className=' m-0 p-0 text-center ms-4 pe-5' style={{ maxHeight: "50px" }}>
                             <Form.Control size="sm" type="text" value={dataToUpdate.Name} onChange={(event) => {
                                 setDataToUpdate({ ...dataToUpdate, Name: event.target.value })
                             }}
@@ -177,9 +177,9 @@ export default function TemplateMiniCard(props) {
                 handleCloseNo={() => handleCloseNo()}
             />
 
-            <div className="row text-center m-0 p-0 ms-4 shadow border border-light" style={{ "borderRadius": "20px" }}>
+            <div className="text-center m-0 p-0 ms-4 shadow border border-light" style={{ "borderRadius": "20px" }}>
                 {headComponent()}
-                <div className='row m-0 p-0' onClick={() => { editReport(props.data.Id) }}>
+                <div className='text-center m-0 p-0' onClick={() => { editReport(props.data.Id) }}>
                     <img src={default_report_img} height="200" width="200" />
                 </div>
 
