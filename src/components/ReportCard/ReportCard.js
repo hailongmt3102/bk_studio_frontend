@@ -95,7 +95,7 @@ export default function ReportCard(props) {
                 setTimeout(() => window.location.reload(), 1000);
             })
             .catch(err => {
-                Store.addNotification(content("Fail", "Fail update", "danger"))
+                Store.addNotification(content("Fail", err.response.data, "danger"))
                 console.log(err.response.data)
 
             })
@@ -123,7 +123,8 @@ export default function ReportCard(props) {
                 handleCloseNo={() => handleCloseNo()}
             />
             <div className="row m-0 p-0 mt-4 mb-4  shadow border border-light" style={{ "borderRadius": "20px" }}>
-                <div className='col m-0 p-0' onClick={() => { editReport(props.data.Id) }}>
+                <div className='col m-0 p-0' onClick={() => {
+                    props.type === "Template" ? nav(`/project/gallery/${props.data.Id}`)  :editReport(props.data.Id) }}>
                     <img src={default_report_img} height="300" width="300" />
                 </div>
                 <div className='col  m-0 p-0'>
@@ -139,16 +140,21 @@ export default function ReportCard(props) {
                             <img src={heart == false ? heart_img : hearted} height="20px" width="20px" />
                         </button>
                         <div>
-                            <ThreeDotButton title={'adđ'} items={option_list} icons_list={icons_list} icon={three_dot} onClick={(val) => {
-                                if (val === 'Delete')
-                                    handleOpen()
-                                else if (val === "Edit information") {
-                                    setPressEdit(true)
-                                }
-                                else if (val === "Share") {
-                                    setshowSharePopUp(true)
-                                }
-                            }} />
+                            <ThreeDotButton
+                                title={'adđ'}
+                                items={option_list}
+                                icons_list={icons_list}
+                                icon={three_dot}
+                                onClick={(val) => {
+                                    if (val === 'Delete')
+                                        handleOpen()
+                                    else if (val === "Edit information") {
+                                        setPressEdit(true)
+                                    }
+                                    else if (val === "Share") {
+                                        setshowSharePopUp(true)
+                                    }
+                                }} />
                         </div>
                     </div>
                     <div className='row ' >

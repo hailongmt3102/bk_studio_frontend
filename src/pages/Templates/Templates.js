@@ -39,7 +39,7 @@ export default function Template(props) {
                 <div className='row p-4'>
                     {reports.map(ele =>
                         <div className='col' style={{ "minWidth": "600px", "maxWidth": "600px" }} >
-                            <ReportCard data={ele} type="Templates" />
+                            <ReportCard data={ele} type="Template" />
                         </div>
                     )}
                 </div>

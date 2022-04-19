@@ -95,7 +95,7 @@ export default function TemplateMiniCard(props) {
                 setTimeout(() => window.location.reload(), 1000);
             })
             .catch(err => {
-                Store.addNotification(content("Fail", "Fail update", "danger"))
+                Store.addNotification(content("Fail", err.response.data, "danger"))
                 console.log(err.response.data)
 
             })
@@ -182,8 +182,6 @@ export default function TemplateMiniCard(props) {
                 <div className='text-center m-0 p-0' onClick={() => { editReport(props.data.Id) }}>
                     <img src={default_report_img} height="200" width="200" />
                 </div>
-
-
                 {
                     pressEdit ?
                         <div className='text-center mb-2'>
