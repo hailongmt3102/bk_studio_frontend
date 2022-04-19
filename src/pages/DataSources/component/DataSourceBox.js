@@ -93,7 +93,7 @@ export default function DataSourceBox(props) {
     }
 
     return (
-        <div className='col-3 ms-4 mt-3 pt-2 mb-5' style={{ "height": "200px", width: "400px", "border-radius": "20px", "backgroundColor": "#F7F7F7" }}>
+        <div className='ms-4 mt-3 pt-2 mb-5' style={{  "border-radius": "20px", "backgroundColor": "#F7F7F7" }}>
             <div className='row ms-3' style={{ "paddingLeft": "310px" }}>
                 <ThreeDotButton title={'adđ'}
                     items={props.option_list}

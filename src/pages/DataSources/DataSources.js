@@ -19,7 +19,7 @@ export default function DataSources() {
     const [showSharePopUp, setshowSharePopUp] = useState(false)
     const currentProject = localStorage.getItem("currentProject")
     useEffect(() => {
-       // console.log("Lấy data nè")
+        // console.log("Lấy data nè")
         // get list people
         GetDataSourcesListInformationInWorkSpace()
             .then(res => {
@@ -70,17 +70,19 @@ export default function DataSources() {
             <div className='row bg-light'>
                 <div className='col-6 m-4 bg-white'>
                     <h1 className='m-2 mt-4' style={{ color: blue_cloud, "font-weight": "bold" }}>User Sources</h1>
-                    <div className='row'>
+                    <div className='row m-0 p-0'>
                         {
                             datasourceslist.map((ele, index) => {
-                                return <DataSourceBox
-                                    option_list={option_list}
-                                    icon_list={icon_list}
-                                    setDatasourceslist={setDatasourceslist}
-                                    datasourceslist={datasourceslist}
-                                    showSharePopUpHandle={showSharePopUpHandle}
-                                    ele={ele}
-                                    index={index} />
+                                return <div className="col-sm mt-4" >
+                                    <DataSourceBox
+                                        option_list={option_list}
+                                        icon_list={icon_list}
+                                        setDatasourceslist={setDatasourceslist}
+                                        datasourceslist={datasourceslist}
+                                        showSharePopUpHandle={showSharePopUpHandle}
+                                        ele={ele}
+                                        index={index} />
+                                </div>
                             })
 
                         }

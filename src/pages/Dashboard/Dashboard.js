@@ -55,61 +55,67 @@ export default function Dashboard() {
 
     return (
         <div className='m-2'>
-            <div className='row m-4 m-0 p-0 '>
-                <div className="rowm-0 p-0 bg-white ">
-                    <h1 className='ms-4  mt-4' style={{ color: deep_blue_primary, "font-weight": "bold", fontSize: "40px" }}>{localization.Project}</h1>
-                    <div className='row m-0 p-0'>
-                        <ScrollMenu>
-                            {projectList.map((ele, index) => (
-                                <div className='col ms-5'>
-                                    <ProjectCard
-                                        data={ele}
-                                    />
-                                </div>
-                            ))}
-                        </ScrollMenu>
-                    </div>
+            <div className='row m-4 m-0 p-0 bg-white mb-4'>
+                <h1 className='ms-4 mt-2' style={{ color: deep_blue_primary, "font-weight": "bold", fontSize: "40px" }}>{localization.Project}</h1>
+                <div className='row m-0 p-0'>
+                    <ScrollMenu>
+                        {projectList.map((ele, index) => (
+                            <div className='col ms-5'>
+                                <ProjectCard
+                                    data={ele}
+                                />
+                            </div>
+                        ))}
+                    </ScrollMenu>
                 </div>
 
 
-                <div className='row bg-light  m-0 p-0'>
-                    <div className='col-7 m-0 p-0'>
-                        <div className=' me-4 mt-4  bg-white' style={{ "minHeight": "1000px" }}>
-                            <h1 className='m-0 ms-4 p-0' style={{ color: deep_blue_primary, "font-weight": "bold", fontSize: "40px" }}>{localization.Templates}</h1>
+               
+                <div className='row bg-light' >
+                    <div className=' col-7  mt-4  m-0 p-0 bg-light' style={{ "minHeight": "1000px" }}>
+                        <div className='ms-2 bg-white me-4  ' >
+                            <h1 className='m-0 pt-4  ms-4 p-0' style={{ color: deep_blue_primary, "font-weight": "bold", fontSize: "40px" }}>{localization.Templates}</h1>
                             <p className='m-0 ms-4 p-0'>Variety template for your choice</p>
-                            <div className='row m-0 p-0'>
-                                {reports.map(ele =>
-                                    <div className='col mt-4 m-0 p-0' style={{ "minWidth": "300px", "minHeight": "300px", "maxWidth": "400px", maxHeight: "300px" }} >
-                                        <TemplateMiniCard data={ele} type="Templates" />
-                                    </div>
-                                )}
-                            </div>
-                        </div>
-
-                    </div>
-                    <div className='col-5 m-0 p-0'>
-                        <div className=' mt-4  bg-white' style={{ "minHeight": "1000px" }}>
-                            <h1 style={{ color: deep_blue_primary, "font-weight": "bold", fontSize: "40px" }}>{localization.People}</h1>
-                            <div className='row ms-2'>
-                                <div class="container">
-                                    <div class="row">
-                                    {
-                                    peopleList.slice(0).reverse().map((people, index) => {
-                                        return <div id={index} className="col-sm mt-4" style={{"minWidth": "300px"}}>
-                                            <PeopleCardMini
-                                                name={people.UserName}
-                                                email={people.Email}
-                                                avatar={people.Avatar}
-                                            />
-                                        </div>
-                                    })
-                                }
+                            <div className='row ms-4 me-4'>
+                                <div class="container m-0 p-0">
+                                    <div class="row m-0 p-0">
+                                        {reports.map(ele =>
+                                            <div
+                                                className='col-lg mt-4 m-0 p-0'
+                                                style={{ "minWidth": "350px", "maxWidth": "350px" }}
+                                            >
+                                                <TemplateMiniCard data={ele} type="Templates" />
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                     </div>
+                    <div className='col-5  m-0 mt-4 bg-white p-0 ' style={{ "minHeight": "1000px" }}>
+
+                        <h1 className='m-0 mt-4 ms-4 p-0' style={{ color: deep_blue_primary, "font-weight": "bold", fontSize: "40px" }}>{localization.People}</h1>
+                        <div className='row ms-2'>
+                            <div class="container m-0 p-0">
+                                <div class="row">
+                                    {
+                                        peopleList.slice(0).reverse().map((people, index) => {
+                                            return <div id={index} className="col-sm mt-4 ms-2" style={{ "minWidth": "300px", "maxWidth": "300px" }}>
+                                                <PeopleCardMini
+                                                    name={people.UserName}
+                                                    email={people.Email}
+                                                    avatar={people.Avatar}
+                                                />
+                                            </div>
+                                        })
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
 
                 </div>
             </div>
