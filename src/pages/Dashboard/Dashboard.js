@@ -72,8 +72,8 @@ export default function Dashboard() {
 
                
                 <div className='row bg-light' >
-                    <div className=' col-7  mt-4  m-0 p-0 bg-light' style={{ "minHeight": "1000px" }}>
-                        <div className='ms-2 bg-white me-4  ' >
+                    <div className=' col-7  mt-4  m-0 p-0 bg-light' >
+                        <div className=' bg-white me-4  ' style={{ "minHeight": "1000px" }} >
                             <h1 className='m-0 pt-4  ms-4 p-0' style={{ color: deep_blue_primary, "font-weight": "bold", fontSize: "40px" }}>{localization.Templates}</h1>
                             <p className='m-0 ms-4 p-0'>Variety template for your choice</p>
                             <div className='row ms-4 me-4'>
