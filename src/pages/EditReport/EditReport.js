@@ -93,7 +93,7 @@ export default function EditReport(props) {
                 })
                 .catch(err => {
                     Store.addNotification(content("Access fail", err.response.data, "danger"))
-                   
+
                 })
         }
 
@@ -300,8 +300,8 @@ export default function EditReport(props) {
         contentRef.current.deleteShape()
     }
 
-    return (
-        <div>
+    const listPopUp = () => {
+        return <div>
             <SqlPopUp
                 type={popUpType}
                 show={showSqlPopUp}
@@ -338,6 +338,13 @@ export default function EditReport(props) {
                 }}
 
             />
+        </div>
+    }
+
+
+    const EditPageUI = () => {
+        return <div>
+            {listPopUp()}
             <div className="row">
                 {tab_component()}
                 <div className="col-10 h-200">
@@ -413,5 +420,76 @@ export default function EditReport(props) {
                 </div>
             </div>
         </div>
+    }
+
+    const ViewPageUI = () => {
+        return <div className="row">
+
+            <div className="leftColumn p-3">
+                <div className="row m-0 p-0">
+                    <div className="col-7 m-0 p-0">
+                        <div className="row m-0 p-0" >
+                            <div className="col-1 m-0 p-0 mt-1">
+                                <button type="button" class="btn btn-sm" onClick={() => { navigate(-1) }}>
+                                    <img src={back} />
+                                </button>
+                            </div>
+                            <div className="col-8 m-0 p-0" >
+                                <div className="ms-1 PrimaryFontColor customFontBold size32"> {reportInformation.Name} </div>
+                            </div>
+                        </div>
+                        <div className="row m-0 p-0">
+                            <div className="col-1">
+
+                            </div>
+                            <div className=" col-10 SecondFontColor customFontBold size24">
+                                {reportInformation.Hastag}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="row mt-2">
+                    <div className=" col-10 ">
+                        <div className="content">
+                            <Content
+                                RId={RId}
+                                ref={contentRef}
+                                setTabData={setTabData}
+                                tabData={tabData}
+                                createNewComponentInReport={createNewComponentInReport}
+                            />
+                        </div>
+                    </div>
+                    <div className="col-2 content p-4 ">
+
+                        <h3 className="PrimaryFontColor size32 customFontBold" >
+                            Detail:
+                        </h3>
+                        <div className="row mt-5 ">
+                            <div className="col PrimaryFontColor size16 customFontBold">Id</div>
+                            <div className="col">{reportInformation.Id} </div>
+                        </div>
+                        <div className="mt-4 PrimaryFontColor size16 customFontBold">Data sources:</div>
+                        <div className="row mt-4">
+                            <div className="col PrimaryFontColor size16 customFontBold">Created by: </div>
+                            <div className="col mt-2">{reportInformation.Author} </div>
+                        </div>
+                        <div className="row mt-4">
+                            <div className="col PrimaryFontColor size16 customFontBold">Last Modified:</div>
+                            <div className="col">{reportInformation.LastModified} </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div >
+    }
+
+    return (
+        <div>
+            {props.isEdit === true ? EditPageUI() : ViewPageUI()}
+        </div>
+
     );
 }

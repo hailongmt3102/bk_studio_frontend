@@ -30,3 +30,26 @@ p {
 .customBorder {
     box-shadow: 0px 0px 10px #0085ff;
 }
+
+.PrimaryFontColor{
+    color: #034078;
+}
+
+.SecondFontColor{
+    color: #0089ED;
+}
+.size32{
+    font-size: 32px;
+}
+
+.size18{
+    font-size: 22px;
+}
+
+.size16{
+    font-size: 16px;
+}
+
+.size24{
+    font-size: 24px;
+}

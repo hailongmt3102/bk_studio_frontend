@@ -1,6 +1,7 @@
-.rightColumn {
+.leftColumn {
     background-color: #F7F7F7;
 }
+
 
 .line {
     background-color: #64000000;
@@ -21,4 +22,5 @@ p.m-0.p-0{
     min-height: 1000px;
     background-color: white;
     border-radius: 10px;
+    
 }
