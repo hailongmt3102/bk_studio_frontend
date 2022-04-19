@@ -35,7 +35,7 @@ const timeCaster = (time) => {
 }
 
 
-export default function ProjectBox(props) {
+export default function ProjectCard(props) {
 
     const localization = useContext(localizationContext)
     const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: '', subTitle: '' })
@@ -48,8 +48,8 @@ export default function ProjectBox(props) {
         Id: props.data.Id,
         Status: props.data.Status,
     })
-  
-    
+
+
     const [projectInformation, setprojectInformation] = useState({
         Name: props.data.Name,
         StartTime: props.data.StartTime,
@@ -123,7 +123,7 @@ export default function ProjectBox(props) {
                 handleCloseYes={() => handleCloseYes()}
                 handleCloseNo={() => handleCloseNo()}
             />
-            <div className='shadow pb-2 pt-1 mb-5 bg-body' style={{ width: "430px", borderRadius: "20px" }}>
+            <div className='shadow mb-3 bg-body' style={{ width: "430px", borderRadius: "20px" }}>
                 <div className='mt-1 p-2'  >
                     <div className='d-flex justify-content-between'>
                         <ThreeDotButton items={option_list} icons_list={icons_list} icon={three_dot} onClick={(val) => {
@@ -144,10 +144,10 @@ export default function ProjectBox(props) {
                     {
                         pressEdit === false ?
                             <div onClick={() => { navigate("/pDetail/" + props.data.Id) }}>
-                                <h3 className='d-flex justify-content-center' style={{ color: "#0085FF", fontSize: "45px" }}>
+                                <h3 className='d-flex  justify-content-center customFontBold SecondFontColor '>
                                     {props.data.Name}
                                 </h3>
-                                <div className='m-3 m-0 p-0 mt-3'>
+                                <div className='m-3 m-0 p-0'>
                                     <div class=" row text-center m-0 p-0">
                                         <div className='col-1  m-0 p-0'>
                                             <img src={ClockSvg} height="25px" />
@@ -195,6 +195,22 @@ export default function ProjectBox(props) {
                                 <div className='m-3 m-0 p-0'>
                                     <div class=" row text-center m-0 p-0">
                                         <div className='col-1  m-0 p-0'>
+                                            <img src={ClockSvg} height="25px" />
+                                        </div>
+                                        <div className='col-7 m-0 p-0' style={{ "text-align": "left" }} >
+                                            <div className='ms-2'>
+                                                <div style={orangeStyle}>{localization.ETime}</div>
+                                            </div>
+                                        </div>
+                                        <div className='col-4  m-0 p-0' >
+                                            <div>{timeCaster(props.data.PredictEndtime).substring(0, 10)}</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className='m-3 m-0 p-0'>
+                                    <div class=" row text-center m-0 p-0">
+                                        <div className='col-1  m-0 p-0'>
                                             <img src={MemberSvg} height="24px" width="22px" />
                                         </div>
                                         <div className='col-7 m-0 p-0' style={{ "text-align": "left" }} >
@@ -206,8 +222,9 @@ export default function ProjectBox(props) {
                                             <div>{props.data.NumOfMember}</div>
                                         </div>
                                     </div>
-                                    
+
                                 </div>
+
                             </div>
                             : <div>
                                 <Form.Control type="text" value={projectInformation.Name} onChange={(event) => {
