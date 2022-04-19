@@ -21,9 +21,6 @@ import ShareWithPopUp from "components/PopUp/ShareWithPopUp"
 import ConfirmDialog from "components/ConfirmDialog";
 
 export default function ReportCard(props) {
-
-
-
     const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: '', subTitle: '' })
     const handleCloseYes = () => {
         deleteSubmit()
@@ -80,7 +77,6 @@ export default function ReportCard(props) {
                 return
             })
     }
-
     const [pressEdit, setPressEdit] = useState(false)
     const [dataToUpdate, setDataToUpdate] = useState({
         "Hastag": props.data.Hastag,
@@ -100,9 +96,7 @@ export default function ReportCard(props) {
 
             })
     }
-
     return (
-
         <div>
             <ShareWithPopUp
                 currentProject={currentProject}
@@ -114,7 +108,6 @@ export default function ReportCard(props) {
                 handleClose={() => {
                     setshowSharePopUp(false)
                 }}
-
             />
             <ConfirmDialog
                 confirmDialog={confirmDialog}
@@ -199,8 +192,6 @@ export default function ReportCard(props) {
                                 </div>
                             </div>
                     }
-
-
                     <div className='row mt-4'>
                         <p className='m-0 p-0'> <span style={{ "color": "#868585" }}>Id:</span> {props.data.Id} </p>
                     </div>

@@ -25,18 +25,9 @@ export default function TemplateMiniCard(props) {
 
 
     const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: '', subTitle: '' })
-    const handleCloseYes = () => {
-        deleteSubmit()
-        // console.log("close ne")
-    }
-    const handleCloseNo = () => {
-        setConfirmDialog({ ...ConfirmDialog, isOpen: false })
-    }
-    const handleOpen = () => {
-        setConfirmDialog({ ...ConfirmDialog, isOpen: true })
-    }
-    const option_list = ["Share", "Edit information", "Download", "Delete"]
-    const icons_list = [share_blue, edit, download_blue, delete_icon]
+
+    const option_list = ["Share", "Edit information", "Download"]
+    const icons_list = [share_blue, edit, download_blue]
     const nav = useNavigate()
     const RId = props.data.Id
     const currentProject = localStorage.getItem("currentProject")
@@ -65,21 +56,11 @@ export default function TemplateMiniCard(props) {
                 })
         }
     }
-    const editReport = (Id) => {
-        nav(`${Id}/edit`)
+    const viewReportNav = (Id) => {
+        nav(`/project/gallery/${Id}`)
     }
 
-    const deleteSubmit = () => {
-        deleteReport(currentProject, RId)
-            .then(res => {
-                Store.addNotification(content("Success", "Deleted Report", "success"))
-                setTimeout(() => window.location.reload(), 1000);
-            })
-            .catch(err => {
-                Store.addNotification(content("Warning", err.response.data, "danger"))
-                return
-            })
-    }
+
 
     const [pressEdit, setPressEdit] = useState(false)
     const [dataToUpdate, setDataToUpdate] = useState({
@@ -116,9 +97,8 @@ export default function TemplateMiniCard(props) {
                 </button>
                 <div>
                     <ThreeDotButton title={'adđ'} items={option_list} icons_list={icons_list} icon={three_dot} onClick={(val) => {
-                        if (val === 'Delete')
-                            handleOpen()
-                        else if (val === "Edit information") {
+
+                        if (val === "Edit information") {
                             setPressEdit(true)
                         }
                         else if (val === "Share") {
@@ -170,16 +150,9 @@ export default function TemplateMiniCard(props) {
                 }}
 
             />
-            <ConfirmDialog
-                confirmDialog={confirmDialog}
-                title="Are you sure you want to delete this project?"
-                handleCloseYes={() => handleCloseYes()}
-                handleCloseNo={() => handleCloseNo()}
-            />
-
             <div className="text-center m-0 p-0 ms-4 shadow border border-light" style={{ "borderRadius": "20px" }}>
                 {headComponent()}
-                <div className='text-center m-0 p-0' onClick={() => { editReport(props.data.Id) }}>
+                <div className='text-center m-0 p-0' onClick={() => { viewReportNav(props.data.Id) }}>
                     <img src={default_report_img} height="200" width="200" />
                 </div>
                 {
