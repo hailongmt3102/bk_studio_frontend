@@ -59,7 +59,7 @@ function App() {
                         <Route path="/pList" element={<ProjectList />} />
                         <Route path="/pDetail/:id" element={<ProjectDetail />} />
 
-                        <Route path="/datasources" e
+                        <Route path="/datasources" 
                             element={<DataSources />} />
                         <Route
                             path="/datasources/:id/view"
