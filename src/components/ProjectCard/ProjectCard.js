@@ -144,9 +144,9 @@ export default function ProjectCard(props) {
                     {
                         pressEdit === false ?
                             <div onClick={() => { navigate("/pDetail/" + props.data.Id) }}>
-                                <h3 className='d-flex  justify-content-center customFontBold SecondFontColor '>
+                                <h2 className='d-flex  justify-content-center customFontBold SecondFontColor '>
                                     {props.data.Name}
-                                </h3>
+                                </h2>
                                 <div className='m-3 m-0 p-0'>
                                     <div class=" row text-center m-0 p-0">
                                         <div className='col-1  m-0 p-0'>

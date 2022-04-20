@@ -133,17 +133,20 @@ export default function ProjectDetail() {
 
             <div className='row m-0 p-0 mt-3' >
                 <div className=' col-10' style={{ color: deep_blue_primary, "font-weight": "bold", fontSize: "40px" }}>Data Sources:</div>
-                <div className='m-3 p-4 bg-white' style={{ minheight: "300px" }}>
+                <div className='bg-white' style={{ minheight: "300px" }}>
                     <ScrollMenu>
                         {datasourceslist.map((ele, index) => (
-                            <DataSourceBox
-                                option_list={option_list}
-                                icon_list={icon_list}
-                                setDatasourceslist={setDatasourceslist}
-                                datasourceslist={datasourceslist}
-                                ele={ele}
-                                index={index}
-                                showSharePopUpHandle={showSharePopUpHandle} />
+                            <div className='ms-4 mt-5' style={{ minWidth: "300px" }}>
+                                <DataSourceBox
+                                    option_list={option_list}
+                                    icon_list={icon_list}
+                                    setDatasourceslist={setDatasourceslist}
+                                    datasourceslist={datasourceslist}
+                                    showSharePopUpHandle={showSharePopUpHandle}
+                                    ele={ele}
+                                    index={index}
+                                />
+                            </div>
                         ))}
                     </ScrollMenu>
                 </div>

@@ -38,6 +38,9 @@ p {
 .SecondFontColor{
     color: #0089ED;
 }
+.size40 {
+    font-size: 40px;
+}
 .size32{
     font-size: 32px;
 }

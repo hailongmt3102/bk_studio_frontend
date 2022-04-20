@@ -11,7 +11,7 @@ import download_blue from "resources/icons/download_blue.svg"
 import share_blue from "resources/icons/share_blue.svg"
 import { useLocation, useNavigate } from "react-router-dom";
 import ShareDataSourcesPopUp from "../DataSources/component/ShareDataSourcesPopUp"
-
+import { ScrollMenu } from 'react-horizontal-scrolling-menu';
 export default function DataSources() {
     const [datasourceslist, setDatasourceslist] = useState([])
     const location = useLocation().pathname
@@ -53,18 +53,34 @@ export default function DataSources() {
                 DId={DId}
             />
            
-
-            <h2 class="ms-4" style={{ color: deep_blue_primary, "font-weight": "bold", fontSize: "40px" }}> People:</h2>
-                <div className='row m-0 p-0  bg-white'>
-                    <div className='col-6 m-0 p-0 '>
-                    <h1 className='m-2 mt-4' style={{ color: blue_cloud, "font-weight": "bold" }}>User Sources</h1>
-                    <div className='row m-0 p-0 mt-5'>
-                        {
-                            datasourceslist.map((ele, index) => {
-                                return <div
-                                    className="col-sm m-0 p-0 ms-4"
-                                    style={{ "minWidth": "320px", "maxWidth": "320px" }}
-                                >
+            <h2 class="ms-5 PrimaryFontColor size40 customFontBold" > Datasources:</h2>
+            <div className='bg-white'>
+                <div className='row'>
+                    <h1 className='ps-5 pt-4 customFontBold SecondFontColor' >User Sources</h1>
+                        <div className='row mt-4 m-0 p-0'>
+                            <ScrollMenu>
+                                {datasourceslist.map((ele, index) => (
+                                        <div className='ms-4'>
+                                            <DataSourceBox
+                                                option_list={option_list}
+                                                icon_list={icon_list}
+                                                setDatasourceslist={setDatasourceslist}
+                                                datasourceslist={datasourceslist}
+                                                showSharePopUpHandle={showSharePopUpHandle}
+                                                ele={ele}
+                                                index={index}
+                                            />
+                                        </div>
+                                ))}
+                            </ScrollMenu>
+                        </div>
+                </div>
+                <div className='row mt-3'>
+                    <h1 className='ps-5 customFontBold SecondFontColor' >Samples</h1>
+                    <div className='row mt-4 m-0 p-0'>
+                        <ScrollMenu>  
+                            {datasourceslist.map((ele, index) => (
+                                <div className='ms-4'>
                                     <DataSourceBox
                                         option_list={option_list}
                                         icon_list={icon_list}
@@ -72,21 +88,19 @@ export default function DataSources() {
                                         datasourceslist={datasourceslist}
                                         showSharePopUpHandle={showSharePopUpHandle}
                                         ele={ele}
-
-                                        index={index} />
+                                        index={index}
+                                    />
                                 </div>
-                            })
-
-                        }
-                    </div>
-                    </div>
-                    <div className='col-6 m-0 p-0' >
-
-                        aaaaaaa
+                            ))}
+                        </ScrollMenu>
                     </div>
                 </div>
+            </div>
+            </div>
+                    
+                
             
-        </div>
+     
            
        
 
