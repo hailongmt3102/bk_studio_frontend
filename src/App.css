@@ -35,6 +35,10 @@ p {
     color: #034078;
 }
 
+.C4FontColor {
+    color: #C4C4C4;
+}
+
 .SecondFontColor{
     color: #0089ED;
 }
@@ -58,4 +62,7 @@ p {
 
 .size24{
     font-size: 24px;
+}
+.size22{
+    font-size: 22px;
 }

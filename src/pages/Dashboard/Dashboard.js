@@ -70,7 +70,7 @@ export default function Dashboard() {
                 </div>
 
 
-               
+
                 <div className='row bg-light' >
                     <div className=' col-7  mt-4  m-0 p-0 bg-light' >
                         <div className=' bg-white me-4  ' style={{ "minHeight": "1000px" }} >
@@ -98,10 +98,10 @@ export default function Dashboard() {
                         <h1 className='m-0 mt-4 ms-4 p-0' style={{ color: deep_blue_primary, "font-weight": "bold", fontSize: "40px" }}>{localization.People}</h1>
                         <div className='row ms-2'>
                             <div class="container m-0 p-0">
-                                <div class="row">
+                                <div class="row ps-3">
                                     {
                                         peopleList.slice(0).reverse().map((people, index) => {
-                                            return <div id={index} className="col-sm mt-4 ms-2" style={{ "minWidth": "300px", "maxWidth": "300px" }}>
+                                            return <div id={index} className="col-sm mt-4" style={{ "minWidth": "300px", "maxWidth": "300px" }}>
                                                 <PeopleCardMini
                                                     name={people.UserName}
                                                     email={people.Email}

@@ -122,7 +122,6 @@ export default function ReportCard(props) {
                                 className="border-0"
                                 style={{
                                     fontSize: "20px",
-
                                     "color": blue_cloud,
                                     "fontWeight": "bold"
                                 }}
@@ -133,9 +132,18 @@ export default function ReportCard(props) {
                         <div className='row mt-2' style={{ "color": deep_blue_primary, "fontSize": "28px", "fontWeight": "bold" }}>
                             {props.data.Name.slice(0, 20)}
                         </div>
-                        <div className='row mb-2' style={{ "color": blue_cloud, "fontSize": "23px", "fontWeight": "bold" }}>
+
+
+                        {
+                            props.data.Hastag === "" ?
+                                <div className='row C4FontColor customFontBold size22'>#Hastag</div>
+                                :
+                                <div className='row SecondFontColor customFontBold  size22'>{props.data.Hastag}</div>
+                        }
+
+                        {/* <div className='row mb-2' style={{ "color": blue_cloud, "fontSize": "23px", "fontWeight": "bold" }}>
                             {props.data.Hastag === "" ? "#Hastag" : props.data.Hastag}
-                        </div>
+                        </div> */}
                     </div>
             }
             <div className='row mt-4'>
@@ -148,7 +156,7 @@ export default function ReportCard(props) {
                 <p className='m-0 p-0'> <span style={{ "color": "#868585" }}> Created Date: </span>  {props.data.CreateTime} </p>
             </div>
             {
-                props.type === "Galary" ? <div className='row mt-2'>
+                props.type === "Gallery" ? <div className='row mt-2'>
                     <p className='m-0 p-0'> <span style={{ "color": "#868585" }}>  Modified Date:  </span>    {props.data.LastModified} </p>
                 </div> : null
             }

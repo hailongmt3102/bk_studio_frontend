@@ -43,7 +43,7 @@ export default function Gallery(props) {
                     {reports.map(ele =>
                         <div className='col m-0 p-0' style={{ "minWidth": "500px", "maxWidth": "500px" }} >
                             <div className='ms-3 mt-4'>
-                                <ReportCard data={ele} />
+                                <ReportCard data={ele} type="Gallery" />
                             </div>
                         </div>
                     )}
