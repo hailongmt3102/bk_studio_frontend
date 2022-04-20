@@ -60,7 +60,7 @@ export default function Dashboard() {
                 <div className='row m-0 p-0'>
                     <ScrollMenu>
                         {projectList.map((ele, index) => (
-                            <div className='col ms-5'>
+                            <div className='col ms-5 me-5'>
                                 <ProjectCard
                                     data={ele}
                                 />
