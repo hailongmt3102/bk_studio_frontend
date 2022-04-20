@@ -7,7 +7,7 @@ import ReportImg from 'resources/images/report.png'
 import { deep_blue_primary } from "../../utils/color"
 import { Store } from 'react-notifications-component'
 import { content } from "../../utils/notification"
-import {getAllTemplate } from "api/Templates"
+import { getAllTemplate } from "api/Templates"
 
 export default function Template(props) {
     const [reports, setReports] = useState([])
@@ -29,13 +29,16 @@ export default function Template(props) {
             </h2>
 
             <div className='bg-white'>
-                <div className='row p-4'>
+                <div className='row ps-2 pe-2'>
                     {reports.map(ele =>
-                        <div className='col' style={{ "minWidth": "600px", "maxWidth": "600px" }} >
-                            <ReportCard data={ele} type="Template" />
+                        <div className='col m-0 p-0' style={{ "minWidth": "500px", "maxWidth": "500px" }} >
+                            <div className='ms-3 mt-4'>
+                                <ReportCard data={ele} type="Template" />
+                            </div>
                         </div>
                     )}
                 </div>
+               
             </div>
         </div>
     )
