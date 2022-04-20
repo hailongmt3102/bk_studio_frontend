@@ -183,7 +183,7 @@ export default function ReportCard(props) {
                 handleCloseNo={() => handleCloseNo()}
             />
             <div className="row m-0 p-0  shadow border border-light" style={{ "borderRadius": "20px" }}>
-                <div className='col-4 m-0 p-0' onClick={() => {
+                <div className='col-4 m-0 p-0 m-auto text-center ' onClick={() => {
                     props.type === "Template" ? nav(`/project/gallery/${props.data.Id}`) : editReport(props.data.Id)
                 }}>
                     <img src={default_report_img} height="200" width="200" />
