@@ -7,7 +7,7 @@ import three_dot from "resources/icons/three-dot.svg"
 import ThreeDotButton from 'components/ThreeDotButton'
 import delete_icon from 'resources/icons/delete.svg'
 import edit from 'resources/icons/edit.svg'
-import {  deleteMemberInAProject } from "api/Project"
+import { deleteMemberInAProject } from "api/Project"
 
 import { Store } from 'react-notifications-component'
 import { content } from "../../utils/notification"
@@ -29,8 +29,8 @@ export default function PeopleCard(props) {
         setConfirmDialog({ ...ConfirmDialog, isOpen: true })
     }
     const option_list = ["Edit role", "Delete People"]
-    
-    
+
+
 
     const deleteSubmit = () => {
         deleteMemberInAProject(props.project_id, { Email: props.email })
@@ -50,9 +50,9 @@ export default function PeopleCard(props) {
     //     Name: props.data.Name,
     // })
 
-    const component = () => {
-        return <div className='row  m-0'>
-            {!props.isManager ? <div className='d-flex m-0 p-0 justify-content-end'>
+    const ThreeDotComponent = () => {
+        return <div>
+            {!props.isManager ? <div >
                 {props.showThreeDotButton ? <ThreeDotButton title={'adđ'} items={option_list} icons_list={icons_list} icon={three_dot} onClick={(val) => {
                     if (val === "Edit role") {
                         if (props.peopleCanEditRoleList === true) {
@@ -72,32 +72,45 @@ export default function PeopleCard(props) {
                 <div className='row mt-4'>
                 </div>
             }
-            <div className='row p-2 m-0 p-0'>
-                <div className='col-3 align-items-center'>
-                    {props.avatar === "" ?
-                        <img src={people_default} height="100px" width="100px" />
-                        : <img src={props.avatar} height="100px" width="100px" style={{ "border-radius": "50%" }} />}
-                </div>
-                <div className='col-9'>
-                    <div className=' ms-5 mb-3'>
-                        <h2 className='customFontRoboto' style={{  "fontWeight": "bold", fontSize: "30px" }}>
-                            {props.name}
-                        </h2>
-                        <div  className='customFontRoboto' >
-                            Email: {props.email.substring(0, 18)+"..."}
-                        </div>
-                        <div className='customFontRoboto' >
-                            Rank: {props.rank}
-                        </div>
-                        <div className='customFontRoboto' >
-                            Online: 6 hour later
-                        </div>
-                        {/* <div style={{ textStyle }}>
-                           {props.position}
-                        </div> */}
-                    </div>
-                </div>
+        </div>
+    }
+
+    const AvtComponent = () => {
+        return <div className='ms-2'>
+            {
+                props.avatar === "" ?
+                    <img src={people_default} height="80px" width="80px" />
+                    : <img src={props.avatar} height="80px" width="80px" style={{ "border-radius": "50%" }} />
+            }
+        </div >
+    }
+    const ContentComponent = () => {
+        return <div className='ms-4 mb-4'>
+            <h2 className='ms-2 customFontRoboto size30 customFontBold' >
+                {props.name}
+            </h2>
+            <div className='ms-2  customFontRoboto' >
+                Email: {props.email.substring(0, 18) + "..."}
             </div>
+            <div className='ms-2  customFontRoboto' >
+                Rank: {props.rank}
+            </div>
+            <div className='ms-2 customFontRoboto' >
+                Online: 6 hour later
+            </div>
+        </div>
+    }
+    const component = () => {
+        return <div className='row m-0 p-0'>
+            <div className='col-2  m-0 p-0  m-auto text-center'>
+                {AvtComponent()}
+
+            </div>
+            <div className='col-9  m-0 p-0'>
+                <div style={{ textAlign: "right" }}>{ThreeDotComponent()}</div>
+                <div className='pt-3 pb-3'>{ContentComponent()}</div>
+            </div>
+
         </div>
     }
     return (
@@ -110,14 +123,14 @@ export default function PeopleCard(props) {
                 handleCloseNo={() => handleCloseNo()}
             />
             {
-                props.isMe ? 
-                <div className="m-4 peoplecard me" onClick={props.onClick}>
-                    {component()}
-                </div>
-                :
-                <div className={props.isManager ? "m-4 peoplecard manager" : "m-4 peoplecard member"} onClick={props.onClick}>
-                    {component()}
-                </div>
+                props.isMe ?
+                    <div className="peoplecard me" onClick={props.onClick}>
+                        {component()}
+                    </div>
+                    :
+                    <div className={props.isManager ? "peoplecard manager" : "peoplecard member"} onClick={props.onClick}>
+                        {component()}
+                    </div>
             }
 
         </div>

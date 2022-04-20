@@ -96,6 +96,73 @@ export default function ReportCard(props) {
 
             })
     }
+    const ContentCoponent = () => {
+        return <div>
+            {
+                pressEdit ?
+                    <div>
+                        <div className='row pe-4' style={{ maxHeight: "50px" }}>
+                            <Form.Control size="sm" type="text" value={dataToUpdate.Name} onChange={(event) => {
+                                setDataToUpdate({ ...dataToUpdate, Name: event.target.value })
+                            }}
+                                className="border-0"
+                                style={{
+                                    fontSize: "28px",
+
+                                    "color": deep_blue_primary,
+                                    "fontWeight": "bold"
+                                }}
+                            />
+                        </div>
+                        <div className='row mt-1 pe-4' >
+                            <Form.Control size="sm" type="text" value={dataToUpdate.Hastag} onChange={(event) => {
+                                setDataToUpdate({ ...dataToUpdate, Hastag: event.target.value })
+                            }}
+                                placeholder="#hastag"
+                                className="border-0"
+                                style={{
+                                    fontSize: "20px",
+
+                                    "color": blue_cloud,
+                                    "fontWeight": "bold"
+                                }}
+                            />
+                        </div>
+                    </div> :
+                    <div>
+                        <div className='row mt-2' style={{ "color": deep_blue_primary, "fontSize": "28px", "fontWeight": "bold" }}>
+                            {props.data.Name.slice(0, 20)}
+                        </div>
+                        <div className='row mb-2' style={{ "color": blue_cloud, "fontSize": "23px", "fontWeight": "bold" }}>
+                            {props.data.Hastag === "" ? "#Hastag" : props.data.Hastag}
+                        </div>
+                    </div>
+            }
+            <div className='row mt-4'>
+                <p className='m-0 p-0'> <span style={{ "color": "#868585" }}>Id:</span> {props.data.Id} </p>
+            </div>
+            <div className='row mt-2'>
+                <p className='m-0 p-0'> <span style={{ "color": "#868585" }}>Created by:</span> {props.data.Author.slice(0, 20)}... </p>
+            </div>
+            <div className='row mt-2'>
+                <p className='m-0 p-0'> <span style={{ "color": "#868585" }}> Created Date: </span>  {props.data.CreateTime} </p>
+            </div>
+            {
+                props.type === "Galary" ? <div className='row mt-2'>
+                    <p className='m-0 p-0'> <span style={{ "color": "#868585" }}>  Modified Date:  </span>    {props.data.LastModified} </p>
+                </div> : null
+            }
+            {
+                pressEdit ?
+                    <div className='text-center row me-5  justify-content-center mt-3 mb-4'>
+                        <button onClick={() => { updateSubmit() }} type="button" class="btn btn-primary">
+                            Save
+                        </button>
+                    </div>
+                    : null
+            }
+        </div>
+    }
     return (
         <div>
             <ShareWithPopUp
@@ -115,12 +182,13 @@ export default function ReportCard(props) {
                 handleCloseYes={() => handleCloseYes()}
                 handleCloseNo={() => handleCloseNo()}
             />
-            <div className="row m-0 p-0 mt-4 mb-4  shadow border border-light" style={{ "borderRadius": "20px" }}>
-                <div className='col m-0 p-0' onClick={() => {
-                    props.type === "Template" ? nav(`/project/gallery/${props.data.Id}`)  :editReport(props.data.Id) }}>
-                    <img src={default_report_img} height="300" width="300" />
+            <div className="row m-0 p-0  shadow border border-light" style={{ "borderRadius": "20px" }}>
+                <div className='col-4 m-0 p-0' onClick={() => {
+                    props.type === "Template" ? nav(`/project/gallery/${props.data.Id}`) : editReport(props.data.Id)
+                }}>
+                    <img src={default_report_img} height="200" width="200" />
                 </div>
-                <div className='col  m-0 p-0'>
+                <div className='col-8  m-0 p-0'>
                     <div class="d-flex flex-row-reverse me-3">
                         <button type="button" class="btn btn-sm" onClick={() => {
                             if (heart == false) {
@@ -150,71 +218,9 @@ export default function ReportCard(props) {
                                 }} />
                         </div>
                     </div>
-                    <div className='row ' >
+                    <div className='row' >
                     </div>
-                    {
-                        pressEdit ?
-                            <div>
-                                <div className='row pe-4' style={{ maxHeight: "50px" }}>
-                                    <Form.Control size="sm" type="text" value={dataToUpdate.Name} onChange={(event) => {
-                                        setDataToUpdate({ ...dataToUpdate, Name: event.target.value })
-                                    }}
-                                        className="border-0"
-                                        style={{
-                                            fontSize: "28px",
-
-                                            "color": deep_blue_primary,
-                                            "fontWeight": "bold"
-                                        }}
-                                    />
-                                </div>
-                                <div className='row mt-1 pe-4' >
-                                    <Form.Control size="sm" type="text" value={dataToUpdate.Hastag} onChange={(event) => {
-                                        setDataToUpdate({ ...dataToUpdate, Hastag: event.target.value })
-                                    }}
-                                        placeholder="#hastag"
-                                        className="border-0"
-                                        style={{
-                                            fontSize: "20px",
-
-                                            "color": blue_cloud,
-                                            "fontWeight": "bold"
-                                        }}
-                                    />
-                                </div>
-                            </div> :
-                            <div>
-                                <div className='row mt-2' style={{ "color": deep_blue_primary, "fontSize": "28px", "fontWeight": "bold" }}>
-                                    {props.data.Name.slice(0, 20)}
-                                </div>
-                                <div className='row mb-2' style={{ "color": blue_cloud, "fontSize": "23px", "fontWeight": "bold" }}>
-                                    {props.data.Hastag}
-                                </div>
-                            </div>
-                    }
-                    <div className='row mt-4'>
-                        <p className='m-0 p-0'> <span style={{ "color": "#868585" }}>Id:</span> {props.data.Id} </p>
-                    </div>
-                    <div className='row mt-2'>
-                        <p className='m-0 p-0'> <span style={{ "color": "#868585" }}>Created by:</span> {props.data.Author.slice(0, 20)}... </p>
-                    </div>
-                    <div className='row mt-2'>
-                        <p className='m-0 p-0'> <span style={{ "color": "#868585" }}> Created Date: </span>  {props.data.CreateTime} </p>
-                    </div>
-                    {
-                        props.type === "Galary" ? <div className='row mt-2'>
-                            <p className='m-0 p-0'> <span style={{ "color": "#868585" }}>  Modified Date:  </span>    {props.data.LastModified} </p>
-                        </div> : null
-                    }
-                    {
-                        pressEdit ?
-                            <div className='text-center row me-5  justify-content-center mt-3 mb-4'>
-                                <button onClick={() => { updateSubmit() }} type="button" class="btn btn-primary">
-                                    Save
-                                </button>
-                            </div>
-                            : null
-                    }
+                    <div className='ms-5 mb-4'>{ContentCoponent()}</div>
                 </div>
             </div >
         </div>
