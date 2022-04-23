@@ -20,7 +20,7 @@ import { content } from "utils/notification"
 import SqlPopUp from "../../components/PopUp/SqlPopUp";
 import ShareWithPopUp from "../../components/PopUp/ShareWithPopUp";
 import ShareLinkPopUp from "../../components/PopUp/ShareLinkPopUp";
-import { createNewReport, createNewComponent, getReportInformation, updateReportInformation } from 'api/Report'
+import { createNewReport, createNewComponent, getReportInformation, updateReportInformation, saveAsCopy } from 'api/Report'
 import { useLocation, useNavigate } from "react-router-dom";
 import { deep_blue_primary } from "utils/color";
 import { textStyleDefault, widthDefault, heightDefault, frameStyleDefault, positionDefault } from 'utils/shape'
@@ -101,6 +101,19 @@ export default function EditReport(props) {
             getDataFields(currentProject)
         }
     }, [])
+
+    const saveACopyHandle = () => {
+        saveAsCopy(currentProject, RId)
+            .then(res => {
+                console.log(res.data)
+                nav(`/project/gallery/${res.data.Id}/edit`)
+                window.location.reload()
+            })
+            .catch(err => {
+                Store.addNotification(content("Fail", err.response.data, "danger"))
+            })
+
+    }
 
     const newFileSubmit = () => {
         createNewReport(localStorage.getItem("currentProject"),
@@ -406,6 +419,7 @@ export default function EditReport(props) {
                         <ToolBar
                             OpenSharePopUp={() => setshowSharePopUp(true)}
                             OpenShareLinkPopUp={() => setshowShareLinkPopUp(true)}
+                            saveACopyHandle={() => saveACopyHandle()}
                         />
                         <div className="m-2 content">
                             <Content

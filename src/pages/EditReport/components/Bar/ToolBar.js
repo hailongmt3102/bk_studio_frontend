@@ -58,7 +58,7 @@ export default function ToolBar(props) {
                 </button>
                 <button className="col m-0 p-0 btn btn-sm" style={{ "minWidth": "80px", "minHeight": "50px" }}
                     onClick={() => {
-                        // props.saveAsACopy()
+                        props.saveACopyHandle()
                     }}>
                     <img src={copy} width="20px" height="20px" />
                     <p className="p-0 m-0">create a copy</p>
@@ -68,14 +68,14 @@ export default function ToolBar(props) {
                     <p className="p-0 m-0">save</p>
                 </button>
                 <button className="col m-0 p-0 btn btn-sm" style={{ "minWidth": "80px", "minHeight": "50px" }}
-                    onClick={()=>props.OpenShareLinkPopUp()}
+                    onClick={() => props.OpenShareLinkPopUp()}
                 >
                     <img src={share} width="20px" height="20px" />
                     <p className="p-0 m-0">share</p>
                 </button>
                 <button className="col m-0 p-0 btn btn-sm" style={{ "minWidth": "80px", "minHeight": "50px" }}
-                     onClick={()=>props.OpenSharePopUp()}
-                    >
+                    onClick={() => props.OpenSharePopUp()}
+                >
                     <img src={shareWith} width="20px" height="20px" />
                     <p className="p-0 m-0">share with</p>
                 </button>
