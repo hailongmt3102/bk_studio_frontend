@@ -39,10 +39,10 @@ export default function Gallery(props) {
             </h2>
 
             <div className='bg-white'>
-                <div className='row ps-2 pe-2'>
+                <div className='row justify-content-center ps-2 pe-2'>
                     {reports.map(ele =>
-                        <div className='col m-0 p-0' style={{ "minWidth": "500px", "maxWidth": "500px" }} >
-                            <div className='ms-3 mt-4'>
+                        <div className='col m-0 p-0' style={{ "minWidth": "600px", "maxWidth": "600px" }} >
+                            <div className='ms-4 mt-5'>
                                 <ReportCard data={ele} type="Gallery" />
                             </div>
                         </div>

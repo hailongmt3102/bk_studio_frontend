@@ -116,20 +116,20 @@ export default function DataSourceBox(props) {
     }
 
     return (
-        <div className='ms-4 row mb-5' style={{ "border-radius": "20px", "backgroundColor": "#F7F7F7" }}>
+        <div className='ms-4 row mb-3' style={{ "border-radius": "20px", "backgroundColor": "#F7F7F7" }}>
             <div className="col-3 m-auto text-center m-0 p-0  customFontRoboto" onClick={() => { ClickHandle(props.ele.Id) }}  >
                 <div className='ms-4 me-2'><img src={excel_icon} /></div>
             </div>
             <div className="col-9 m-0 p-0" >
                 {threeDotComponent()}
 
-                <div className="ms-4 m-0 p-0 customFontRoboto" style={{ color: blue_cloud, fontSize: "28px" }}>
+                <div className="ms-4 m-0 p-0 SecondFontColor size32 customFontRoboto " >
                     {
                         pressRename == false ?
                             <h4 className=''>{props.ele.Information.substring(0, 15)}</h4>
                             :
                             // <newNameTextField/>
-                            <Form.Group className='m-0 p-0 ms-2 pe-2'>
+                            <Form.Group className='m-0 p-0  pe-3'>
                                 <Form.Control
                                     type="text"
                                     placeholder=""
@@ -141,19 +141,28 @@ export default function DataSourceBox(props) {
                             </Form.Group>
                     }
                 </div>
-                <div class=" ms-4  m-0 p-0 mt-1" >
+                <div class=" ms-4  m-0 p-0 mt-3 me-4" >
                     <div><span style={{ "color": "#868585" }}>date created: </span>{props.ele.CreateTime}</div>
                 </div>
-                <div class="ms-4 m-0 p-0 mt-1 pb-3" >
+                {
+                    pressRename == false ?
+                        <div class="ms-4 m-0 p-0 mt-1 pb-4 me-4" >
+                            <p><span style={{ "color": "#868585" }}>last modified: </span>{props.ele.LastModified}</p>
+                        </div> :
+                        <div class="ms-4 m-0 p-0 mt-1 me-4" >
+                            <p><span style={{ "color": "#868585" }}>last modified: </span>{props.ele.LastModified}</p>
+                        </div>
+                }
+                {/* <div class="ms-4 m-0 p-0 mt-1 pb-2 me-4" >
                     <p><span style={{ "color": "#868585" }}>last modified: </span>{props.ele.LastModified}</p>
-                </div>
+                </div> */}
                 {
                     pressRename == false ? null :
                         <div className='d-flex justify-content-center'>
                             <button
                                 onClick={() => {
                                     RenameHandle(props.ele.Id, props.ele.Information)
-                                }} type="button" class="btn btn-primary btn-sm">
+                                }} type="button" class="btn btn-primary btn-sm mb-3">
                                 Save
                             </button>
                         </div>

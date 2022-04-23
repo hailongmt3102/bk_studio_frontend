@@ -56,11 +56,11 @@ export default function DataSources() {
             <h2 class="ms-5 PrimaryFontColor size40 customFontBold" > Datasources:</h2>
             <div className='bg-white'>
                 <div className='row'>
-                    <h1 className='ps-5 pt-4 customFontBold SecondFontColor' >User Sources</h1>
+                    <h1 className='ps-5 ms-3 mt-4 customFontBold SecondFontColor' >User Sources</h1>
                         <div className='row mt-4 m-0 p-0'>
                             <ScrollMenu>
                                 {datasourceslist.map((ele, index) => (
-                                        <div className='ms-4'>
+                                        <div className='ms-4 mb-5'>
                                             <DataSourceBox
                                                 option_list={option_list}
                                                 icon_list={icon_list}
@@ -75,8 +75,8 @@ export default function DataSources() {
                             </ScrollMenu>
                         </div>
                 </div>
-                <div className='row mt-3'>
-                    <h1 className='ps-5 customFontBold SecondFontColor' >Samples</h1>
+                <div className='row mt-3 '>
+                    <h1 className='ps-5 ms-3 customFontBold SecondFontColor' >Samples</h1>
                     <div className='row mt-4 m-0 p-0'>
                         <ScrollMenu>  
                             {datasourceslist.map((ele, index) => (

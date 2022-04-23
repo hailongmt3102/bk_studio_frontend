@@ -191,12 +191,12 @@ export default function ReportCard(props) {
                 handleCloseNo={() => handleCloseNo()}
             />
             <div className="row m-0 p-0  shadow border border-light" style={{ "borderRadius": "20px" }}>
-                <div className='col-4 m-0 p-0 m-auto text-center ' onClick={() => {
+                <div className='col-5 m-0 p-0 m-auto text-center ' onClick={() => {
                     props.type === "Template" ? nav(`/project/gallery/${props.data.Id}`) : editReport(props.data.Id)
                 }}>
-                    <img src={default_report_img} height="200" width="200" />
+                    <img src={default_report_img} height="300" width="300" />
                 </div>
-                <div className='col-8  m-0 p-0'>
+                <div className='col-7  m-0 p-0'>
                     <div class="d-flex flex-row-reverse me-3">
                         <button type="button" class="btn btn-sm" onClick={() => {
                             if (heart == false) {
