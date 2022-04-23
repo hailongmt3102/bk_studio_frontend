@@ -1,6 +1,7 @@
 import { createNewComponent, deleteShape as deleteShapeApi, getAllComponent } from 'api/Report';
 import { ArcElement, BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, LineElement, PointElement, Title, Tooltip } from 'chart.js';
 import React, { useEffect, useImperativeHandle, useRef, useState } from 'react';
+import { Rnd } from 'react-rnd';
 import { useLocation } from 'react-router-dom';
 import FloatingCard from './FloatingCard';
 import FloatText from './FloatText';
@@ -261,40 +262,9 @@ const Content = React.forwardRef((props, ref) => {
     }
     const [dragAreaLocation, setDragAreaLocation] = useState(defaultLocation)
     const [isAdding, setIsAdding] = useState(true)
-
-    const adjustedMouseEvent = () => {
-        const canvas = this.current
-        if (canvas == null) return
-        console.log("asdfasdfadsf")
-        // let position
-        // const onMouseMove = (e) => {
-        //     const size = {
-        //         width: e.offsetX - position.x,
-        //         height: e.offsetY - position.y,
-        //     }
-        //     setDragAreaLocation(prev => ({ ...prev, size }))
-        // }
-        // canvas.addEventListener("mousedown", (e) => {
-        //     position = {
-        //         x: e.offsetX,
-        //         y: e.offsetY     
-        //     }
-        //     setDragAreaLocation(prev => ({ ...prev, position }))
-        //     setIsAdding(true)
-        //     canvas.addEventListener("mousemove", onMouseMove)
-        //     canvas.addEventListener("mouseup", () => {
-        //         canvas.removeEventListener("mousemove", onMouseMove)
-        //         setDragAreaLocation(defaultLocation)
-        //         setIsAdding(false)
-        //     })
-        // })
-    }
     // -------------------------------------------------------
     return (
         <React.Fragment>
-            <div style={{width: "100%", height:"100%", backgroundColor: "#000"}}>
-
-            </div>
             {
                 components.map((component, index) =>
                     <div onMouseDown={() => {
@@ -309,8 +279,7 @@ const Content = React.forwardRef((props, ref) => {
                         />
                     </div>)
             }
-            {/* <LongCanvas mode={mode}>
-            </LongCanvas> */}
+            {props.isAdding && <Rnd size={props.mouseDragValue.size} position={props.mouseDragValue.position} className="border" />}
         </React.Fragment>
     )
 })

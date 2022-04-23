@@ -314,38 +314,76 @@ export default function EditReport(props) {
     }
     const [dragAreaLocation, setDragAreaLocation] = useState(defaultLocation)
     const [isAdding, setIsAdding] = useState(true)
+    const [addShapeType, setAddShapeType] = useState(null)
 
+    // render drag box and event for it
+    const contentBoxRef = useRef()
     const adjustedMouseEvent = () => {
-        const canvas = contentRef.current
+        const canvas = contentBoxRef.current
         if (canvas == null) return
-        console.log("asdfasdfadsf")
-        // let position
-        // const onMouseMove = (e) => {
-        //     const size = {
-        //         width: e.offsetX - position.x,
-        //         height: e.offsetY - position.y,
-        //     }
-        //     setDragAreaLocation(prev => ({ ...prev, size }))
-        // }
-        // canvas.addEventListener("mousedown", (e) => {
-        //     position = {
-        //         x: e.offsetX,
-        //         y: e.offsetY     
-        //     }
-        //     setDragAreaLocation(prev => ({ ...prev, position }))
-        //     setIsAdding(true)
-        //     canvas.addEventListener("mousemove", onMouseMove)
-        //     canvas.addEventListener("mouseup", () => {
-        //         canvas.removeEventListener("mousemove", onMouseMove)
-        //         setDragAreaLocation(defaultLocation)
-        //         setIsAdding(false)
-        //     })
-        // })
+        let position
+        const onMouseMove = (e) => {
+            const size = {
+                width: e.offsetX - position.x,
+                height: e.offsetY - position.y,
+            }
+            setDragAreaLocation(prev => ({ ...prev, size }))
+        }
+        canvas.addEventListener("mousedown", (e) => {
+            position = {
+                x: e.offsetX,
+                y: e.offsetY
+            }
+            setDragAreaLocation(prev => ({ ...prev, position }))
+            setIsAdding(true)
+            canvas.addEventListener("mousemove", onMouseMove)
+            canvas.addEventListener("mouseup", () => {
+                canvas.removeEventListener("mousemove", onMouseMove)
+                executeWhenDragged({ ...dragAreaLocation })
+                setDragAreaLocation(defaultLocation)
+                setIsAdding(false)
+            })
+        })
+    }
+
+    const executeWhenDragged = (dragInfo) => {
+        console.log(addShapeType)
+        switch (addShapeType) {
+            case "text":
+                createTextComponent(dragInfo)
+                break
+            default:
+                break
+        }
+    }
+
+    const createTextComponent = async (info) => {
+        try {
+            let newShape = {
+                Title: "Title",
+                Type: componentType,
+                QueryCommand: "",
+                Height: info.size.height,
+                Width: info.size.height,
+                Position: JSON.stringify(info.position),
+                TitleTheme: "",
+                TextTheme: JSON.stringify(textStyleDefault),
+                FrameTheme: JSON.stringify(frameStyleDefault)
+            }
+            await createNewComponent(currentProject, RId, newShape)
+            contentRef.pushNewComponent(newShape)
+            console.log("new text added")
+        }
+        catch (err) {
+            //create fail
+            console.log(err)
+        }
     }
 
     useEffect(() => {
         adjustedMouseEvent()
-    }, [contentRef.current])
+    }, [])
+
     // =======================================================
 
 
@@ -448,20 +486,22 @@ export default function EditReport(props) {
                         <ToolBar
                             OpenSharePopUp={() => setshowSharePopUp(true)}
                             OpenShareLinkPopUp={() => setshowShareLinkPopUp(true)}
+                            setAddShapeType={setAddShapeType}
                         />
-                        <div className="m-2 content">
+                        <div className=" content" ref={contentBoxRef}>
                             <Content
                                 RId={RId}
                                 ref={contentRef}
                                 setTabData={setTabData}
                                 tabData={tabData}
                                 createNewComponentInReport={createNewComponentInReport}
+                                showingMouseDrag={addShapeType != null}
+                                mouseDragValue={dragAreaLocation}
                             />
                         </div>
                     </div>
                 </div>
             </div>
-            {/* {isAdding && <Rnd size={location.size} position={location.position} className="border" />} */}
         </div>
     );
 }
