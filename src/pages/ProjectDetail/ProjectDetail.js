@@ -136,7 +136,7 @@ export default function ProjectDetail() {
                 <div className='bg-white' style={{ minheight: "300px" }}>
                     <ScrollMenu>
                         {datasourceslist.map((ele, index) => (
-                            <div className='ms-4 mt-5' style={{ minWidth: "300px" }}>
+                            <div className='ms-4 mt-5 mb-5' style={{ minWidth: "300px" }}>
                                 <DataSourceBox
                                     option_list={option_list}
                                     icon_list={icon_list}
