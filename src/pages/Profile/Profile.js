@@ -90,7 +90,7 @@ export default function Profile() {
                 return
             })
             .catch((e) => {
-                Store.addNotification(content("Warning", e.response.data, "danger"))
+                Store.addNotification(content("Fail", e.response.data, "danger"))
                 return
             })
 

@@ -8,7 +8,7 @@ import { getListPeopleByProjectID, getListPeople } from "api/People"
 import { shareReport, getSharedListPeople, updateSharePermission } from "api/Report"
 import shareWith from "resources/icons/share_with_primary.svg";
 import edit from 'resources/icons/edit.svg'
-import { getDataSourcesSharedListPeople,shareDataSources } from "api/DataSources"
+import { getDataSourcesSharedListPeople, shareDataSources } from "api/DataSources"
 import eye_bluecloud from 'resources/icons/eye_bluecloud.svg'
 import DropdownWithIndex0 from 'components/DropdownWithIndex0'
 
@@ -39,7 +39,7 @@ export default function ShareDataSourcesPopUp(props) {
                     // console.log("list share", res.data.map((e) => e.Email))
                 })
                 .catch(err => {
-                    Store.addNotification(content("Warning", "Can't show list shared people in this project", "danger"))
+                    Store.addNotification(content("Fail", err.response.data, "danger"))
                     // console.log( err.response.data)
                 })
     }, [props.DId])
@@ -51,7 +51,7 @@ export default function ShareDataSourcesPopUp(props) {
                     console.log("list show Detail", res.data.map((e) => e.Email).filter(item => !listSharedName.includes(item) && item !== myEmail))
                 })
                 .catch(err => {
-                    Store.addNotification(content("Warning", "Can't show list people in this project", "danger"))
+                    Store.addNotification(content("Fail", err.response.data, "danger"))
                     //console.log(err.response.data)
                 })
         }
@@ -63,7 +63,7 @@ export default function ShareDataSourcesPopUp(props) {
                     //console.log("list show workspace", res.data.map((e) => e.Email).filter(item => !listSharedName.includes(item)))
                 })
                 .catch(err => {
-                    Store.addNotification(content("Warning", "Can't show list people in this project", "danger"))
+                    Store.addNotification(content("Fail", err.response.data, "danger"))
                     //console.log(err.response.data)
                 })
 

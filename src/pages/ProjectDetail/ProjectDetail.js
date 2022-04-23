@@ -53,9 +53,7 @@ export default function ProjectDetail() {
         fontSize: "17px"
     }
     const [showRolePopUp, setshowRolePopUp] = useState(false)
-    const timeCaster = (time) => {
-        return time.substring(0, 19).replace('T', " ")
-    }
+
 
     const [email, setEmail] = useState("")
     const [projectInformation, setprojectInformation] = useState({
@@ -252,7 +250,7 @@ export default function ProjectDetail() {
                                                 }}
                                                 setdontshowRolePopUp={() => {
                                                     setshowRolePopUp(false)
-                                                    Store.addNotification(content("Warning", "You don't edit member's role because you also are member position", "warning"))
+                                                    Store.addNotification(content("Fail", "You don't edit member's role because you also are member position", "danger"))
                                                 }}
                                                 getEmail={() => {
                                                     setEmail(ele.Email)
@@ -281,7 +279,7 @@ export default function ProjectDetail() {
                                             }}
                                             setdontshowRolePopUp={() => {
                                                 setshowRolePopUp(false)
-                                                Store.addNotification(content("Warning", "You don't edit member's role because you also are member position", "warning"))
+                                                Store.addNotification(content("Fail", "You don't edit member's role because you also are member position", "danger"))
 
                                             }}
                                             getEmail={() => {
@@ -315,9 +313,9 @@ export default function ProjectDetail() {
             })
             .catch((e) => {
                 //console.log(e.response)
-                Store.addNotification(content("Warning", e.response.data, "danger"))
+                Store.addNotification(content("Fail", e.response.data, "danger"))
                 return
-                // alert(e.response.data);
+
             })
 
 

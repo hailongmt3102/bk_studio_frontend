@@ -24,7 +24,7 @@ import NativeSelect from '@mui/material/NativeSelect';
 
 export default function ShareWithPopUp(props) {
 
-    
+
 
     var myEmail = localStorage.getItem("email")
     // console.log("email",myEmail)
@@ -43,7 +43,7 @@ export default function ShareWithPopUp(props) {
                 //console.log("list share", res.data.map((e) => e.Email))
             })
             .catch(err => {
-                Store.addNotification(content("Warning", "Can't show list shared people in this project", "danger"))
+                Store.addNotification(content("Fail", "Can't show list shared people in this project", "danger"))
                 // console.log( err.response.data)
             })
     }, [])
@@ -54,7 +54,7 @@ export default function ShareWithPopUp(props) {
                 //console.log("list show",res.data.map((e)=>e.Email).filter(item => !listSharedName.includes(item)))
             })
             .catch(err => {
-                Store.addNotification(content("Warning", "Can't show list people in this project", "danger"))
+                Store.addNotification(content("Fail", "Can't show list people in this project", "danger"))
                 //console.log(err.response.data)
             })
     }, [listSharedName])
@@ -72,7 +72,7 @@ export default function ShareWithPopUp(props) {
                 props.handleClose()
             })
             .catch(error => {
-                Store.addNotification(content("Warning", error.data, "danger"))
+                Store.addNotification(content("Fail", error.data, "danger"))
                 props.handleClose()
             })
     }
@@ -107,8 +107,8 @@ export default function ShareWithPopUp(props) {
 
 
     const updateShareHandle = async () => {
-        try{
-            for(let i = 0; i < listSharedPeople.length; i++){
+        try {
+            for (let i = 0; i < listSharedPeople.length; i++) {
                 await updateSharePermission(props.currentProject, props.RId, {
                     Email: listSharedPeople[i].Email,
                     Permission: listSharedPeople[i].Permission
@@ -117,7 +117,7 @@ export default function ShareWithPopUp(props) {
             Store.addNotification(content("Success", "Shared with member", "success"))
             props.handleClose()
 
-        }catch(err){
+        } catch (err) {
             console.log(err)
         }
     }
@@ -133,10 +133,10 @@ export default function ShareWithPopUp(props) {
                                 {e.Email}
                             </div>
                             <div className='col'>
-                                <DropdownWithIndex0 title={e.Permission} items={[e.Permission, e.Permission == "View" ? "Edit" : "View"]} icons_list={e.Permission === "View" ? [eye_bluecloud, edit] : [edit, eye_bluecloud]} 
-                                onClick={(val) => {
-                                    setListSharedPeople([...listSharedPeople.slice(0, index), {...listSharedPeople[index], Permission:val}, ...listSharedPeople.slice(index+1)])
-                                }} />
+                                <DropdownWithIndex0 title={e.Permission} items={[e.Permission, e.Permission == "View" ? "Edit" : "View"]} icons_list={e.Permission === "View" ? [eye_bluecloud, edit] : [edit, eye_bluecloud]}
+                                    onClick={(val) => {
+                                        setListSharedPeople([...listSharedPeople.slice(0, index), { ...listSharedPeople[index], Permission: val }, ...listSharedPeople.slice(index + 1)])
+                                    }} />
                             </div>
                         </div>
                     })

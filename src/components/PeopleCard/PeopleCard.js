@@ -39,7 +39,7 @@ export default function PeopleCard(props) {
                 setTimeout(() => window.location.reload(), 2000);
             })
             .catch(err => {
-                Store.addNotification(content("Warning", "You don't delete member's role because you also are member position", "warning"))
+                Store.addNotification(content("Fail", "You don't delete member because you also are member position", "danger"))
             })
     }
     const icons_list = [edit, delete_icon]

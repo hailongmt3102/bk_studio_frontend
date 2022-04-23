@@ -12,11 +12,11 @@ export default function Setting(props) {
     const [language, setlanguage] = useState(languageSaved)
     return (
         <div>
-            <h2 class="mt-3 mb-3 ms-4" style={{  color: deep_blue_primary, "font-weight": "bold", fontSize: "40px" }}>{localization.Setting} </h2>
+            <h2 class="mt-3 mb-3 ms-4" style={{ color: deep_blue_primary, "font-weight": "bold", fontSize: "40px" }}>{localization.Setting} </h2>
             <div style={{ backgroundColor: "white", paddingBottom: "25px", height: "700px" }}>
                 <Form.Group as={Row} className="mb-3 mt-3 ms-4 align-items-center" controlId="formPlaintextPassword">
                     <Form.Label column sm="2">
-                        <h5 className='mt-4' style={{  "font-weight": "bold", fontSize: 16 }}>{localization.DarkMode}  </h5>
+                        <h5 className='mt-4' style={{ "font-weight": "bold", fontSize: 16 }}>{localization.DarkMode}  </h5>
                     </Form.Label>
                     <Col className='mt-4' sm="5">
                         <Form.Check
@@ -28,7 +28,7 @@ export default function Setting(props) {
                 </Form.Group>
                 <Form.Group as={Row} className="mb-7 ms-4 ms-2 align-items-center" controlId="formPlaintextPassword">
                     <Form.Label column sm="2" >
-                        <h5 style={{  "font-weight": "bold", fontSize: 16 }}>{localization.Language} </h5>
+                        <h5 style={{ "font-weight": "bold", fontSize: 16 }}>{localization.Language} </h5>
                     </Form.Label>
                     <Col sm="2" >
                         <Drop title={language} items={["English", "Vietnamese"]} onClick={(val, index) => {
@@ -48,7 +48,7 @@ export default function Setting(props) {
                                     <img src={tick} style={{ height: 10, width: 10 }} />
                                 </div>
                                 <div class="col-7 customFontRoboto">
-                                {localization.usetool}
+                                    {localization.usetool}
                                 </div>
                             </div>
                         </div>
@@ -58,7 +58,7 @@ export default function Setting(props) {
                                     <img src={tick} style={{ height: 10, width: 10 }} />
                                 </div>
                                 <div class="col-7 customFontRoboto">
-                                {localization.createreports}
+                                    {localization.createreports}
                                 </div>
                             </div>
                         </div>
@@ -68,7 +68,7 @@ export default function Setting(props) {
                                     <img src={tick} style={{ height: 10, width: 10 }} />
                                 </div>
                                 <div class="col-7 customFontRoboto">
-                                {localization.sharereports}
+                                    {localization.sharereports}
                                 </div>
                             </div>
                         </div>
@@ -77,18 +77,18 @@ export default function Setting(props) {
                                 <div class=" justify-content-center  col-1">
                                     <img src={tick} style={{ height: 10, width: 10 }} />
                                 </div>
-                                <div class="col-7 customFontRoboto" style={{  color: "grey" }}>
-                                {localization.multipleprojects}
+                                <div class="col-7 customFontRoboto" style={{ color: "grey" }}>
+                                    {localization.multipleprojects}
                                 </div>
                             </div>
                         </div>
-                        <div className='customFontRoboto' style={{ paddingLeft: "100px"}}>
+                        <div className='customFontRoboto' style={{ paddingLeft: "100px" }}>
                             <div className="row  ">
                                 <div class=" justify-content-center  col-1">
                                     <img src={tick} style={{ height: 10, width: 10 }} />
                                 </div>
                                 <div class="col-7" style={{ fontFamily: "Roboto", color: "grey" }}>
-                                {localization.blockads}
+                                    {localization.blockads}
                                 </div>
                             </div>
                         </div>
@@ -97,14 +97,14 @@ export default function Setting(props) {
                                 <div class=" justify-content-center  col-1">
                                     <img src={tick} style={{ height: 10, width: 10 }} />
                                 </div>
-                                <div class="col-7 customFontRoboto" style={{  color: "grey" }}>
-                                {localization.nolimitreports}
+                                <div class="col-7 customFontRoboto" style={{ color: "grey" }}>
+                                    {localization.nolimitreports}
                                 </div>
                             </div>
                         </div>
                         <div className="text-center gap-2 mt-4 mb-4  customFontRoboto" >
                             <Button variant="success" size="sm" style={{ width: "200px", borderRadius: "20px" }}>
-                            {localization.used}
+                                {localization.used}
                             </Button>
                         </div>
 
@@ -117,7 +117,7 @@ export default function Setting(props) {
                                     <img src={tick} style={{ height: 10, width: 10 }} />
                                 </div>
                                 <div class="col-7 customFontRoboto" >
-                                {localization.usetool}
+                                    {localization.usetool}
                                 </div>
                             </div>
                         </div>
@@ -127,7 +127,7 @@ export default function Setting(props) {
                                     <img src={tick} style={{ height: 10, width: 10 }} />
                                 </div>
                                 <div class="col-7 customFontRoboto" >
-                                {localization.createreports}
+                                    {localization.createreports}
                                 </div>
                             </div>
                         </div>
@@ -137,7 +137,7 @@ export default function Setting(props) {
                                     <img src={tick} style={{ height: 10, width: 10 }} />
                                 </div>
                                 <div class="col-7 customFontRoboto" >
-                                {localization.sharereports}
+                                    {localization.sharereports}
                                 </div>
                             </div>
                         </div>
@@ -147,7 +147,7 @@ export default function Setting(props) {
                                     <img src={tick} style={{ height: 10, width: 10 }} />
                                 </div>
                                 <div class="col-7 customFontRoboto" >
-                                {localization.multipleprojects}
+                                    {localization.multipleprojects}
                                 </div>
                             </div>
                         </div>
@@ -157,7 +157,7 @@ export default function Setting(props) {
                                     <img src={tick} style={{ height: 10, width: 10 }} />
                                 </div>
                                 <div class="col-7 customFontRoboto" >
-                                {localization.blockads}
+                                    {localization.blockads}
                                 </div>
                             </div>
                         </div>
@@ -167,7 +167,7 @@ export default function Setting(props) {
                                     <img src={tick} style={{ height: 10, width: 10 }} />
                                 </div>
                                 <div class="col-7 customFontRoboto">
-                                {localization.nolimitreports}
+                                    {localization.nolimitreports}
                                 </div>
                             </div>
                         </div>

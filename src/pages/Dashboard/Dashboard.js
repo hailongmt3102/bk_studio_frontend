@@ -28,7 +28,7 @@ export default function Dashboard() {
             })
             .catch(
                 error => {
-                    Store.addNotification(content("Warning", error.response.data, "danger"))
+                    Store.addNotification(content("Fail", error.response.data, "danger"))
                     return
                 }
             )
@@ -38,7 +38,7 @@ export default function Dashboard() {
             })
             .catch(
                 error => {
-                    Store.addNotification(content("Warning", error.response.data, "danger"))
+                    Store.addNotification(content("Fail", error.response.data, "danger"))
                     return
                 }
             )
@@ -48,7 +48,7 @@ export default function Dashboard() {
                 setReports(res.data)
             })
             .catch(err => {
-                Store.addNotification(content("Warning", err.response.data, "danger"))
+                Store.addNotification(content("Fail", err.response.data, "danger"))
                 return
             })
     }, [])

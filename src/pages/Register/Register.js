@@ -54,7 +54,7 @@ export default function Register() {
             })
             .catch(
                 err => {
-                    Store.addNotification(content("Warning", err.response.data, "danger"))
+                    Store.addNotification(content("Fail", err.response.data, "danger"))
                     return
                 }
             )
@@ -75,12 +75,12 @@ export default function Register() {
         }
         if (information.Password.length < 8) {
             Store.addNotification(content("Warning", "Password have to more than 8 digit", "warning"))
-            return 
+            return
         }
         if (information.Password !== confirmPassword) {
             Store.addNotification(content("Warning", "Password and confirm password don't match", "warning"))
-            return 
-           
+            return
+
         }
         RegisterApi(information)
             .then((res) => {

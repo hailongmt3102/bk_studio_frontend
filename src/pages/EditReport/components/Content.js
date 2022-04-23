@@ -3,7 +3,8 @@ import { ArcElement, BarElement, CategoryScale, Chart as ChartJS, Legend, Linear
 import React, { useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import Shape from './Shape';
-
+import { content } from "utils/notification"
+import { Store } from 'react-notifications-component'
 
 ChartJS.register(
     CategoryScale,
@@ -138,7 +139,8 @@ const Content = React.forwardRef((props, ref) => {
                     setComponents(res.data)
                 })
                 .catch(res => {
-                    alert(res.response.data)
+                    Store.addNotification(content("Fail", res.response.data, "danger"))
+
                 })
         }
     }
@@ -157,7 +159,7 @@ const Content = React.forwardRef((props, ref) => {
                 pasteShape() {
                     pasteShape()
                 },
-                deleteShape(){
+                deleteShape() {
                     deleteShape()
                 }
             }

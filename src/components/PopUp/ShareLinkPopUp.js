@@ -32,7 +32,7 @@ export default function ShareLinkPopUp(props) {
                 //console.log(res.data)
             })
             .catch(err => {
-                Store.addNotification(content("Warning", "Can't show list people in this project", "danger"))
+                Store.addNotification(content("Fail", "Can't show list people in this project", "danger"))
                 console.log(err.response.data)
             })
         getSharedListPeople(props.currentProject, props.RId)
@@ -60,7 +60,7 @@ export default function ShareLinkPopUp(props) {
                 props.handleClose()
             })
             .catch(error => {
-                Store.addNotification(content("Warning", error.data, "danger"))
+                Store.addNotification(content("Fail", error.data, "danger"))
                 props.handleClose()
             })
     }

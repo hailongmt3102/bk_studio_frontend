@@ -2,7 +2,8 @@ import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import BlankReportIcon from 'resources/icons/blankReport.svg'
 import { getListProject } from 'api/Project'
-
+import { Store } from 'react-notifications-component'
+import { content } from "utils/notification"
 import { deep_blue_primary, blue_cloud } from "../../utils/color"
 import { createNewReport as CreateReportApi } from 'api/Report'
 
@@ -14,8 +15,8 @@ export default function CreateReport() {
             CreateReportApi(currentProjectId,
                 {
                     Hastag: "",
-                    Description: "example", 
-                    Name : "New Report"
+                    Description: "example",
+                    Name: "New Report"
                 }
             )
                 .then(res => {
@@ -23,10 +24,12 @@ export default function CreateReport() {
                     nav(`/project/gallery/${res.data.Id}/edit`)
                 })
                 .catch(err => {
-                    alert(err.response.data)
+                    Store.addNotification(content("Fail", err.response.data, "danger"))
+
                 })
         } else {
-            alert("You must create project first")
+            Store.addNotification(content("Warning", "You must create project first", "warning"))
+
         }
     }
     return (

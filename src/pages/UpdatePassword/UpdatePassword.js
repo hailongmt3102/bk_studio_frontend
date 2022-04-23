@@ -12,8 +12,8 @@ import { Link } from "react-router-dom";
 import { deep_blue_primary } from "../../utils/color"
 import "@fontsource/poppins";
 
-import {Store} from 'react-notifications-component'
-import {content} from "../../utils/notification"
+import { Store } from 'react-notifications-component'
+import { content } from "../../utils/notification"
 
 export default function UpdatePassword() {
     const [isVisible, setisVisible] = useState(false)
@@ -26,19 +26,19 @@ export default function UpdatePassword() {
         console.log("da nhan Change")
         if (information.Code === null || information.NewPassword === "") {
             Store.addNotification(content("Warning", "Please fill in code or new password", "warning"))
-            return 
+            return
         }
-        else if (information.NewPassword.length < 8){
+        else if (information.NewPassword.length < 8) {
             Store.addNotification(content("Warning", "Password have to more than 8 digit", "warning"))
-            return 
+            return
         }
         else {
             updatePasswordAPI(information)
                 .then((res) => {
                     Store.addNotification(content("Success", "Changed Password", "success")
-                    ,{
-                        duration: 5000
-                    })
+                        , {
+                            duration: 5000
+                        })
                     navigate("/account/login")
                 })
                 .catch((e) => {
@@ -76,7 +76,7 @@ export default function UpdatePassword() {
                                             </label>
 
                                         </div>
-                                        <form class="mx-1 mx-md-4 mt-2 " style={{fontSize: 16 }}>
+                                        <form class="mx-1 mx-md-4 mt-2 " style={{ fontSize: 16 }}>
                                             <Form.Group as={Col} md="12" controlId="validationCustomUsername">
                                                 <Form.Label>Code from email</Form.Label>
                                                 <InputGroup hasValidation>

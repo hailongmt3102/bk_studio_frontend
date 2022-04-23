@@ -42,7 +42,7 @@ export default function ImportData() {
                     setStep(1)
                 })
                 .catch(err => {
-                    Store.addNotification(content("Warning", err.response.data, "danger"), {
+                    Store.addNotification(content("Fail", err.response.data, "danger"), {
                         duration: 10000
                     })
                     return

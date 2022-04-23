@@ -70,14 +70,13 @@ export default function ProjectCard(props) {
                 window.location.reload()
             })
             .catch((e) => {
-                Store.addNotification(content("Warning", e.response.data, "danger"))
+                Store.addNotification(content("Fail", e.response.data, "danger"))
                 return
             })
     }
 
 
     const DeleteProjectSubmit = () => {
-
         deleteProject(props.data.Id)
             .then((res) => {
                 Store.addNotification(content("Successful", "Deleted Project", "success"))
@@ -87,7 +86,6 @@ export default function ProjectCard(props) {
                 Store.addNotification(content("Error", "Delete Fail", "danger"))
                 return
             })
-
     }
 
     const [pressEdit, setpressEdit] = useState(false)
@@ -103,7 +101,7 @@ export default function ProjectCard(props) {
             })
             .catch((e) => {
                 //console.log(e.response)
-                Store.addNotification(content("Warning", e.response.data, "danger"))
+                Store.addNotification(content("Fail", e.response.data, "danger"))
                 return
                 // alert(e.response.data);
             })

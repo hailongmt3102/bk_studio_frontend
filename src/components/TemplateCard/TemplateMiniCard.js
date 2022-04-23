@@ -39,7 +39,7 @@ export default function TemplateMiniCard(props) {
                     setHeart(true)
                 })
                 .catch(err => {
-                    Store.addNotification(content("Warning", err.response.data, "danger"))
+                    Store.addNotification(content("Fail", err.response.data, "danger"))
                     return
                 })
         }
@@ -51,7 +51,7 @@ export default function TemplateMiniCard(props) {
                     setHeart(false)
                 })
                 .catch(err => {
-                    Store.addNotification(content("Warning", err.response.data, "danger"))
+                    Store.addNotification(content("Fail", err.response.data, "danger"))
                     return
                 })
         }
