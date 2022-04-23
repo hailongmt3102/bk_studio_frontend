@@ -10,8 +10,8 @@ export default function PeopleCardMini(props) {
         <div className='row'>
             <div className='col-1'>
                 {props.avatar === "" ?
-                    <img  src={people_default} height="40px" width="40px" />
-                    : <img  src={props.avatar} height="40px" width="40px" style={{ "border-radius": "50%" }} />
+                    <img src={people_default} height="40px" width="40px" />
+                    : <img src={props.avatar} height="40px" width="40px" style={{ "border-radius": "50%" }} />
                 }
             </div>
             <div className='col-11' >
@@ -19,7 +19,7 @@ export default function PeopleCardMini(props) {
                     {props.name}
                 </h5>
                 <h5 className=' ms-4 customFontRoboto' style={{ fontSize: "16px" }}>
-                    {props.email.substring(1,25)}
+                    {props.email}
                 </h5>
             </div>
 

@@ -70,10 +70,10 @@ export default function ProjectList() {
 
             <div className='p-4 m-4 rounded-5 bg-white'>
 
-                <div className='row m-4'  >
+                <div className='row'  >
                     {
                         projectList.slice(0).reverse().map((project, index) => {
-                            return <div id={index} className="col" style={{ maxWidth: "450px" }}>
+                            return <div id={index} className="col mt-4" style={{ maxWidth: "450px" }}>
                                 <ProjectBox
                                     data={project}
 
