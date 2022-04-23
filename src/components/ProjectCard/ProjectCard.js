@@ -41,7 +41,7 @@ export default function ProjectCard(props) {
     const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: '', subTitle: '' })
     const option_list = ["Edit Project", "Delete Project"]
 
-    const status_list = ["Draft", "Active", "Closed"]
+    const status_list = ["Draft", "Active", "Close"]
     const staus_icon_list = [now_icon, active_icon, closed_icon]
     const icons_list = [edit, delete_icon]
     const [newProject, setNewProject] = useState({
@@ -60,17 +60,21 @@ export default function ProjectCard(props) {
 
     const navigate = useNavigate()
 
-    useEffect(() => {
-        //console.log("dô useEffect")
-        // get all project
-        updateStatus(props.data.Id, { Status: newProject.Status })
+    const ChangeStatatusSubmit = (status) => {
+
+        updateStatus(props.data.Id, { Status: status })
             .then((res) => {
+                setNewProject({
+                    ...newProject, Status: status
+                })
+                window.location.reload()
             })
             .catch((e) => {
                 Store.addNotification(content("Warning", e.response.data, "danger"))
                 return
             })
-    }, [newProject.Status])
+    }
+
 
     const DeleteProjectSubmit = () => {
 
@@ -85,6 +89,7 @@ export default function ProjectCard(props) {
             })
 
     }
+
     const [pressEdit, setpressEdit] = useState(false)
     const EditProjectSubmit = () => {
         editProject(props.data.Id, {
@@ -134,12 +139,11 @@ export default function ProjectCard(props) {
                                 handleOpen()
                             }
                         }} />
-                        <DropdownWithIndex0 title={newProject.Status} items={status_list} icons_list={staus_icon_list} onClick={(val) => {
-                            setNewProject({
-                                ...newProject, Status: val
-                            })
-                            //ChangeStatatusSubmit();
-                        }} />
+                        <DropdownWithIndex0 title={newProject.Status} items={status_list} icons_list={staus_icon_list}
+                            onClick={(val) => {
+
+                                ChangeStatatusSubmit(val);
+                            }} />
                     </div>
                     {
                         pressEdit === false ?
@@ -182,29 +186,29 @@ export default function ProjectCard(props) {
                                         <div className='col-1  m-0 p-0'>
                                             <img src={ClockSvg} height="25px" />
                                         </div>
-                                        <div className='col-7 m-0 p-0' style={{ "text-align": "left" }} >
-                                            <div className='ms-2'>
-                                                <div style={orangeStyle}>{localization.EsTime}</div>
-                                            </div>
-                                        </div>
-                                        <div className='col-4  m-0 p-0' >
-                                            <div>{timeCaster(props.data.PredictEndtime).substring(0, 10)}</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className='m-3 m-0 p-0'>
-                                    <div class=" row text-center m-0 p-0">
-                                        <div className='col-1  m-0 p-0'>
-                                            <img src={ClockSvg} height="25px" />
-                                        </div>
-                                        <div className='col-7 m-0 p-0' style={{ "text-align": "left" }} >
-                                            <div className='ms-2'>
-                                                <div style={orangeStyle}>{localization.ETime}</div>
-                                            </div>
-                                        </div>
-                                        <div className='col-4  m-0 p-0' >
-                                            <div>{timeCaster(props.data.PredictEndtime).substring(0, 10)}</div>
-                                        </div>
+                                        {
+                                            props.data.Status === "Close" ?
+                                                <div className='col-7 m-0 p-0' style={{ "text-align": "left" }} >
+                                                    <div className='ms-2'>
+                                                        <div style={orangeStyle}>{localization.ETime}</div>
+                                                    </div>
+                                                </div> :
+                                                <div className='col-7 m-0 p-0' style={{ "text-align": "left" }} >
+                                                    <div className='ms-2'>
+                                                        <div style={orangeStyle}>{localization.EsTime}</div>
+                                                    </div>
+                                                </div>
+                                        }
+                                        {
+                                            props.data.Status === "Close" ?
+                                                <div className='col-4  m-0 p-0' >
+                                                    <div>{timeCaster(props.data.PredictEndtime).substring(0, 10)}</div>
+                                                </div> :
+                                                <div className='col-4  m-0 p-0' >
+                                                    <div>{timeCaster(props.data.PredictEndtime).substring(0, 10)}</div>
+                                                </div>
+                                        }
+
                                     </div>
                                 </div>
 
@@ -260,31 +264,37 @@ export default function ProjectCard(props) {
                                         </div>
                                     </div>
                                 </div>
-                                <div className='m-3 m-0 p-0'>
-                                    <div class=" row text-center m-0 p-0">
-                                        <div className='col-1  m-0 p-0'>
-                                            <img src={ClockSvg} height="25px" />
-                                        </div>
-                                        <div className='col-6 m-0 p-0' style={{ "text-align": "left" }} >
-                                            <div className='ms-2'>
-                                                <div style={orangeStyle}>Estimated end time:</div>
+                                {
+                                    props.data.Status === "Close" ?
+                                        null :
+                                        <div className='m-3 m-0 p-0'>
+                                            <div class=" row text-center m-0 p-0">
+                                                <div className='col-1  m-0 p-0'>
+                                                    <img src={ClockSvg} height="25px" />
+                                                </div>
+                                                <div className='col-6 m-0 p-0' style={{ "text-align": "left" }} >
+                                                    <div className='ms-2'>
+                                                        <div style={orangeStyle}>Estimated end time:</div>
+                                                    </div>
+                                                </div>
+                                                <div className='col-5  m-0 p-0' >
+                                                    <Form.Group controlId="duedate">
+                                                        <Form.Control
+                                                            type="date"
+                                                            name="duedate"
+                                                            placeholder=""
+                                                            value={moment(projectInformation.PredictEndtime).format("YYYY-MM-DD")}
+                                                            onChange={(e) => {
+                                                                setprojectInformation({ ...projectInformation, PredictEndtime: e.target.value.substring(0, 10) })
+                                                            }}
+                                                        />
+                                                    </Form.Group>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div className='col-5  m-0 p-0' >
-                                            <Form.Group controlId="duedate">
-                                                <Form.Control
-                                                    type="date"
-                                                    name="duedate"
-                                                    placeholder=""
-                                                    value={moment(projectInformation.PredictEndtime).format("YYYY-MM-DD")}
-                                                    onChange={(e) => {
-                                                        setprojectInformation({ ...projectInformation, PredictEndtime: e.target.value.substring(0, 10) })
-                                                    }}
-                                                />
-                                            </Form.Group>
-                                        </div>
-                                    </div>
-                                </div>
+
+                                }
+
                                 <div className='d-flex justify-content-center'><button onClick={() => { EditProjectSubmit() }} type="button" class="btn btn-primary btn-lg">Save</button></div>
                             </div>
 
