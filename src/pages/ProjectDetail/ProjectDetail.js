@@ -93,6 +93,7 @@ export default function ProjectDetail() {
             .then(res => {
                 let result = res.data.filter(d => d.Type != "Workspace")
                 setDatasourceslist(result)
+                console.log(result)
             })
             .catch(err => {
                 console.log(err)
@@ -130,27 +131,38 @@ export default function ProjectDetail() {
                 DId={DId}
 
             />
+            {
+                datasourceslist.length === 0 ?
+                    <div className='row m-0 p-0 mt-3' >
+                        <div className=' col-10' style={{ color: deep_blue_primary, "font-weight": "bold", fontSize: "40px" }}>Data Sources:</div>
+                        <div className='bg-white' style={{ height: "300px" }}>
+                        </div>
+                    </div>
+                    :
+                    <div className='row m-0 p-0 mt-3' >
+                        <div className=' col-10' style={{ color: deep_blue_primary, "font-weight": "bold", fontSize: "40px" }}>Data Sources:</div>
+                        <div className='bg-white' style={{ minheight: "300px" }}>
+                            <ScrollMenu>
+                                {datasourceslist.map((ele, index) => (
+                                    <div className='ms-4 mt-5 mb-5' style={{ minWidth: "300px" }}>
+                                        <DataSourceBox
+                                            option_list={option_list}
+                                            icon_list={icon_list}
+                                            setDatasourceslist={setDatasourceslist}
+                                            datasourceslist={datasourceslist}
+                                            showSharePopUpHandle={showSharePopUpHandle}
+                                            ele={ele}
+                                            index={index}
+                                        />
+                                    </div>
+                                ))}
+                            </ScrollMenu>
+                        </div>
+                    </div>
 
-            <div className='row m-0 p-0 mt-3' >
-                <div className=' col-10' style={{ color: deep_blue_primary, "font-weight": "bold", fontSize: "40px" }}>Data Sources:</div>
-                <div className='bg-white' style={{ minheight: "300px" }}>
-                    <ScrollMenu>
-                        {datasourceslist.map((ele, index) => (
-                            <div className='ms-4 mt-5 mb-5' style={{ minWidth: "300px" }}>
-                                <DataSourceBox
-                                    option_list={option_list}
-                                    icon_list={icon_list}
-                                    setDatasourceslist={setDatasourceslist}
-                                    datasourceslist={datasourceslist}
-                                    showSharePopUpHandle={showSharePopUpHandle}
-                                    ele={ele}
-                                    index={index}
-                                />
-                            </div>
-                        ))}
-                    </ScrollMenu>
-                </div>
-            </div>
+            }
+
+
 
 
 

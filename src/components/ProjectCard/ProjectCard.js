@@ -222,7 +222,7 @@ export default function ProjectCard(props) {
                                                 <div style={orangeStyle}>{localization.JoinMember}</div>
                                             </div>
                                         </div>
-                                        <div className='col-4  m-0 p-0' >
+                                        <div className='col-4  m-0 p-0 mb-4' >
                                             <div>{props.data.NumOfMember}</div>
                                         </div>
                                     </div>
