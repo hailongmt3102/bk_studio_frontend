@@ -34,7 +34,6 @@ export default function ToolBar(props) {
                 </button>
                 <button className="col m-0 p-0 btn btn-sm" style={{ "minWidth": "80px", "minHeight": "50px" }}
                     onClick={() => {
-                        console.log("asdf")
                         props.setAddShapeType("text")
                     }}
                 >

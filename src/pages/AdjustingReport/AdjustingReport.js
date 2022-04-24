@@ -27,7 +27,8 @@ export default function AdjustingReport(props) {
     const nav = useNavigate()
     let RId = useLocation().pathname.split('/')[3] ?? -1
     const currentProject = localStorage.getItem("currentProject")
-    const contentRef = useRef(null)
+    const contentWrappingBox = useRef(null)
+    const contentRef = useRef()
 
     // list data sources of the report
     const [dataSource, setDataSource] = useState({})
@@ -65,7 +66,6 @@ export default function AdjustingReport(props) {
         }
     }
     const [dragAreaLocation, setDragAreaLocation] = useState(defaultLocation)
-    const [isAdding, setIsAdding] = useState(true)
     const [addShapeType, setAddShapeType] = useState(null)
 
     // const report shapes
@@ -105,6 +105,7 @@ export default function AdjustingReport(props) {
         }
     }
     // ** ---------------------------------------------------------------------------------------------
+
 
 
 
@@ -171,6 +172,7 @@ export default function AdjustingReport(props) {
         }
     }
     // ** ---------------------------------------------------------------------------------------------
+
 
 
 
@@ -439,7 +441,7 @@ export default function AdjustingReport(props) {
                 QueryCommand: selectedShape.QueryCommand,
                 Height: selectedShape.Height,
                 Width: selectedShape.Width,
-                Position: JSON.stringify({x: selectedShape.Position.x + 50, y: selectedShape.Position.y + 50}),
+                Position: JSON.stringify({ x: selectedShape.Position.x + 50, y: selectedShape.Position.y + 50 }),
                 TitleTheme: "",
                 TextTheme: JSON.stringify(selectedShape.TextTheme),
                 FrameTheme: JSON.stringify(selectedShape.FrameTheme)
@@ -465,16 +467,132 @@ export default function AdjustingReport(props) {
 
 
 
+
+    //!  NOT WORKING
+    //! start
+    // ** ---------------------------------------------------------------------------------------------
+    // ** create some function to add non query shape in report
+    // ** create some mouse event to draw drag area
+    const adjustedMouseEvent = () => {
+        const canvas = contentWrappingBox.current
+        if (canvas == null) return
+        let position
+        const onMouseMove = (e) => {
+            // if (shapeTypeVariable == null) return
+            const size = {
+                width: e.offsetX - position.x,
+                height: e.offsetY - position.y,
+            }
+            setDragAreaLocation(prev => ({ ...prev, size }))
+        }
+        canvas.addEventListener("mousedown", (e) => {
+            position = {
+                x: e.offsetX,
+                y: e.offsetY
+            }
+            setDragAreaLocation(prev => ({ ...prev, position }))
+            canvas.addEventListener("mousemove", onMouseMove)
+            canvas.addEventListener("mouseup", () => {
+                canvas.removeEventListener("mousemove", onMouseMove)
+                // if (shapeTypeVariable == null) return
+                executeWhenDragged({ ...dragAreaLocation })
+                setDragAreaLocation(defaultLocation)
+            })
+        })
+
+        console.log("added mouse event")
+    }
+
+    // ** when drag complete
+    const executeWhenDragged = (dragInfo) => {
+        console.log(dragInfo)
+        switch (addShapeType) {
+            case "text":
+                createTextComponent(dragInfo)
+                break
+            default:
+                break
+        }
+    }
+
+
+    // ** ---------------------------------------------------------------------------------------------
+    //! end
+
+
+
+
+    // ** ---------------------------------------------------------------------------------------------
+    // ** trigger click outside of component 
+    // ** can create new component 
+    const triggerClickContentBackground = (e) => {
+        if (contentRef == null) return
+        if (contentRef.current && !contentRef.current.contains(e.target)) {
+            executeWhenClickOutside(e)
+        }
+    }
+
+    // ** check menu status and create relative information
+    const executeWhenClickOutside = (position) => {
+        console.log(position)
+        switch (addShapeType) {
+            case "text":
+                createTextComponent()
+                break
+            default:
+                break
+        }
+    }
+
+    // ** create text component
+    const createTextComponent = async () => {
+        try {
+            // let newShape = {
+            //     Title: "Title",
+            //     Type: componentType,
+            //     QueryCommand: "",
+            //     Height: 100,
+            //     Width: 300,
+            //     Position: JSON.stringify(info.position),
+            //     TitleTheme: "",
+            //     TextTheme: JSON.stringify(textStyleDefault),
+            //     FrameTheme: JSON.stringify(frameStyleDefault)
+            // }
+            // await createNewComponent(currentProject, RId, newShape)
+            // pushNewComponentToUI(newShape)
+        }
+        catch (err) {
+            console.log(err)
+        }
+    }
+
+    const onMouseDownHandler = (e) => {
+        console.log(e.offsetX)
+    }
+
+    const onMouseMoveHandler = (e) => {
+        
+    }
+
+    const onMouseUpHandler = (e) => {
+        
+    }
+
+
+
+
     useEffect(() => {
         getReportInfo()
         getDataFields()
         getReportContent()
+        // register mouse event
+        // adjustedMouseEvent()
     }, [])
 
     // trigger on change of tabData
     useEffect(() => {
-        console.log(shapeComponents)
-    }, [shapeComponents])
+        console.log(addShapeType)
+    }, [addShapeType])
 
     const [reportInformation, setReportInformation] = useState(
         {
@@ -594,12 +712,21 @@ export default function AdjustingReport(props) {
                             OpenShareLinkPopUp={() => setshowShareLinkPopUp(true)}
                             setAddShapeType={setAddShapeType}
                         />
-                        <div className="content">
+
+                        <div className="content"
+                            // onClick={(e) => triggerClickContentBackground(e)}
+                            onMouseDown={onMouseDownHandler}
+                            onMouseMove={onMouseMoveHandler}
+                            onMouseUp={onMouseUpHandler}
+                        >
                             <Content
+                                ref={contentRef}
                                 shapeComponents={shapeComponents}
                                 updateShapeComponent={updateShapeComponent}
                                 followingIndexComponent={followingIndexComponent}
                                 setFollowingIndexComponent={setFollowingIndexComponent}
+                                showingMouseDrag={addShapeType != null}
+                                mouseDragValue={dragAreaLocation}
                             />
                         </div>
                     </div>

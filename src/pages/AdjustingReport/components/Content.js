@@ -1,7 +1,9 @@
 import { ArcElement, BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, LineElement, PointElement, Title, Tooltip } from 'chart.js';
 import { Bar, Doughnut, Line, Pie } from 'react-chartjs-2';
 import { Rnd } from 'react-rnd';
+import React from 'react';
 import TableComponent from './table/TableComponent';
+import Text from './Text/Text';
 
 ChartJS.register(
     CategoryScale,
@@ -17,7 +19,7 @@ ChartJS.register(
 
 
 
-export default function Content(props) {
+const Content = React.forwardRef((props, ref) => {
     const executeShape = (shape, index) => {
         switch (shape.Type) {
             case "Table":
@@ -77,9 +79,6 @@ export default function Content(props) {
                         onResizeStop={(e, direction, ref, delta, position) => {
                             props.updateShapeComponent(index, { ...shape, Width: ref.style.width, Height: ref.style.height })
                         }}
-                        onMouseDown={() => {
-                            // callParentWhenClick()
-                        }}
                         className={props.followingIndexComponent == index ? "border border-5 customBorder" : "border border-5"}
                     >
                         {shape.Title}
@@ -133,6 +132,9 @@ export default function Content(props) {
                         {shape.Title}
                         <Pie data={shape.pieData} />
                     </Rnd>)
+            case "Text":
+                <Text data={shape}/>
+                break
             default:
                 break
 
@@ -140,14 +142,22 @@ export default function Content(props) {
     }
 
     return (
-        props.shapeComponents.map((shape, index) =>
-            <div key={index} onClick={() => {
-                props.setFollowingIndexComponent(index)
-            }}>
-                {
-                    executeShape(shape, index)
-                }
-            </div>
-        )
+        <div ref={ref}>
+            {
+                props.shapeComponents.map((shape, index) =>
+                    <div key={index} onMouseDown={() => {
+                        props.setFollowingIndexComponent(index)
+                    }}>
+                        {
+                            executeShape(shape, index)
+                        }
+                    </div>
+                )
+            }
+            {props.showingMouseDrag && <Rnd size={props.mouseDragValue.size} position={props.mouseDragValue.position} className="border" />}
+        </div>
+
     )
-}
+})
+
+export default Content
