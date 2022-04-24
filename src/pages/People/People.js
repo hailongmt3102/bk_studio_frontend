@@ -35,9 +35,9 @@ export default function People() {
             <div className='rounded-5 bg-white'>
                 <div className='row m-0 p-0 bg-light'>
                     <div className='col-4 m-0 p-0 '>
-                        <div className='m-4 p-4 bg-white' style={{ height: "100%" }}>
-                            <h1 className='row ' style={{ color: blue_cloud, "font-weight": "bold" }}>Manager</h1>
-                            <div class="p-2"> {
+                        <div className='m-3 p-4 bg-white' >
+                            <h1 className='row  m-0 p-0 customFontBold SecondFontColor ' >Manager</h1>
+                            {
                                 people.map((ele) => {
                                     if (ele.Email === getEmail) {
                                         if (ele.Position !== "Manager") return null
@@ -58,7 +58,7 @@ export default function People() {
                                     }
                                     else {
                                         if (ele.Position !== "Manager") return null
-                                        return <div class="d-flex p-2"> <PeopleCard
+                                        return <PeopleCard
                                             position={ele.Position}
                                             name={ele.UserName}
                                             email={ele.Email}
@@ -70,26 +70,24 @@ export default function People() {
                                             showThreeDotButton={false}
                                             isMe={false}
                                         />
-                                        </div>
-
                                     }
-
                                 })
                             }
-                            </div>
+
                         </div>
 
                     </div>
-                    <div className='col-8 m-0 p-0' >
-                        <div className='m-4 p-4 bg-white' style={{ height: "100%" }}>
+                    <div className='col-8  m-0 p-0' >
+                        <div className='m-3 p-4 bg-white' style={{ height: "100%" }}>
                             <h1 style={{ color: blue_cloud, "font-weight": "bold" }}>Member</h1>
-                            <div className='row ms-3'>
+                            <div className='row'>
                                 {
                                     people.map((ele) => {
                                         if (ele.Email === getEmail) {
                                             if (ele.Position !== "Member") return null
                                             else {
                                                 return <PeopleCard
+                                                    // style={{ "maxWidth": "400px" }}
                                                     position={ele.Position}
                                                     name={ele.UserName}
                                                     email={ele.Email}
@@ -105,18 +103,19 @@ export default function People() {
                                         }
                                         else {
                                             if (ele.Position !== "Member") return null
-                                            return <div class="col"> <PeopleCard
-                                                position={ele.Position}
-                                                name={ele.UserName}
-                                                email={ele.Email}
-                                                avatar={ele.Avatar}
-                                                rank={ele.RankAccount}
-                                                birthday={ele.Birthday.substring(0, 10).split('-').reverse().join('-')}
-                                                gender={ele.Gender}
-                                                isManager={false}
-                                                showThreeDotButton={false}
-                                                isMe={false}
-                                            />
+                                            return <div class="col-4 m-0 p-0" >
+                                                <PeopleCard
+                                                    position={ele.Position}
+                                                    name={ele.UserName}
+                                                    email={ele.Email}
+                                                    avatar={ele.Avatar}
+                                                    rank={ele.RankAccount}
+                                                    birthday={ele.Birthday.substring(0, 10).split('-').reverse().join('-')}
+                                                    gender={ele.Gender}
+                                                    isManager={false}
+                                                    showThreeDotButton={false}
+                                                    isMe={false}
+                                                />
                                             </div>
                                         }
                                     })

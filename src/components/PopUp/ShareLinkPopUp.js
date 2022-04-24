@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { Modal, Button } from 'react-bootstrap'
-import { blue_cloud, deep_blue_primary } from "../../../../utils/color"
+import { blue_cloud, deep_blue_primary } from "../../utils/color"
 
-import { editPeopleRoleWithProject } from "../../../../api/Project"
+import { editPeopleRoleWithProject } from "../../api/Project"
 import { getListPeopleByProjectID } from "api/People"
 
-import { shareReport, getShardListPeople } from "api/Report"
+import { shareReport, getSharedListPeople } from "api/Report"
 import link from "resources/icons/link.svg";
 import edit from 'resources/icons/edit.svg'
 
@@ -32,10 +32,10 @@ export default function ShareLinkPopUp(props) {
                 //console.log(res.data)
             })
             .catch(err => {
-                Store.addNotification(content("Warning", "Can't show list people in this project", "danger"))
+                Store.addNotification(content("Fail", "Can't show list people in this project", "danger"))
                 console.log(err.response.data)
             })
-        getShardListPeople(props.currentProject, props.RId)
+        getSharedListPeople(props.currentProject, props.RId)
             .then(res => {
                 setListSharedPeople(res.data)
                 //console.log(res.data)
@@ -60,7 +60,7 @@ export default function ShareLinkPopUp(props) {
                 props.handleClose()
             })
             .catch(error => {
-                Store.addNotification(content("Warning", error.data, "danger"))
+                Store.addNotification(content("Fail", error.data, "danger"))
                 props.handleClose()
             })
     }
@@ -122,7 +122,7 @@ export default function ShareLinkPopUp(props) {
     return (
         <Modal
             show={props.show}
-            onHide={()=>props.handleClose()}
+            onHide={() => props.handleClose()}
             backdrop="static"
             size="xl"
             aria-labelledby="contained-modal-title-vcenter"

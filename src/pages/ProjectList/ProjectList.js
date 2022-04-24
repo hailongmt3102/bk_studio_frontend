@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getListProject } from 'api/Project'
-import ProjectBox from '../../components/ProjectBox'
+import ProjectBox from '../../components/ProjectCard/ProjectCard'
 import NewProjectModel from './components/NewProjectModel'
 
 import { deep_blue_primary } from "../../utils/color"
@@ -18,14 +18,14 @@ export default function ProjectList() {
 
     const [appendProject, setAppendProject] = useState(0)
 
-    const [lastProjectId, setLastProjectId]=useState(0)
+    const [lastProjectId, setLastProjectId] = useState(0)
 
     const navigate = useNavigate()
     useEffect(() => {
         // get all project
         getListProject()
             .then(response => {
-                
+
                 setProjectList(response.data)
                 //console.log(response.data.length)
                 setLastProjectId(response.data.length !== 0 ? response.data.length : 0)
@@ -41,9 +41,9 @@ export default function ProjectList() {
         <div>
             <div className='d-flex flex-row pt-2'>
 
-            <h2 class="ms-4 mt-1" style={{ color: deep_blue_primary, "font-weight": "bold", fontSize: "40px" }}> 
-            Project list
-            </h2>
+                <h2 class="ms-4 mt-1" style={{ color: deep_blue_primary, "font-weight": "bold", fontSize: "40px" }}>
+                    Project list
+                </h2>
                 <div className='d-flex flex-row pt-1'>
 
                     <button className='btn btn-default btn-lg ms-3 p-0'
@@ -70,13 +70,13 @@ export default function ProjectList() {
 
             <div className='p-4 m-4 rounded-5 bg-white'>
 
-                <div className='row m-4'  >
+                <div className='row'  >
                     {
                         projectList.slice(0).reverse().map((project, index) => {
-                            return <div id={index} className="col">
+                            return <div id={index} className="col mt-4" style={{ maxWidth: "450px" }}>
                                 <ProjectBox
                                     data={project}
-                                   
+
                                 />
                             </div>
                         })

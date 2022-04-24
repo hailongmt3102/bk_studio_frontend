@@ -7,7 +7,8 @@ import FloatingCard from './FloatingCard';
 import FloatText from './FloatText';
 import LongCanvas from './LongCanvas';
 import Shape from './Shape';
-
+import { content } from "utils/notification"
+import { Store } from 'react-notifications-component'
 
 ChartJS.register(
     CategoryScale,
@@ -143,7 +144,8 @@ const Content = React.forwardRef((props, ref) => {
                     setComponents(res.data)
                 })
                 .catch(res => {
-                    alert(res.response.data)
+                    Store.addNotification(content("Fail", res.response.data, "danger"))
+
                 })
         }
     }

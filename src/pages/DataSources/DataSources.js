@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 
 import { blue_cloud } from "../../utils/color"
 import { deep_blue_primary } from "../../utils/color"
@@ -9,21 +9,22 @@ import edit from "resources/icons/edit.svg"
 import delete_icon from "resources/icons/delete.svg"
 import download_blue from "resources/icons/download_blue.svg"
 import share_blue from "resources/icons/share_blue.svg"
-
-const orangeStyle = {
-    color: "#FF7F0D",
-}
-
-
+import { useLocation, useNavigate } from "react-router-dom";
+import ShareDataSourcesPopUp from "../DataSources/component/ShareDataSourcesPopUp"
+import { ScrollMenu } from 'react-horizontal-scrolling-menu';
 export default function DataSources() {
     const [datasourceslist, setDatasourceslist] = useState([])
+    const location = useLocation().pathname
+    let RId = location.split('/')[3]
+    const [showSharePopUp, setshowSharePopUp] = useState(false)
+    const currentProject = localStorage.getItem("currentProject")
     useEffect(() => {
-        console.log("Lấy data nè")
+        // console.log("Lấy data nè")
         // get list people
         GetDataSourcesListInformationInWorkSpace()
             .then(res => {
                 setDatasourceslist(res.data)
-                console.log(res.data)
+                //console.log(res.data)
             })
             .catch(err => {
                 console.log(err)
@@ -32,74 +33,126 @@ export default function DataSources() {
     }, [])
     const option_list = ["Share", "Rename", "Download", "Delete"]
     const icon_list = [share_blue, edit, download_blue, delete_icon]
+
+    const showSharePopUpHandle = (DId) => {
+        setshowSharePopUp(true)
+        setDId(DId)
+    }
+    const [DId, setDId] = useState(-1)
     return (
         <div>
-            <div className='d-flex flex-row pt-2'>
-
-                <h2 class="ms-4 mt-1" style={{ color: deep_blue_primary, "font-weight": "bold", fontSize: "40px" }}> Data Sources:</h2>
-                {/* <button className='btn btn-default btn-lg ms-3 p-0'
-                    onClick={() => {
-                        //setShowPModel(true)
-                    }}
-                >
-                    <img src={add_round} width="40px" height="40px" />
-                </button> */}
-
-
-
-            </div>
-
-            <div className='row bg-light'>
-                <div className='col-6 m-4 bg-white'>
-                    <h1 className='m-2 mt-4' style={{ color: blue_cloud, "font-weight": "bold" }}>User Sources</h1>
-                    <div className='row'>
-                        {
-                            datasourceslist.map((ele, index) => {
-                                return <DataSourceBox
-                                    option_list={option_list}
-                                    icon_list={icon_list}
-                                    setDatasourceslist={setDatasourceslist}
-                                    datasourceslist={datasourceslist}
-                                    ele={ele}
-                                    index={index} />
-                            })
-
-                        }
+            <ShareDataSourcesPopUp
+                type="Workspace"
+                show={showSharePopUp}
+                handleOpen={() => {
+                    setshowSharePopUp(true)
+                }}
+                handleClose={() => {
+                    setshowSharePopUp(false)
+                }}
+                DId={DId}
+            />
+           
+            <h2 class="ms-5 PrimaryFontColor size40 customFontBold" > Datasources:</h2>
+            <div className='bg-white'>
+                <div className='row'>
+                    <h1 className='ps-5 ms-3 mt-4 customFontBold SecondFontColor' >User Sources</h1>
+                        <div className='row mt-4 m-0 p-0'>
+                            <ScrollMenu>
+                                {datasourceslist.map((ele, index) => (
+                                        <div className='ms-4 mb-5'>
+                                            <DataSourceBox
+                                                option_list={option_list}
+                                                icon_list={icon_list}
+                                                setDatasourceslist={setDatasourceslist}
+                                                datasourceslist={datasourceslist}
+                                                showSharePopUpHandle={showSharePopUpHandle}
+                                                ele={ele}
+                                                index={index}
+                                            />
+                                        </div>
+                                ))}
+                            </ScrollMenu>
+                        </div>
+                </div>
+                <div className='row mt-3 '>
+                    <h1 className='ps-5 ms-3 customFontBold SecondFontColor' >Samples</h1>
+                    <div className='row mt-4 m-0 p-0'>
+                        <ScrollMenu>  
+                            {datasourceslist.map((ele, index) => (
+                                <div className='ms-4'>
+                                    <DataSourceBox
+                                        option_list={option_list}
+                                        icon_list={icon_list}
+                                        setDatasourceslist={setDatasourceslist}
+                                        datasourceslist={datasourceslist}
+                                        showSharePopUpHandle={showSharePopUpHandle}
+                                        ele={ele}
+                                        index={index}
+                                    />
+                                </div>
+                            ))}
+                        </ScrollMenu>
                     </div>
                 </div>
-                <div className='col-5 m-4 bg-white'>
-
-                    <h1 className='m-2 mt-4' style={{ color: blue_cloud, "font-weight": "bold" }}>Sample</h1>
-                    {/* <div className='col-3 ms-4 mt-3 pt-2' style={{ "height": "190px", width: "370px", "border-radius": "20px", "backgroundColor": "#F7F7F7" }}>
-                        <div className='row' style={{ "paddingLeft": "310px" }}>
-
-                            <ThreeDotButton title={'adđ'} items={option_list} icon={three_dot} onClick={(val) => { }} />
-                        </div>
-                        <div className="row ms-2">
-                            <div class="col-2 d-flex me-3 ms-2" style={{ fontFamily: "Roboto" }}>
-                                <img src={excel_icon} />
-                            </div>
-                            <div class="col-5 ms-4 text-center" style={{ fontFamily: "Roboto" }}>
-                                <div class="col-4" style={{ fontFamily: "Roboto", color: blue_cloud }}>
-                                    <h2>Iris.csv</h2>
-                                </div>
-                                <div class="col-5 mt-1" style={{ fontFamily: "Roboto" }}>
-                                    datecreated:10/10/2021
-                                </div>
-                                <div class="col-5" style={{ fontFamily: "Roboto" }}>
-                                    lastmodified:10/10/2021
-                                </div>
-
-
-                            </div>
-
-                        </div>
-                    </div> */}
-
-                </div>
-
             </div>
-        </div>
+            </div>
+                    
+                
+            
+     
+           
+       
 
     )
 }
+// import React, { useEffect, useState } from 'react'
+
+// import { blue_cloud } from "../../utils/color"
+// import { deep_blue_primary } from "../../utils/color"
+// import avt_people from "resources/icons/avt_people.svg"
+
+
+// import PeopleCard from "components/PeopleCard/PeopleCard"
+
+
+// import { getListPeople } from '../../api/People'
+
+
+// export default function DataSources() {
+
+//     let getEmail = localStorage.getItem("email") ?? ""
+//     //console.log(getEmail)
+//     const [people, setPeople] = useState([])
+//     useEffect(() => {
+//         // get list people
+
+//         getListPeople()
+//             .then(res => {
+//                 setPeople(res.data)
+//                 console.log(res.data)
+//             })
+//             .catch(err => {
+//                 console.log(err)
+//             })
+
+//     }, [])
+//     return (
+//         <div>
+//             <h2 class="ms-4" style={{ color: deep_blue_primary, "font-weight": "bold", fontSize: "40px" }}> People:</h2>
+//             <div className='rounded-5 bg-white'>
+//                 <div className='row m-0 p-0 bg-light'>
+//                     <div className='col-4 m-0 p-0 '>
+                        
+
+//                     </div>
+//                     <div className='col-8 m-0 p-0' >
+                       
+
+//                     </div>
+
+//                 </div>
+//             </div>
+//         </div>
+//     )
+// }

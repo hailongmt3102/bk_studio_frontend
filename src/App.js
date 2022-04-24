@@ -22,6 +22,7 @@ import Setting from "./pages/Setting/Setting";
 import ForgetPassword from "./pages/ForgetPassword/ForgetPassword";
 import Drawer from "./pages/Drawer/Drawer";
 import Header from "pages/Header";
+import DataSourceContent from "pages/DatasourceContent/DataSourceContent"
 import UpdatePassword from "pages/UpdatePassword/UpdatePassword";
 import { ReactNotifications } from 'react-notifications-component';
 import 'react-notifications-component/dist/theme.css';
@@ -59,7 +60,16 @@ function App() {
                         <Route path="/pList" element={<ProjectList />} />
                         <Route path="/pDetail/:id" element={<ProjectDetail />} />
 
-                        <Route path="/datasources" element={<DataSources />} />
+                        <Route path="/datasources" 
+                            element={<DataSources />} />
+                        <Route
+                            path="/datasources/:id/view"
+                            element={<DataSourceContent isEdit={false} />}
+                        />
+                        <Route
+                            path="/datasources/:id/edit"
+                            element={<DataSourceContent isEdit={true} />}
+                        />
                         <Route path="/people" element={<People />} />
                         <Route path="/account/login" element={<Login />} />
 

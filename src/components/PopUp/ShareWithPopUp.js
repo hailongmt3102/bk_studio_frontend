@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { Modal, Button } from 'react-bootstrap'
-import { blue_cloud, deep_blue_primary } from "../../../../utils/color"
+import { blue_cloud, deep_blue_primary } from "../../utils/color"
 
-import { editPeopleRoleWithProject } from "../../../../api/Project"
+import { editPeopleRoleWithProject } from "../../api/Project"
 import { getListPeopleByProjectID } from "api/People"
 
-import { shareReport, getShardListPeople, updateSharePermission } from "api/Report"
+import { shareReport, getSharedListPeople, updateSharePermission } from "api/Report"
 import shareWith from "resources/icons/share_with_primary.svg";
 import edit from 'resources/icons/edit.svg'
 
@@ -21,8 +21,13 @@ import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import NativeSelect from '@mui/material/NativeSelect';
+
 export default function ShareWithPopUp(props) {
 
+
+
+    var myEmail = localStorage.getItem("email")
+    // console.log("email",myEmail)
 
     const roleList = ["View", "Edit"]
     const staus_icon_list = [eye_bluecloud, edit]
@@ -30,7 +35,7 @@ export default function ShareWithPopUp(props) {
     const [listSharedPeople, setListSharedPeople] = useState([])
     const [listSharedName, setListSharedName] = useState([])
     useEffect(() => {
-        getShardListPeople(props.currentProject, props.RId)
+        getSharedListPeople(props.currentProject, props.RId)
             .then(res => {
                 setListSharedPeople(res.data)
                 setListSharedName(res.data.map((e) => e.Email))
@@ -38,18 +43,18 @@ export default function ShareWithPopUp(props) {
                 //console.log("list share", res.data.map((e) => e.Email))
             })
             .catch(err => {
-                Store.addNotification(content("Warning", "Can't show list shared people in this project", "danger"))
+                Store.addNotification(content("Fail", "Can't show list shared people in this project", "danger"))
                 // console.log( err.response.data)
             })
     }, [])
     useEffect(() => {
         getListPeopleByProjectID(props.currentProject)
             .then(res => {
-                setListShowPeople(res.data.map((e) => e.Email).filter(item => !listSharedName.includes(item)))
+                setListShowPeople(res.data.map((e) => e.Email).filter(item => (!listSharedName.includes(item) && item !== myEmail)))
                 //console.log("list show",res.data.map((e)=>e.Email).filter(item => !listSharedName.includes(item)))
             })
             .catch(err => {
-                Store.addNotification(content("Warning", "Can't show list people in this project", "danger"))
+                Store.addNotification(content("Fail", "Can't show list people in this project", "danger"))
                 //console.log(err.response.data)
             })
     }, [listSharedName])
@@ -67,7 +72,7 @@ export default function ShareWithPopUp(props) {
                 props.handleClose()
             })
             .catch(error => {
-                Store.addNotification(content("Warning", error.data, "danger"))
+                Store.addNotification(content("Fail", error.data, "danger"))
                 props.handleClose()
             })
     }
@@ -102,8 +107,8 @@ export default function ShareWithPopUp(props) {
 
 
     const updateShareHandle = async () => {
-        try{
-            for(let i = 0; i < listSharedPeople.length; i++){
+        try {
+            for (let i = 0; i < listSharedPeople.length; i++) {
                 await updateSharePermission(props.currentProject, props.RId, {
                     Email: listSharedPeople[i].Email,
                     Permission: listSharedPeople[i].Permission
@@ -112,7 +117,7 @@ export default function ShareWithPopUp(props) {
             Store.addNotification(content("Success", "Shared with member", "success"))
             props.handleClose()
 
-        }catch(err){
+        } catch (err) {
             console.log(err)
         }
     }
@@ -128,10 +133,10 @@ export default function ShareWithPopUp(props) {
                                 {e.Email}
                             </div>
                             <div className='col'>
-                                <DropdownWithIndex0 title={e.Permission} items={[e.Permission, e.Permission == "View" ? "Edit" : "View"]} icons_list={e.Permission === "View" ? [eye_bluecloud, edit] : [edit, eye_bluecloud]} 
-                                onClick={(val) => {
-                                    setListSharedPeople([...listSharedPeople.slice(0, index), {...listSharedPeople[index], Permission:val}, ...listSharedPeople.slice(index+1)])
-                                }} />
+                                <DropdownWithIndex0 title={e.Permission} items={[e.Permission, e.Permission == "View" ? "Edit" : "View"]} icons_list={e.Permission === "View" ? [eye_bluecloud, edit] : [edit, eye_bluecloud]}
+                                    onClick={(val) => {
+                                        setListSharedPeople([...listSharedPeople.slice(0, index), { ...listSharedPeople[index], Permission: val }, ...listSharedPeople.slice(index + 1)])
+                                    }} />
                             </div>
                         </div>
                     })

@@ -4,10 +4,12 @@ import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import add_grey from 'resources/icons/add_grey.svg'
 import substract from 'resources/icons/substract.svg'
-
+import {deep_blue_primary} from "utils/color"
 import { blue_cloud } from "utils/color"
 import { Form } from 'react-bootstrap'
 export default function SqlPopUp(props) {
+
+    console.log(props.type)
     const [step, setStep] = useState(1)
 
     const op = ['=', "!=", ">", "<", ">=", "<="];
@@ -60,6 +62,7 @@ export default function SqlPopUp(props) {
     }
 
     const submit = () => {
+        setStep(1)
         if (selectedField.length == 0 && function_clause.length == 0) {
             alert("Nothing to compute")
             return
@@ -113,6 +116,7 @@ export default function SqlPopUp(props) {
 
     const selectTableComponent = () => {
         return <div>
+            <div className='customFontBold ms-5 mb-3' style={{fontSize: 20}}>Select Table</div>
             <Autocomplete
                 className='ms-5 me-5'
                 multiple
@@ -678,10 +682,26 @@ export default function SqlPopUp(props) {
             {orderByClause()}
         </div>
     }
+    const [typeChartName, setTypeChartName] = useState(props.type)
+    useEffect(()=> {
+        setTypeChartName(props.type)
+    }, [props.type])
     const titleComponent = () => {
         switch (step) {
             case 1:
-                return <div>Select table</div>
+                return <div>
+                    <Form.Control type="text" value={typeChartName} onChange={(event) => {
+                        setTypeChartName(event.target.value)
+
+                    }}
+                        className="border-0 mb-2 m-0 p-0"
+                        style={{
+                            fontSize: "32px",
+                            color: deep_blue_primary,
+                            fontWeight: "bold"
+                        }}
+                    />
+                </div>
             case 2:
                 return <div>Select X column</div>
             case 3:

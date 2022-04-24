@@ -1,20 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom'
 import AdjustedDropdown from '../components/AdjustedDropdown'
-import { Form, InputGroup, Col, Row, Container, Button, FormControl, FormGroup } from 'react-bootstrap'
-import search from "resources/icons/search.svg"
 import profile from "resources/icons/profile.svg"
 import logout_icon from "resources/icons/logout_icon.svg"
 import Autocomplete from '@mui/material/Autocomplete';
-const orangeStyle = {
-    color: "#FF7F0D",
-}
-
+import TextField from '@mui/material/TextField';
+import Avatar from '@mui/material/Avatar';
 export default function Header() {
     var url = useLocation().pathname
     const [visible, setVisible] = useState(true)
     var nav = useNavigate()
-    const fonts = ['A', 'B'];
+    const option_list = ['Dashboard', 'Datasources', 'People', "Your Projects", "Create a report", "Gallery", "Import Data", "Templates", "Profile", "Setting"];
     useEffect(() => {
         let accountExp = /account\/[a-zA-Z]/
         if (accountExp.test(url)) {
@@ -29,6 +25,7 @@ export default function Header() {
         localStorage.removeItem("username")
         nav('account/login')
     }
+    const [searchContent, setSearchContent] = useState("")
     return (
         visible ?
             <div className='text-center row m-0 p-0'>
@@ -36,33 +33,54 @@ export default function Header() {
                 </div>
                 <div className='col-8 m-0 p-0 mt-4'  >
                     <Autocomplete
-
-                        id="asynchronous-demo"
-                        options={fonts}
+                        className='ms-5 me-5'
+                        id="tags-standard"
+                        options={option_list}
                         renderInput={(params) => (
-                            <div ref={params.InputProps.ref}>
-                                <Form.Group   {...params.inputProps} md="12">
-                                    <InputGroup>
-                                        <InputGroup.Text className='border-right-0' style={{backgroundColor:"white"}} id="inputGroupPrepend "><img src={search}></img></InputGroup.Text>
-                                        <Form.Control
-                                        className='border-right-0 ' 
-                                            onChange={(e) => {
-                                                
-                                            }}
-                                            // type={isVisible ? "text" : "password"}
-                                            placeholder="Search"
-                                            // value={information.Password}
-                                        />
-                                    </InputGroup>
-                                </Form.Group>
-
-                                {/* 
-                                <input type="text" 
-                                    style={{ height: "50px", width: "1200px" }}
-
-                                /> */}
-                            </div>
+                            <TextField
+                                {...params}
+                                variant="standard"
+                                placeholder="Go to page..."
+                            />
                         )}
+                        onChange={(e, val) => {
+                            setSearchContent(val)
+                            if (val === "Dashboard") {
+                                nav("/")
+                            }
+                            else if (val === "Datasources") {
+                                nav("/datasources")
+                            }
+                            else if (val === "People") {
+                                nav("/people")
+                            }
+                            else if (val === "Your Projects") {
+                                nav("/pList")
+                            }
+                            else if (val === "People") {
+                                nav("/people")
+                            }
+                            else if (val === "Create a report") {
+                                nav("/project/create")
+                            }
+                            else if (val === "Gallery") {
+                                nav("/project/gallery")
+                            }
+                            else if (val === "Import Data") {
+                                nav("/project/import")
+                            }
+                            else if (val === "Templates") {
+                                nav("/project/templates")
+                            }
+                            else if (val === "Profile") {
+                                nav("/personal/profile")
+                            }
+                            else if (val === "Setting") {
+                                nav("/personal/setting")
+                            }
+                            else nav("/")
+                        }}
+
                     />
                 </div>
 
@@ -74,11 +92,12 @@ export default function Header() {
                         }}
                         title={
                             <div className='d-flex align-items-center'>
-                                <div className='bg-primary text-white p-1' style={{ height: "45px", width: "45px", borderRadius: "45px", "fontSize": "26px" }}>
+                                <Avatar sx={{ bgcolor: "#0089ED" }}>{localStorage.getItem("username") !== null ? localStorage.getItem("username")[0].toUpperCase() : ""}</Avatar>
+                                {/* <div className='bg-primary text-white p-1' style={{ height: "45px", width: "45px", borderRadius: "45px", "fontSize": "26px" }}>
                                     <div className=''>
-                                        {localStorage.getItem("username") !== null ? localStorage.getItem("username")[0].toUpperCase() : ""}
+
                                     </div>
-                                </div>
+                                </div> */}
                                 <div className='ms-2 me-3'>
                                     {localStorage.getItem("username") === null ? "" : localStorage.getItem("username").substring(0, 10)}
                                 </div>

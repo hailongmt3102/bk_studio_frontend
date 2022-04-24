@@ -4,7 +4,7 @@ import ClockSvg from 'resources/icons/clock.svg'
 import MemberSvg from 'resources/icons/two_people.svg'
 import { getListProject } from 'api/Project'
 
-import {createNewProject} from 'api/Project'
+import { createNewProject } from 'api/Project'
 import { Store } from 'react-notifications-component'
 import { content } from "utils/notification"
 
@@ -17,7 +17,7 @@ const orangeStyle = {
 export default function NewProjectModel(props) {
 
     useEffect(() => {
-        setProjectInfo({...projectInfo, Name: `Project ${props.newProjectId}`})
+        setProjectInfo({ ...projectInfo, Name: `Project ${props.newProjectId}` })
     }, [props.newProjectId])
 
     const [projectInfo, setProjectInfo] = useState({
@@ -35,49 +35,50 @@ export default function NewProjectModel(props) {
     // when click submit button
     const onsubmit = () => {
         // check input field
-        if ([projectInfo.Name, projectInfo.StartTime, projectInfo.PredictEndtime].includes("") || isNaN(projectInfo.NumOfMember)){
+        if ([projectInfo.Name, projectInfo.StartTime, projectInfo.PredictEndtime].includes("") || isNaN(projectInfo.NumOfMember)) {
             Store.addNotification(content("Warning", "Some field is required", "warning"))
             return
-        }else if (projectInfo.NumOfMember < 0) {
+        } else if (projectInfo.NumOfMember < 0) {
             Store.addNotification(content("Warning", "Num of member must be positive number", "warning"))
             return
         }
 
         var info = {
-            ...projectInfo, 
-            StartTime : projectInfo.StartTime + " 00:00:00",
-            PredictEndtime : projectInfo.PredictEndtime + " 00:00:00",
+            ...projectInfo,
+            StartTime: projectInfo.StartTime + " 00:00:00",
+            PredictEndtime: projectInfo.PredictEndtime + " 00:00:00",
         }
 
         createNewProject(info)
-        .then(res => {
-            props.handleClose()
-            Store.addNotification(content("Successful", "Created a new project", "success"))
-            setTimeout(() => window.location.reload(), 1000);
-            props.onComplete()
-        })
-        .catch(err => {
-            alert(err.response.data)
-        })
-        
+            .then(res => {
+                props.handleClose()
+                Store.addNotification(content("Successful", "Created a new project", "success"))
+                setTimeout(() => window.location.reload(), 1000);
+                props.onComplete()
+            })
+            .catch(err => {
+                Store.addNotification(content("Fail", err.response.data, "danger"))
+
+            })
+
     }
     const body = () => {
         return (
             <div>
                 <Form>
-                    <Form.Control type="text" value={projectInfo.Name} onChange = {(event) => {
-                        setProjectInfo({...projectInfo, Name: event.target.value})
+                    <Form.Control type="text" value={projectInfo.Name} onChange={(event) => {
+                        setProjectInfo({ ...projectInfo, Name: event.target.value })
                     }}
-                    className="text-primary border-0 mb-2"
-                    style={{
-                        fontSize : "30px",
-                    }}
+                        className="text-primary border-0 mb-2"
+                        style={{
+                            fontSize: "30px",
+                        }}
                     />
 
                     <Form.Group controlId="duedate" className='mt-4'>
-                        <Form.Label> 
+                        <Form.Label>
                             <div className='d-flex flex-row'>
-                                <img src={ClockSvg} width="30px" height="30px" color='black'/>
+                                <img src={ClockSvg} width="30px" height="30px" color='black' />
                                 <div style={orangeStyle} className="ms-4">
                                     Start time: <strong className='text-danger'>*</strong>
                                 </div>
@@ -98,9 +99,9 @@ export default function NewProjectModel(props) {
                         />
                     </Form.Group>
                     <Form.Group controlId="duedate" className='mt-4'>
-                        <Form.Label> 
+                        <Form.Label>
                             <div className='d-flex flex-row'>
-                                <img src={ClockSvg} width="30px" height="30px"/>
+                                <img src={ClockSvg} width="30px" height="30px" />
                                 <div style={orangeStyle} className="ms-4">
                                     Predict end time: <strong className='text-danger'>*</strong>
                                 </div>
@@ -119,12 +120,12 @@ export default function NewProjectModel(props) {
                             }}
                         />
                     </Form.Group>
-                
+
 
                     <Form.Group controlId="duedate" className='mt-4'>
-                        <Form.Label> 
+                        <Form.Label>
                             <div className='d-flex flex-row'>
-                                <img src={ClockSvg} width="30px" height="30px"/>
+                                <img src={ClockSvg} width="30px" height="30px" />
                                 <div style={orangeStyle} className="ms-4">
                                     Description:
                                 </div>

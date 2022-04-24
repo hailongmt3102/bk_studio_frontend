@@ -43,20 +43,24 @@ const shareReport = (PId, RId, data) => {
     return axiosClient.post(`/project/${PId}/${RId}/share`, data)
 }
 
-const getShardListPeople = (PId, RId) => {
+const getSharedListPeople = (PId, RId) => {
     return axiosClient.get(`/project/${PId}/${RId}/getshare`)
 }
 const updateSharePermission = (PId, RId, data) => {
     return axiosClient.post(`/project/${PId}/${RId}/share/update`, data)
 }
 
-const deleteShape = (PId,RId, CId) => {
+const deleteShape = (PId, RId, CId) => {
     return axiosClient.get(`/project/${PId}/${RId}/component/${CId}/delete`)
 }
 
 const getPermission = (PId, RId, Email ) => {
     return axiosClient.get(`/project/${PId}/${RId}/getPermission`)
 }
+const saveAsCopy = (PId, RId) => {
+    return axiosClient.get(`/project/${PId}/${RId}/copy`)
+}
+
 
 export {
     createNewReport,
@@ -70,8 +74,12 @@ export {
     updateReportInformation,
     getReportInformation,
     shareReport,
-    getShardListPeople,
+    getSharedListPeople,
     updateSharePermission,
     deleteShape,
+<<<<<<< HEAD
     getPermission
+=======
+    saveAsCopy
+>>>>>>> main
 }

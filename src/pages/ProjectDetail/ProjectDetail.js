@@ -25,25 +25,35 @@ import delete_icon from "resources/icons/delete.svg"
 import download_blue from "resources/icons/download_blue.svg"
 import share_blue from "resources/icons/share_blue.svg"
 import excel_icon from "resources/icons/excel_icon.svg"
-
+import ShareDataSourcesPopUp from "../DataSources/component/ShareDataSourcesPopUp"
 import three_dot from "resources/icons/three-dot.svg"
 import ThreeDotButton from 'components/ThreeDotButton'
-
+import { ScrollMenu } from 'react-horizontal-scrolling-menu';
 
 
 export default function ProjectDetail() {
     let getEmail = localStorage.getItem("email") ?? ""
     var location = useLocation()
     var navigate = useNavigate()
+
+    const currentProject = localStorage.getItem("currentProject")
+    const [showSharePopUp, setshowSharePopUp] = useState(false)
+    const [DId, setDId] = useState(-1)
+    const showSharePopUpHandle = (DId) => {
+        setshowSharePopUp(true)
+        setDId(DId)
+    }
     const array = location.pathname.split("/");
     var project_id = array[array.length - 1]
     const [peopleInProject, setPeopleListInProject] = useState([])
     const [showPeoplePopUp, setshowPeoplePopUp] = useState(false)
-
-    const [showRolePopUp, setshowRolePopUp] = useState(false)
-    const timeCaster = (time) => {
-        return time.substring(0, 19).replace('T', " ")
+    const orangeStyle = {
+        color: "#FF7F0D",
+        fontWeight: "bold",
+        fontSize: "17px"
     }
+    const [showRolePopUp, setshowRolePopUp] = useState(false)
+
 
     const [email, setEmail] = useState("")
     const [projectInformation, setprojectInformation] = useState({
@@ -81,6 +91,7 @@ export default function ProjectDetail() {
             .then(res => {
                 let result = res.data.filter(d => d.Type != "Workspace")
                 setDatasourceslist(result)
+                console.log(result)
             })
             .catch(err => {
                 console.log(err)
@@ -101,6 +112,64 @@ export default function ProjectDetail() {
 
 
     }, [])
+    const option_list = ["Send to Workspace", "Rename", "Share", "Download", "Delete"]
+    const icon_list = [sendTo, edit, share_blue, download_blue, delete_icon]
+    const dataSourcesComponent = () => {
+        return <div>
+            <ShareDataSourcesPopUp
+                type="ProjectDetail"
+                currentProject={currentProject}
+                show={showSharePopUp}
+                handleOpen={() => {
+                    setshowSharePopUp(true)
+                }}
+                handleClose={() => {
+                    setshowSharePopUp(false)
+                }}
+                DId={DId}
+
+            />
+            {
+                datasourceslist.length === 0 ?
+                    <div className='row m-0 p-0 mt-3' >
+                        <div className=' col-10' style={{ color: deep_blue_primary, "font-weight": "bold", fontSize: "40px" }}>Data Sources:</div>
+                        <div className='bg-white' style={{ height: "300px" }}>
+                        </div>
+                    </div>
+                    :
+                    <div className='row m-0 p-0 mt-3' >
+                        <div className=' col-10' style={{ color: deep_blue_primary, "font-weight": "bold", fontSize: "40px" }}>Data Sources:</div>
+                        <div className='bg-white' style={{ minheight: "300px" }}>
+                            <ScrollMenu>
+                                {datasourceslist.map((ele, index) => (
+                                    <div className='ms-4 mt-5 mb-5' style={{ minWidth: "300px" }}>
+                                        <div className='pb-2'>
+                                            <DataSourceBox
+                                                option_list={option_list}
+                                                icon_list={icon_list}
+                                                setDatasourceslist={setDatasourceslist}
+                                                datasourceslist={datasourceslist}
+                                                showSharePopUpHandle={showSharePopUpHandle}
+                                                ele={ele}
+                                                index={index}
+                                            />
+                                        </div>
+                                    </div>
+                                ))}
+                            </ScrollMenu>
+                        </div>
+                    </div>
+
+            }
+
+
+
+
+
+
+
+        </div >
+    }
 
     const peopleComponent = () => {
         return <div>
@@ -183,7 +252,7 @@ export default function ProjectDetail() {
                                                 }}
                                                 setdontshowRolePopUp={() => {
                                                     setshowRolePopUp(false)
-                                                    Store.addNotification(content("Warning", "You don't edit member's role because you also are member position", "warning"))
+                                                    Store.addNotification(content("Fail", "You can't edit member's role because you also are member position", "danger"))
                                                 }}
                                                 getEmail={() => {
                                                     setEmail(ele.Email)
@@ -212,7 +281,7 @@ export default function ProjectDetail() {
                                             }}
                                             setdontshowRolePopUp={() => {
                                                 setshowRolePopUp(false)
-                                                Store.addNotification(content("Warning", "You don't edit member's role because you also are member position", "warning"))
+                                                Store.addNotification(content("Fail", "You can't edit member's role because you also are member position", "danger"))
 
                                             }}
                                             getEmail={() => {
@@ -233,12 +302,7 @@ export default function ProjectDetail() {
             </div>
         </div>
     }
-    const orangeStyle = {
-        color: "#FF7F0D",
-        fontWeight: "bold",
-       
-        fontSize: "17px"
-    }
+
     const EditProjectSubmit = () => {
         editProject(project_id, {
             ...projectInformation,
@@ -251,9 +315,9 @@ export default function ProjectDetail() {
             })
             .catch((e) => {
                 //console.log(e.response)
-                Store.addNotification(content("Warning", e.response.data, "danger"))
+                Store.addNotification(content("Fail", e.response.data, "danger"))
                 return
-                // alert(e.response.data);
+
             })
 
 
@@ -369,74 +433,6 @@ export default function ProjectDetail() {
 
                 </div>
 
-            </div>
-
-
-
-        </div>
-    }
-
-    const sendToWorkspaceSubmit = (id) => {
-        SendToWorkspace(id, { "Type": "Workspace" })
-            .then((res) => {
-                Store.addNotification(content("Success", "Edited Project successful", "success"))
-                navigate("/datasources")
-
-            })
-            .catch((e) => {
-                Store.addNotification(content("Failure", "Send failed", "danger"))
-                console.log(e.response.data)
-                return
-
-            })
-    }
-    const deleteHandle = (id) => {
-        deleteDatasource(id)
-            .then(res => {
-                Store.addNotification(content("Success", "Deleted Datasource", "success"))
-                setTimeout(() => window.location.reload(), 1000);
-            })
-            .catch(err => {
-                Store.addNotification(content("Fail", "Delete Fail", "danger"))
-                console.log(err.response.data)
-            })
-    }
-    const RenameHandle = (id, newname) => {
-        Rename(id, {
-            "newName": newname
-        })
-            .then(res => {
-                console.log(res.data)
-                Store.addNotification(content("Success", "Renamed", "success"))
-                setTimeout(() => window.location.reload(), 1000);
-            })
-            .catch(err => {
-                Store.addNotification(content("Fail", "Rename Fail", "danger"))
-                console.log(err.response.data)
-            })
-    }
-    const [pressRename, setPressRename] = useState(false)
-
-    const setNewName = (value, index) => {
-        setDatasourceslist([...datasourceslist.splice(0, index), { ...datasourceslist[index], Information: value }, ...datasourceslist.splice(index + 1)])
-
-    }
-    const option_list = ["Send to Workspace", "Rename", "Share", "Download", "Delete"]
-    const icon_list = [sendTo, share_blue, edit, download_blue, delete_icon]
-    const dataSourcesComponent = () => {
-        return <div>
-            <div className='row m-0 p-0 mt-3' >
-                <div className=' col-10' style={{ color: deep_blue_primary, "font-weight": "bold", fontSize: "40px" }}>Data Sources:</div>
-            </div>
-            <div className='m-3 p-4  bg-white' style={{ height: "350px" }}>
-                <div className='row'>
-                    {
-                        datasourceslist.map((ele, index) => {
-                            return  <DataSourceBox option_list={option_list} icon_list={icon_list}  setDatasourceslist={setDatasourceslist} datasourceslist={datasourceslist} ele = {ele} index ={index}/>
-                        })
-
-                    }
-                </div>
             </div>
 
 

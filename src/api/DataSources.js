@@ -43,6 +43,25 @@ const Rename = (id, data) => {
     return axiosClient.post("/data/" + id + "/rename", data)
 }
 
+const getDataSourcesSharedListPeople = (id) => {
+    return axiosClient.get("/data/" + id + "/getshare")
+}
+
+const shareDataSources = (id, data) => {
+    return axiosClient.post("/data/" + id + "/share", data)
+}
+
+
+const getDataSourcesInformationByDId = (id) => {
+    return axiosClient.get("/data/" + id + "/info")
+}
+const showDataSourceContent = (id) => {
+    return axiosClient.get("/data/" + id + "/rows")
+}
+
+const checkPermissionWithDatasource = (id) => {
+    return axiosClient.get("/data/" + id + "/permission")
+}
 
 
 
@@ -55,5 +74,10 @@ export {
     GetDataSourcesListInformationInProject,
     getColumnsOfTable,
     deleteDatasource,
-    Rename
+    getDataSourcesSharedListPeople,
+    shareDataSources,
+    Rename,
+    getDataSourcesInformationByDId,
+    showDataSourceContent,
+    checkPermissionWithDatasource
 }

@@ -9,7 +9,7 @@ import three_dot from "resources/icons/three-dot.svg"
 import { orange } from "utils/color"
 import ThreeDotButton from 'components/ThreeDotButton'
 import CustomDropdownButton from 'pages/EditReport/components/CustomDropdownButton'
-import { Rename, deleteDatasource, SendToWorkspace } from '../../../api/DataSources'
+import { Rename, deleteDatasource, SendToWorkspace, checkPermissionWithDatasource } from 'api/DataSources'
 
 import { Store } from 'react-notifications-component'
 import { content } from "utils/notification"
@@ -71,65 +71,102 @@ export default function DataSourceBox(props) {
             })
     }
 
-    return (
-        <div className='col-3 ms-4 mt-3 pt-2 mb-5' style={{ "height": "200px", width: "400px", "border-radius": "20px", "backgroundColor": "#F7F7F7" }}>
-            <div className='row ms-3' style={{ "paddingLeft": "310px" }}>
-                <ThreeDotButton title={'adđ'}
-                    items={props.option_list}
-                    icon={three_dot}
-                    icons_list={props.icon_list}
-                    onClick={(val) => {
-                        if (val == "Delete") {
-                            deleteHandle(props.ele.Id)
-                        }
-                        else if (val === "Rename") {
-                            setPressRename(true)
-                        }
-                        else if (val === "Send to Workspace") {
-                            sendToWorkspaceSubmit(props.ele.Id)
-                        }
-                    }} />
-            </div>
-            <div className="row m-0 p-0">
-                <div className="col-4 m-0 p-0 customFontRoboto" >
-                    <img src={excel_icon} height="120px" width="100%" />
-                </div>
-                <div className="col-8 m-0 p-0 customFontRoboto" >
-                    <div className="row m-0 p-0 customFontRoboto" style={{ color: blue_cloud, fontSize: "28px" }}>
-                        {
-                            pressRename == false ? <p><span>{props.ele.Information}</span></p> :
-                                // <newNameTextField/>
-                                <Form.Group className='m-0 p-0 ms-2 pe-2'>
-                                    <Form.Control
-                                        type="text"
-                                        placeholder=""
-                                        value={props.ele.Information}
-                                        onChange={(e) => {
-                                            setNewName(e.target.value, props.index)
-                                        }}
-                                    />
-                                </Form.Group>
-                        }
-                    </div>
-                    <div class="row  m-0 p-0 mt-1" >
-                        <p><span style={{ "color": "#868585" }}>date created: </span>{props.ele.CreateTime}</p>
-                    </div>
-                    <div class="row m-0 p-0" >
-                        <p><span style={{ "color": "#868585" }}>last modified: </span>{props.ele.LastModified}</p>
-                    </div>
-                    {
-                        pressRename == false ? null :
-                            <div className='d-flex justify-content-center'>
-                                <button
-                                    onClick={() => {
-                                        RenameHandle(props.ele.Id, props.ele.Information)
-                                    }} type="button" class="btn btn-primary btn-sm">
-                                    Save
-                                </button>
-                            </div>
-                    }
+    const ClickHandle = (id) => {
 
+        console.log("id gui len ne,", id)
+        checkPermissionWithDatasource(id)
+            .then(res => {
+                console.log("quyen", res.data)
+                if (res.data === "View") {
+                    navigate(`/datasources/${id}/view`)
+                }
+                else if (res.data === "Edit") {
+                    navigate(`/datasources/${id}/edit`)
+                }
+                else Store.addNotification(content("Access Fail", "You don't have permission with this datasource", "danger"))
+
+            })
+            .catch(err => {
+                Store.addNotification(content("Fail", "Rename Fail", "danger"))
+                console.log(err.response.data)
+            })
+
+    }
+    const threeDotComponent = () => {
+        return <div className="row" style={{ "textAlign": "end" }}>
+            <ThreeDotButton title={'adđ'}
+                items={props.option_list}
+                icon={three_dot}
+                icons_list={props.icon_list}
+                onClick={(val) => {
+                    if (val == "Delete") {
+                        deleteHandle(props.ele.Id)
+                    }
+                    else if (val === "Rename") {
+                        setPressRename(true)
+                    }
+                    else if (val == "Share") {
+                        props.showSharePopUpHandle(props.ele.Id)
+                    }
+                    else if (val === "Send to Workspace") {
+                        sendToWorkspaceSubmit(props.ele.Id)
+                    }
+                }} />
+        </div>
+    }
+
+    return (
+        <div className='ms-4 row mb-3' style={{ "border-radius": "20px", "backgroundColor": "#F7F7F7" }}>
+            <div className="col-3 m-auto text-center m-0 p-0  customFontRoboto" onClick={() => { ClickHandle(props.ele.Id) }}  >
+                <div className='ms-4 me-2'><img src={excel_icon} /></div>
+            </div>
+            <div className="col-9 m-0 p-0" >
+                {threeDotComponent()}
+
+                <div className="ms-4 m-0 p-0 SecondFontColor size32 customFontRoboto " >
+                    {
+                        pressRename == false ?
+                            <h4 className=''>{props.ele.Information.substring(0, 15)}</h4>
+                            :
+                            // <newNameTextField/>
+                            <Form.Group className='m-0 p-0  pe-3'>
+                                <Form.Control
+                                    type="text"
+                                    placeholder=""
+                                    value={props.ele.Information}
+                                    onChange={(e) => {
+                                        setNewName(e.target.value, props.index)
+                                    }}
+                                />
+                            </Form.Group>
+                    }
                 </div>
+                <div class=" ms-4  m-0 p-0 mt-3 me-4" >
+                    <div><span style={{ "color": "#868585" }}>date created: </span>{props.ele.CreateTime}</div>
+                </div>
+                {
+                    pressRename == false ?
+                        <div class="ms-4 m-0 p-0 mt-1 pb-4 me-4" >
+                            <p><span style={{ "color": "#868585" }}>last modified: </span>{props.ele.LastModified}</p>
+                        </div> :
+                        <div class="ms-4 m-0 p-0 mt-1 me-4" >
+                            <p><span style={{ "color": "#868585" }}>last modified: </span>{props.ele.LastModified}</p>
+                        </div>
+                }
+                {/* <div class="ms-4 m-0 p-0 mt-1 pb-2 me-4" >
+                    <p><span style={{ "color": "#868585" }}>last modified: </span>{props.ele.LastModified}</p>
+                </div> */}
+                {
+                    pressRename == false ? null :
+                        <div className='d-flex justify-content-center'>
+                            <button
+                                onClick={() => {
+                                    RenameHandle(props.ele.Id, props.ele.Information)
+                                }} type="button" class="btn btn-primary btn-sm mb-3">
+                                Save
+                            </button>
+                        </div>
+                }
 
             </div>
         </div>
