@@ -15,7 +15,7 @@ import three_dot from "resources/icons/three-dot.svg"
 import { blue_cloud, deep_blue_primary } from "utils/color"
 import { Store } from 'react-notifications-component'
 import { content } from "../../utils/notification"
-import { like, unlike, deleteReport, updateReportInformation } from 'api/Report'
+import { like, unlike, deleteReport, updateReportInformation, getPermission  } from 'api/Report'
 import ShareWithPopUp from "components/PopUp/ShareWithPopUp"
 
 import ConfirmDialog from "components/ConfirmDialog";
@@ -62,8 +62,21 @@ export default function ReportCard(props) {
                 })
         }
     }
-    const editReport = (Id) => {
-        nav(`${Id}/edit`)
+    const editReport = async (Id)  => {
+        try {
+            let permission = (await getPermission(props.data.PId, props.data.RId)).data
+            let isEdit = permission == 'Edit'
+            nav(`${Id}`, {
+                state: {
+                    PId: props.data.PId,
+                    Type: props.data.Type,
+                    RId: props.data.RId,
+                    isEdit : isEdit
+                }
+            })
+        } catch (error) {
+            alert(error)
+        }
     }
 
     const deleteSubmit = () => {
