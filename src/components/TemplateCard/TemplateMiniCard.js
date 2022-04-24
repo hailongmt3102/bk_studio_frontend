@@ -57,7 +57,14 @@ export default function TemplateMiniCard(props) {
         }
     }
     const viewReportNav = (Id) => {
-        nav(`/project/gallery/${Id}`)
+        nav(`project/gallery/${Id}`, {
+            state: {
+                PId: props.data.PId,
+                Type: props.data.Type,
+                RId: props.data.Id,
+                isEdit: false
+            }
+        })
     }
 
 

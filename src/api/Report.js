@@ -8,7 +8,8 @@ const getAllReport = (PId) => {
     return axiosClient.get(`/project/${PId}/reports`)
 }
 
-const getAllComponent = (PId, RId) => {
+const getAllComponent = (PId, RId, isTemplate) => {
+    if (isTemplate) return axiosClient.get(`/template/${RId}/components`)
     return axiosClient.get(`/project/${PId}/${RId}/components`)
 }
 
@@ -35,7 +36,8 @@ const updateReportInformation = (PId, RId, data) => {
     return axiosClient.post(`/project/${PId}/${RId}/update`, data)
 }
 
-const getReportInformation = (PId, RId) => {
+const getReportInformation = (PId, RId, isTemplate) => {
+    if (isTemplate) return axiosClient.get(`/template/${RId}/info`)
     return axiosClient.get(`/project/${PId}/${RId}/info`)
 }
 

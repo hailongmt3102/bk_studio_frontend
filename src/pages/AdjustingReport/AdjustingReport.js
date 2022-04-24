@@ -86,7 +86,7 @@ export default function AdjustingReport(props) {
     // ** get report information
     const getReportInfo = async () => {
         try {
-            let res = await getReportInformation(currentProject, RId)
+            let res = await getReportInformation(currentProject, RId, isTemplate)
             setReportInformation(res.data)
         } catch (error) {
             console.log("Get report info fail, error", error)
@@ -192,7 +192,7 @@ export default function AdjustingReport(props) {
     const fetchAllShapesFromServer = async () => {
         if (currentProject == null) return
         try {
-            let componentResult = (await getAllComponent(currentProject, RId)).data
+            let componentResult = (await getAllComponent(currentProject, RId, isTemplate)).data
             let queryResult, parseResult
             for (let i = 0; i < componentResult.length; i++) {
                 // don't need to fetch data from query command
@@ -434,8 +434,6 @@ export default function AdjustingReport(props) {
                 console.log("Save shape error :", componentData.Id, " \n Error: ", error)
             }
         }
-
-
     }
 
     const copyShape = () => {
@@ -673,37 +671,73 @@ export default function AdjustingReport(props) {
                                         </button>
                                     </div>
                                     <div className="col-8 m-0 p-0" >
-                                        <Form.Control type="text" value={reportInformation.Name} onChange={(event) => {
-                                            setReportInformation({ ...reportInformation, Name: event.target.value })
+                                        {
+                                            isEdit ?
+                                                <Form.Control type="text" value={reportInformation.Name}
+                                                    onChange={(event) => {
+                                                        setReportInformation({ ...reportInformation, Name: event.target.value })
 
-                                        }}
-                                            className="border-0 mb-2 m-0 p-0"
-                                            placeholder="Report Name"
-                                            style={{
-                                                fontSize: "32px",
-                                                backgroundColor: "#F7F7F7",
-                                                color: deep_blue_primary,
-                                                fontFamily: "Poppins",
-                                                fontWeight: "bold"
-                                            }}
-                                        />
+                                                    }}
+                                                    className="border-0 mb-2 m-0 p-0"
+                                                    placeholder="Report Name"
+                                                    style={{
+                                                        fontSize: "32px",
+                                                        backgroundColor: "#F7F7F7",
+                                                        color: deep_blue_primary,
+                                                        fontFamily: "Poppins",
+                                                        fontWeight: "bold"
+                                                    }}
+                                                /> :
+                                                <Form.Control type="text" value={reportInformation.Name}
+                                                    onChange={(event) => {
+                                                        setReportInformation({ ...reportInformation, Name: event.target.value })
+
+                                                    }}
+                                                    readOnly
+                                                    className="border-0 mb-2 m-0 p-0"
+                                                    placeholder="Report Name"
+                                                    style={{
+                                                        fontSize: "32px",
+                                                        backgroundColor: "#F7F7F7",
+                                                        color: deep_blue_primary,
+                                                        fontFamily: "Poppins",
+                                                        fontWeight: "bold"
+                                                    }}
+                                                />
+                                        }
                                     </div>
                                 </div>
                                 <div className="row ms-5 m-0 p-0 text-center">
                                     <div className="col-5">
-                                        <Form.Control type="text" value={reportInformation.Hastag} onChange={(event) => {
-                                            setReportInformation({ ...reportInformation, Hastag: event.target.value })
+                                        {isEdit ?
+                                            <Form.Control type="text" value={reportInformation.Hastag} onChange={(event) => {
+                                                setReportInformation({ ...reportInformation, Hastag: event.target.value })
 
-                                        }}
-                                            className="text-primary border-0  m-0 p-0 ms-4"
-                                            placeholder="#Hastag"
-                                            style={{
-                                                fontSize: "22px",
-                                                backgroundColor: "#F7F7F7",
-                                                fontFamily: "Poppins",
-                                                fontWeight: "bold"
                                             }}
-                                        />
+                                                className="text-primary border-0  m-0 p-0 ms-4"
+                                                placeholder="#Hastag"
+                                                style={{
+                                                    fontSize: "22px",
+                                                    backgroundColor: "#F7F7F7",
+                                                    fontFamily: "Poppins",
+                                                    fontWeight: "bold"
+                                                }}
+                                            />
+                                            :
+                                            <Form.Control type="text" value={reportInformation.Hastag} onChange={(event) => {
+                                                setReportInformation({ ...reportInformation, Hastag: event.target.value })
+
+                                            }}
+                                                readOnly
+                                                className="text-primary border-0  m-0 p-0 ms-4"
+                                                placeholder="#Hastag"
+                                                style={{
+                                                    fontSize: "22px",
+                                                    backgroundColor: "#F7F7F7",
+                                                    fontFamily: "Poppins",
+                                                    fontWeight: "bold"
+                                                }}
+                                            />}
                                     </div>
                                 </div>
                             </div>
