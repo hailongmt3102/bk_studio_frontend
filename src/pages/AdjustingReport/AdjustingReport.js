@@ -203,19 +203,25 @@ export default function AdjustingReport(props) {
                     // error to query data of this shape
                     componentResult[i].Type = "Error"
                 } else {
-                    parseResult = parseDataQueried(componentResult[i].Type, queryResult)
-                    // parse them json data from server
-                    componentResult[i].Position = JSON.parse(componentResult[i].Position)
-                    componentResult[i].TextTheme = JSON.parse(componentResult[i].TextTheme)
-                    componentResult[i].FrameTheme = JSON.parse(componentResult[i].FrameTheme)
-                    componentResult[i] = { ...componentResult[i], ...parseResult }
+                    try {
+                        parseResult = parseDataQueried(componentResult[i].Type, queryResult)
+                        // parse them json data from server
+                        componentResult[i].Position = JSON.parse(componentResult[i].Position)
+                        componentResult[i].TextTheme = JSON.parse(componentResult[i].TextTheme)
+                        componentResult[i].FrameTheme = JSON.parse(componentResult[i].FrameTheme)
+                        componentResult[i] = { ...componentResult[i], ...parseResult }
+                    }
+                    catch (err) {
+                        // eror parse
+                        componentResult[i] = { Type: "Unknown" }
+                    }
                 }
             }
             return componentResult
         }
         catch (err) {
             console.log("Fetch component fail:  ", err)
-            return null
+            return []
         }
     }
 
