@@ -80,7 +80,7 @@ export default function DataSources() {
                     <div className='row mt-4 m-0 p-0'>
                         <ScrollMenu>
                             {datasourceslist.map((ele, index) => (
-                                <div className='ms-4'>
+                                <div className='ms-4 mb-5'>
                                     <DataSourceBox
                                         option_list={option_list}
                                         icon_list={icon_list}

@@ -64,6 +64,12 @@ const checkPermissionWithDatasource = (id) => {
 }
 
 
+const updateShareDataSourcePermission = (pid) => {
+    return axiosClient.post("/data/project", pid)
+}
+
+
+
 
 export {
     ImportDataApi,
@@ -79,5 +85,6 @@ export {
     Rename,
     getDataSourcesInformationByDId,
     showDataSourceContent,
-    checkPermissionWithDatasource
+    checkPermissionWithDatasource, 
+    updateShareDataSourcePermission
 }

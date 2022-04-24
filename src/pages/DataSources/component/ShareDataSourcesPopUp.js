@@ -5,10 +5,10 @@ import { blue_cloud, deep_blue_primary } from "utils/color"
 import { editPeopleRoleWithProject } from "api/Project"
 import { getListPeopleByProjectID, getListPeople } from "api/People"
 
-import { shareReport, getSharedListPeople, updateSharePermission } from "api/Report"
+
 import shareWith from "resources/icons/share_with_primary.svg";
 import edit from 'resources/icons/edit.svg'
-import { getDataSourcesSharedListPeople, shareDataSources } from "api/DataSources"
+import { getDataSourcesSharedListPeople, shareDataSources, updateShareDataSourcePermission } from "api/DataSources"
 import eye_bluecloud from 'resources/icons/eye_bluecloud.svg'
 import DropdownWithIndex0 from 'components/DropdownWithIndex0'
 
@@ -17,10 +17,7 @@ import { content } from "utils/notification"
 
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
-import Box from '@mui/material/Box';
-import InputLabel from '@mui/material/InputLabel';
-import FormControl from '@mui/material/FormControl';
-import NativeSelect from '@mui/material/NativeSelect';
+
 export default function ShareDataSourcesPopUp(props) {
     var myEmail = localStorage.getItem("email")
 
@@ -121,7 +118,7 @@ export default function ShareDataSourcesPopUp(props) {
     const updateShareHandle = async () => {
         try {
             for (let i = 0; i < listSharedPeople.length; i++) {
-                // await updateSharePermission(props.currentProject, props.RId, {
+                // await updateShareDataSourcePermission(props.currentProject, props.RId, {
                 //     Email: listSharedPeople[i].Email,
                 //     Permission: listSharedPeople[i].Permission
                 // })
@@ -140,15 +137,21 @@ export default function ShareDataSourcesPopUp(props) {
                 {
 
                     listSharedPeople.map((e, index) => {
-                        return <div className='row'>
-                            <div className='col ms-5'>
-                                {e.Email}
+                        return <div className='row mt-3'>
+                            <div className='col-8'>
+                                <div className='ms-5'>{e.Email}</div>
                             </div>
-                            <div className='col'>
+                            <div className='col-2'>
                                 <DropdownWithIndex0 title={e.Permission} items={[e.Permission, e.Permission == "View" ? "Edit" : "View"]} icons_list={e.Permission === "View" ? [eye_bluecloud, edit] : [edit, eye_bluecloud]}
                                     onClick={(val) => {
                                         setListSharedPeople([...listSharedPeople.slice(0, index), { ...listSharedPeople[index], Permission: val }, ...listSharedPeople.slice(index + 1)])
                                     }} />
+                            </div>
+
+                            <div className='col-2'>
+                                <Button onClick={() => { }} autoFocus>
+                                    Clear
+                                </Button>
                             </div>
                         </div>
                     })
