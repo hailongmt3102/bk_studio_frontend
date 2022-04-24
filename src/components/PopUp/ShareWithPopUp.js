@@ -141,6 +141,7 @@ export default function ShareWithPopUp(props) {
                             </div>
                             <div className='col-2'>
                                 <Button onClick={() => {
+                                    
                                 }} autoFocus>
                                     Clear
                                 </Button>

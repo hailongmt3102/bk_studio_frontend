@@ -8,7 +8,7 @@ import { getListPeopleByProjectID, getListPeople } from "api/People"
 
 import shareWith from "resources/icons/share_with_primary.svg";
 import edit from 'resources/icons/edit.svg'
-import { getDataSourcesSharedListPeople, shareDataSources, updateShareDataSourcePermission } from "api/DataSources"
+import { getDataSourcesSharedListPeople, shareDataSources, updateShareDataSourcePermission, unshareDataSources } from "api/DataSources"
 import eye_bluecloud from 'resources/icons/eye_bluecloud.svg'
 import DropdownWithIndex0 from 'components/DropdownWithIndex0'
 
@@ -132,7 +132,21 @@ export default function ShareDataSourcesPopUp(props) {
             Store.addNotification(content("Fail", err, "danger"))
         }
     }
-
+    const unshareHandle = (email, index) => {
+        unshareDataSources(props.DId, {
+            Email: email,
+        })
+            .then(response => {
+                console.log(response)
+                setListSharedPeople([...listSharedPeople.slice(0, index), ...listSharedPeople.slice(index + 1)])
+                Store.addNotification(content("Success", "unshare roi ne", "success"))
+                //setTimeout(() => window.location.reload(), 1000);
+                // props.handleClose()
+            })
+            .catch(err => {
+                Store.addNotification(content("Fail", err.response.data, "danger"))
+            })
+    }
     const listSharedPeopleComponent = () => {
         return <div>
             <div className='row'>
@@ -151,7 +165,10 @@ export default function ShareDataSourcesPopUp(props) {
                             </div>
 
                             <div className='col-2'>
-                                <Button onClick={() => { }} autoFocus>
+                                <Button onClick={() => {
+                                    unshareHandle(e.Email, index)
+
+                                }} autoFocus>
                                     Clear
                                 </Button>
                             </div>
