@@ -12,7 +12,6 @@ import Register from "./pages/Register/Register";
 import ProjectDetail from "./pages/ProjectDetail/ProjectDetail"
 import ProjectList from "./pages/ProjectList/ProjectList"
 import ChangePassword from "pages/ChangePassword/ChangePassword";
-import EditReport from "./pages/EditReport/EditReport";
 import ImportData from "./pages/ImportData/ImportData";
 import Templates from "./pages/Templates/Templates";
 import CreateReport from "./pages/CreateReport/CreateReport";
@@ -60,7 +59,7 @@ function App() {
                         <Route path="/pList" element={<ProjectList />} />
                         <Route path="/pDetail/:id" element={<ProjectDetail />} />
 
-                        <Route path="/datasources" 
+                        <Route path="/datasources"
                             element={<DataSources />} />
                         <Route
                             path="/datasources/:id/view"
@@ -93,7 +92,7 @@ function App() {
                         <Route
                             path="/project/gallery/:id"
                             exact
-                            element={<AdjustingReport/>}
+                            element={<AdjustingReport />}
                         />
 
                         <Route path="/personal/profile" element={<Profile />} />

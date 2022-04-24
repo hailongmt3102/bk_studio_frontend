@@ -1,24 +1,20 @@
 import React, { useState, useEffect } from 'react'
-import { styled } from '@mui/material/styles';
-import { Form, InputGroup, Col, Row, Container } from 'react-bootstrap'
-import visible from "resources/icons/visible.svg"
-import avt from "resources/icons/avt.svg"
-import profile from "resources/icons/profile.svg"
-import lock from "resources/icons/lock.svg";
-import CustomDropdownButton from 'pages/EditReport/components/CustomDropdownButton';
+
+import { Form, Col, Row } from 'react-bootstrap'
+
 import { GetInformationApi, updateInformation } from "api/Account"
 import { useNavigate } from 'react-router-dom'
 
 import { deep_blue_primary } from "../../utils/color"
 import "@fontsource/poppins";
-import Drop from 'pages/EditReport/components/Drop';
+
 import moment from 'moment';
 import { Store } from 'react-notifications-component'
 import { content } from "../../utils/notification"
 import people_default from "resources/icons/people_default.svg"
 import edit_grey from "resources/icons/edit_grey.svg";
 import Badge from '@mui/material/Badge';
-import Avatar from '@mui/material/Avatar';
+
 
 export default function Profile() {
 

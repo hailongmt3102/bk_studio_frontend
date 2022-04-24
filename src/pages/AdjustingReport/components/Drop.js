@@ -19,7 +19,7 @@ export default function Drop(props) {
 
     return (
         <Dropdown>
-            <Dropdown.Toggle  as={CustomToggle} id="dropdown-basic">
+            <Dropdown.Toggle as={CustomToggle} id="dropdown-basic">
                 <div>
                     {
                         props.icon !== null ? <img src={props.icon}></img> : null

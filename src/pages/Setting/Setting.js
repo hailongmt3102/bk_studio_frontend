@@ -5,7 +5,7 @@ import tick from "resources/icons/tick.svg"
 import { localizationContext } from '../../App'
 import { deep_blue_primary } from "../../utils/color"
 
-import Drop from 'pages/EditReport/components/Drop';
+import Drop from 'pages/AdjustingReport/components/Drop';
 export default function Setting(props) {
     const localization = useContext(localizationContext)
     const languageSaved = localStorage.getItem('language') ?? 'English'

@@ -8,7 +8,7 @@ import { deep_blue_primary } from "utils/color"
 import three_dot from "resources/icons/three-dot.svg"
 import { orange } from "utils/color"
 import ThreeDotButton from 'components/ThreeDotButton'
-import CustomDropdownButton from 'pages/EditReport/components/CustomDropdownButton'
+
 import { Rename, deleteDatasource, SendToWorkspace, checkPermissionWithDatasource } from 'api/DataSources'
 
 import { Store } from 'react-notifications-component'

@@ -1,6 +1,6 @@
 import { getColumnsOfTable, GetDataSourcesListInformationInProject, QueryData as QueryDataApi } from "api/DataSources";
 import { createNewComponent as createNewComponentApi, createNewReport, deleteShape as deleteShapeApi, getAllComponent, getReportInformation, updateAComponent, updateReportInformation } from 'api/Report';
-import TabComponent from "pages/EditReport/components/tabComponent/TabComponent";
+import TabComponent from "pages/AdjustingReport/components/PopUp/TabComponent";
 import { useEffect, useRef, useState } from "react";
 import { Form } from 'react-bootstrap';
 import { Store } from 'react-notifications-component';
