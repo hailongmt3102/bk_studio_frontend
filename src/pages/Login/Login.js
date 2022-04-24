@@ -112,7 +112,7 @@ export default function Login() {
                                     </div>
                                     <div class="col-md-10 col-lg-6 col-xl-5 order-1 order-lg-2 mt-5 ">
 
-                                        <h1 class=" mb-2 mx-1 mx-md-4 mt-5 customFontBold "  style={{ color: deep_blue_primary }}>{localization.signIn}</h1>
+                                        <h1 class=" mb-2 mx-1 mx-md-4 mt-5 customFontBold " style={{ color: deep_blue_primary }}>{localization.signIn}</h1>
 
 
                                         <div class="form-check mb-4">
@@ -127,7 +127,7 @@ export default function Login() {
 
                                         </div>
 
-                                        <form class="mx-1 mx-md-4" style={{ color: deep_blue_primary}}>
+                                        <form class="mx-1 mx-md-4" style={{ color: deep_blue_primary }}>
 
                                             <Form.Group as={Col} md="12" controlId="validationCustomUsername">
                                                 <Form.Label>Email</Form.Label>
@@ -202,8 +202,8 @@ export default function Login() {
                                                     </button>
                                                 )}
                                                 buttonText="Login"
-                                                onSuccess={responseGoogle}
-                                                onFailure={responseGoogle}
+                                                onSuccess={() => responseGoogle}
+                                                onFailure={() => responseGoogle}
                                                 cookiePolicy={'single_host_origin'}
                                             />,
                                             <p class=" mt-3 mb-2 mx-1 mx-md-4 " style={{ fontSize: 14 }}>{localization.GGAccount}</p>
