@@ -77,9 +77,6 @@ export {
     getSharedListPeople,
     updateSharePermission,
     deleteShape,
-<<<<<<< HEAD
-    getPermission
-=======
+    getPermission,
     saveAsCopy
->>>>>>> main
 }

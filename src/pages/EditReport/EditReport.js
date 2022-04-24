@@ -423,7 +423,7 @@ export default function EditReport(props) {
                             OpenShareLinkPopUp={() => setshowShareLinkPopUp(true)}
                             saveACopyHandle={() => saveACopyHandle()}
                         />
-                        <div className=" content" ref={contentBoxRef}>
+                        {/* <div className=" content" ref={contentBoxRef}>
                             <Content
                                 RId={RId}
                                 ref={contentRef}
@@ -433,7 +433,7 @@ export default function EditReport(props) {
                                 showingMouseDrag={addShapeType != null}
                                 mouseDragValue={dragAreaLocation}
                             />
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </div>

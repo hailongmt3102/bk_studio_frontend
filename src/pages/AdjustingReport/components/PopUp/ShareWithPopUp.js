@@ -5,7 +5,7 @@ import { blue_cloud, deep_blue_primary } from "../../../../utils/color"
 import { editPeopleRoleWithProject } from "../../../../api/Project"
 import { getListPeopleByProjectID } from "api/People"
 
-import { shareReport, getShardListPeople, updateSharePermission } from "api/Report"
+import { shareReport, getSharedListPeople, updateSharePermission } from "api/Report"
 import shareWith from "resources/icons/share_with_primary.svg";
 import edit from 'resources/icons/edit.svg'
 
@@ -30,7 +30,7 @@ export default function ShareWithPopUp(props) {
     const [listSharedPeople, setListSharedPeople] = useState([])
     const [listSharedName, setListSharedName] = useState([])
     useEffect(() => {
-        getShardListPeople(props.currentProject, props.RId)
+        getSharedListPeople(props.currentProject, props.RId)
             .then(res => {
                 setListSharedPeople(res.data)
                 setListSharedName(res.data.map((e) => e.Email))

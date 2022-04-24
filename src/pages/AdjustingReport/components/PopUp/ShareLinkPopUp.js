@@ -5,7 +5,7 @@ import { blue_cloud, deep_blue_primary } from "../../../../utils/color"
 import { editPeopleRoleWithProject } from "../../../../api/Project"
 import { getListPeopleByProjectID } from "api/People"
 
-import { shareReport, getShardListPeople } from "api/Report"
+import { shareReport, getSharedListPeople } from "api/Report"
 import link from "resources/icons/link.svg";
 import edit from 'resources/icons/edit.svg'
 
@@ -35,7 +35,7 @@ export default function ShareLinkPopUp(props) {
                 Store.addNotification(content("Warning", "Can't show list people in this project", "danger"))
                 console.log(err.response.data)
             })
-        getShardListPeople(props.currentProject, props.RId)
+        getSharedListPeople(props.currentProject, props.RId)
             .then(res => {
                 setListSharedPeople(res.data)
                 //console.log(res.data)
