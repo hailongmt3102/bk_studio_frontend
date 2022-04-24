@@ -16,7 +16,7 @@ import { blue_cloud, deep_blue_primary } from "utils/color"
 import { Store } from 'react-notifications-component'
 import { content } from "../../utils/notification"
 import { like, unlike, deleteReport, updateReportInformation } from 'api/Report'
-import ShareWithPopUp from "components/PopUp/ShareWithPopUp"
+import ShareWithPopUp from "pages/AdjustingReport/components/PopUp/ShareWithPopUp"
 
 import ConfirmDialog from "components/ConfirmDialog";
 

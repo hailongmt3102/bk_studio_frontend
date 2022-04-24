@@ -4,10 +4,12 @@ import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import add_grey from 'resources/icons/add_grey.svg'
 import substract from 'resources/icons/substract.svg'
-
+import { deep_blue_primary } from "utils/color"
 import { blue_cloud } from "utils/color"
 import { Form } from 'react-bootstrap'
 export default function SqlPopUp(props) {
+
+    console.log(props.type)
     const [step, setStep] = useState(1)
 
     const op = ['=', "!=", ">", "<", ">=", "<="];
@@ -60,6 +62,7 @@ export default function SqlPopUp(props) {
     }
 
     const submit = () => {
+        setStep(1)
         if (selectedField.length == 0 && function_clause.length == 0) {
             alert("Nothing to compute")
             return
@@ -96,13 +99,16 @@ export default function SqlPopUp(props) {
         if (order_clause.length > 0) {
             query += ` order by ${order_clause.map(order => `${order.field} ${order.fx}`).join(',')}`
         }
-        props.onComplete("example", query)
+        props.onComplete(query)
         props.handleClose()
     }
 
     useEffect(() => {
+        console.log("datasource trong popup", props.dataSource)
         set_data_source(Object.keys(props.dataSource))
+
         Object.keys(props.dataSource).map(key => {
+            // let arr = props.dataSource[key].map(field => )
             setFieldList([...fieldList, ...props.dataSource[key]])
         })
     }, [props.dataSource])
@@ -110,9 +116,9 @@ export default function SqlPopUp(props) {
 
     const selectTableComponent = () => {
         return <div>
+            <div className='customFontBold ms-5 mb-3' style={{ fontSize: 20 }}>Select Table</div>
             <Autocomplete
                 className='ms-5 me-5'
-                multiple
                 id="tags-standard"
                 options={data_source}
                 renderInput={(params) => (
@@ -662,8 +668,6 @@ export default function SqlPopUp(props) {
                 return selectClauseTypePieandDonut()
             case "Doughnut Chart":
                 return selectClauseTypePieandDonut()
-            default:
-                return null;
 
         }
     }
@@ -677,10 +681,21 @@ export default function SqlPopUp(props) {
             {orderByClause()}
         </div>
     }
+    const [typeChartName, setTypeChartName] = useState(props.type)
+    useEffect(() => {
+        setTypeChartName(props.type + " name")
+    }, [props.type])
     const titleComponent = () => {
         switch (step) {
             case 1:
-                return <div>Select table</div>
+                return <div>
+                    <Form.Control type="text" value={typeChartName} onChange={(event) => {
+                        setTypeChartName(event.target.value)
+
+                    }}
+                        className="border-0 mb-2 m-0 p-0 PrimaryFontColor size32 customFontBold"
+                    />
+                </div>
             case 2:
                 return <div>Select X column</div>
             case 3:
