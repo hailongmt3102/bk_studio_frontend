@@ -176,8 +176,8 @@ export default function ProjectDetail() {
             <div className='rounded-5 bg-white'>
                 <div className='row m-0 p-0 bg-light'>
                     <div className='col-4 m-0 p-0 '>
-                        <div className='m-4 p-4 bg-white' style={{ height: "100%" }}>
-                            <h1 className='row ' style={{ color: blue_cloud, "font-weight": "bold" }}>Manager</h1>
+                        <div className='m-2 p-2 bg-white' style={{ height: "100%" }}>
+                            <h1 className='row customFontBold SecondFontColor m-0 p-2'>Manager</h1>
                             <div class="p-2 col-1"> {
                                 peopleInProject.map((ele, index) => {
                                     if (ele.Email === getEmail) {
@@ -227,14 +227,38 @@ export default function ProjectDetail() {
                         </div>
                     </div>
                     <div className='col-8 m-0 p-0' >
-                        <div className='m-4 p-4 bg-white' style={{ height: "100%" }}>
-                            <h1 style={{ color: blue_cloud, "font-weight": "bold" }}>Member</h1>
-                            <div className='row ms-3'>{
-                                peopleInProject.map((ele, index) => {
-                                    if (ele.Email === getEmail) {
-                                        if (ele.Position !== "Member") return null
-                                        else {
-                                            return <PeopleCard
+                        <div className='m-2 p-2 bg-white' style={{ height: "100%" }}>
+                            <h1 className=' m-0 p-2 customFontBold SecondFontColor'>Member</h1>
+                            <div className='row m-0 p-0'>{
+                                peopleInProject.map((ele) => {
+                                    if (ele.Position !== "Member") return null
+                                    return <div class="col-4 m-0 p-0" >
+                                        {ele.Email !== getEmail ?
+                                            <PeopleCard
+                                                project_id={project_id}
+                                                position={ele.Position}
+                                                name={ele.UserName}
+                                                email={ele.Email}
+                                                avatar={ele.Avatar}
+                                                rank={ele.RankAccount}
+                                                birthday={ele.Birthday.substring(0, 10).split('-').reverse().join('-')}
+                                                gender={ele.Gender}
+                                                isManager={false}
+                                                showThreeDotButton={true}
+                                                isMe={false}
+                                                peopleCanEditRoleList={peopleCanEditRoleList}
+                                                setshowRolePopUp={() => {
+                                                    setshowRolePopUp(true)
+                                                }}
+                                                setdontshowRolePopUp={() => {
+                                                    setshowRolePopUp(false)
+                                                    Store.addNotification(content("Fail", "You can't edit member's role because you also are member position", "danger"))
+
+                                                }}
+                                                getEmail={() => {
+                                                    setEmail(ele.Email)
+                                                }}
+                                            /> : <PeopleCard
                                                 project_id={project_id}
                                                 position={ele.Position}
                                                 name={ele.UserName}
@@ -260,39 +284,7 @@ export default function ProjectDetail() {
 
                                             />
                                         }
-                                    }
-                                    else {
-                                        if (ele.Position !== "Member") return null
-                                        return <div class="col"> <PeopleCard
-                                            project_id={project_id}
-                                            position={ele.Position}
-                                            name={ele.UserName}
-                                            email={ele.Email}
-                                            avatar={ele.Avatar}
-                                            rank={ele.RankAccount}
-                                            birthday={ele.Birthday.substring(0, 10).split('-').reverse().join('-')}
-                                            gender={ele.Gender}
-                                            isManager={false}
-                                            showThreeDotButton={true}
-                                            isMe={false}
-                                            peopleCanEditRoleList={peopleCanEditRoleList}
-                                            setshowRolePopUp={() => {
-                                                setshowRolePopUp(true)
-                                            }}
-                                            setdontshowRolePopUp={() => {
-                                                setshowRolePopUp(false)
-                                                Store.addNotification(content("Fail", "You can't edit member's role because you also are member position", "danger"))
-
-                                            }}
-                                            getEmail={() => {
-                                                setEmail(ele.Email)
-                                            }}
-                                        />
-                                        </div>
-
-                                    }
-
-
+                                    </div>
                                 })
                             }
                             </div>
