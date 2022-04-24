@@ -69,7 +69,7 @@ export default function PeopleCard(props) {
                 }} /> : <div className='row mt-3'></div>
                 }
             </div> :
-                <div className='row mt-4'>
+                <div className='row mt-3'>
                 </div>
             }
         </div>
