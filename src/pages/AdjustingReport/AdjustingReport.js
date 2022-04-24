@@ -28,8 +28,8 @@ export default function AdjustingReport(props) {
     // some hiddenInfo of this report
     const RId = location.state.RId
     const currentProject = location.state.PId
-    const isEdit = location.state.isEdit
     const isTemplate = location.state.Type == "Template"
+    const isEdit = location.state.isEdit && !isTemplate
 
     const navigate = useNavigate()
     const nav = useNavigate()

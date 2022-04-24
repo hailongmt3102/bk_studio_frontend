@@ -1,19 +1,14 @@
-import React, { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 
-import { deep_blue_primary } from "../../utils/color"
-import { getListProject } from 'api/Project'
 import { getListPeople } from 'api/People'
-import ProjectCard from '../../components/ProjectCard/ProjectCard'
-import PeopleCardMini from "components/PeopleCardMini/PeopleCardMini"
-import { localizationContext } from '../../App'
+import { getListProject } from 'api/Project'
 import { getAllTemplate } from "api/Templates"
-import { Store } from 'react-notifications-component'
-import { content } from "../../utils/notification"
-import ReportCard from "components/ReportCard/ReportCard"
+import PeopleCardMini from "components/PeopleCardMini/PeopleCardMini"
 import TemplateMiniCard from "components/TemplateCard/TemplateMiniCard"
-import { ScrollMenu } from 'react-horizontal-scrolling-menu';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
+import { ScrollMenu } from 'react-horizontal-scrolling-menu'
+import { localizationContext } from '../../App'
+import ProjectCard from '../../components/ProjectCard/ProjectCard'
+import { deep_blue_primary } from "../../utils/color"
 export default function Dashboard() {
     // use localization
     const localization = useContext(localizationContext)
@@ -25,37 +20,23 @@ export default function Dashboard() {
         setProjectList([...projectList.slice(0, index), newData, ...projectList.slice(index + 1)])
     }
 
+    const getData = async () => {
+        try {
+            let projectList = await getListProject()
+            let peopleList = await getListPeople()
+            let templateList = await getAllTemplate()
+
+            setProjectList(projectList.data)
+            setPeopleList(peopleList.data)
+            setReports(templateList.data)
+        } catch (error) {
+
+        }
+    }
+
     useEffect(() => {
         // get all project
-        getListProject()
-            .then(response => {
-                setProjectList(response.data)
-            })
-            .catch(
-                error => {
-                    Store.addNotification(content("Fail", error.response.data, "danger"))
-                    return
-                }
-            )
-        getListPeople()
-            .then(response => {
-                setPeopleList(response.data)
-            })
-            .catch(
-                error => {
-                    Store.addNotification(content("Fail", error.response.data, "danger"))
-                    return
-                }
-            )
-        getAllTemplate()
-            .then(res => {
-                console.log(res.data)
-                setReports(res.data)
-            })
-            .catch(err => {
-                Store.addNotification(content("Fail", err.response.data, "danger"))
-                return
-            })
+        getData()
     }, [])
 
     return (
