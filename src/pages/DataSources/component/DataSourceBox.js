@@ -19,7 +19,15 @@ export default function DataSourceBox(props) {
 
     const navigate = useNavigate()
 
+    var myEmail = localStorage.getItem("email")
 
+    const [isHost, setIsHost] = useState(false)
+
+    useEffect(() => {
+        if (myEmail === props.ele.Email) {
+            setIsHost(true)
+        }
+    }, [])
 
     const deleteHandle = (id) => {
         deleteDatasource(id)
@@ -106,7 +114,14 @@ export default function DataSourceBox(props) {
                         setPressRename(true)
                     }
                     else if (val == "Share") {
-                        props.showSharePopUpHandle(props.ele.Id)
+
+                        if (isHost === true) {
+                            console.log(isHost)
+                            props.showSharePopUpHandle(props.ele.Id)
+                        }
+                        else {
+                            Store.addNotification(content("Fail", "You don't have share this data source permission", "danger"))
+                        }
                     }
                     else if (val === "Send to Workspace") {
                         sendToWorkspaceSubmit(props.ele.Id)
