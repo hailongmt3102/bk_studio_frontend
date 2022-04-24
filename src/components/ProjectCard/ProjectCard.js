@@ -44,10 +44,7 @@ export default function ProjectCard(props) {
     const status_list = ["Draft", "Active", "Close"]
     const staus_icon_list = [now_icon, active_icon, closed_icon]
     const icons_list = [edit, delete_icon]
-    const [newProject, setNewProject] = useState({
-        Id: props.data.Id,
-        Status: props.data.Status,
-    })
+
 
 
     const [projectInformation, setprojectInformation] = useState({
@@ -64,10 +61,7 @@ export default function ProjectCard(props) {
 
         updateStatus(props.data.Id, { Status: status })
             .then((res) => {
-                setNewProject({
-                    ...newProject, Status: status
-                })
-                window.location.reload()
+                props.updateData({ ...props.data, Status: status })
             })
             .catch((e) => {
                 Store.addNotification(content("Fail", e.response.data, "danger"))
@@ -96,8 +90,11 @@ export default function ProjectCard(props) {
             PredictEndtime: projectInformation.PredictEndtime.substring(0, 10)
         })
             .then((res) => {
-                // Store.addNotification(content("Success", "Edited Project successful", "sucess"))
-                setTimeout(() => window.location.reload(), 1000);
+                setpressEdit(false)
+                props.updateData({
+                    ...props.data, StartTime: projectInformation.StartTime.substring(0, 10),
+                    PredictEndtime: projectInformation.PredictEndtime.substring(0, 10)
+                })
             })
             .catch((e) => {
                 //console.log(e.response)
@@ -137,7 +134,7 @@ export default function ProjectCard(props) {
                                 handleOpen()
                             }
                         }} />
-                        <DropdownWithIndex0 title={newProject.Status} items={status_list} icons_list={staus_icon_list}
+                        <DropdownWithIndex0 title={props.data.Status} items={status_list} icons_list={staus_icon_list}
                             onClick={(val) => {
 
                                 ChangeStatatusSubmit(val);

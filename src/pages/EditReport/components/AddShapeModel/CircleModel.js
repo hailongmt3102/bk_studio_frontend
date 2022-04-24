@@ -18,7 +18,7 @@ export default function CircleModel(props) {
     // when click submit button
     const onsubmit = () => {
         let err = false
-        if (calculateField.length === 0) return alert("You don't have anything to compute")
+        if (calculateField.length === 0) return alert("You can't have anything to compute")
         // compute query field
         let query = calculateField.map((field, index) => {
             if (!field.show) return ""

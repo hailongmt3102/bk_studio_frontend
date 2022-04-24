@@ -20,6 +20,11 @@ export default function Dashboard() {
     const [projectList, setProjectList] = useState([])
     const [peopleList, setPeopleList] = useState([])
     const [reports, setReports] = useState([])
+
+    const updateData = (index, newData) => {
+        setProjectList([...projectList.slice(0, index), newData, ...projectList.slice(index + 1)])
+    }
+
     useEffect(() => {
         // get all project
         getListProject()
@@ -63,6 +68,7 @@ export default function Dashboard() {
                             <div className='col ms-5 me-5 mb-4 mt-4'>
                                 <ProjectCard
                                     data={ele}
+                                    updateData={(newData) => updateData(index, newData)}
                                 />
                             </div>
                         ))}
