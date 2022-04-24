@@ -137,9 +137,9 @@ export default function ShareDataSourcesPopUp(props) {
             Email: email,
         })
             .then(response => {
-                console.log(response)
+                // console.log(response)
                 setListSharedPeople([...listSharedPeople.slice(0, index), ...listSharedPeople.slice(index + 1)])
-                Store.addNotification(content("Success", "unshare roi ne", "success"))
+                // Store.addNotification(content("Success", "unshare roi ne", "success"))
                 //setTimeout(() => window.location.reload(), 1000);
                 // props.handleClose()
             })
