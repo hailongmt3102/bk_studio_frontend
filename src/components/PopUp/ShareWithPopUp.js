@@ -118,7 +118,8 @@ export default function ShareWithPopUp(props) {
             props.handleClose()
 
         } catch (err) {
-            console.log(err)
+            Store.addNotification(content("Fail", err, "danger"))
+
         }
     }
 
@@ -139,7 +140,8 @@ export default function ShareWithPopUp(props) {
                                     }} />
                             </div>
                             <div className='col-2'>
-                                <Button onClick={() => { }} autoFocus>
+                                <Button onClick={() => {
+                                }} autoFocus>
                                     Clear
                                 </Button>
                             </div>
@@ -197,7 +199,7 @@ export default function ShareWithPopUp(props) {
                     shareSubmit()
                     updateShareHandle()
                 }}>
-                    Share
+                    Done
                 </Button>
             </Modal.Footer>
         </Modal>

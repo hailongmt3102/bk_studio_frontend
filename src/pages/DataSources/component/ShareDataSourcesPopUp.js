@@ -32,7 +32,7 @@ export default function ShareDataSourcesPopUp(props) {
                 .then(res => {
                     setListSharedPeople(res.data)
                     setListSharedName(res.data.map((e) => e.Email))
-                    //console.log("list share", res.data)
+                    console.log("list share", res.data)
                     // console.log("list share", res.data.map((e) => e.Email))
                 })
                 .catch(err => {
@@ -118,16 +118,18 @@ export default function ShareDataSourcesPopUp(props) {
     const updateShareHandle = async () => {
         try {
             for (let i = 0; i < listSharedPeople.length; i++) {
-                // await updateShareDataSourcePermission(props.currentProject, props.RId, {
-                //     Email: listSharedPeople[i].Email,
-                //     Permission: listSharedPeople[i].Permission
-                // })
+                await updateShareDataSourcePermission(props.DId, {
+                    Email: listSharedPeople[i].Email,
+                    Permission: listSharedPeople[i].Permission
+                })
             }
+
             Store.addNotification(content("Success", "Shared with member", "success"))
             props.handleClose()
 
         } catch (err) {
-            console.log(err)
+
+            Store.addNotification(content("Fail", err, "danger"))
         }
     }
 
@@ -207,7 +209,7 @@ export default function ShareDataSourcesPopUp(props) {
                     shareSubmit()
                     updateShareHandle()
                 }}>
-                    Share
+                    Done
                 </Button>
             </Modal.Footer>
         </Modal>
