@@ -128,15 +128,23 @@ export default function ShareWithPopUp(props) {
                 {
 
                     listSharedPeople.map((e, index) => {
-                        return <div className='row'>
-                            <div className='col ms-5'>
-                                {e.Email}
+                        return <div className='row m-0 p-0 mt-4'>
+                            <div className='col-6 '>
+                                <div className='ms-5'>{e.Email}</div>
                             </div>
-                            <div className='col'>
+                            <div className='col-2'>
                                 <DropdownWithIndex0 title={e.Permission} items={[e.Permission, e.Permission == "View" ? "Edit" : "View"]} icons_list={e.Permission === "View" ? [eye_bluecloud, edit] : [edit, eye_bluecloud]}
                                     onClick={(val) => {
                                         setListSharedPeople([...listSharedPeople.slice(0, index), { ...listSharedPeople[index], Permission: val }, ...listSharedPeople.slice(index + 1)])
                                     }} />
+                            </div>
+                            <div className='col-2'>
+                                <Button onClick={() => { }} autoFocus>
+                                    Clear
+                                </Button>
+                            </div>
+                            <div className='col-2'>
+
                             </div>
                         </div>
                     })

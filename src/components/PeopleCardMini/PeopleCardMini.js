@@ -7,14 +7,14 @@ import '../PeopleCard/peopleCard.css'
 import people_default from "resources/icons/people_default.svg"
 export default function PeopleCardMini(props) {
     return (
-        <div className='row'>
-            <div className='col-1'>
+        <div className='row justify-content-center m-auto'>
+            <div className='col-2 '>
                 {props.avatar === "" ?
-                    <img src={people_default} height="40px" width="40px" />
-                    : <img src={props.avatar} height="40px" width="40px" style={{ "border-radius": "50%" }} />
+                    <img src={people_default} height="50px" width="50px" />
+                    : <img src={props.avatar} height="50px" width="50px" style={{ "border-radius": "50%" }} />
                 }
             </div>
-            <div className='col-11' >
+            <div className='col-10' >
                 <h5 className=' ms-4 customFontRoboto' style={{ fontSize: "20px", fontWeight: "bold" }}>
                     {props.name}
                 </h5>

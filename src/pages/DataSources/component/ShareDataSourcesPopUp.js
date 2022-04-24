@@ -138,7 +138,7 @@ export default function ShareDataSourcesPopUp(props) {
 
                     listSharedPeople.map((e, index) => {
                         return <div className='row mt-3'>
-                            <div className='col-8'>
+                            <div className='col-6'>
                                 <div className='ms-5'>{e.Email}</div>
                             </div>
                             <div className='col-2'>
@@ -152,6 +152,9 @@ export default function ShareDataSourcesPopUp(props) {
                                 <Button onClick={() => { }} autoFocus>
                                     Clear
                                 </Button>
+                            </div>
+                            <div className='col-2'>
+
                             </div>
                         </div>
                     })

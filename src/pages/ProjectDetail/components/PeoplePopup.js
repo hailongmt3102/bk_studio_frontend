@@ -11,8 +11,8 @@ import { deep_blue_primary } from "../../../utils/color"
 import { createNewProject } from 'api/Project'
 import PeopleCardMini from 'components/PeopleCardMini/PeopleCardMini'
 
-import {Store} from 'react-notifications-component'
-import {content} from "../../../utils/notification"
+import { Store } from 'react-notifications-component'
+import { content } from "../../../utils/notification"
 
 import { getListPeopleByProjectID } from '../../../api/People'
 const orangeStyle = {
@@ -72,7 +72,7 @@ export default function PeoplePopup(props) {
         inviteMember(project_id, { "NewUsers": listpeopleToAdd })
             .then(res => {
                 props.handleClose()
-                Store.addNotification(content("Success", "Added member", "success", {duration: 100000}))
+                Store.addNotification(content("Success", "Added member", "success", { duration: 100000 }))
                 setTimeout(() => window.location.reload(), 1000);
                 setPeopleListToAdd([])
                 props.onComplete()
@@ -116,7 +116,7 @@ export default function PeoplePopup(props) {
                                     // console.log(ele.name)
                                 }}
                             />
-                            <div><PeopleCardMini
+                            <div className='mt-3'><PeopleCardMini
                                 onClick={() => {
 
                                 }}
