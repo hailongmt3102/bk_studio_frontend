@@ -5,7 +5,7 @@ import { blue_cloud, deep_blue_primary } from "../../utils/color"
 import { editPeopleRoleWithProject } from "../../api/Project"
 import { getListPeopleByProjectID } from "api/People"
 
-import { shareReport, getSharedListPeople, updateSharePermission } from "api/Report"
+import { shareReport, getSharedListPeople, updateSharePermission, unshareReport } from "api/Report"
 import shareWith from "resources/icons/share_with_primary.svg";
 import edit from 'resources/icons/edit.svg'
 
@@ -61,19 +61,32 @@ export default function ShareWithPopUp(props) {
 
     const [role, setRole] = useState("View")
     const [selectPeople, setSelectPeople] = useState([])
-    const shareSubmit = () => {
+    const shareHandle = () => {
         shareReport(props.currentProject, props.RId, {
             Emails: selectPeople,
             Permission: role
         })
             .then(response => {
                 //Store.addNotification(content("Success", "Editted role", "success"))
-                //setTimeout(() => window.location.reload(), 1000);
                 props.handleClose()
+                setTimeout(() => window.location.reload(), 1000);
             })
             .catch(error => {
-                Store.addNotification(content("Fail", error.data, "danger"))
+                Store.addNotification(content("Fail", error.response.data, "danger"))
                 props.handleClose()
+            })
+    }
+    const unshareHandle = (email, index) => {
+        unshareReport(props.currentProject, props.RId, {
+            Email: email,
+        })
+            .then(response => {
+                setListSharedPeople([...listSharedPeople.slice(0, index), ...listSharedPeople.slice(index + 1)])
+                Store.addNotification(content("Success", "Deleted share permission", "success"))
+            })
+            .catch(error => {
+                Store.addNotification(content("Fail", error.response.data, "danger"))
+
             })
     }
 
@@ -123,6 +136,7 @@ export default function ShareWithPopUp(props) {
         }
     }
 
+
     const listSharedPeopleComponent = () => {
         return <div>
             <div className='row'>
@@ -141,7 +155,7 @@ export default function ShareWithPopUp(props) {
                             </div>
                             <div className='col-2'>
                                 <Button onClick={() => {
-                                    
+                                    unshareHandle(e.Email, index)
                                 }} autoFocus>
                                     Clear
                                 </Button>
@@ -197,7 +211,7 @@ export default function ShareWithPopUp(props) {
             </Modal.Body>
             <Modal.Footer>
                 <Button onClick={() => {
-                    shareSubmit()
+                    shareHandle()
                     updateShareHandle()
                 }}>
                     Done
