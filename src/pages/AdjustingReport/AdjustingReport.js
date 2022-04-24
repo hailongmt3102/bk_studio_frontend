@@ -199,11 +199,11 @@ export default function AdjustingReport(props) {
                 if (!checkNeedToQueryData(componentResult[i].Type)) continue
                 // fetch data
                 queryResult = await queryDataOfAShape(componentResult[i].QueryCommand)
-                parseResult = parseDataQueried(componentResult[i].Type, queryResult)
                 if (queryResult == null) {
                     // error to query data of this shape
                     componentResult[i].Type = "Error"
                 } else {
+                    parseResult = parseDataQueried(componentResult[i].Type, queryResult)
                     // parse them json data from server
                     componentResult[i].Position = JSON.parse(componentResult[i].Position)
                     componentResult[i].TextTheme = JSON.parse(componentResult[i].TextTheme)

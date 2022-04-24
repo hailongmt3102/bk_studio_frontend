@@ -1,40 +1,34 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Form } from 'react-bootstrap'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { getListPeopleByProjectID } from '../../api/People'
 
-import { blue_cloud } from "../../utils/color"
-import { deep_blue_primary } from "../../utils/color"
-import add_people from "resources/icons/add_people.svg"
-import sendTo from "resources/icons/sendto.svg"
-import file_orange from "resources/icons/file_orange.svg"
+import { GetDataSourcesListInformationInProject } from 'api/DataSources'
+import { canUpdatePermission, editProject, getInformationByPId } from "api/Project"
 import PeopleCard from "components/PeopleCard/PeopleCard"
-import { getInformationByPId } from "api/Project"
-import PeoplePopup from './components/PeoplePopup'
-import RolePopUp from './components/RolePopUp'
-import ClockSvg from 'resources/icons/clock.svg'
-import MemberSvg from 'resources/icons/two_people.svg'
-import moment from 'moment';
+import moment from 'moment'
+import { ScrollMenu } from 'react-horizontal-scrolling-menu'
 import { Store } from 'react-notifications-component'
-import { content } from "utils/notification"
-import { editProject, canUpdatePermission } from 'api/Project'
-import DataSourceBox from '../../pages/DataSources/component/DataSourceBox'
-import { Rename, SendToWorkspace, deleteDatasource, GetDataSourcesListInformationInProject } from 'api/DataSources'
-import edit from "resources/icons/edit.svg"
+import add_people from "resources/icons/add_people.svg"
+import ClockSvg from 'resources/icons/clock.svg'
 import delete_icon from "resources/icons/delete.svg"
 import download_blue from "resources/icons/download_blue.svg"
+import edit from "resources/icons/edit.svg"
+import file_orange from "resources/icons/file_orange.svg"
+import sendTo from "resources/icons/sendto.svg"
 import share_blue from "resources/icons/share_blue.svg"
-import excel_icon from "resources/icons/excel_icon.svg"
+import MemberSvg from 'resources/icons/two_people.svg'
+import { content } from "utils/notification"
+import DataSourceBox from '../../pages/DataSources/component/DataSourceBox'
+import { deep_blue_primary } from "../../utils/color"
 import ShareDataSourcesPopUp from "../DataSources/component/ShareDataSourcesPopUp"
-import three_dot from "resources/icons/three-dot.svg"
-import ThreeDotButton from 'components/ThreeDotButton'
-import { ScrollMenu } from 'react-horizontal-scrolling-menu';
+import PeoplePopup from './components/PeoplePopup'
+import RolePopUp from './components/RolePopUp'
 
 
 export default function ProjectDetail() {
     let getEmail = localStorage.getItem("email") ?? ""
     var location = useLocation()
-    var navigate = useNavigate()
 
     const currentProject = localStorage.getItem("currentProject")
     const [showSharePopUp, setshowSharePopUp] = useState(false)
@@ -82,11 +76,6 @@ export default function ProjectDetail() {
             .catch(err => {
                 setPeopleCanEditRoleList(false)
             })
-    }, [])
-
-    const [datasourceslist, setDatasourceslist] = useState([])
-
-    useEffect(() => {
         GetDataSourcesListInformationInProject({ PId: project_id })
             .then(res => {
                 let result = res.data.filter(d => d.Type != "Workspace")
@@ -96,10 +85,6 @@ export default function ProjectDetail() {
             .catch(err => {
                 console.log(err)
             })
-
-    }, [])
-
-    useEffect(() => {
         getListPeopleByProjectID(project_id)
             .then(response => {
                 //console.log(response.data)
@@ -109,9 +94,12 @@ export default function ProjectDetail() {
                 error => {
                 }
             )
+    }, [project_id])
 
+    
 
-    }, [])
+    const [datasourceslist, setDatasourceslist] = useState([])
+
     const option_list = ["Send to Workspace", "Rename", "Share", "Download", "Delete"]
     const icon_list = [sendTo, edit, share_blue, download_blue, delete_icon]
     const dataSourcesComponent = () => {
