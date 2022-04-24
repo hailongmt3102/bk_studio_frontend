@@ -1,5 +1,5 @@
 import { getColumnsOfTable, GetDataSourcesListInformationInProject, QueryData as QueryDataApi } from "api/DataSources";
-import { createNewComponent as createNewComponentApi, createNewReport, deleteShape as deleteShapeApi, getAllComponent, getReportInformation, updateAComponent, updateReportInformation } from 'api/Report';
+import { createNewComponent as createNewComponentApi, createNewReport, deleteShape as deleteShapeApi, getAllComponent, getReportInformation, updateAComponent, updateReportInformation, saveAsCopy } from 'api/Report';
 import TabComponent from "pages/AdjustingReport/components/tabComponent/TabComponent";
 import { useEffect, useRef, useState } from "react";
 import { Form } from 'react-bootstrap';
@@ -11,7 +11,7 @@ import { content } from "utils/notification";
 import { frameStyleDefault, heightDefault, positionDefault, textStyleDefault, widthDefault } from 'utils/shape';
 import ToolBar from "./components/Bar/ToolBar";
 import Content from "./components/Content";
-import MenuBar from "./components/MenuBar";
+import MenuBar from "./components/Bar/MenuBar";
 import ShareLinkPopUp from "./components/PopUp/ShareLinkPopUp";
 import ShareWithPopUp from "./components/PopUp/ShareWithPopUp";
 import SqlPopUp from "./components/PopUp/SqlPopUp";
@@ -134,6 +134,20 @@ export default function AdjustingReport(props) {
                 alert(err.response.data)
             })
     }
+
+    const saveACopyHandle = () => {
+        saveAsCopy(currentProject, RId)
+            .then(res => {
+                console.log(res.data)
+                nav(`/project/gallery/${res.data.Id}/edit`)
+                window.location.reload()
+            })
+            .catch(err => {
+                Store.addNotification(content("Fail", err.response.data, "danger"))
+            })
+
+    }
+
 
     const updateSubmit = async () => {
         try {
@@ -759,6 +773,7 @@ export default function AdjustingReport(props) {
                             OpenShareLinkPopUp={() => setshowShareLinkPopUp(true)}
                             setAddShapeType={setAddShapeType}
                             isEdit={isEdit}
+                            saveACopyHandle={() => saveACopyHandle()}
                         />
 
                         <div className="content"
