@@ -52,7 +52,6 @@ export default function Login() {
                 localStorage.setItem("token", res.data.AccessToken)
                 localStorage.setItem("username", res.data.UserName)
                 localStorage.setItem("email", information.Email)
-
                 if (remember) {
                     localStorage.setItem("password", information.Password)
                     localStorage.setItem("remember", true)

@@ -1,7 +1,11 @@
 import { createNewComponent, deleteShape as deleteShapeApi, getAllComponent } from 'api/Report';
 import { ArcElement, BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, LineElement, PointElement, Title, Tooltip } from 'chart.js';
 import React, { useEffect, useImperativeHandle, useRef, useState } from 'react';
+import { Rnd } from 'react-rnd';
 import { useLocation } from 'react-router-dom';
+import FloatingCard from './FloatingCard';
+import FloatText from './FloatText';
+import LongCanvas from './LongCanvas';
 import Shape from './Shape';
 import { content } from "utils/notification"
 import { Store } from 'react-notifications-component'
@@ -23,7 +27,8 @@ const Content = React.forwardRef((props, ref) => {
     const [components, setComponents] = useState([])
     const ShapeRef = useRef([]);
     const currentProject = localStorage.getItem("currentProject")
-
+    const [mode, setMode] = useState("addText")
+    const [newFloatCard, setNewFloatCard] = useState(<FloatText />)
     ShapeRef.current = []
     const addToRefs = (el, index) => {
         if (el && !ShapeRef.current.includes(el) && !Object.keys(ShapeRef.current).includes(index.toString())) {
@@ -246,7 +251,19 @@ const Content = React.forwardRef((props, ref) => {
                 alert(err.response.data)
             })
     }
-
+    // -------------------------------------
+    // drag area
+    const defaultLocation = {
+        size: {
+            width: 0,
+            height: 0
+        },
+        position: {
+            x: 0, y: 0
+        }
+    }
+    const [dragAreaLocation, setDragAreaLocation] = useState(defaultLocation)
+    const [isAdding, setIsAdding] = useState(true)
     // -------------------------------------------------------
     return (
         <React.Fragment>
@@ -264,7 +281,7 @@ const Content = React.forwardRef((props, ref) => {
                         />
                     </div>)
             }
-
+            {props.isAdding && <Rnd size={props.mouseDragValue.size} position={props.mouseDragValue.position} className="border" />}
         </React.Fragment>
     )
 })

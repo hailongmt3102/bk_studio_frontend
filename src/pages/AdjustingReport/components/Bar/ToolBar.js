@@ -1,5 +1,4 @@
 import React from 'react'
-import CustomDropdownButton from '../CustomDropdownButton'
 
 import plus from "resources/icons/plus.svg";
 import dataBoard from "resources/icons/dataBoard.svg";
@@ -35,7 +34,6 @@ export default function ToolBar(props) {
                 </button>
                 <button className="col m-0 p-0 btn btn-sm" style={{ "minWidth": "80px", "minHeight": "50px" }}
                     onClick={() => {
-                        console.log("asdf")
                         props.setAddShapeType("text")
                     }}
                 >
@@ -43,11 +41,7 @@ export default function ToolBar(props) {
                     <p className="p-0 m-0">add text</p>
                 </button>
                 <button className="col m-0 p-0 btn btn-sm" style={{ "minWidth": "80px", "minHeight": "50px" }}>
-                    <CustomDropdownButton title="add shape" icon={addShape} items={["Rectangle", "Circle"]} onClick={(val) => {
-                        // openModal(val)
-                    }} />
-                    {/* <CircleModel show={modelState["Doughnut"]} handleClose={() => { closeModal("Doughnut") }} dataSource={props.dataSource} addShape={props.addShape} />
-                    <TableModel show={modelState["Table"]} handleClose={() => { closeModal("Table") }} dataSource={props.dataSource} addShape={props.addShape} /> */}
+                    aaa
                 </button>
                 <button className="col m-0 p-0 btn btn-sm" style={{ "minWidth": "80px", "minHeight": "50px" }}>
                     <img src={undo} width="20px" height="20px" />
@@ -63,7 +57,7 @@ export default function ToolBar(props) {
                 </button>
                 <button className="col m-0 p-0 btn btn-sm" style={{ "minWidth": "80px", "minHeight": "50px" }}
                     onClick={() => {
-                        props.saveACopyHandle()
+                        // props.saveAsACopy()
                     }}>
                     <img src={copy} width="20px" height="20px" />
                     <p className="p-0 m-0">create a copy</p>
@@ -73,13 +67,19 @@ export default function ToolBar(props) {
                     <p className="p-0 m-0">save</p>
                 </button>
                 <button className="col m-0 p-0 btn btn-sm" style={{ "minWidth": "80px", "minHeight": "50px" }}
-                    onClick={() => props.OpenShareLinkPopUp()}
+                    onClick={() => {
+                        if (props.isEdit)
+                            props.OpenShareLinkPopUp()
+                    }}
                 >
                     <img src={share} width="20px" height="20px" />
                     <p className="p-0 m-0">share</p>
                 </button>
                 <button className="col m-0 p-0 btn btn-sm" style={{ "minWidth": "80px", "minHeight": "50px" }}
-                    onClick={() => props.OpenSharePopUp()}
+                    onClick={() => {
+                        if (props.isEdit)
+                            props.OpenSharePopUp()
+                    }}
                 >
                     <img src={shareWith} width="20px" height="20px" />
                     <p className="p-0 m-0">share with</p>

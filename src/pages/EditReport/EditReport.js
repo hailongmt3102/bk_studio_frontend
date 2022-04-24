@@ -24,6 +24,7 @@ import { createNewReport, createNewComponent, getReportInformation, updateReport
 import { useLocation, useNavigate } from "react-router-dom";
 import { deep_blue_primary } from "utils/color";
 import { textStyleDefault, widthDefault, heightDefault, frameStyleDefault, positionDefault } from 'utils/shape'
+import { Rnd } from "react-rnd";
 
 
 export default function EditReport(props) {
@@ -33,6 +34,8 @@ export default function EditReport(props) {
     const nav = useNavigate()
     let RId = location.split('/')[3]
     const currentProject = localStorage.getItem("currentProject")
+    const contentRef = useRef(null)
+
 
     const updateSubmit = async () => {
         try {
@@ -302,7 +305,6 @@ export default function EditReport(props) {
     const [showShareLinkPopUp, setshowShareLinkPopUp] = useState(false)
 
     // ref to content component of report
-    const contentRef = useRef()
     const saveAllShapeComponents = () => {
         contentRef.current.saveAllShape()
     }
@@ -421,15 +423,17 @@ export default function EditReport(props) {
                             OpenShareLinkPopUp={() => setshowShareLinkPopUp(true)}
                             saveACopyHandle={() => saveACopyHandle()}
                         />
-                        <div className="m-2 content">
+                        {/* <div className=" content" ref={contentBoxRef}>
                             <Content
                                 RId={RId}
                                 ref={contentRef}
                                 setTabData={setTabData}
                                 tabData={tabData}
                                 createNewComponentInReport={createNewComponentInReport}
+                                showingMouseDrag={addShapeType != null}
+                                mouseDragValue={dragAreaLocation}
                             />
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </div>

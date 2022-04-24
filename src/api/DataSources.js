@@ -25,9 +25,10 @@ const getColumnsOfTable = (table) => {
     return axiosClient.get(`/data/columns?table=${table}`)
 }
 
-const QueryData = (query) => {
+const QueryData = (query, isSampleType) => {
     return axiosClient.post("/data/query", {
-        query: query
+        query: query,
+        isSampleType: isSampleType
     })
 }
 

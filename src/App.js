@@ -3,7 +3,7 @@ import "@fontsource/mulish";
 import "@fontsource/roboto";
 import "../src/App.css"
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import DataSources from "./pages/DataSources/DataSources";
 import People from "pages/People/People";
@@ -28,6 +28,7 @@ import { ReactNotifications } from 'react-notifications-component';
 import 'react-notifications-component/dist/theme.css';
 import LocalizedStrings from 'react-localization';
 import { data } from './utils/localizationData'
+import AdjustingReport from "pages/AdjustingReport/AdjustingReport";
 const translations = new LocalizedStrings(data);
 const localizationContext = React.createContext(translations);
 
@@ -92,11 +93,7 @@ function App() {
                         <Route
                             path="/project/gallery/:id"
                             exact
-                            element={<EditReport isEdit={false} />}
-                        />
-                        <Route
-                            path="/project/gallery/:id/edit"
-                            element={<EditReport isEdit={true} />}
+                            element={<AdjustingReport/>}
                         />
 
                         <Route path="/personal/profile" element={<Profile />} />

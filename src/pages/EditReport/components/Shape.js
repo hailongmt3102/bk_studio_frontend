@@ -158,6 +158,7 @@ const Shape = React.forwardRef((props, ref) => {
 
                     break;
                 default:
+                    console.log("Unresolve shape type : ", props.data.Type)
                     break
             }
             // put to component data
