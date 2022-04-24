@@ -51,13 +51,12 @@ export default function Login() {
             .then((res) => {
                 localStorage.setItem("token", res.data.AccessToken)
                 localStorage.setItem("username", res.data.UserName)
+                localStorage.setItem("email", information.Email)
                 if (remember) {
-                    localStorage.setItem("email", information.Email)
                     localStorage.setItem("password", information.Password)
                     localStorage.setItem("remember", true)
                 }
                 else {
-                    localStorage.removeItem("email")
                     localStorage.removeItem("password")
                     localStorage.removeItem("remember")
                 }

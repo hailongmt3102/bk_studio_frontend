@@ -23,10 +23,16 @@ import { shapeBackgroundColors, shapeBorderColors } from 'utils/color';
 const shapeTypes = ["Table", "Pie Chart", "Doughnut Chart", "Line Chart", "Bar Chart"]
 
 export default function AdjustingReport(props) {
+    const location = useLocation()
+
+    // some hiddenInfo of this report
+    const RId = location.state.RId
+    const currentProject = location.state.PId
+    const isEdit = location.state.isEdit
+    const isTemplate = location.state.Type == "Template"
+
     const navigate = useNavigate()
     const nav = useNavigate()
-    let RId = useLocation().pathname.split('/')[3] ?? -1
-    const currentProject = localStorage.getItem("currentProject")
     const contentWrappingBox = useRef(null)
     const contentRef = useRef()
 
@@ -113,7 +119,7 @@ export default function AdjustingReport(props) {
     // ** ---------------------------------------------------------------------------------------------
     // ** declare some function for pop up layout
     const newFileSubmit = () => {
-        createNewReport(localStorage.getItem("currentProject"),
+        createNewReport(currentProject,
             {
                 Hastag: "",
                 Description: "",
@@ -216,7 +222,7 @@ export default function AdjustingReport(props) {
     // ** for each shape, query it's data
     const queryDataOfAShape = async (query) => {
         try {
-            return await QueryDataApi(query)
+            return await QueryDataApi(query, isTemplate)
         }
         catch (err) {
             console.log("Query data fail. error: ", err, " \n Query Command :  ", query)
@@ -571,11 +577,11 @@ export default function AdjustingReport(props) {
     }
 
     const onMouseMoveHandler = (e) => {
-        
+
     }
 
     const onMouseUpHandler = (e) => {
-        
+
     }
 
 
@@ -705,12 +711,14 @@ export default function AdjustingReport(props) {
                             pasteShape={pasteShape}
                             deleteShape={deleteShape}
                             copyShape={copyShape}
+                            isEdit={isEdit}
                         />
 
                         <ToolBar
                             OpenSharePopUp={() => setshowSharePopUp(true)}
                             OpenShareLinkPopUp={() => setshowShareLinkPopUp(true)}
                             setAddShapeType={setAddShapeType}
+                            isEdit={isEdit}
                         />
 
                         <div className="content"

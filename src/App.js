@@ -83,11 +83,7 @@ function App() {
                         <Route
                             path="/project/gallery/:id"
                             exact
-                            element={<AdjustingReport isEdit={false} />}
-                        />
-                        <Route
-                            path="/project/gallery/:id/edit"
-                            element={<AdjustingReport isEdit={true} />}
+                            element={<AdjustingReport/>}
                         />
 
                         <Route path="/personal/profile" element={<Profile />} />

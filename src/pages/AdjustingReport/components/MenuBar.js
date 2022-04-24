@@ -48,46 +48,62 @@ export default function MenuBar(props) {
             <div className="row justify-content-center m-0 p-0">
                 <div className='col-1' >
                     <div className='mt-3 ms-2'>
-                        <ThreeDotButton className="col-1 p-4 btn" style={{ "minHeight": "80px", "text-align": "center" }} title={'File'} items={file_option} icons_list={file_option_icon_list} onClick={(val) => {
-                            if (val = "New") {
-                                props.newFileSubmit()
-                            }
-                        }} />
+                        {
+                            props.isEdit ?
+                                <ThreeDotButton className="col-1 p-4 btn" style={{ "minHeight": "80px", "text-align": "center" }} title={'File'} items={file_option} icons_list={file_option_icon_list} onClick={(val) => {
+                                    if (val = "New") {
+                                        props.newFileSubmit()
+                                    }
+                                }} />
+                                : <button className='btn'>File</button>
+                        }
                     </div>
                 </div>
                 <div className='col-1' >
                     <div className='mt-3 ms-2'>
-                        <ThreeDotButton className="col-1 p-4 btn" style={{ "minHeight": "80px", "text-align": "center" }} title={'Edit'} items={edit_option} icons_list={edit_option_icon_list}
-                            onClick={(val) => {
-                                switch (val) {
-                                    case 'Copy' : 
-                                        props.copyShape()
-                                        break;
-                                    case 'Paste':
-                                        props.pasteShape()
-                                        break
-                                    case 'Delete':
-                                        props.deleteShape()
-                                        break
-                                    default:
-                                        break
-                                }
-                            }} />
+                        {
+                            props.isEdit ?
+                                <ThreeDotButton className="col-1 p-4 btn" style={{ "minHeight": "80px", "text-align": "center" }} title={'Edit'} items={edit_option} icons_list={edit_option_icon_list}
+                                    onClick={(val) => {
+                                        switch (val) {
+                                            case 'Copy':
+                                                props.copyShape()
+                                                break;
+                                            case 'Paste':
+                                                props.pasteShape()
+                                                break
+                                            case 'Delete':
+                                                props.deleteShape()
+                                                break
+                                            default:
+                                                break
+                                        }
+                                    }} />
+                                : <button className='btn'>File</button>
+                        }
                     </div>
                 </div>
                 <div className='col-1' >
                     <div className='mt-3 ms-2'>
-                        <ThreeDotButton className="col-1 p-4 btn" style={{ "minHeight": "80px", "text-align": "center" }} title={'Function'} items={function_option} onClick={(val) => {
-                        }} />
+                        {
+                            props.isEdit ?
+                                <ThreeDotButton className="col-1 p-4 btn" style={{ "minHeight": "80px", "text-align": "center" }} title={'Function'} items={function_option} onClick={(val) => {
+                                }} />
+                                : <button className='btn'>File</button>
+                        }
                     </div>
                 </div>
                 <div className='col-1' >
                     <div className='mt-3 ms-2'>
-                        <ThreeDotButton className="col-1 p-4 btn" style={{ "minHeight": "80px", "text-align": "center" }} title={'Insert'} items={insert_option} icons_list={insert_option_icon_list}
-                            onClick={(val) => {
-                                props.showSqlPopUpFunction(val)
-                                props.componentTypeHandle(val)
-                            }} />
+                        {
+                            props.isEdit ?
+                                <ThreeDotButton className="col-1 p-4 btn" style={{ "minHeight": "80px", "text-align": "center" }} title={'Insert'} items={insert_option} icons_list={insert_option_icon_list}
+                                    onClick={(val) => {
+                                        props.showSqlPopUpFunction(val)
+                                        props.componentTypeHandle(val)
+                                    }} />
+                                : <button className='btn'>File</button>
+                        }
                     </div>
                 </div>
                 <div className='col-5 m-0 p-0'></div>

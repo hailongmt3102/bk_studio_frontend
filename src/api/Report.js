@@ -54,6 +54,9 @@ const deleteShape = (PId,RId, CId) => {
     return axiosClient.get(`/project/${PId}/${RId}/component/${CId}/delete`)
 }
 
+const getPermission = (PId, RId, Email ) => {
+    return axiosClient.get(`/project/${PId}/${RId}/getPermission`)
+}
 
 export {
     createNewReport,
@@ -69,5 +72,6 @@ export {
     shareReport,
     getShardListPeople,
     updateSharePermission,
-    deleteShape
+    deleteShape,
+    getPermission
 }
