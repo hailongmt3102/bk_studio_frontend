@@ -47,8 +47,8 @@ export default function ShareDataSourcesPopUp(props) {
         if (props.type == "ProjectDetail") {
             getListPeopleByProjectID(props.currentProject)
                 .then(res => {
-                    setListShowPeople(res.data.map((e) => e.Email).filter(item => !listSharedName.includes(item)))
-                    console.log("list show Detail", res.data.map((e) => e.Email).filter(item => !listSharedName.includes(item) && item !== myEmail))
+                    setListShowPeople(res.data.map((e) => e.Email).filter(item => !listSharedName.includes(item) && item !== myEmail))
+                    // console.log("list show Detail", res.data.map((e) => e.Email).filter(item => !listSharedName.includes(item) && item !== myEmail))
                 })
                 .catch(err => {
                     Store.addNotification(content("Fail", err.response.data, "danger"))

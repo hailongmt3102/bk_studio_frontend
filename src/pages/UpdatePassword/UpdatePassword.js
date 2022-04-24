@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
-import { Form, InputGroup, Col, Button, FormControl } from 'react-bootstrap'
+import { Form, InputGroup, Col } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import login_image from "resources/images/login_image.png"
 import { updatePasswordAPI } from "api/Account"
 import lock from "resources/icons/lock.svg";
 import invisible from "resources/icons/invisible.svg"
-import email from "resources/icons/email.svg";
+
 
 import visible from "resources/icons/visible.svg"
 import { Link } from "react-router-dom";
