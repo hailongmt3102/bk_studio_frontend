@@ -90,7 +90,12 @@ function App() {
                         <Route path="/project/templates" element={<Templates />} />
 
                         <Route
-                            path="/project/gallery/:id"
+                            path="/project/gallery/:id/edit"
+                            exact
+                            element={<AdjustingReport />}
+                        />
+                        <Route
+                            path="/project/gallery/:id/view"
                             exact
                             element={<AdjustingReport />}
                         />

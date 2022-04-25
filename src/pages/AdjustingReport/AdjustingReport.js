@@ -16,6 +16,7 @@ import ShareLinkPopUp from "./components/PopUp/ShareLinkPopUp";
 import ShareWithPopUp from "./components/PopUp/ShareWithPopUp";
 import SqlPopUp from "./components/PopUp/SqlPopUp";
 import './AdjustingReport.css';
+import Button from '@mui/material/Button';
 
 import { shapeBackgroundColors, shapeBorderColors } from 'utils/color';
 
@@ -26,10 +27,20 @@ export default function AdjustingReport(props) {
     const location = useLocation()
 
     // some hiddenInfo of this report
+
     const RId = location.state.RId
     const currentProject = location.state.PId
     const isTemplate = location.state.Type == "Template"
-    const isEdit = location.state.isEdit && !isTemplate
+
+
+    const [isEdit, setIsEdit] = useState(false)
+
+    useEffect(() => {
+        if (!isTemplate) {
+            if (location.state.Permission == "Edit") setIsEdit(true)
+            else setIsEdit(false)
+        }
+    }, [])
 
     const navigate = useNavigate()
     const nav = useNavigate()
@@ -40,8 +51,7 @@ export default function AdjustingReport(props) {
     const [dataSource, setDataSource] = useState({})
 
     const [key, setKey] = useState('Data');
-    const fonts = ['Roboto', 'Poppins'];
-    const size = ['14', '16', "32", '45'];
+
     const [showSqlPopUp, setshowSqlPopUp] = useState(false)
     const [popUpType, setPopUpType] = useState("")
 
@@ -633,9 +643,8 @@ export default function AdjustingReport(props) {
         }
     )
 
-
-    return (
-        <div>
+    const EditUI = () => {
+        return <div>
             <div>
                 {/* some popup */}
                 <SqlPopUp
@@ -795,6 +804,89 @@ export default function AdjustingReport(props) {
                     </div>
                 </div>
             </div>
+        </div>
+    }
+
+    const ViewPageUI = () => {
+        return <div className="row">
+            <div className="leftColumn p-3">
+                <div className="row m-0 p-0">
+                    <div className="col-7 m-0 p-0">
+                        <div className="row m-0 p-0" >
+                            <div className="col-1 m-0 p-0 mt-1">
+                                <button type="button" class="btn btn-sm" onClick={() => { navigate(-1) }}>
+                                    <img src={back} />
+                                </button>
+                            </div>
+                            <div className="col-8 m-0 p-0" >
+                                <div className="ms-1 PrimaryFontColor customFontBold size32"> {reportInformation.Name} </div>
+                            </div>
+                        </div>
+                        <div className="row m-0 p-0">
+                            <div className="col-1">
+
+                            </div>
+                            <div className=" col-10 SecondFontColor customFontBold size24">
+                                {reportInformation.Hastag}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {
+                    isTemplate === true ? <div> <Button onClick={() => { }} autoFocus>
+                        No
+                    </Button></div> : null
+                }
+                <div className="row mt-2">
+                    <div className=" col-10 ">
+                        <div className="content"
+                            // onClick={(e) => triggerClickContentBackground(e)}
+                            onMouseDown={onMouseDownHandler}
+                            onMouseMove={onMouseMoveHandler}
+                            onMouseUp={onMouseUpHandler}
+                        >
+                            <Content
+                                ref={contentRef}
+                                shapeComponents={shapeComponents}
+                                updateShapeComponent={updateShapeComponent}
+                                followingIndexComponent={followingIndexComponent}
+                                setFollowingIndexComponent={setFollowingIndexComponent}
+                                showingMouseDrag={addShapeType != null}
+                                mouseDragValue={dragAreaLocation}
+                            />
+                        </div>
+                    </div>
+                    <div className="col-2 content p-4 ">
+
+                        <h3 className="PrimaryFontColor size32 customFontBold" >
+                            Detail:
+                        </h3>
+                        <div className="row mt-5 ">
+                            <div className="col PrimaryFontColor size16 customFontBold">Id</div>
+                            <div className="col">{reportInformation.Id} </div>
+                        </div>
+                        <div className="mt-4 PrimaryFontColor size16 customFontBold">Data sources:</div>
+                        <div className="row mt-4">
+                            <div className="col PrimaryFontColor size16 customFontBold">Created by: </div>
+                            <div className="col mt-2">{reportInformation.Author} </div>
+                        </div>
+                        <div className="row mt-4">
+                            <div className="col PrimaryFontColor size16 customFontBold">Last Modified:</div>
+                            <div className="col">{reportInformation.LastModified} </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div >
+    }
+
+    return (
+        <div>
+            {
+                isEdit === true ? EditUI() : ViewPageUI()
+            }
         </div>
     )
 }

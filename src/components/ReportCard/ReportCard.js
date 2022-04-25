@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Form } from 'react-bootstrap'
 
 import default_report_img from "../../resources/icons/default_report_img.svg"
@@ -62,22 +62,7 @@ export default function ReportCard(props) {
                 })
         }
     }
-    const editReport = async (Id) => {
-        try {
-            let permission = (await getPermission(props.data.PId, props.data.RId)).data
-            let isEdit = permission == 'Edit'
-            nav(`${Id}`, {
-                state: {
-                    PId: props.data.PId,
-                    Type: props.data.Type,
-                    RId: props.data.RId,
-                    isEdit: isEdit
-                }
-            })
-        } catch (error) {
-            alert(error)
-        }
-    }
+
 
     const deleteSubmit = () => {
         deleteReport(currentProject, RId)
@@ -109,6 +94,8 @@ export default function ReportCard(props) {
 
             })
     }
+
+
     const ContentCoponent = () => {
         return <div>
             {
@@ -184,6 +171,35 @@ export default function ReportCard(props) {
             }
         </div>
     }
+    const NavigationHandle = async (Id) => {
+        try {
+            let permission = (await getPermission(props.data.PId, props.data.RId)).data
+            if (permission == 'Edit') {
+                nav(`${Id}/edit`, {
+                    state: {
+                        PId: props.data.PId,
+                        Type: props.data.Type,
+                        RId: props.data.RId,
+                        Permission: permission
+                    }
+                })
+            }
+            else {
+                nav(`${Id}/view`, {
+                    state: {
+                        PId: props.data.PId,
+                        Type: props.data.Type,
+                        RId: props.data.RId,
+                        Permission: permission
+                    }
+                })
+            }
+
+
+        } catch (error) {
+            alert(error)
+        }
+    }
     return (
         <div>
             <ShareWithPopUp
@@ -205,7 +221,7 @@ export default function ReportCard(props) {
             />
             <div className="row m-0 p-0  shadow border border-light" style={{ "borderRadius": "20px" }}>
                 <div className='col-5 m-0 p-0 m-auto text-center ' onClick={() => {
-                    props.type === "Template" ? nav(`/project/gallery/${props.data.Id}`) : editReport(props.data.Id)
+                    props.type === "Template" ? nav(`/project/gallery/${props.data.Id}`) : NavigationHandle(props.data.Id)
                 }}>
                     <img src={default_report_img} height="300" width="300" />
                 </div>
