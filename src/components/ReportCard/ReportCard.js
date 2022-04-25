@@ -200,6 +200,16 @@ export default function ReportCard(props) {
             alert(error)
         }
     }
+    const viewReportNav = (Id) => {
+        nav('/project/gallery/' + Id + '/view', {
+            state: {
+                PId: props.data.PId,
+                Type: props.data.Type,
+                RId: props.data.Id,
+                isEdit: "View"
+            }
+        })
+    }
     return (
         <div>
             <ShareWithPopUp
@@ -221,7 +231,7 @@ export default function ReportCard(props) {
             />
             <div className="row m-0 p-0  shadow border border-light" style={{ "borderRadius": "20px" }}>
                 <div className='col-5 m-0 p-0 m-auto text-center ' onClick={() => {
-                    props.type === "Template" ? nav(`/project/gallery/${props.data.Id}`) : NavigationHandle(props.data.Id)
+                    props.type === "Template" ? viewReportNav(props.data.Id) : NavigationHandle(props.data.Id)
                 }}>
                     <img src={default_report_img} height="300" width="300" />
                 </div>

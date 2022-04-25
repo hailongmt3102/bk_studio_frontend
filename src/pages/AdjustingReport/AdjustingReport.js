@@ -811,7 +811,7 @@ export default function AdjustingReport(props) {
         return <div className="row">
             <div className="leftColumn p-3">
                 <div className="row m-0 p-0">
-                    <div className="col-7 m-0 p-0">
+                    <div className="col-8 m-0 p-0">
                         <div className="row m-0 p-0" >
                             <div className="col-1 m-0 p-0 mt-1">
                                 <button type="button" class="btn btn-sm" onClick={() => { navigate(-1) }}>
@@ -821,65 +821,75 @@ export default function AdjustingReport(props) {
                             <div className="col-8 m-0 p-0" >
                                 <div className="ms-1 PrimaryFontColor customFontBold size32"> {reportInformation.Name} </div>
                             </div>
+
                         </div>
                         <div className="row m-0 p-0">
                             <div className="col-1">
 
                             </div>
-                            <div className=" col-10 SecondFontColor customFontBold size24">
+                            <div className=" col-8 SecondFontColor customFontBold size24">
                                 {reportInformation.Hastag}
+                            </div>
+
+                        </div>
+                    </div>
+                    <div className="col-2 mt-5 m-0 p-0 mb-2 text-end pe-5">
+                        {
+                            isTemplate === true ? <div> <button className='btn-lg btn-success text-center border-0'
+                                onClick={() => { }}>
+                                <div>Mapping data</div>
+                            </button></div> : null
+                        }
+                    </div>
+                    <div className="col-2 mt-5 m-0 p-0">
+
+                    </div>
+
+
+                    <div className="row mt-2">
+                        <div className=" col-10 ">
+                            <div className="content"
+                                // onClick={(e) => triggerClickContentBackground(e)}
+                                onMouseDown={onMouseDownHandler}
+                                onMouseMove={onMouseMoveHandler}
+                                onMouseUp={onMouseUpHandler}
+                            >
+                                <Content
+                                    ref={contentRef}
+                                    shapeComponents={shapeComponents}
+                                    updateShapeComponent={updateShapeComponent}
+                                    followingIndexComponent={followingIndexComponent}
+                                    setFollowingIndexComponent={setFollowingIndexComponent}
+                                    showingMouseDrag={addShapeType != null}
+                                    mouseDragValue={dragAreaLocation}
+                                />
+                            </div>
+                        </div>
+                        <div className="col-2 content p-4 ">
+
+                            <h3 className="PrimaryFontColor size32 customFontBold" >
+                                Detail:
+                            </h3>
+                            <div className="row mt-5 ">
+                                <div className="col PrimaryFontColor size16 customFontBold">Id</div>
+                                <div className="col">{reportInformation.Id} </div>
+                            </div>
+                            <div className="mt-4 PrimaryFontColor size16 customFontBold">Data sources:</div>
+                            <div className="row mt-4">
+                                <div className="col PrimaryFontColor size16 customFontBold">Created by: </div>
+                                <div className="col mt-2">{reportInformation.Author} </div>
+                            </div>
+                            <div className="row mt-4">
+                                <div className="col PrimaryFontColor size16 customFontBold">Last Modified:</div>
+                                <div className="col">{reportInformation.LastModified} </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                {
-                    isTemplate === true ? <div> <Button onClick={() => { }} autoFocus>
-                        No
-                    </Button></div> : null
-                }
-                <div className="row mt-2">
-                    <div className=" col-10 ">
-                        <div className="content"
-                            // onClick={(e) => triggerClickContentBackground(e)}
-                            onMouseDown={onMouseDownHandler}
-                            onMouseMove={onMouseMoveHandler}
-                            onMouseUp={onMouseUpHandler}
-                        >
-                            <Content
-                                ref={contentRef}
-                                shapeComponents={shapeComponents}
-                                updateShapeComponent={updateShapeComponent}
-                                followingIndexComponent={followingIndexComponent}
-                                setFollowingIndexComponent={setFollowingIndexComponent}
-                                showingMouseDrag={addShapeType != null}
-                                mouseDragValue={dragAreaLocation}
-                            />
-                        </div>
-                    </div>
-                    <div className="col-2 content p-4 ">
-
-                        <h3 className="PrimaryFontColor size32 customFontBold" >
-                            Detail:
-                        </h3>
-                        <div className="row mt-5 ">
-                            <div className="col PrimaryFontColor size16 customFontBold">Id</div>
-                            <div className="col">{reportInformation.Id} </div>
-                        </div>
-                        <div className="mt-4 PrimaryFontColor size16 customFontBold">Data sources:</div>
-                        <div className="row mt-4">
-                            <div className="col PrimaryFontColor size16 customFontBold">Created by: </div>
-                            <div className="col mt-2">{reportInformation.Author} </div>
-                        </div>
-                        <div className="row mt-4">
-                            <div className="col PrimaryFontColor size16 customFontBold">Last Modified:</div>
-                            <div className="col">{reportInformation.LastModified} </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
 
-        </div >
+            </div >
+        </div>
     }
 
     return (

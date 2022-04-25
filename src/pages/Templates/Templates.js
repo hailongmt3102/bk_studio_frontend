@@ -22,6 +22,7 @@ export default function Template(props) {
                 return
             })
     }, [])
+
     return (
         <div>
             <h2 class="ms-4 mt-2" style={{ color: deep_blue_primary, "font-weight": "bold", fontSize: "40px" }}>
