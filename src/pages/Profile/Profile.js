@@ -96,6 +96,14 @@ export default function Profile() {
     const onChange = (e) => {
 
         console.log(e.target.files[0])
+        let files = e.target.files;
+        let reader = new FileReader();
+        reader.readAsDataURL(files[0]);
+        reader.onload = (e) => {
+            setinformation({
+                ...information, Avatar: e.target.result
+            })
+        }
         updateAvatar(e.target.files[0])
             .then((res) => {
 
