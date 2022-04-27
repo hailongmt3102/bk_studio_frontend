@@ -2,11 +2,10 @@ import React, { useEffect, useState } from 'react'
 import { Modal, Button } from 'react-bootstrap'
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
-import add_grey from 'resources/icons/add_grey.svg'
-import substract from 'resources/icons/substract.svg'
+import change from 'resources/icons/change.svg'
 
-import { blue_cloud } from "utils/color"
-import { Form } from 'react-bootstrap'
+
+
 export default function MappingPopUp(props) {
     const [step, setStep] = useState(1)
     const [fieldList, setFieldList] = useState([])
@@ -65,7 +64,6 @@ export default function MappingPopUp(props) {
 
     const selectTableComponent = () => {
         return <div>
-            <div className='customFontBold ms-5 mb-3 size22' >Select a datasource</div>
             <Autocomplete
                 className='ms-5 me-5'
                 id="tags-standard"
@@ -93,39 +91,68 @@ export default function MappingPopUp(props) {
             case 1:
                 return <div className='customFontBold PrimaryFontColor size32'>Select Table</div>
             case 2:
-                return <div className='customFontBold PrimaryFontColor size32'>Select X column</div>
+                return <div className='customFontBold PrimaryFontColor size32'>Mapping X column</div>
             case 3:
-                return <div className='customFontBold PrimaryFontColor size32'>SQL function</div>
+                return <div className='customFontBold PrimaryFontColor size32'>Mapping data</div>
             default:
                 return null
         }
     }
 
-    const selectXColumnCoponent = () => {
-        return <Autocomplete
-            className='ms-5 me-5'
-            id="tags-standard"
-            options={selectFrom.reduce((pre, cur) => [...pre, ...props.dataSource[cur]], [])}
-            renderInput={(params) => (
-                <TextField
-                    {...params}
-                    variant="standard"
-                    placeholder="Fields"
+    const MappingXColumComponent = () => {
+        return <div className='row m-0 p-0 pe-5'>
+            <div className='col-5 text-center m-auto m-0 p-0'> Tên cột cũ </div>
+            <div className='col-2  m-0 p-0'> <img src={change} /> </div>
+            <div className='col-4  m-0 p-0'>
+                <Autocomplete
+                    id="tags-standard"
+                    options={selectFrom.reduce((pre, cur) => [...pre, ...props.dataSource[cur]], [])}
+                    renderInput={(params) => (
+                        <TextField
+                            {...params}
+                            variant="standard"
+                            placeholder="Fields"
+                        />
+                    )}
+                    onChange={(e, val) => {
+                        setSelectXAxis(val)
+                    }}
                 />
-            )}
-            onChange={(e, val) => {
-                setSelectXAxis(val)
-            }}
-        />
+            </div>
+            <div className='col-1'></div>
+        </div>
+    }
+    const MappingDataComponent = () => {
+        return <div className='row m-0 p-0 pe-5'>
+            <div className='col-5 text-center m-auto m-0 p-0'> Tên cột cũ </div>
+            <div className='col-2  m-0 p-0'> <img src={change} /> </div>
+            <div className='col-4  m-0 p-0'>
+                <Autocomplete
+                    id="tags-standard"
+                    options={selectFrom.reduce((pre, cur) => [...pre, ...props.dataSource[cur]], [])}
+                    renderInput={(params) => (
+                        <TextField
+                            {...params}
+                            variant="standard"
+                            placeholder="Fields"
+                        />
+                    )}
+                    onChange={(e, val) => {
+                        setSelectXAxis(val)
+                    }}
+                />
+            </div>
+            <div className='col-1'></div>
+        </div>
     }
     const bodyComponent = () => {
         switch (step) {
             case 1:
                 return selectTableComponent()
             case 2:
-                return selectXColumnCoponent()
+                return MappingXColumComponent()
             case 3:
-                return <div>aaa</div>
+                return MappingDataComponent()
             default:
                 return null
         }
