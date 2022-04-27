@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 
 import { Form, Col, Row } from 'react-bootstrap'
 
-import { GetInformationApi, updateInformation } from "api/Account"
+import { GetInformationApi, updateInformation, updateAvatar } from "api/Account"
 import { useNavigate } from 'react-router-dom'
 
 import { deep_blue_primary } from "../../utils/color"
@@ -94,16 +94,17 @@ export default function Profile() {
 
 
     const onChange = (e) => {
-        let files = e.target.files;
-        let reader = new FileReader();
-        reader.readAsDataURL(files[0]);
 
-        reader.onload = (e) => {
-            setinformation({
-                ...information, Avatar: e.target.result
+        console.log(e.target.files[0])
+        updateAvatar(e.target.files[0])
+            .then((res) => {
+
             })
-            //console.log("img data", e.target.result)
-        }
+            .catch((e) => {
+                Store.addNotification(content("Warning", e.response.data, "danger"))
+                return
+                //alert(e.response.data);
+            })
     }
 
     const [pressEdit, setPressEdit] = useState(false)
