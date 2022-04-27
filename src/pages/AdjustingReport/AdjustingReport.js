@@ -146,6 +146,7 @@ export default function AdjustingReport(props) {
                         Permission: 'Edit'
                     }
                 })
+                window.location.reload()
             })
             .catch(err => {
                 alert(err.response.data)
