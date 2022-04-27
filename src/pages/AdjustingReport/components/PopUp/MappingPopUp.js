@@ -1,0 +1,191 @@
+import React, { useEffect, useState } from 'react'
+import { Modal, Button } from 'react-bootstrap'
+import Autocomplete from '@mui/material/Autocomplete';
+import TextField from '@mui/material/TextField';
+import add_grey from 'resources/icons/add_grey.svg'
+import substract from 'resources/icons/substract.svg'
+
+import { blue_cloud } from "utils/color"
+import { Form } from 'react-bootstrap'
+export default function MappingPopUp(props) {
+    const [step, setStep] = useState(1)
+    const [fieldList, setFieldList] = useState([])
+    const [data_source, set_data_source] = useState([]);
+    const [selectXAxis, setSelectXAxis] = useState(null)
+    const [selectFrom, setSelectFrom] = useState([])
+
+    const submit = () => {
+        // if (selectedField.length == 0 && function_clause.length == 0) {
+        //     alert("Nothing to compute")
+        //     return
+        // }
+        // if (selectFrom.length > 1) {
+        //     alert("Multi table now is not available")
+        //     return
+        // }
+        // let query = "select"
+        // if (selectXAxis != null) query += ` ${selectXAxis},`
+        // // select fields component
+        // if (selectedField.length > 0 && function_clause.length == 0) {
+        //     query += ` ${selectedField.join(',')}`
+        // } else if (selectedField.length == 0 && function_clause.length > 0) {
+        //     query += ` ${function_clause.map(clause => `${clause.op}(${clause.field})`).join(',')}`
+        // } else {
+        //     query += ` ${selectedField.join(',')} ,${function_clause.map(clause => `${clause.op}(${clause.field})`).join(',')}`
+        // }
+        // // from component
+        // query += ` from ${selectFrom[0]}`
+        // // where
+        // if (where_clause.length > 0) {
+        //     query += ` where ${where_clause.map(where => `${where.field} ${where.op} ${where.value}`).join(' and ')}`
+        // }
+        // // group by
+        // if (groupBy.length > 0) {
+        //     query += ` group by ${groupBy.join(',')}`
+        // }
+        // // having
+        // if (having_clause.length > 0) {
+        //     query += ` having ${having_clause.map(having => `${having.field} ${having.op} ${having.value}`).join(' and ')}`
+        // }
+        // // order by
+        // if (order_clause.length > 0) {
+        //     query += ` order by ${order_clause.map(order => `${order.field} ${order.fx}`).join(',')}`
+        // }
+        // props.onComplete("example", query)
+        props.handleClose()
+    }
+
+    useEffect(() => {
+        set_data_source(Object.keys(props.dataSource))
+        Object.keys(props.dataSource).map(key => {
+            setFieldList([...fieldList, ...props.dataSource[key]])
+        })
+    }, [props.dataSource])
+
+
+    const selectTableComponent = () => {
+        return <div>
+            <div className='customFontBold ms-5 mb-3 size22' >Select a datasource</div>
+            <Autocomplete
+                className='ms-5 me-5'
+                id="tags-standard"
+                options={data_source}
+                renderInput={(params) => (
+                    <TextField
+                        {...params}
+                        variant="standard"
+                        // label="Multiple values"
+                        placeholder="Data sources"
+                    />
+                )}
+                onChange={(e, val) => {
+                    setSelectFrom([val])
+                }}
+            />
+        </div>
+    }
+
+
+
+
+    const titleComponent = () => {
+        switch (step) {
+            case 1:
+                return <div className='customFontBold PrimaryFontColor size32'>Select Table</div>
+            case 2:
+                return <div className='customFontBold PrimaryFontColor size32'>Select X column</div>
+            case 3:
+                return <div className='customFontBold PrimaryFontColor size32'>SQL function</div>
+            default:
+                return null
+        }
+    }
+
+    const selectXColumnCoponent = () => {
+        return <Autocomplete
+            className='ms-5 me-5'
+            id="tags-standard"
+            options={selectFrom.reduce((pre, cur) => [...pre, ...props.dataSource[cur]], [])}
+            renderInput={(params) => (
+                <TextField
+                    {...params}
+                    variant="standard"
+                    placeholder="Fields"
+                />
+            )}
+            onChange={(e, val) => {
+                setSelectXAxis(val)
+            }}
+        />
+    }
+    const bodyComponent = () => {
+        switch (step) {
+            case 1:
+                return selectTableComponent()
+            case 2:
+                return selectXColumnCoponent()
+            case 3:
+                return <div>aaa</div>
+            default:
+                return null
+        }
+    }
+    const footerComponent = () => {
+        switch (step) {
+            case 1:
+                return <Button onClick={() => {
+                    setStep(2)
+                }} >Next
+                </Button>
+            case 2:
+                return <div>
+                    <Button onClick={() => {
+                        setStep(1)
+                    }} >Back
+                    </Button>
+                    <Button className='ms-2' onClick={() => {
+                        setStep(3)
+                    }} >Next
+                    </Button>
+                </div>
+            case 3:
+                return <div>
+                    <Button onClick={() => {
+                        setStep(2)
+                    }} >Back
+                    </Button>
+                    <Button className='ms-2' onClick={() => {
+                        submit()
+                    }} >Done
+                    </Button></div>
+            default:
+                return null
+        }
+    }
+    return (
+        <Modal
+            show={props.show}
+            onHide={props.handleClose}
+            backdrop="static"
+            //fullscreen={true} 
+            size="xl"
+            aria-labelledby="example-modal-sizes-title-lg"
+        >
+            <Modal.Header closeButton>
+                <Modal.Title>
+                    {
+                        titleComponent()
+                    }
+                </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                {
+                    bodyComponent()
+                }
+            </Modal.Body >
+            <Modal.Footer>
+                {footerComponent()}
+            </Modal.Footer>
+        </Modal >
+    )
+}

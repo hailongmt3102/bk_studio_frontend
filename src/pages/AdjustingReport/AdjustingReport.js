@@ -14,6 +14,7 @@ import Content from "./components/Content";
 import MenuBar from "./components/Bar/MenuBar";
 import ShareLinkPopUp from "./components/PopUp/ShareLinkPopUp";
 import ShareWithPopUp from "./components/PopUp/ShareWithPopUp";
+import MappingPopUp from "./components/PopUp/MappingPopUp";
 import SqlPopUp from "./components/PopUp/SqlPopUp";
 import './AdjustingReport.css';
 import Button from '@mui/material/Button';
@@ -836,8 +837,20 @@ export default function AdjustingReport(props) {
         </div>
     }
 
+
+    const [showMappingPopUp, setShowMappingPopUp] = useState(false)
+
     const ViewPageUI = () => {
         return <div className="row">
+            <MappingPopUp
+                type={popUpType}
+                show={showMappingPopUp}
+                handleClose={() => {
+                    setShowMappingPopUp(false)
+                }}
+                onComplete={buildQueryComplete}
+                dataSource={dataSource}
+            />
             <div className="leftColumn p-3">
                 <div className="row m-0 p-0">
                     <div className="col-8 m-0 p-0">
@@ -865,7 +878,7 @@ export default function AdjustingReport(props) {
                     <div className="col-2 mt-5 m-0 p-0 mb-2 text-end pe-5">
                         {
                             isTemplate === true ? <div> <button className='btn-lg btn-success text-center border-0'
-                                onClick={() => { }}>
+                                onClick={() => { setShowMappingPopUp(true) }}>
                                 <div>Mapping data</div>
                             </button></div> : null
                         }
