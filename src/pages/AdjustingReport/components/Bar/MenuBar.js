@@ -52,7 +52,7 @@ export default function MenuBar(props) {
                             props.isEdit ?
                                 <ThreeDotButton className="col-1 p-4 btn" style={{ "minHeight": "80px", "text-align": "center" }} title={'File'} items={file_option} icons_list={file_option_icon_list} onClick={(val) => {
                                     if (val = "New") {
-                                        props.newFileSubmit()
+                                        props.newFileHandle()
                                     }
                                 }} />
                                 : <button className='btn'>File</button>
@@ -83,7 +83,7 @@ export default function MenuBar(props) {
                         }
                     </div>
                 </div>
-                <div className='col-1' >
+                {/* <div className='col-1' >
                     <div className='mt-3 ms-2'>
                         {
                             props.isEdit ?
@@ -92,7 +92,7 @@ export default function MenuBar(props) {
                                 : <button className='btn'>File</button>
                         }
                     </div>
-                </div>
+                </div> */}
                 <div className='col-1' >
                     <div className='mt-3 ms-2'>
                         {

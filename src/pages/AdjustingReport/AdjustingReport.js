@@ -19,6 +19,7 @@ import './AdjustingReport.css';
 import Button from '@mui/material/Button';
 
 import { shapeBackgroundColors, shapeBorderColors } from 'utils/color';
+import { WindowRounded } from "@mui/icons-material";
 
 // declare some chart type of this app 
 const shapeTypes = ["Table", "Pie Chart", "Doughnut Chart", "Line Chart", "Bar Chart"]
@@ -128,7 +129,7 @@ export default function AdjustingReport(props) {
 
     // ** ---------------------------------------------------------------------------------------------
     // ** declare some function for pop up layout
-    const newFileSubmit = () => {
+    const newFileHandle = () => {
         createNewReport(currentProject,
             {
                 Hastag: "",
@@ -136,9 +137,15 @@ export default function AdjustingReport(props) {
                 Name: "New Report"
             })
             .then(res => {
-                console.log(res.data)
-                nav(`/project/gallery/${res.data.Id}/edit`)
-                window.location.reload()
+                console.log("ketqua", res.data)
+                nav('/project/gallery/' + res.data.Id + '/edit', {
+                    state: {
+                        PId: currentProject,
+                        Type: "Report",
+                        RId: res.data.Id,
+                        Permission: 'Edit'
+                    }
+                })
             })
             .catch(err => {
                 alert(err.response.data)
@@ -148,9 +155,17 @@ export default function AdjustingReport(props) {
     const saveACopyHandle = () => {
         saveAsCopy(currentProject, RId)
             .then(res => {
-                console.log(res.data)
-                nav(`/project/gallery/${res.data.Id}/edit`)
+                // console.log(res.data)
+                nav('/project/gallery/' + res.data.Id + '/edit', {
+                    state: {
+                        PId: currentProject,
+                        Type: "Report",
+                        RId: res.data.Id,
+                        Permission: 'Edit'
+                    }
+                })
                 window.location.reload()
+
             })
             .catch(err => {
                 Store.addNotification(content("Fail", err.response.data, "danger"))
@@ -766,7 +781,7 @@ export default function AdjustingReport(props) {
                             </div>
                         </div>
                         <MenuBar
-                            newFileSubmit={newFileSubmit}
+                            newFileHandle={newFileHandle}
                             updateSubmit={updateSubmit}
                             showSqlPopUpFunction={showSqlPopUpFunction}
                             componentTypeHandle={componentTypeHandle}
