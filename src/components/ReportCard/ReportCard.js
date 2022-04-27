@@ -23,7 +23,7 @@ import ConfirmDialog from "components/ConfirmDialog";
 export default function ReportCard(props) {
     const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: '', subTitle: '' })
     const handleCloseYes = () => {
-        deleteSubmit()
+        deleteHandle()
         // console.log("close ne")
     }
     const handleCloseNo = () => {
@@ -64,10 +64,11 @@ export default function ReportCard(props) {
     }
 
 
-    const deleteSubmit = () => {
+    const deleteHandle = () => {
         deleteReport(currentProject, RId)
             .then(res => {
-                Store.addNotification(content("Success", "Deleted Report", "success"))
+                if (props.Type === "Gallery") Store.addNotification(content("Success", "Deleted Report", "success"))
+                else Store.addNotification(content("Success", "Deleted Template", "success"))
                 setTimeout(() => window.location.reload(), 1000);
             })
             .catch(err => {
@@ -225,7 +226,7 @@ export default function ReportCard(props) {
             />
             <ConfirmDialog
                 confirmDialog={confirmDialog}
-                title="Are you sure you want to delete this project?"
+                title={props.type === "Gallery" ? "Are you sure you want to delete this report ?" : "Are you sure you want to delete this template ?"}
                 handleCloseYes={() => handleCloseYes()}
                 handleCloseNo={() => handleCloseNo()}
             />
