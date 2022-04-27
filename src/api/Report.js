@@ -66,6 +66,9 @@ const getPermission = (PId, RId, Email) => {
 const saveAsCopy = (PId, RId) => {
     return axiosClient.get(`/project/${PId}/${RId}/copy`)
 }
+const saveAsTemplate = (PId, RId) => {
+    return axiosClient.get(`/project/${PId}/${RId}/saveAsTemplate`)
+}
 
 
 export {
@@ -85,5 +88,6 @@ export {
     updateSharePermission,
     deleteShape,
     getPermission,
-    saveAsCopy
+    saveAsCopy,
+    saveAsTemplate
 }

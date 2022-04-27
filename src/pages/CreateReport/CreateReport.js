@@ -21,7 +21,14 @@ export default function CreateReport() {
             )
                 .then(res => {
                     console.log(res.data.status)
-                    nav(`/project/gallery/${res.data.Id}/edit`)
+                    nav('/project/gallery/' + res.data.Id + '/edit', {
+                        state: {
+                            PId: currentProjectId,
+                            Type: "Report",
+                            RId: res.data.Id,
+                            Permission: 'Edit'
+                        }
+                    })
                 })
                 .catch(err => {
                     Store.addNotification(content("Fail", err.response.data, "danger"))

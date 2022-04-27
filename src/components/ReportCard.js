@@ -71,7 +71,7 @@ export default function ReportCard(props) {
                     PId: props.data.PId,
                     Type: props.data.Type,
                     RId: props.data.RId,
-                    isEdit : isEdit
+                    isEdit: isEdit
                 }
             })
         } catch (error) {
@@ -116,7 +116,7 @@ export default function ReportCard(props) {
         <div>
             <ConfirmDialog
                 confirmDialog={confirmDialog}
-                title="Are you sure you want to delete this project?"
+                title="Are you sure you want to delete report ?"
                 handleCloseYes={() => handleCloseYes()}
                 handleCloseNo={() => handleCloseNo()}
             />

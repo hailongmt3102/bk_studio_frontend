@@ -51,9 +51,10 @@ export default function ToolBar(props) {
                     <img src={redo} width="20px" height="20px" />
                     <p className="p-0 m-0">redo</p>
                 </button>
-                <button className="col m-0 p-0 btn btn-sm" style={{ "minWidth": "80px", "minHeight": "50px" }}>
+                <button className="col m-0 p-0 btn btn-sm" style={{ "minWidth": "80px", "minHeight": "50px" }}
+                    onClick={() => props.saveATemplateHandle()}>
                     <img src={comment} width="20px" height="20px" />
-                    <p className="p-0 m-0">comment</p>
+                    <p className="p-0 m-0">save as template</p>
                 </button>
                 <button className="col m-0 p-0 btn btn-sm" style={{ "minWidth": "80px", "minHeight": "50px" }}
                     onClick={() => {

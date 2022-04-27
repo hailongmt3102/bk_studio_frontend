@@ -1,5 +1,5 @@
 import { getColumnsOfTable, GetDataSourcesListInformationInProject, QueryData as QueryDataApi } from "api/DataSources";
-import { createNewComponent as createNewComponentApi, createNewReport, deleteShape as deleteShapeApi, getAllComponent, getReportInformation, updateAComponent, updateReportInformation, saveAsCopy } from 'api/Report';
+import { createNewComponent as createNewComponentApi, createNewReport, deleteShape as deleteShapeApi, getAllComponent, getReportInformation, updateAComponent, updateReportInformation, saveAsCopy, saveAsTemplate } from 'api/Report';
 import TabComponent from "pages/AdjustingReport/components/tabComponent/TabComponent";
 import { useEffect, useRef, useState } from "react";
 import { Form } from 'react-bootstrap';
@@ -166,6 +166,18 @@ export default function AdjustingReport(props) {
                 })
                 window.location.reload()
 
+            })
+            .catch(err => {
+                Store.addNotification(content("Fail", err.response.data, "danger"))
+            })
+
+    }
+
+    const saveATemplateHandle = () => {
+        saveAsTemplate(currentProject, RId)
+            .then(res => {
+                // console.log(res.data)
+                nav('/project/templates')
             })
             .catch(err => {
                 Store.addNotification(content("Fail", err.response.data, "danger"))
@@ -798,6 +810,7 @@ export default function AdjustingReport(props) {
                             setAddShapeType={setAddShapeType}
                             isEdit={isEdit}
                             saveACopyHandle={() => saveACopyHandle()}
+                            saveATemplateHandle={() => saveATemplateHandle()}
                         />
 
                         <div className="content"
