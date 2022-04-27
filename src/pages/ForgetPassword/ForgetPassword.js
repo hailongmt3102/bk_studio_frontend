@@ -13,7 +13,7 @@ import { Store } from 'react-notifications-component'
 import { content } from "../../utils/notification"
 
 export default function ForgetPassword() {
-   
+
     const [Email, setEmail] = useState("")
     const navigate = useNavigate()
 
@@ -21,30 +21,30 @@ export default function ForgetPassword() {
         if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail)) {
             return (true)
         }
-        
+
         return (false)
     }
 
     const onSubmitHandler = () => {
-        if (Email===""){
+        if (Email === "") {
             Store.addNotification(content("Warning", "Please fill in your email", "warning"))
         }
-        else if(!ValidateEmail(Email)){
+        else if (!ValidateEmail(Email)) {
             Store.addNotification(content("Warning", "Invalid Email", "warning"))
             return
         }
-        else{
+        else {
             ForgotPasswordAPI(Email)
-            .then((res) => {
-                Store.addNotification(content("Message", "Please check email to get forgot password code for your account", "info"))
-                navigate("/account/updatePassword")
-            })
-            .catch((e) => {
-                Store.addNotification(content("Warning", e.reponse.data, "danger"))
-                return 
-            })
+                .then((res) => {
+                    Store.addNotification(content("Message", "Please check email to get forgot password code for your account", "info"))
+                    navigate("/account/updatePassword")
+                })
+                .catch((e) => {
+                    Store.addNotification(content("Warning", e.reponse.data, "danger"))
+                    return
+                })
         }
-        
+
 
 
     }
@@ -61,7 +61,7 @@ export default function ForgetPassword() {
                                     </div>
                                     <div class="col-md-10 col-lg-6 col-xl-5 order-1 order-lg-2 mt-5 ">
                                         {/* <div class="text-center"> <img src={logo}></img></div> */}
-                                        <p class="h1 fw-bold mb-2 mx-1 mx-md-4 mt-5" style={{ color: deep_blue_primary}}>Forget Password</p>
+                                        <p class="h1 fw-bold mb-2 mx-1 mx-md-4 mt-5" style={{ color: deep_blue_primary }}>Forget Password</p>
 
 
                                         <div class="form-check mb-5">
@@ -69,12 +69,12 @@ export default function ForgetPassword() {
                                                 If you already have an account register
                                             </div>
                                             <label class="form-check-label" for="form2Example3">
-                                                You can <Link to="/account/login" class="border-0" style={{color: deep_blue_primary,"font-weight": "bold"}}>  Login here !
+                                                You can <Link to="/account/login" class="border-0" style={{ color: deep_blue_primary, "fontWeight": "bold" }}>  Login here !
                                                 </Link>
                                             </label>
 
                                         </div>
-                                        <form class="mx-1 mx-md-4 mt-2 "  style={{ fontSize: 14}}>
+                                        <form class="mx-1 mx-md-4 mt-2 " style={{ fontSize: 14 }}>
 
                                             <Form.Group as={Col} md="12" controlId="validationCustomUsername">
                                                 <Form.Label>Email</Form.Label>
@@ -95,10 +95,10 @@ export default function ForgetPassword() {
                                                     </Form.Control.Feedback>
                                                 </InputGroup>
                                             </Form.Group>
-                                            
 
-                                          
-                                            <div class="d-grid gap-2  mt-5 "  style={{ fontSize: 14}}>
+
+
+                                            <div class="d-grid gap-2  mt-5 " style={{ fontSize: 14 }}>
                                                 <a class="btn btn-primary p-2" type="button" style={{ backgroundColor: "#034078", borderRadius: "25px " }} onClick={onSubmitHandler}>Send Email</a>
 
                                             </div>
@@ -110,7 +110,7 @@ export default function ForgetPassword() {
 
                                         </form>
 
-                                       
+
 
 
                                     </div>
@@ -123,7 +123,7 @@ export default function ForgetPassword() {
                     </div>
                 </div>
             </div>
-            <div style={{height: "100px"}}> </div>
+            <div style={{ height: "100px" }}> </div>
         </section>
     )
 }

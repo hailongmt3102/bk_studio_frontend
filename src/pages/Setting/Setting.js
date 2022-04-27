@@ -12,11 +12,11 @@ export default function Setting(props) {
     const [language, setlanguage] = useState(languageSaved)
     return (
         <div>
-            <h2 class="mt-3 mb-3 ms-4" style={{ color: deep_blue_primary, "font-weight": "bold", fontSize: "40px" }}>{localization.Setting} </h2>
+            <h2 class="mt-3 mb-3 ms-4" style={{ color: deep_blue_primary, "fontWeight": "bold", fontSize: "40px" }}>{localization.Setting} </h2>
             <div style={{ backgroundColor: "white", paddingBottom: "25px", height: "700px" }}>
                 <Form.Group as={Row} className="mb-3 mt-3 ms-4 align-items-center" controlId="formPlaintextPassword">
                     <Form.Label column sm="2">
-                        <h5 className='mt-4' style={{ "font-weight": "bold", fontSize: 16 }}>{localization.DarkMode}  </h5>
+                        <h5 className='mt-4' style={{ "fontWeight": "bold", fontSize: 16 }}>{localization.DarkMode}  </h5>
                     </Form.Label>
                     <Col className='mt-4' sm="5">
                         <Form.Check
@@ -28,7 +28,7 @@ export default function Setting(props) {
                 </Form.Group>
                 <Form.Group as={Row} className="mb-7 ms-4 ms-2 align-items-center" controlId="formPlaintextPassword">
                     <Form.Label column sm="2" >
-                        <h5 style={{ "font-weight": "bold", fontSize: 16 }}>{localization.Language} </h5>
+                        <h5 style={{ "fontWeight": "bold", fontSize: 16 }}>{localization.Language} </h5>
                     </Form.Label>
                     <Col sm="2" >
                         <Drop title={language} items={["English", "Vietnamese"]} onClick={(val, index) => {

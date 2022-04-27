@@ -71,7 +71,7 @@ export default function UpdatePassword() {
                                                 If you already have an account register
                                             </div>
                                             <label class="form-check-label" >
-                                                You can <Link to="/account/login" class="border-0" style={{ color: deep_blue_primary, "font-weight": "bold" }}>  Login here !
+                                                You can <Link to="/account/login" class="border-0" style={{ color: deep_blue_primary, "fontWeight": "bold" }}>  Login here !
                                                 </Link>
                                             </label>
 

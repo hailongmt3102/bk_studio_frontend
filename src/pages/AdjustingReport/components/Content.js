@@ -36,7 +36,7 @@ const Content = React.forwardRef((props, ref) => {
                             updateDataTable={(data) => {
                                 props.updateShapeComponent(index, data)
                             }}
-                            classstyle={props.followingIndexComponent == index ? "border border-5 customBorder" : "border border-5"}
+                            classstyle={props.followingIndexComponent === index ? "border border-5 customBorder" : "border border-5"}
                         />
                     </div>
                 )
@@ -57,7 +57,7 @@ const Content = React.forwardRef((props, ref) => {
                         onResizeStop={(e, direction, ref, delta, position) => {
                             props.updateShapeComponent(index, { ...shape, Width: ref.style.width, Height: ref.style.height })
                         }}
-                        className={props.followingIndexComponent == index ? "border border-5 customBorder" : "border border-5"}
+                        className={props.followingIndexComponent === index ? "border border-5 customBorder" : "border border-5"}
                     >
                         {shape.Title}
                         <Doughnut data={shape.doughnutData} />
@@ -79,7 +79,7 @@ const Content = React.forwardRef((props, ref) => {
                         onResizeStop={(e, direction, ref, delta, position) => {
                             props.updateShapeComponent(index, { ...shape, Width: ref.style.width, Height: ref.style.height })
                         }}
-                        className={props.followingIndexComponent == index ? "border border-5 customBorder" : "border border-5"}
+                        className={props.followingIndexComponent === index ? "border border-5 customBorder" : "border border-5"}
                     >
                         {shape.Title}
                         <Line data={shape.lineData} />
@@ -103,7 +103,7 @@ const Content = React.forwardRef((props, ref) => {
                         onResizeStop={(e, direction, ref, delta, position) => {
                             props.updateShapeComponent(index, { ...shape, Width: ref.style.width, Height: ref.style.height })
                         }}
-                        className={props.followingIndexComponent == index ? "border border-5 customBorder" : "border border-5"}
+                        className={props.followingIndexComponent === index ? "border border-5 customBorder" : "border border-5"}
                     >
                         {shape.Title}
                         <Bar data={shape.barData} />
@@ -127,13 +127,13 @@ const Content = React.forwardRef((props, ref) => {
                         onResizeStop={(e, direction, ref, delta, position) => {
                             props.updateShapeComponent(index, { ...shape, Width: ref.style.width, Height: ref.style.height })
                         }}
-                        className={props.followingIndexComponent == index ? "border border-5 customBorder" : "border border-5"}
+                        className={props.followingIndexComponent === index ? "border border-5 customBorder" : "border border-5"}
                     >
                         {shape.Title}
                         <Pie data={shape.pieData} />
                     </Rnd>)
             case "Text":
-                <Text data={shape}/>
+                <Text data={shape} />
                 break
             default:
                 break

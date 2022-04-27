@@ -35,7 +35,7 @@ export default function SelectData(props) {
     const inputFile = useRef(null)
     const handleOnChange = (e) => {
         let file = e.target.files[0];
-        if (!file.name.includes('.csv')){
+        if (!file.name.includes('.csv')) {
             alert("invalid format, expected : .csv")
             return
         }
@@ -55,7 +55,7 @@ export default function SelectData(props) {
         <div>
             <div>
                 <div>
-                    <h2 class="ms-4 mt-2" style={{ color: deep_blue_primary, "font-weight": "bold", fontSize: "40px" }}>
+                    <h2 class="ms-4 mt-2" style={{ color: deep_blue_primary, "fontWeight": "bold", fontSize: "40px" }}>
                         Import data:
                     </h2>
                 </div>

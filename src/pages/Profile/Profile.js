@@ -65,30 +65,30 @@ export default function Profile() {
         //         "Address": information.Address,
         //         "Birthday": "2000-12-04"
         //     })
-        updateInformation(
-            {
-                "UserName": information.UserName,
-                "RankAccount": information.RankAccount,
-                "Avatar": information.Avatar,
-                "OverView": information.OverView,
-                "Company": information.Company,
-                "Gender": information.Gender,
-                "Address": information.Address,
-                "Birthday": moment(information.Birthday).format("YYYY-MM-DD")
-            }
-        )
-            .then((res) => {
-                console.log(res.data)
+        // updateInformation(
+        //     {
+        //         "UserName": information.UserName,
+        //         "RankAccount": information.RankAccount,
+        //         "Avatar": information.Avatar,
+        //         "OverView": information.OverView,
+        //         "Company": information.Company,
+        //         "Gender": information.Gender,
+        //         "Address": information.Address,
+        //         "Birthday": moment(information.Birthday).format("YYYY-MM-DD")
+        //     }
+        // )
+        //     .then((res) => {
+        //         console.log(res.data)
 
-                localStorage.setItem("username", information.UserName)
-                Store.addNotification(content("Success", "Updated information", "success"))
-                setTimeout(() => window.location.reload(), 1000);
-                return
-            })
-            .catch((e) => {
-                Store.addNotification(content("Fail", e.response.data, "danger"))
-                return
-            })
+        //         localStorage.setItem("username", information.UserName)
+        //         Store.addNotification(content("Success", "Updated information", "success"))
+        //         setTimeout(() => window.location.reload(), 1000);
+        //         return
+        //     })
+        //     .catch((e) => {
+        //         Store.addNotification(content("Fail", e.response.data, "danger"))
+        //         return
+        //     })
 
     }
 
@@ -111,7 +111,7 @@ export default function Profile() {
     //}
     return (
         <div>
-            <h3 class="mt-3 mb-3 ms-5" style={{ color: deep_blue_primary, "font-weight": "bold", fontSize: "40px" }}> Profile:</h3>
+            <h3 class="mt-3 mb-3 ms-5" style={{ color: deep_blue_primary, "fontWeight": "bold", fontSize: "40px" }}> Profile:</h3>
             <div class="row rounded bg-white p-4 m-4" style={{ height: 750 }}>
                 <div class="col-2 me-5 ms-4 justify-content-center ">
 
@@ -157,7 +157,7 @@ export default function Profile() {
                                     ...information, UserName: e.target.value
                                 })
                             }}>
-                                <Form.Control type="text" value={information.UserName} />
+                                <Form.Control type="text" value={information.UserName} onChange={() => { }} />
                             </Col>
                         </Form.Group>
                     </div>
@@ -187,6 +187,7 @@ export default function Profile() {
                             inline
                             label="Male"
                             checked={information.Gender === "Male" ? true : false}
+                            onChange={() => { }}
                             name="group1"
                             type="radio"
                             id="MaleGender"
@@ -204,6 +205,7 @@ export default function Profile() {
                             name="group1"
                             type="radio"
                             id="FemaleGender"
+                            onChange={() => { }}
                             checked={information.Gender === "Female" ? true : false}
                         />
                     </div>

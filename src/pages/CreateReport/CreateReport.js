@@ -35,13 +35,13 @@ export default function CreateReport() {
     return (
         <div>
             <div className='m-2 mt-4 mb-4'>
-                <h2 class="ms-4 mt-1" style={{ color: deep_blue_primary, "font-weight": "bold", fontSize: "40px" }}>
+                <h2 class="ms-4 mt-1" style={{ color: deep_blue_primary, "fontWeight": "bold", fontSize: "40px" }}>
                     Create a report
                 </h2>
             </div>
             <div className='bg-white p-3'>
                 <div>
-                    <h3 class="ms-4 mt-1" style={{ color: blue_cloud, "font-weight": "bold", fontSize: "40px" }}>
+                    <h3 class="ms-4 mt-1" style={{ color: blue_cloud, "fontWeight": "bold", fontSize: "40px" }}>
                         From a blank
                     </h3>
                     <button className=' ms-4 btn btn-lg btn-default m-2 p-2 shadow p-3 mb-5 bg-body rounded' onClick={() => {
@@ -51,7 +51,7 @@ export default function CreateReport() {
                     </button>
                 </div>
                 <div>
-                    <h3 class="ms-4 mt-1" style={{ color: blue_cloud, "font-weight": "bold", fontSize: "40px" }}>
+                    <h3 class="ms-4 mt-1" style={{ color: blue_cloud, "fontWeight": "bold", fontSize: "40px" }}>
                         From a template
                     </h3>
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import Table from '../Components/Table'
 
 export default function EditData(props) {
@@ -19,10 +19,12 @@ export default function EditData(props) {
 
 
     const editColumns = (index) => {
-        setColumns({...columns, active: columns.active.map((element, i) => {
-            if (i === index) return !element
-            else return element
-        })})
+        setColumns({
+            ...columns, active: columns.active.map((element, i) => {
+                if (i === index) return !element
+                else return element
+            })
+        })
     }
 
     return (
@@ -33,7 +35,7 @@ export default function EditData(props) {
                         Review data source
                     </h2>
                     <div className='col'>
-                        <button className='btn btn-success' onClick={() => {props.submit(props.fileInformation.name, columns)}}>
+                        <button className='btn btn-success' onClick={() => { props.submit(props.fileInformation.name, columns) }}>
                             Finish
                         </button>
                     </div>
@@ -52,7 +54,7 @@ export default function EditData(props) {
                                     return (
                                         <li key={index} class="list-group-item border-0 row">
                                             <div class="form-check form-switch">
-                                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked={columns.active[index]} onClick={() => {editColumns(index)}}/>
+                                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" onChange={() => { }} checked={columns.active[index]} onClick={() => { editColumns(index) }} />
                                                 <label class="form-check-label" for="flexSwitchCheckChecked">{field}</label>
                                             </div>
                                         </li>

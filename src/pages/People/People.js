@@ -31,7 +31,7 @@ export default function People() {
     }, [])
     return (
         <div>
-            <h2 class="ms-4" style={{ color: deep_blue_primary, "font-weight": "bold", fontSize: "40px" }}> People:</h2>
+            <h2 class="ms-4" style={{ color: deep_blue_primary, "fontWeight": "bold", fontSize: "40px" }}> People:</h2>
             <div className='rounded-5 bg-white'>
                 <div className='row m-0 p-0 bg-light'>
                     <div className='col-4 m-0 p-0 '>

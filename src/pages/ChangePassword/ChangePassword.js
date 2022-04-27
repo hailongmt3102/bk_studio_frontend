@@ -57,7 +57,7 @@ export default function ChangePassword() {
                                     </div>
                                     <div class="col-md-10 col-lg-6 col-xl-5 order-1 order-lg-2 mt-5 ">
 
-                                        <p class="h1 fw-bold mb-2 mx-1 mx-md-4 mt-5" style={{ color: deep_blue_primary}}>Change Password</p>
+                                        <p class="h1 fw-bold mb-2 mx-1 mx-md-4 mt-5" style={{ color: deep_blue_primary }}>Change Password</p>
 
 
                                         <div class="form-check mb-5">
@@ -65,7 +65,7 @@ export default function ChangePassword() {
                                                 If you already have an account register
                                             </div>
                                             <label class="form-check-label" >
-                                                You can <Link to="/account/login" class="border-0" style={{ color: deep_blue_primary, "font-weight": "bold" }}>  Login here !
+                                                You can <Link to="/account/login" class="border-0" style={{ color: deep_blue_primary, "fontWeight": "bold" }}>  Login here !
                                                 </Link>
                                             </label>
 

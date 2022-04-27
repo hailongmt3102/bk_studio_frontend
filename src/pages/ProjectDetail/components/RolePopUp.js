@@ -75,6 +75,7 @@ export default function RolePopUp(props) {
                                 <ListItemButton role={undefined} onClick={checked(key)} dense>
                                     <ListItemIcon>
                                         <Checkbox
+                                            onChange={() => { }}
                                             edge="start"
                                             checked={showList[key]}
                                             tabIndex={-1}
@@ -100,7 +101,7 @@ export default function RolePopUp(props) {
             size="lg"
         >
             <Modal.Header closeButton>
-                <Modal.Title><div className='d-flex align-items-center' style={{ color: deep_blue_primary, "font-weight": "bold", fontSize: "30px" }}>Edit Role</div></Modal.Title>
+                <Modal.Title><div className='d-flex align-items-center' style={{ color: deep_blue_primary, "fontWeight": "bold", fontSize: "30px" }}>Edit Role</div></Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 {

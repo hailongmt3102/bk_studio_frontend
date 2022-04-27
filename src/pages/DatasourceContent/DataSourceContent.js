@@ -53,13 +53,13 @@ export default function DataSourceContent(props) {
                             field: 'id',
                             headerName: key,
                             editable: isEdit,
-                            width : width
+                            width: width
                         }
                     return {
                         field: key,
                         headerName: key,
                         editable: isEdit,
-                        width : width
+                        width: width
                     }
                 })
 
@@ -140,7 +140,7 @@ export default function DataSourceContent(props) {
         <div>
             <div>
                 <div className='row'>
-                    <h2 class="ms-4 mt-2" style={{ color: deep_blue_primary, "font-weight": "bold", fontSize: "40px" }}>
+                    <h2 class="ms-4 mt-2" style={{ color: deep_blue_primary, "fontWeight": "bold", fontSize: "40px" }}>
                         Edit data source:
                     </h2>
 

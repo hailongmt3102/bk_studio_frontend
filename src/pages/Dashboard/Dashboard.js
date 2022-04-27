@@ -42,7 +42,7 @@ export default function Dashboard() {
     return (
         <div className='m-2'>
             <div className='row m-4 m-0 p-0 bg-white mb-4'>
-                <h1 className='ms-4 mt-2' style={{ color: deep_blue_primary, "font-weight": "bold", fontSize: "40px" }}>{localization.Project}</h1>
+                <h1 className='ms-4 mt-2' style={{ color: deep_blue_primary, "fontWeight": "bold", fontSize: "40px" }}>{localization.Project}</h1>
                 <div className='row m-0 p-0'>
                     <ScrollMenu>
                         {projectList.map((ele, index) => (
@@ -61,7 +61,7 @@ export default function Dashboard() {
                 <div className='row bg-light' >
                     < div className=' col-7  mt-4  m-0 p-0 bg-light' >
                         <div className=' bg-white me-4  ' style={{ "minHeight": "1000px" }} >
-                            <h1 className='m-0 pt-4  ms-4 p-0' style={{ color: deep_blue_primary, "font-weight": "bold", fontSize: "40px" }}>{localization.Templates}</h1>
+                            <h1 className='m-0 pt-4  ms-4 p-0' style={{ color: deep_blue_primary, "fontWeight": "bold", fontSize: "40px" }}>{localization.Templates}</h1>
                             <p className='m-0 ms-4 p-0'>Variety template for your choice</p>
                             <div className='row pe-2'>
                                 <div class="container m-0 p-0">
@@ -82,7 +82,7 @@ export default function Dashboard() {
                     </div >
                     <div className='col-5  m-0 mt-4 bg-white p-0 ' style={{ "minHeight": "1000px" }}>
 
-                        <h1 className='m-0 mt-4 ms-4 p-0' style={{ color: deep_blue_primary, "font-weight": "bold", fontSize: "40px" }}>{localization.People}</h1>
+                        <h1 className='m-0 mt-4 ms-4 p-0' style={{ color: deep_blue_primary, "fontWeight": "bold", fontSize: "40px" }}>{localization.People}</h1>
                         <div className='row ms-2'>
                             <div class="container m-0 p-0">
                                 <div class="row ms-5 mt-3   ">

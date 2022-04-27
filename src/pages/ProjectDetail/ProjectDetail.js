@@ -96,7 +96,7 @@ export default function ProjectDetail() {
             )
     }, [project_id])
 
-    
+
 
     const [datasourceslist, setDatasourceslist] = useState([])
 
@@ -120,13 +120,13 @@ export default function ProjectDetail() {
             {
                 datasourceslist.length === 0 ?
                     <div className='row m-0 p-0 mt-3' >
-                        <div className=' col-10' style={{ color: deep_blue_primary, "font-weight": "bold", fontSize: "40px" }}>Data Sources:</div>
+                        <div className=' col-10' style={{ color: deep_blue_primary, "fontWeight": "bold", fontSize: "40px" }}>Data Sources:</div>
                         <div className='bg-white' style={{ height: "300px" }}>
                         </div>
                     </div>
                     :
                     <div className='row m-0 p-0 mt-3' >
-                        <div className=' col-10' style={{ color: deep_blue_primary, "font-weight": "bold", fontSize: "40px" }}>Data Sources:</div>
+                        <div className=' col-10' style={{ color: deep_blue_primary, "fontWeight": "bold", fontSize: "40px" }}>Data Sources:</div>
                         <div className='bg-white' style={{ minheight: "300px" }}>
                             <ScrollMenu>
                                 {datasourceslist.map((ele, index) => (
@@ -305,7 +305,7 @@ export default function ProjectDetail() {
     const aboutComponent = () => {
         return <div>
             <div className='row m-0 p-0 mt-3' >
-                <div className=' col-10' style={{ color: deep_blue_primary, "font-weight": "bold", fontSize: "40px" }}>About:</div>
+                <div className=' col-10' style={{ color: deep_blue_primary, "fontWeight": "bold", fontSize: "40px" }}>About:</div>
                 <div className='col-2 m-0 p-0 m-auto text-right align-self-end'>
                     <div className='ms-3'>
                         <button class="btn btn-primary btn-lg ms-5 p-3 "
@@ -441,7 +441,7 @@ export default function ProjectDetail() {
             <div className='row mt-2 m-0 p-0'>
                 {dataSourcesComponent()}
                 {aboutComponent()}
-                <h2 class="col-10  m-0 p-0" style={{ color: deep_blue_primary, "font-weight": "bold", fontSize: "40px" }}>
+                <h2 class="col-10  m-0 p-0" style={{ color: deep_blue_primary, "fontWeight": "bold", fontSize: "40px" }}>
                     <div className='ms-4'>My team:</div>
                 </h2>
                 <div className='col-2 ml-auto m-0 p-0 text-right align-self-end'>

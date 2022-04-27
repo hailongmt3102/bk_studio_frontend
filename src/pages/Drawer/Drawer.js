@@ -1,4 +1,4 @@
-import React, {useEffect, useState, } from "react";
+import React, { useEffect, useState, } from "react";
 import { useLocation, useNavigate } from 'react-router-dom'
 import Project from "./Components/Project";
 import Workspace from "./Components/Workspace";
@@ -30,7 +30,7 @@ export default function Drawer(props) {
 				setProjectList(res.data)
 				if (cProject == null && res.data.length > 0) {
 					setProjectToWork(res.data[0].Id)
-				}else if (res.data.length == 0) {
+				} else if (res.data.length == 0) {
 					setProjectToWork(-1)
 				}
 			})
@@ -110,8 +110,8 @@ export default function Drawer(props) {
 				<img src={MenuIcon} width="40px" height="40px" />
 			</div>
 			<div className={`drawer ${toggle ? "enter" : "exit"}`}>
-				<ul class="list-group">
-					<a class="list-group-item border-0 p-0" onClick={() => {
+				<ul className="list-group">
+					<a className="list-group-item border-0 p-0" onClick={() => {
 						navigate("/")
 						// setSelectedIndex(0)
 					}}>
@@ -129,7 +129,7 @@ export default function Drawer(props) {
 							setCurrentProject={setProjectToWork}
 						/>
 					) : null}
-					<a class="list-group-item border-0 p-0" onClick={() => {
+					<a className="list-group-item border-0 p-0" onClick={() => {
 						navigate("project/create")
 						// setSelectedIndex(4)
 					}}>
@@ -141,7 +141,7 @@ export default function Drawer(props) {
 					{props.state === "project" ? (
 						<Project selectedIndex={selectedIndex} swapDrawerVisible={swapDrawerVisible} />
 					) : null}
-					<a class="list-group-item border-0 p-0" onClick={() => {
+					<a className="list-group-item border-0 p-0" onClick={() => {
 						navigate("personal/profile")
 						// setSelectedIndex(8)
 					}}>
