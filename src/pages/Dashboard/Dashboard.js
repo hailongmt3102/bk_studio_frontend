@@ -85,7 +85,7 @@ export default function Dashboard() {
                         <h1 className='m-0 mt-4 ms-4 p-0' style={{ color: deep_blue_primary, "fontWeight": "bold", fontSize: "40px" }}>{localization.People}</h1>
                         <div className='row ms-2'>
                             <div class="container m-0 p-0">
-                                <div class="row ms-5 mt-3   ">
+                                <div class="row  mt-3   ">
                                     {
                                         peopleList.slice(0).reverse().map((people, index) => {
                                             return <div id={index} className="col-sm mt-4 ms-4" style={{ "minWidth": "300px", "maxWidth": "300px" }}>
