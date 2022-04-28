@@ -35,7 +35,7 @@ export default function People() {
             <div className='rounded-5 bg-white'>
                 <div className='row m-0 p-0 bg-light'>
                     <div className='col-4 m-0 p-0 '>
-                        <div className='m-3 p-4 bg-white' >
+                        <div className='m-3 p-4 bg-white' style={{ height: "100%" }} >
                             <h1 className='row  m-0 p-0 customFontBold SecondFontColor ' >Manager</h1>
                             {
                                 people.map((ele) => {
