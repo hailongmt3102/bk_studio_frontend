@@ -17,6 +17,10 @@ const GetDataSourcesListInformationInWorkSpace = () => {
     return axiosClient.get("/data/workspace")
 }
 
+const GetSampleDataSource = () => {
+    return axiosClient.get("/data/sample")
+}
+
 const GetDataSourcesListInformationInProject = (pid) => {
     return axiosClient.post("/data/project", pid)
 }
@@ -92,5 +96,6 @@ export {
     getDataSourcesInformationByDId,
     showDataSourceContent,
     checkPermissionWithDatasource,
-    updateShareDataSourcePermission
+    updateShareDataSourcePermission,
+    GetSampleDataSource
 }

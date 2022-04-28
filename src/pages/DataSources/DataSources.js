@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react'
 
 import { blue_cloud } from "../../utils/color"
 import { deep_blue_primary } from "../../utils/color"
-import { GetDataSourcesListInformationInWorkSpace } from '../../api/DataSources'
+import { GetDataSourcesListInformationInWorkSpace, GetSampleDataSource } from '../../api/DataSources'
 import DataSourceBox from './component/DataSourceBox'
 import add_round from "resources/icons/add_round.svg"
 import edit from "resources/icons/edit.svg"
@@ -14,13 +14,24 @@ import ShareDataSourcesPopUp from "../DataSources/component/ShareDataSourcesPopU
 import { ScrollMenu } from 'react-horizontal-scrolling-menu';
 export default function DataSources() {
     const [datasourceslist, setDatasourceslist] = useState([])
-    const location = useLocation().pathname
-    let RId = location.split('/')[3]
+    const [sampleList, setSampleList] = useState([])
+    // const location = useLocation().pathname
+    // let RId = location.split('/')[3]
     const [showSharePopUp, setshowSharePopUp] = useState(false)
-    const currentProject = localStorage.getItem("currentProject")
+    // const currentProject = localStorage.getItem("currentProject")
+
     useEffect(() => {
         // console.log("Lấy data nè")
         // get list people
+
+        GetSampleDataSource()
+            .then(res => {
+                setSampleList(res.data)
+                //console.log(res.data)
+            })
+            .catch(err => {
+                console.log(err)
+            })
         GetDataSourcesListInformationInWorkSpace()
             .then(res => {
                 setDatasourceslist(res.data)
@@ -33,6 +44,8 @@ export default function DataSources() {
     }, [])
     const option_list = ["Share", "Rename", "Download", "Delete"]
     const icon_list = [share_blue, edit, download_blue, delete_icon]
+    const sample_option_list = ["Share", "Download"]
+    const sample_icon_list = [share_blue, download_blue]
 
     const showSharePopUpHandle = (DId) => {
         setshowSharePopUp(true)
@@ -79,11 +92,11 @@ export default function DataSources() {
                     <h1 className='ps-5 ms-3 customFontBold SecondFontColor' >Samples</h1>
                     <div className='row mt-4 m-0 p-0'>
                         <ScrollMenu>
-                            {datasourceslist.map((ele, index) => (
+                            {sampleList.map((ele, index) => (
                                 <div className='ms-4 mb-5'>
                                     <DataSourceBox
-                                        option_list={option_list}
-                                        icon_list={icon_list}
+                                        option_list={sample_option_list}
+                                        icon_list={sample_icon_list}
                                         setDatasourceslist={setDatasourceslist}
                                         datasourceslist={datasourceslist}
                                         showSharePopUpHandle={showSharePopUpHandle}
