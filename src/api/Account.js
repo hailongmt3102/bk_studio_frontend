@@ -29,7 +29,9 @@ const updateInformation = (data) => {
 }
 
 const updateAvatar = (data) => {
-    return axiosClient.post("/upload/avt", data)
+    let form = new FormData()
+    form.append("file", data);
+    return axiosClient.post("/upload/avt", form)
 }
 
 export {

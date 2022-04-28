@@ -65,18 +65,18 @@ export default function Profile() {
         //         "Address": information.Address,
         //         "Birthday": "2000-12-04"
         //     })
-        // updateInformation(
-        //     {
-        //         "UserName": information.UserName,
-        //         "RankAccount": information.RankAccount,
-        //         "Avatar": information.Avatar,
-        //         "OverView": information.OverView,
-        //         "Company": information.Company,
-        //         "Gender": information.Gender,
-        //         "Address": information.Address,
-        //         "Birthday": moment(information.Birthday).format("YYYY-MM-DD")
-        //     }
-        // )
+        updateInformation(
+            {
+                "UserName": information.UserName,
+                "RankAccount": information.RankAccount,
+                "Avatar": information.Avatar,
+                "OverView": information.OverView,
+                "Company": information.Company,
+                "Gender": information.Gender,
+                "Address": information.Address,
+                "Birthday": moment(information.Birthday).format("YYYY-MM-DD")
+            }
+        )
         //     .then((res) => {
         //         console.log(res.data)
 
@@ -99,14 +99,9 @@ export default function Profile() {
         let files = e.target.files;
         let reader = new FileReader();
         reader.readAsDataURL(files[0]);
-        reader.onload = (e) => {
-            setinformation({
-                ...information, Avatar: e.target.result
-            })
-        }
         updateAvatar(e.target.files[0])
             .then((res) => {
-
+                setinformation({...information, Avatar: res.data.fileUrl})
             })
             .catch((e) => {
                 Store.addNotification(content("Warning", e.response.data, "danger"))
