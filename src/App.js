@@ -62,13 +62,10 @@ function App() {
                         <Route path="/datasources"
                             element={<DataSources />} />
                         <Route
-                            path="/datasources/:id/view"
-                            element={<DataSourceContent isEdit={false} />}
+                            path="/datasources/:id"
+                            element={<DataSourceContent />}
                         />
-                        <Route
-                            path="/datasources/:id/edit"
-                            element={<DataSourceContent isEdit={true} />}
-                        />
+
                         <Route path="/people" element={<People />} />
                         <Route path="/account/login" element={<Login />} />
 

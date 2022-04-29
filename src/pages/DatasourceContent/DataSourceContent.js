@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import Table from '../ImportData/Components/Table'
 import { getDataSourcesInformationByDId, showDataSourceContent } from "api/DataSources"
 import { deep_blue_primary } from "../../utils/color"
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid, GridCellEditStopReasons } from '@mui/x-data-grid';
 import {
     randomCreatedDate,
     randomTraderName,
@@ -13,19 +13,29 @@ import {
 export default function DataSourceContent(props) {
     var location = useLocation()
     const [datasource, setDatasource] = useState([])
+    var DId = location.state.Did
+    const role = location.state.isEdit ?? false
 
-    const array = location.pathname.split("/");
-    var DId = array[array.length - 2]
-    const role = array[array.length - 1]
-    const [dataFile, setDataFile] = useState([])
+    // const [dataFile, setDataFile] = useState([])
 
+    const [updateContent, setUpdateContent] = useState({
+        "1": {
+            "username": "rog1",
+            "first_name": "david"
+        },
+        "2": {
+            "username": "mike1",
+            "first_name": "roge",
+            "last_name": "paul"
+        }
+    })
 
     const [rows, setRows] = useState([])
     const [columns, setColumns] = useState([])
 
     useEffect(() => {
         console.log(rows)
-        console.log(columns)
+        console.log("colum", columns)
     }, [rows, columns])
 
     useEffect(() => {
@@ -43,7 +53,7 @@ export default function DataSourceContent(props) {
                 if (res.data.length == 0) return
                 const keys = Object.keys(res.data[0])
                 // parse keys to columns data
-                const isEdit = props.isEdit
+
                 const width = 150
 
                 // TODO : parse type of content and set to Grid UI
@@ -52,13 +62,13 @@ export default function DataSourceContent(props) {
                         return {
                             field: 'id',
                             headerName: key,
-                            editable: isEdit,
+                            editable: role,
                             width: width
                         }
                     return {
                         field: key,
                         headerName: key,
-                        editable: isEdit,
+                        editable: role,
                         width: width
                     }
                 })
@@ -77,98 +87,63 @@ export default function DataSourceContent(props) {
             })
 
     }, [])
+    const handleRowEditCommit = React.useCallback(
+        (params) => {
+            const id = params.id;
+            const key = params.field;
+            const value = params.value;
+            console.log("value", value)
+        },
+        []
+    );
 
+    const EditUI = () => {
+        return <div>
+            <div className='row'>
+                <h2 class="ms-4 mt-2" style={{ color: deep_blue_primary, "fontWeight": "bold", fontSize: "40px" }}>
+                    Edit data source:
+                </h2>
 
-    // const columns = [
-    //     { field: 'name', headerName: 'Name', width: 180, editable: true },
-    //     { field: 'age', headerName: 'Age', type: 'number', editable: true },
-    //     {
-    //         field: 'dateCreated',
-    //         headerName: 'Date Created',
-    //         type: 'date',
-    //         width: 180,
-    //         editable: true,
-    //     },
-    //     {
-    //         field: 'lastLogin',
-    //         headerName: 'Last Login',
-    //         type: 'dateTime',
-    //         width: 220,
-    //         editable: true,
-    //     },
-    // ];
-
-    // const rows = [
-    //     {
-    //         id: 1,
-    //         name: randomTraderName(),
-    //         age: 25,
-    //         dateCreated: randomCreatedDate(),
-    //         lastLogin: randomUpdatedDate(),
-    //     },
-    //     {
-    //         id: 2,
-    //         name: randomTraderName(),
-    //         age: 36,
-    //         dateCreated: randomCreatedDate(),
-    //         lastLogin: randomUpdatedDate(),
-    //     },
-    //     {
-    //         id: 3,
-    //         name: randomTraderName(),
-    //         age: 19,
-    //         dateCreated: randomCreatedDate(),
-    //         lastLogin: randomUpdatedDate(),
-    //     },
-    //     {
-    //         id: 4,
-    //         name: randomTraderName(),
-    //         age: 28,
-    //         dateCreated: randomCreatedDate(),
-    //         lastLogin: randomUpdatedDate(),
-    //     },
-    //     {
-    //         id: 5,
-    //         name: randomTraderName(),
-    //         age: 23,
-    //         dateCreated: randomCreatedDate(),
-    //         lastLogin: randomUpdatedDate(),
-    //     },
-    // ];
-
-    return (
-        <div>
-            <div>
-                <div className='row'>
-                    <h2 class="ms-4 mt-2" style={{ color: deep_blue_primary, "fontWeight": "bold", fontSize: "40px" }}>
-                        Edit data source:
-                    </h2>
-
-                    {/* <div className='col'>
-                        <button className='btn btn-success' onClick={() => {props.submit(props.fileInformation.name, columns)}}>
-                            Finish
-                        </button>
-                    </div> */}
-
+                <div className='col'>
+                    <button className='btn btn-success' onClick={() => { }}>
+                        Finish
+                    </button>
                 </div>
-                <div className='bg-white row m-2'>
-                    <div className='col-9'>
-                        {
-                            <div style={{ height: 500, width: '100%' }}>
-                                <DataGrid rows={rows} columns={columns}
-                                    columnVisibilityModel={{
-                                        // Hide columns status and traderName, the other columns will remain visible
-                                        id: false,
-                                    }}
-                                />
-                            </div>
-                        }
-                        {/* <Table name={datasource.Information} data={dataFile} rows={rows} columns={columns} /> */}
-                    </div>
-                    <div className='col-3'>
-                        <h4>Properties</h4>
-                        {/* <h6>{props.fileInformation.name}</h6> */}
-                        {/* <ul className="list-group bd-none">
+
+            </div>
+            <div className='bg-white row m-2'>
+                <div className='col-9'>
+                    {
+                        <div style={{ height: 500, width: '100%' }}>
+                            <DataGrid rows={rows} columns={columns}
+                                columnVisibilityModel={{
+                                    // Hide columns status and traderName, the other columns will remain visible
+                                    id: false,
+                                }}
+                                experimentalFeatures={{ newEditingApi: true }}
+
+                                // onCellEditStop={(params, event) => {
+                                //     // if (params.reason === GridCellEditStopReasons.cellFocusOut) {
+                                //     //     event.defaultMuiPrevented = true;
+                                //     // }
+                                //     console.log("param", params)
+                                //     console.log("event", event)
+                                // }}
+                                onCellEd
+                                onCellEditCommit={() => handleRowEditCommit}
+                            />
+                        </div>
+                    }
+                    {/* <Table name={datasource.Information} data={dataFile} rows={rows} columns={columns} /> */}
+                </div>
+                <div className='col-3'>
+                    <h4>Properties</h4>
+                    {
+                        columns.map((ele, index) =>
+                            index !== 0 && <div>{ele.field}</div>)
+                    }
+                    {/* <h6>{props.fileInformation.name}</h6> */}
+                    {/* <ul className="list-group bd-none">
                             {
                                 Object.keys(props.dataFile[0]).map((field, index) => {
                                     return (
@@ -184,9 +159,16 @@ export default function DataSourceContent(props) {
                                 })
                             }
                         </ul> */}
-                    </div>
                 </div>
             </div>
+        </div>
+    }
+    return (
+
+        <div>
+            {
+                EditUI()
+            }
         </div>
     )
 }

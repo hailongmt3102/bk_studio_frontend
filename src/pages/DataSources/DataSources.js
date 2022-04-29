@@ -15,8 +15,8 @@ import { ScrollMenu } from 'react-horizontal-scrolling-menu';
 export default function DataSources() {
     const [datasourceslist, setDatasourceslist] = useState([])
     const [sampleList, setSampleList] = useState([])
-    // const location = useLocation().pathname
-    // let RId = location.split('/')[3]
+
+
     const [showSharePopUp, setshowSharePopUp] = useState(false)
     // const currentProject = localStorage.getItem("currentProject")
 

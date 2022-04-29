@@ -86,10 +86,20 @@ export default function DataSourceBox(props) {
             .then(res => {
                 console.log("quyen", res.data)
                 if (res.data === "View") {
-                    navigate(`/datasources/${id}/view`)
+                    navigate(`/datasources/${id}`, {
+                        state: {
+                            isEdit: false,
+                            Did: id
+                        }
+                    })
                 }
                 else if (res.data === "Edit") {
-                    navigate(`/datasources/${id}/edit`)
+                    navigate(`/datasources/${id}`, {
+                        state: {
+                            isEdit: true,
+                            Did: id
+                        }
+                    })
                 }
                 else Store.addNotification(content("Access Fail", "You don't have permission with this datasource", "danger"))
 
