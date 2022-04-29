@@ -16,9 +16,12 @@ import { blue_cloud, deep_blue_primary } from "utils/color"
 import { Store } from 'react-notifications-component'
 import { content } from "../../utils/notification"
 import { like, unlike, deleteReport, updateReportInformation, getPermission } from 'api/Report'
+
+import { likeTemplate, unlikeTemplate } from 'api/Templates'
 import ShareWithPopUp from "pages/AdjustingReport/components/PopUp/ShareWithPopUp"
 
 import ConfirmDialog from "components/ConfirmDialog";
+import Template from 'pages/Templates/Templates'
 
 export default function ReportCard(props) {
     const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: '', subTitle: '' })
@@ -32,14 +35,24 @@ export default function ReportCard(props) {
     const handleOpen = () => {
         setConfirmDialog({ ...ConfirmDialog, isOpen: true })
     }
-    const option_list = ["Share", "Edit information", "Download", "Delete"]
-    const icons_list = [share_blue, edit, download_blue, delete_icon]
+    const option_list = props.type === "Template" ? ["Share", "Download", "Delete"] : ["Share", "Edit information", "Download", "Delete"]
+    const icons_list = props.type === "Template" ? [share_blue, download_blue, delete_icon] : [share_blue, edit, download_blue, delete_icon]
     const nav = useNavigate()
     const RId = props.data.Id
     const currentProject = localStorage.getItem("currentProject")
     const [heart, setHeart] = useState(props.data.Favorite)
     const likeSubmit = () => {
         if (currentProject != null) {
+            if (props.type === "Template") {
+                likeTemplate(RId)
+                    .then(res => {
+                        setHeart(true)
+                    })
+                    .catch(err => {
+                        Store.addNotification(content("Fail", err.response.data, "danger"))
+                        return
+                    })
+            }
             like(currentProject, RId)
                 .then(res => {
                     setHeart(true)
@@ -52,6 +65,16 @@ export default function ReportCard(props) {
     }
     const unlikeSubmit = () => {
         if (currentProject != null) {
+            if (props.type === "Template") {
+                unlikeTemplate(RId)
+                    .then(res => {
+                        setHeart(false)
+                    })
+                    .catch(err => {
+                        Store.addNotification(content("Fail", err.response.data, "danger"))
+                        return
+                    })
+            }
             unlike(currentProject, RId)
                 .then(res => {
                     setHeart(false)
@@ -67,7 +90,7 @@ export default function ReportCard(props) {
     const deleteHandle = () => {
         deleteReport(currentProject, RId)
             .then(res => {
-                if (props.Type === "Gallery") Store.addNotification(content("Success", "Deleted Report", "success"))
+                if (props.Type === "Report") Store.addNotification(content("Success", "Deleted Report", "success"))
                 else Store.addNotification(content("Success", "Deleted Template", "success"))
                 setTimeout(() => window.location.reload(), 1000);
             })
@@ -157,7 +180,7 @@ export default function ReportCard(props) {
                 <p className='m-0 p-0'> <span style={{ "color": "#868585" }}> Created Date: </span>  {props.data.CreateTime} </p>
             </div>
             {
-                props.type === "Gallery" ? <div className='row mt-2'>
+                props.type === "Report" ? <div className='row mt-2'>
                     <p className='m-0 p-0'> <span style={{ "color": "#868585" }}>  Modified Date:  </span>    {props.data.LastModified} </p>
                 </div> : null
             }
@@ -214,6 +237,7 @@ export default function ReportCard(props) {
     return (
         <div>
             <ShareWithPopUp
+                type={props.type}
                 currentProject={currentProject}
                 RId={RId}
                 show={showSharePopUp}
@@ -226,7 +250,7 @@ export default function ReportCard(props) {
             />
             <ConfirmDialog
                 confirmDialog={confirmDialog}
-                title={props.type === "Gallery" ? "Are you sure you want to delete this report ?" : "Are you sure you want to delete this template ?"}
+                title={props.type === "Report" ? "Are you sure you want to delete this report ?" : "Are you sure you want to delete this template ?"}
                 handleCloseYes={() => handleCloseYes()}
                 handleCloseNo={() => handleCloseNo()}
             />

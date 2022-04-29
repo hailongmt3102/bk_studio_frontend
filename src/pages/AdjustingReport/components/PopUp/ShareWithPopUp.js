@@ -108,9 +108,15 @@ export default function ShareWithPopUp(props) {
                 }}
             />
             <div className='col-2 m-auto'>
-                <DropdownWithIndex0 title={role} items={roleList} icons_list={staus_icon_list} onClick={(val) => {
-                    setRole(val)
-                }} />
+                {
+                    props.type === "Template" ? <DropdownWithIndex0 title={role} items={["View"]} icons_list={[eye_bluecloud]} onClick={(val) => {
+                        setRole(val)
+                    }} /> : <DropdownWithIndex0 title={role} items={roleList} icons_list={staus_icon_list} onClick={(val) => {
+                        setRole(val)
+                    }} />
+
+                }
+
             </div>
         </div>
     }

@@ -17,7 +17,7 @@ import { Store } from 'react-notifications-component'
 import { content } from "../../utils/notification"
 import { like, unlike, deleteReport, updateReportInformation } from 'api/Report'
 import ShareWithPopUp from "pages/AdjustingReport/components/PopUp/ShareWithPopUp"
-
+import { likeTemplate, unlikeTemplate } from 'api/Templates'
 import ConfirmDialog from "components/ConfirmDialog";
 
 export default function TemplateMiniCard(props) {
@@ -26,35 +26,31 @@ export default function TemplateMiniCard(props) {
 
     const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: '', subTitle: '' })
 
-    const option_list = ["Share", "Edit information", "Download"]
-    const icons_list = [share_blue, edit, download_blue]
+    const option_list = ["Share", "Download", "Delete"]
+    const icons_list = [share_blue, download_blue, delete_icon]
     const nav = useNavigate()
     const RId = props.data.Id
     const currentProject = localStorage.getItem("currentProject")
     const [heart, setHeart] = useState(props.data.Favorite)
     const likeSubmit = () => {
-        if (currentProject != null) {
-            like(currentProject, RId)
-                .then(res => {
-                    setHeart(true)
-                })
-                .catch(err => {
-                    Store.addNotification(content("Fail", err.response.data, "danger"))
-                    return
-                })
-        }
+        likeTemplate(RId)
+            .then(res => {
+                setHeart(true)
+            })
+            .catch(err => {
+                Store.addNotification(content("Fail", err.response.data, "danger"))
+                return
+            })
     }
     const unlikeSubmit = () => {
-        if (currentProject != null) {
-            unlike(currentProject, RId)
-                .then(res => {
-                    setHeart(false)
-                })
-                .catch(err => {
-                    Store.addNotification(content("Fail", err.response.data, "danger"))
-                    return
-                })
-        }
+        unlikeTemplate(RId)
+            .then(res => {
+                setHeart(false)
+            })
+            .catch(err => {
+                Store.addNotification(content("Fail", err.response.data, "danger"))
+                return
+            })
     }
     const viewReportNav = (Id) => {
         nav(`project/gallery/${Id}/view`, {
@@ -146,6 +142,7 @@ export default function TemplateMiniCard(props) {
 
         <div>
             <ShareWithPopUp
+                type={"Template"}
                 currentProject={currentProject}
                 RId={RId}
                 show={showSharePopUp}
