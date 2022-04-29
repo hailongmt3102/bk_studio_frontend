@@ -1,14 +1,27 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import BlankReportIcon from 'resources/icons/blankReport.svg'
 import { getListProject } from 'api/Project'
 import { Store } from 'react-notifications-component'
+import ReportCard from "components/ReportCard/ReportCard"
 import { content } from "utils/notification"
 import { deep_blue_primary, blue_cloud } from "../../utils/color"
 import { createNewReport as CreateReportApi } from 'api/Report'
-
+import { getAllTemplate } from "api/Templates"
 export default function CreateReport() {
     const nav = useNavigate()
+    const [reports, setReports] = useState([])
+    useEffect(() => {
+        getAllTemplate()
+            .then(res => {
+                console.log(res.data)
+                setReports(res.data)
+            })
+            .catch(err => {
+                Store.addNotification(content("Fail", err.response.data, "danger"))
+                return
+            })
+    }, [])
     const newReport = () => {
         let currentProjectId = localStorage.getItem("currentProject")
         if (currentProjectId != null) {
@@ -62,6 +75,15 @@ export default function CreateReport() {
                         From a template
                     </h3>
 
+                </div>
+                <div className='row m-0 p-0 justify-content-center'>
+                    {reports.map(ele =>
+                        <div className='col m-0 p-0' style={{ "minWidth": "600px", "maxWidth": "600px" }} >
+                            <div className='ms-4 mt-5 pe-4'>
+                                <ReportCard data={ele} type="Template" />
+                            </div>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>
