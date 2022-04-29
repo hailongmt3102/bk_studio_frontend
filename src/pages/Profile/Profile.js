@@ -77,18 +77,17 @@ export default function Profile() {
                 "Birthday": moment(information.Birthday).format("YYYY-MM-DD")
             }
         )
-        //     .then((res) => {
-        //         console.log(res.data)
-
-        //         localStorage.setItem("username", information.UserName)
-        //         Store.addNotification(content("Success", "Updated information", "success"))
-        //         setTimeout(() => window.location.reload(), 1000);
-        //         return
-        //     })
-        //     .catch((e) => {
-        //         Store.addNotification(content("Fail", e.response.data, "danger"))
-        //         return
-        //     })
+            .then((res) => {
+                console.log(res.data)
+                localStorage.setItem("username", information.UserName)
+                Store.addNotification(content("Success", "Updated information", "success"))
+                setTimeout(() => window.location.reload(), 1000);
+                return
+            })
+            .catch((e) => {
+                Store.addNotification(content("Fail", e.response.data, "danger"))
+                return
+            })
 
     }
 
@@ -101,7 +100,7 @@ export default function Profile() {
         reader.readAsDataURL(files[0]);
         updateAvatar(e.target.files[0])
             .then((res) => {
-                setinformation({...information, Avatar: res.data.fileUrl})
+                setinformation({ ...information, Avatar: res.data.fileUrl })
             })
             .catch((e) => {
                 Store.addNotification(content("Warning", e.response.data, "danger"))
