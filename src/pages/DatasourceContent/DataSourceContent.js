@@ -87,15 +87,7 @@ export default function DataSourceContent(props) {
             })
 
     }, [])
-    const handleRowEditCommit = React.useCallback(
-        (params) => {
-            const id = params.id;
-            const key = params.field;
-            const value = params.value;
-            console.log("value", value)
-        },
-        []
-    );
+
 
     const EditUI = () => {
         return <div>
@@ -122,15 +114,14 @@ export default function DataSourceContent(props) {
                                 }}
                                 experimentalFeatures={{ newEditingApi: true }}
 
-                                // onCellEditStop={(params, event) => {
-                                //     // if (params.reason === GridCellEditStopReasons.cellFocusOut) {
-                                //     //     event.defaultMuiPrevented = true;
-                                //     // }
-                                //     console.log("param", params)
-                                //     console.log("event", event)
-                                // }}
-                                onCellEd
-                                onCellEditCommit={() => handleRowEditCommit}
+                                onCellEditStop={(params, event) => {
+                                    // if (params.reason === GridCellEditStopReasons.cellFocusOut) {
+                                    //     event.defaultMuiPrevented = true;
+                                    // }
+                                    console.log("param", params)
+                                    console.log("event", event)
+                                }}
+
                             />
                         </div>
                     }
