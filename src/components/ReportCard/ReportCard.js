@@ -204,7 +204,7 @@ export default function ReportCard(props) {
                         PId: props.data.PId,
                         Type: props.data.Type,
                         RId: props.data.RId,
-                        Permission: permission
+                        Permission: permission,
                     }
                 })
             }
@@ -214,7 +214,7 @@ export default function ReportCard(props) {
                         PId: props.data.PId,
                         Type: props.data.Type,
                         RId: props.data.RId,
-                        Permission: permission
+                        Permission: permission,
                     }
                 })
             }

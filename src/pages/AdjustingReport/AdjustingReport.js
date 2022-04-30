@@ -33,16 +33,7 @@ export default function AdjustingReport(props) {
     const RId = location.state.RId
     const currentProject = location.state.PId
     const isTemplate = location.state.Type == "Template"
-
-
-    const [isEdit, setIsEdit] = useState(false)
-
-    useEffect(() => {
-        if (!isTemplate) {
-            if (location.state.Permission == "Edit") setIsEdit(true)
-            else setIsEdit(false)
-        }
-    }, [])
+    const isEdit = location.state.Permission == "Edit" && !isTemplate
 
     const navigate = useNavigate()
     const nav = useNavigate()
@@ -422,7 +413,8 @@ export default function AdjustingReport(props) {
     // ** declare some function to action with report content
     // ** function to resize or drag shape element
     const updateShapeComponent = (index, data) => {
-        setShapeComponent([...shapeComponents.slice(0, index), data, ...shapeComponents.slice(index + 1)])
+        if (isEdit)
+            setShapeComponent([...shapeComponents.slice(0, index), data, ...shapeComponents.slice(index + 1)])
     }
 
     // ** push new component 
@@ -822,6 +814,7 @@ export default function AdjustingReport(props) {
                             onMouseUp={onMouseUpHandler}
                         >
                             <Content
+                                isEdit={isEdit}
                                 ref={contentRef}
                                 shapeComponents={shapeComponents}
                                 updateShapeComponent={updateShapeComponent}
@@ -891,19 +884,20 @@ export default function AdjustingReport(props) {
                     <div className="row mt-2">
                         <div className=" col-10 ">
                             <div className="content"
-                                // onClick={(e) => triggerClickContentBackground(e)}
+                                onClick={(e) => triggerClickContentBackground(e)}
                                 onMouseDown={onMouseDownHandler}
                                 onMouseMove={onMouseMoveHandler}
                                 onMouseUp={onMouseUpHandler}
                             >
                                 <Content
+                                    isEdit={isEdit}
                                     ref={contentRef}
                                     shapeComponents={shapeComponents}
                                     updateShapeComponent={updateShapeComponent}
-                                    followingIndexComponent={followingIndexComponent}
+                                    followingIndexComponent={-1}
                                     setFollowingIndexComponent={setFollowingIndexComponent}
-                                    showingMouseDrag={addShapeType != null}
-                                    mouseDragValue={dragAreaLocation}
+                                // showingMouseDrag={addShapeType != null}
+                                // mouseDragValue={dragAreaLocation}
                                 />
                             </div>
                         </div>

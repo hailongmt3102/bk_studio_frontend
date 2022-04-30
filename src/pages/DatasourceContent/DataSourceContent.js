@@ -18,6 +18,25 @@ export default function DataSourceContent(props) {
 
     // const [dataFile, setDataFile] = useState([])
 
+
+    //KT inclue updateContent
+    // Object.keys(updateContent).includes(id)
+    //if k inclue => push() : 
+    // setUpdateContent({
+    //         ...updateContent, {
+    //         [id]: {
+    //             [field]: value
+    //         }
+    //     }
+    // })
+    //else include rồi => setUpdateContent({
+    //         ...updateContent, 
+    //         [id]: {...updateContent[id], 
+    //             [field]: value
+    //         }
+    //     
+    // })
+
     const [updateContent, setUpdateContent] = useState({
         "1": {
             "username": "rog1",
@@ -115,11 +134,12 @@ export default function DataSourceContent(props) {
                                 experimentalFeatures={{ newEditingApi: true }}
 
                                 onCellEditStop={(params, event) => {
-                                    // if (params.reason === GridCellEditStopReasons.cellFocusOut) {
-                                    //     event.defaultMuiPrevented = true;
-                                    // }
-                                    console.log("param", params)
-                                    console.log("event", event)
+                                    if (params.reason === GridCellEditStopReasons.cellFocusOut) {
+                                        event.defaultMuiPrevented = true;
+                                        console.log("param", params)
+                                        console.log("event", event.target)
+                                    }
+
                                 }}
 
                             />

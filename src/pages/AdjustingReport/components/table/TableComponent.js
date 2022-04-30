@@ -5,6 +5,8 @@ import './TableComponent.css'
 export default function TableComponent(props) {
     return (
         <Rnd
+            disableDragging={props.disableDragging}
+            enableResizing={props.enableResizing}
             size={{ width: props.data.Width, height: props.data.Height }}
             position={{ x: props.data.Position.x, y: props.data.Position.y }}
             onDragStop={(e, d) => {
@@ -18,7 +20,7 @@ export default function TableComponent(props) {
             onResizeStop={(e, direction, ref, delta, position) => {
                 props.updateDataTable({ ...props.data, Width: ref.style.width, Height: ref.style.height })
             }}
-            className={`${props.classstyle} component-container` }
+            className={`${props.classstyle} component-container`}
         >
             {
                 props.data.data !== undefined ?

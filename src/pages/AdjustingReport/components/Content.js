@@ -32,6 +32,8 @@ const Content = React.forwardRef((props, ref) => {
                     }}
                     >
                         <TableComponent
+                            disableDragging={!props.isEdit}
+                            enableResizing={props.isEdit}
                             data={shape}
                             updateDataTable={(data) => {
                                 props.updateShapeComponent(index, data)
@@ -44,6 +46,8 @@ const Content = React.forwardRef((props, ref) => {
                 if (shape.doughnutData == null) return null
                 return (
                     <Rnd
+                        disableDragging={!props.isEdit}
+                        enableResizing={props.isEdit}
                         size={{ width: shape.Width, height: shape.Height }}
                         position={{ x: shape.Position.x, y: shape.Position.y }}
                         onDragStop={(e, d) => {
@@ -66,6 +70,8 @@ const Content = React.forwardRef((props, ref) => {
                 if (shape.lineData == null) return null
                 return (
                     <Rnd
+                        disableDragging={!props.isEdit}
+                        enableResizing={props.isEdit}
                         size={{ width: shape.Width, height: shape.Height }}
                         position={{ x: shape.Position.x, y: shape.Position.y }}
                         onDragStop={(e, d) => {
@@ -89,6 +95,8 @@ const Content = React.forwardRef((props, ref) => {
                 if (shape.barData == null) return null
                 return (
                     <Rnd
+                        disableDragging={!props.isEdit}
+                        enableResizing={props.isEdit}
                         size={{ width: shape.Width, height: shape.Height }}
                         position={{ x: shape.Position.x, y: shape.Position.y }}
                         onDragStop={(e, d) => {
@@ -113,6 +121,8 @@ const Content = React.forwardRef((props, ref) => {
                 if (shape.pieData == null) return null
                 return (
                     <Rnd
+                        disableDragging={!props.isEdit}
+                        enableResizing={props.isEdit}
                         size={{ width: shape.Width, height: shape.Height }}
                         position={{ x: shape.Position.x, y: shape.Position.y }}
                         onDragStop={(e, d) => {
