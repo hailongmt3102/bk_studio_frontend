@@ -22,7 +22,7 @@ export default function RolePopUp(props) {
         "Delete project": false,
         "Change project status": false,
         "Delete member": false,
-        "Edit member information": false
+        "Edit role member": false
     })
 
     const checked = (value) => () => {

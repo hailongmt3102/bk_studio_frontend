@@ -17,11 +17,11 @@ import { Store } from 'react-notifications-component'
 import { content } from "../../utils/notification"
 import { like, unlike, deleteReport, updateReportInformation, getPermission } from 'api/Report'
 
-import { likeTemplate, unlikeTemplate } from 'api/Templates'
+import { likeTemplate, unlikeTemplate, deleteTemplate } from 'api/Templates'
 import ShareWithPopUp from "pages/AdjustingReport/components/PopUp/ShareWithPopUp"
 
 import ConfirmDialog from "components/ConfirmDialog";
-import Template from 'pages/Templates/Templates'
+
 
 export default function ReportCard(props) {
     const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: '', subTitle: '' })
@@ -88,16 +88,29 @@ export default function ReportCard(props) {
 
 
     const deleteHandle = () => {
-        deleteReport(currentProject, RId)
-            .then(res => {
-                if (props.Type === "Report") Store.addNotification(content("Success", "Deleted Report", "success"))
-                else Store.addNotification(content("Success", "Deleted Template", "success"))
-                setTimeout(() => window.location.reload(), 1000);
-            })
-            .catch(err => {
-                Store.addNotification(content("Fail", err.response.data, "danger"))
-                return
-            })
+        if (props.type === "Report") {
+
+            deleteReport(currentProject, RId)
+                .then(res => {
+                    Store.addNotification(content("Success", "Deleted Report", "success"))
+                    setTimeout(() => window.location.reload(), 1000);
+                })
+                .catch(err => {
+                    Store.addNotification(content("Fail", err.response.data, "danger"))
+                    return
+                })
+        }
+        else
+            deleteTemplate(RId)
+                .then(res => {
+                    Store.addNotification(content("Success", "Deleted Template", "success"))
+                    setTimeout(() => window.location.reload(), 1000);
+                })
+                .catch(err => {
+                    Store.addNotification(content("Fail", err.response.data, "danger"))
+                    return
+                })
+
     }
     const [pressEdit, setPressEdit] = useState(false)
     const [dataToUpdate, setDataToUpdate] = useState({
@@ -120,7 +133,7 @@ export default function ReportCard(props) {
     }
 
 
-    const ContentCoponent = () => {
+    const ContentComponent = () => {
         return <div>
             {
                 pressEdit ?
@@ -292,7 +305,7 @@ export default function ReportCard(props) {
                     </div>
                     <div className='row' >
                     </div>
-                    <div className='ms-5 mb-4'>{ContentCoponent()}</div>
+                    <div className='ms-5 mb-4'>{ContentComponent()}</div>
                 </div>
             </div >
         </div>

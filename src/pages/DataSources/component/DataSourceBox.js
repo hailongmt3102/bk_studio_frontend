@@ -126,11 +126,11 @@ export default function DataSourceBox(props) {
                     else if (val == "Share") {
 
                         if (isHost === true) {
-                            console.log(isHost)
+                            //console.log(isHost)
                             props.showSharePopUpHandle(props.ele.Id)
                         }
                         else {
-                            Store.addNotification(content("Fail", "You don't have share this data source permission", "danger"))
+                            Store.addNotification(content("Fail", "You can't share this data source", "danger"))
                         }
                     }
                     else if (val === "Send to Workspace") {

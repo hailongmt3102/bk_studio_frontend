@@ -12,13 +12,15 @@ const unlikeTemplate = (RId) => {
     return axiosClient.get(`/template/${RId}/unfavorite`)
 }
 
+const deleteTemplate = (RId) => {
+    return axiosClient.get(`/template/${RId}/delete`)
+}
 
 
 
 export {
     getAllTemplate,
     likeTemplate,
-    unlikeTemplate
-
-
+    unlikeTemplate,
+    deleteTemplate
 }
