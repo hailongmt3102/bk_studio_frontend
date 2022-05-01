@@ -677,10 +677,31 @@ export default function AdjustingReport(props) {
         }
     )
 
+    const switchToViewMode = () => {
+        nav('/project/gallery/' + RId + '/view', {
+            state: {
+                PId: location.state.PId,
+                Type: location.state.Type,
+                RId: location.state.RID,
+                Permission: "View"
+            }
+        })
+    }
+    const [showMappingPopUp, setShowMappingPopUp] = useState(false)
     const EditUI = () => {
         return <div>
             <div>
                 {/* some popup */}
+                <MappingPopUp
+                    type={popUpType}
+                    show={showMappingPopUp}
+                    handleClose={() => {
+                        setShowMappingPopUp(false)
+                    }}
+                    onComplete={buildQueryComplete}
+                    dataSource={dataSource}
+
+                />
                 <SqlPopUp
                     type={popUpType}
                     show={showSqlPopUp}
@@ -716,7 +737,10 @@ export default function AdjustingReport(props) {
                 />
             </div>
             <div className="row">
-                <TabComponent />
+                <TabComponent
+                    showMappingPopUpHandle={() => setShowMappingPopUp(true)}
+
+                />
                 <div className="col-10 h-200">
                     <div className="rightColumn p-3">
                         <div className="row m-0 p-0">
@@ -809,6 +833,7 @@ export default function AdjustingReport(props) {
                             deleteShape={deleteShape}
                             copyShape={copyShape}
                             isEdit={isEdit}
+                            switchToViewModeHandle={() => { switchToViewMode() }}
                         />
 
                         <ToolBar
@@ -844,7 +869,7 @@ export default function AdjustingReport(props) {
     }
 
 
-    // const [showMappingPopUp, setShowMappingPopUp] = useState(false)
+
 
     const createAReportByTemplateHandle = () => {
         createAReportByTemplate(RId, {
@@ -869,15 +894,7 @@ export default function AdjustingReport(props) {
 
     const ViewPageUI = () => {
         return <div className="row">
-            {/* <MappingPopUp
-                type={popUpType}
-                show={showMappingPopUp}
-                handleClose={() => {
-                    setShowMappingPopUp(false)
-                }}
-                onComplete={buildQueryComplete}
-                dataSource={dataSource}
-            /> */}
+
             <div className="leftColumn p-3">
                 <div className="row m-0 p-0">
                     <div className="col-8 m-0 p-0">

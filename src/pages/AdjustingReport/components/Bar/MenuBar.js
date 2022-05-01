@@ -108,7 +108,8 @@ export default function MenuBar(props) {
                 </div>
                 <div className='col-5 m-0 p-0'></div>
                 <div className='col-3 m-0 p-0'>
-                    <button className='btn-lg btn-success text-center border-0 ms-5'>
+                    <button className='btn-lg btn-success text-center border-0 ms-5'
+                        onClick={() => { props.switchToViewModeHandle() }}>
                         <div className='row p-2 text-center'>
                             <div className='col-2 text-center me-1'>
                                 <img src={view} width="20px" height="20px" />

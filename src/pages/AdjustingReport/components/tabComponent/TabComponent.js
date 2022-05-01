@@ -10,10 +10,10 @@ import bold from "resources/icons/bold.svg";
 import italic from "resources/icons/italic.svg";
 import underline from "resources/icons/underline.svg";
 
-export default function TabComponent() {
+export default function TabComponent(props) {
 	const [key, setKey] = useState('Data');
 	const fonts = ['Roboto', 'Poppins'];
-    const size = ['14', '16', "32", '45'];
+	const size = ['14', '16', "32", '45'];
 
 	return <div className="col-2 ">
 		<Tabs className="p-2" activeKey={key} onSelect={(k) => setKey(k)}>
@@ -31,6 +31,10 @@ export default function TabComponent() {
 						<h4>Type</h4>
 					</div>
 				</div>
+				<div> <button className='btn-lg btn-success text-center border-0'
+					onClick={() => { props.showMappingPopUpHandle() }}>
+					<div>Edit data</div>
+				</button></div>
 			</Tab>
 			<Tab className="p-4" eventKey="Format" label="Style">
 				<div className="mt-2">Text</div>
