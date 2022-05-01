@@ -35,8 +35,8 @@ export default function ReportCard(props) {
     const handleOpen = () => {
         setConfirmDialog({ ...ConfirmDialog, isOpen: true })
     }
-    const option_list = props.type === "Template" ? ["Share", "Download", "Delete"] : ["Share", "Edit information", "Download", "Delete"]
-    const icons_list = props.type === "Template" ? [share_blue, download_blue, delete_icon] : [share_blue, edit, download_blue, delete_icon]
+    const option_list = props.type === "Template" ? ["Download", "Delete"] : ["Share", "Edit information", "Download", "Delete"]
+    const icons_list = props.type === "Template" ? [download_blue, delete_icon] : [share_blue, edit, download_blue, delete_icon]
     const nav = useNavigate()
     const RId = props.data.Id
     const currentProject = localStorage.getItem("currentProject")

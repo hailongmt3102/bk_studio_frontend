@@ -17,7 +17,7 @@ import { Store } from 'react-notifications-component'
 import { content } from "../../utils/notification"
 import { like, unlike, deleteReport, updateReportInformation } from 'api/Report'
 import ShareWithPopUp from "pages/AdjustingReport/components/PopUp/ShareWithPopUp"
-import { likeTemplate, unlikeTemplate } from 'api/Templates'
+import { likeTemplate, unlikeTemplate, deleteTemplate } from 'api/Templates'
 import ConfirmDialog from "components/ConfirmDialog";
 
 export default function TemplateMiniCard(props) {
@@ -26,8 +26,8 @@ export default function TemplateMiniCard(props) {
 
     const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: '', subTitle: '' })
 
-    const option_list = ["Share", "Download", "Delete"]
-    const icons_list = [share_blue, download_blue, delete_icon]
+    const option_list = ["Download", "Delete"]
+    const icons_list = [download_blue, delete_icon]
     const nav = useNavigate()
     const RId = props.data.Id
     const currentProject = localStorage.getItem("currentProject")
@@ -85,6 +85,17 @@ export default function TemplateMiniCard(props) {
             })
     }
 
+    const deleteHandle = () => {
+        deleteTemplate(RId)
+            .then(res => {
+                Store.addNotification(content("Success", "Deleted Template", "success"))
+                setTimeout(() => window.location.reload(), 1000);
+            })
+            .catch(err => {
+                Store.addNotification(content("Fail", err.response.data, "danger"))
+                return
+            })
+    }
     const headComponent = () => {
         return <div className='row text-center m-0 p-0'>
             <div class="d-flex flex-row-reverse me-3">
@@ -106,6 +117,9 @@ export default function TemplateMiniCard(props) {
                         }
                         else if (val === "Share") {
                             setshowSharePopUp(true)
+                        }
+                        else if (val === "Delete") {
+                            deleteHandle()
                         }
                     }} />
                 </div>
