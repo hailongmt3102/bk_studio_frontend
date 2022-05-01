@@ -266,7 +266,7 @@ export default function ReportCard(props) {
                 PId: props.data.PId,
                 Type: props.data.Type,
                 RId: props.data.Id,
-                isEdit: "View"
+                Permission: "View"
             }
         })
     }

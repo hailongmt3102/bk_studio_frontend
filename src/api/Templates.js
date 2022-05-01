@@ -20,6 +20,11 @@ const updateTemplateInformation = (RId, data) => {
     return axiosClient.post(`/template/${RId}/rename`, data)
 }
 
+const createAReportByTemplate = (RId, data) => {
+    return axiosClient.post(`/template/${RId}/makeReport`, data)
+}
+
+
 
 
 export {
@@ -27,5 +32,6 @@ export {
     likeTemplate,
     unlikeTemplate,
     deleteTemplate,
-    updateTemplateInformation
+    updateTemplateInformation,
+    createAReportByTemplate
 }

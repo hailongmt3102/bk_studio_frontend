@@ -1,5 +1,6 @@
 import { getColumnsOfTable, GetDataSourcesListInformationInProject, QueryData as QueryDataApi } from "api/DataSources";
 import { createNewComponent as createNewComponentApi, createNewReport, deleteShape as deleteShapeApi, getAllComponent, getReportInformation, updateAComponent, updateReportInformation, saveAsCopy, saveAsTemplate, getAllDatasourceNameInReport } from 'api/Report';
+import { createAReportByTemplate } from "api/Templates"
 import TabComponent from "pages/AdjustingReport/components/tabComponent/TabComponent";
 import { useEffect, useRef, useState } from "react";
 import { Form } from 'react-bootstrap';
@@ -843,11 +844,32 @@ export default function AdjustingReport(props) {
     }
 
 
-    const [showMappingPopUp, setShowMappingPopUp] = useState(false)
+    // const [showMappingPopUp, setShowMappingPopUp] = useState(false)
+
+    const createAReportByTemplateHandle = () => {
+        createAReportByTemplate(RId, {
+            ProjectId: currentProject,
+        })
+            .then(res => {
+                nav('/project/gallery/' + res.data.RId + '/edit', {
+                    state: {
+                        PId: res.data.PId,
+                        Type: "Report",
+                        RId: res.data.RId,
+                        Permission: "Edit"
+                    }
+                })
+                console.log("thanhcong", res.data)
+            })
+            .catch(err => {
+                Store.addNotification(content("Fail", err.response.data, "danger"))
+                props.handleClose()
+            })
+    }
 
     const ViewPageUI = () => {
         return <div className="row">
-            <MappingPopUp
+            {/* <MappingPopUp
                 type={popUpType}
                 show={showMappingPopUp}
                 handleClose={() => {
@@ -855,7 +877,7 @@ export default function AdjustingReport(props) {
                 }}
                 onComplete={buildQueryComplete}
                 dataSource={dataSource}
-            />
+            /> */}
             <div className="leftColumn p-3">
                 <div className="row m-0 p-0">
                     <div className="col-8 m-0 p-0">
@@ -883,8 +905,8 @@ export default function AdjustingReport(props) {
                     <div className="col-2 mt-5 m-0 p-0 mb-2 text-end pe-5">
                         {
                             isTemplate === true ? <div> <button className='btn-lg btn-success text-center border-0'
-                                onClick={() => { setShowMappingPopUp(true) }}>
-                                <div>Mapping data</div>
+                                onClick={() => { createAReportByTemplateHandle() }}>
+                                <div>Apply</div>
                             </button></div> : null
                         }
                     </div>
