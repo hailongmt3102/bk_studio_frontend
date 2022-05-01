@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Form } from 'react-bootstrap'
 
 import default_report_img from "../../resources/icons/default_report_img.svg"
@@ -17,7 +17,7 @@ import { Store } from 'react-notifications-component'
 import { content } from "../../utils/notification"
 import { like, unlike, deleteReport, updateReportInformation, getPermission } from 'api/Report'
 
-import { likeTemplate, unlikeTemplate, deleteTemplate } from 'api/Templates'
+import { likeTemplate, unlikeTemplate, deleteTemplate, updateTemplateInformation } from 'api/Templates'
 import ShareWithPopUp from "pages/AdjustingReport/components/PopUp/ShareWithPopUp"
 
 import ConfirmDialog from "components/ConfirmDialog";
@@ -29,17 +29,25 @@ export default function ReportCard(props) {
         deleteHandle()
         // console.log("close ne")
     }
+    const myEmail = localStorage.getItem("email")
+    const [isHost, setIsHost] = useState(false)
+    useEffect(() => {
+        if (props.data.Author == myEmail)
+            setIsHost(true)
+        else setIsHost(false)
+    }, [])
     const handleCloseNo = () => {
         setConfirmDialog({ ...ConfirmDialog, isOpen: false })
     }
     const handleOpen = () => {
         setConfirmDialog({ ...ConfirmDialog, isOpen: true })
     }
-    const option_list = props.type === "Template" ? ["Download", "Delete"] : ["Share", "Edit information", "Download", "Delete"]
-    const icons_list = props.type === "Template" ? [download_blue, delete_icon] : [share_blue, edit, download_blue, delete_icon]
+    const option_list = props.type === "Template" ? ["Edit information", "Download", "Delete"] : ["Share", "Edit information", "Download", "Delete"]
+    const icons_list = props.type === "Template" ? [edit, download_blue, delete_icon] : [share_blue, edit, download_blue, delete_icon]
     const nav = useNavigate()
     const RId = props.data.Id
     const currentProject = localStorage.getItem("currentProject")
+
     const [heart, setHeart] = useState(props.data.Favorite)
     const likeSubmit = () => {
         if (currentProject != null) {
@@ -115,21 +123,36 @@ export default function ReportCard(props) {
     const [pressEdit, setPressEdit] = useState(false)
     const [dataToUpdate, setDataToUpdate] = useState({
         "Hastag": props.data.Hastag,
-        "Description": "",
         "Name": props.data.Name
     })
     const [showSharePopUp, setshowSharePopUp] = useState(false)
     const updateSubmit = () => {
-        updateReportInformation(currentProject, RId, dataToUpdate)
-            .then(res => {
-                Store.addNotification(content("Success", "Updated Report Information", "success"))
-                setTimeout(() => window.location.reload(), 1000);
-            })
-            .catch(err => {
-                Store.addNotification(content("Fail", err.response.data, "danger"))
-                console.log(err.response.data)
+        if (props.type == "Report") {
+            updateReportInformation(currentProject, RId, dataToUpdate)
+                .then(res => {
+                    Store.addNotification(content("Success", "Updated Report Information", "success"))
+                    setTimeout(() => window.location.reload(), 1000);
+                })
+                .catch(err => {
+                    Store.addNotification(content("Fail", err.response.data, "danger"))
+                    console.log(err.response.data)
 
-            })
+                })
+        }
+        else {
+            // updateTemplateInformation
+            updateTemplateInformation(RId, dataToUpdate)
+                .then(res => {
+                    Store.addNotification(content("Success", "Updated Template Information", "success"))
+                    setTimeout(() => window.location.reload(), 1000);
+                })
+                .catch(err => {
+                    Store.addNotification(content("Fail", err.response.data, "danger"))
+                    console.log(err.response.data)
+
+                })
+        }
+
     }
 
 
@@ -295,7 +318,11 @@ export default function ReportCard(props) {
                                     if (val === 'Delete')
                                         handleOpen()
                                     else if (val === "Edit information") {
-                                        setPressEdit(true)
+                                        if (isHost === true) {
+                                            setPressEdit(true)
+                                        }
+                                        else Store.addNotification(content("Fail", "You can't edit information", "danger"))
+
                                     }
                                     else if (val === "Share") {
                                         setshowSharePopUp(true)

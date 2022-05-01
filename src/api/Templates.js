@@ -16,11 +16,16 @@ const deleteTemplate = (RId) => {
     return axiosClient.get(`/template/${RId}/delete`)
 }
 
+const updateTemplateInformation = (RId, data) => {
+    return axiosClient.post(`/template/${RId}/rename`, data)
+}
+
 
 
 export {
     getAllTemplate,
     likeTemplate,
     unlikeTemplate,
-    deleteTemplate
+    deleteTemplate,
+    updateTemplateInformation
 }
