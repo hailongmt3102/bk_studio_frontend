@@ -44,8 +44,8 @@ export default function DataSources() {
     }, [])
     const option_list = ["Share", "Rename", "Download", "Delete"]
     const icon_list = [share_blue, edit, download_blue, delete_icon]
-    const sample_option_list = ["Share", "Download"]
-    const sample_icon_list = [share_blue, download_blue]
+    const sample_option_list = ["Download"]
+    const sample_icon_list = [download_blue]
 
     const showSharePopUpHandle = (DId) => {
         setshowSharePopUp(true)
