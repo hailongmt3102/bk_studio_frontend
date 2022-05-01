@@ -70,6 +70,9 @@ const saveAsTemplate = (PId, RId) => {
     return axiosClient.get(`/project/${PId}/${RId}/saveAsTemplate`)
 }
 
+const getAllDatasourceNameInReport = (PId, RId) => {
+    return axiosClient.get(`/project/${PId}/${RId}/dataSourceName`)
+}
 
 export {
     createNewReport,
@@ -89,5 +92,6 @@ export {
     deleteShape,
     getPermission,
     saveAsCopy,
-    saveAsTemplate
+    saveAsTemplate,
+    getAllDatasourceNameInReport
 }

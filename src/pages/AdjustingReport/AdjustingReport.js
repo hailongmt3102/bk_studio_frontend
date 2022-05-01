@@ -1,5 +1,5 @@
 import { getColumnsOfTable, GetDataSourcesListInformationInProject, QueryData as QueryDataApi } from "api/DataSources";
-import { createNewComponent as createNewComponentApi, createNewReport, deleteShape as deleteShapeApi, getAllComponent, getReportInformation, updateAComponent, updateReportInformation, saveAsCopy, saveAsTemplate } from 'api/Report';
+import { createNewComponent as createNewComponentApi, createNewReport, deleteShape as deleteShapeApi, getAllComponent, getReportInformation, updateAComponent, updateReportInformation, saveAsCopy, saveAsTemplate, getAllDatasourceNameInReport } from 'api/Report';
 import TabComponent from "pages/AdjustingReport/components/tabComponent/TabComponent";
 import { useEffect, useRef, useState } from "react";
 import { Form } from 'react-bootstrap';
@@ -634,12 +634,24 @@ export default function AdjustingReport(props) {
     }
 
 
-
+    const [listDataSourcesName, setListDataSourcesName] = useState([])
 
     useEffect(() => {
         getReportInfo()
         getDataFields()
         getReportContent()
+        if (!isTemplate) {
+            getAllDatasourceNameInReport(currentProject, RId)
+                .then(res => {
+                    setListDataSourcesName(res.data)
+                    // console.log("listdata", res.data)
+                })
+                .catch(err => {
+                    Store.addNotification(content("Fail", err.response.data, "danger"))
+                    return
+                })
+        }
+
         // register mouse event
         // adjustedMouseEvent()
     }, [])
@@ -910,7 +922,13 @@ export default function AdjustingReport(props) {
                                 <div className="col PrimaryFontColor size16 customFontBold">Id</div>
                                 <div className="col">{reportInformation.Id} </div>
                             </div>
+
                             <div className="mt-4 PrimaryFontColor size16 customFontBold">Data sources:</div>
+                            <div className="mt-2">
+                                {
+                                    listDataSourcesName.map((ele) => ele)
+                                }
+                            </div>
                             <div className="row mt-4">
                                 <div className="col PrimaryFontColor size16 customFontBold">Created by: </div>
                                 <div className="col mt-2">{reportInformation.Author} </div>
