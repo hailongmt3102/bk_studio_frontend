@@ -1,6 +1,6 @@
 import { getColumnsOfTable, GetDataSourcesListInformationInProject, QueryData as QueryDataApi } from "api/DataSources";
-import { createNewComponent as createNewComponentApi, createNewReport, deleteShape as deleteShapeApi, getAllComponent, getReportInformation, updateAComponent, updateReportInformation, saveAsCopy, saveAsTemplate, getAllDatasourceNameInReport } from 'api/Report';
-import { createAReportByTemplate } from "api/Templates"
+import { createNewComponent as createNewComponentApi, createNewReport, deleteShape as deleteShapeApi, getAllComponent, getReportInformation, updateAComponent, updateReportInformation, saveAsCopy, saveAsTemplate, getAllDatasourceNameInReport, deleteReport } from 'api/Report';
+import { createAReportByTemplate, deleteTemplate } from "api/Templates"
 import TabComponent from "pages/AdjustingReport/components/tabComponent/TabComponent";
 import { useEffect, useRef, useState } from "react";
 import { Form } from 'react-bootstrap';
@@ -688,6 +688,30 @@ export default function AdjustingReport(props) {
         })
     }
     const [showMappingPopUp, setShowMappingPopUp] = useState(false)
+
+    const deleteHandle = () => {
+        if (location.state.Type === "Report") {
+
+            deleteReport(currentProject, RId)
+                .then(res => {
+                    nav('/project/gallery')
+                })
+                .catch(err => {
+                    Store.addNotification(content("Fail", err.response.data, "danger"))
+                    return
+                })
+        }
+        else
+            deleteTemplate(RId)
+                .then(res => {
+                    nav('/project/gallery')
+                })
+                .catch(err => {
+                    Store.addNotification(content("Fail", err.response.data, "danger"))
+                    return
+                })
+
+    }
     const EditUI = () => {
         return <div>
             <div>
@@ -834,6 +858,8 @@ export default function AdjustingReport(props) {
                             copyShape={copyShape}
                             isEdit={isEdit}
                             switchToViewModeHandle={() => { switchToViewMode() }}
+                            saveHandle={updateSubmit}
+                            deleteHandle={deleteHandle}
                         />
 
                         <ToolBar

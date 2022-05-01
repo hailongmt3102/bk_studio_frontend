@@ -51,8 +51,14 @@ export default function MenuBar(props) {
                         {
                             props.isEdit ?
                                 <ThreeDotButton className="col-1 p-4 btn" style={{ "minHeight": "80px", "text-align": "center" }} title={'File'} items={file_option} icons_list={file_option_icon_list} onClick={(val) => {
-                                    if (val = "New") {
+                                    if (val == "New") {
                                         props.newFileHandle()
+                                    }
+                                    else if (val == "Save") {
+                                        props.saveHandle()
+                                    }
+                                    else if (val == "Delete") {
+                                        props.deleteHandle()
                                     }
                                 }} />
                                 : <button className='btn'>File</button>
