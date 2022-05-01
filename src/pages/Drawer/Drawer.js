@@ -5,6 +5,7 @@ import Workspace from "./Components/Workspace";
 import { getListProject } from 'api/Project'
 import Personal from "./Components/Personal";
 import MenuIcon from 'resources/icons/menu.svg'
+import threeLine from "resources/icons/threeLine.svg"
 import './Drawer.css'
 
 export default function Drawer(props) {
@@ -103,11 +104,11 @@ export default function Drawer(props) {
 	}
 
 	return props.state !== "" ? (
-		<div className="">
-			<div className="m-2 drawer-button" onClick={() => {
+		<div>
+			<div className="m-2  text-center drawer-button" style={{ width: "40px", height: "40px" }} onClick={() => {
 				setToggle(!toggle)
 			}}>
-				<img src={MenuIcon} width="40px" height="40px" />
+				<div className="mt-1 m-auto"><img src={threeLine} width="28px" height="28px" /></div>
 			</div>
 			<div className={`drawer ${toggle ? "enter" : "exit"}`}>
 				<ul className="list-group">

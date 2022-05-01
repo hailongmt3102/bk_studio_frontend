@@ -692,7 +692,7 @@ export default function SqlPopUp(props) {
                     className="border-0 mb-2 m-0 p-0 PrimaryFontColor size32 customFontBold"
                 /></div>
             case 2:
-                return <div className='customFontBold PrimaryFontColor size32'>Select X column</div>
+                return <div className='customFontBold PrimaryFontColor size32'>Select Axis</div>
             case 3:
                 return <div className='customFontBold PrimaryFontColor size32'>SQL function</div>
             default:

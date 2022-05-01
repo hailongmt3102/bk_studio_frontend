@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import AdjustedDropdown from '../components/AdjustedDropdown'
 import profile from "resources/icons/profile.svg"
 import logout_icon from "resources/icons/logout_icon.svg"
+import logoapp from "resources/icons/logoapp.svg"
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import Avatar from '@mui/material/Avatar';
@@ -30,6 +31,7 @@ export default function Header() {
         visible ?
             <div className='text-center row m-0 p-0'>
                 <div className='col-2 m-0 p-0' >
+                    <img className='mt-2 ms-5' src={logoapp} height="50%" width="50%" />
                 </div>
                 <div className='col-8 m-0 p-0 mt-4'  >
                     <Autocomplete
