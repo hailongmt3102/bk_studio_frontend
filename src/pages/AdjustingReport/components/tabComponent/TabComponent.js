@@ -77,6 +77,7 @@ export default function TabComponent(props) {
 
 	}
 
+
 	return <div className="col-2 ">
 		<MappingPopUp
 			componentType={props.data.data.type}
@@ -87,6 +88,7 @@ export default function TabComponent(props) {
 			onComplete={buildQueryComplete}
 			commandData={commandData}
 			dataSource={props.dataSource}
+
 
 		/>
 
@@ -103,7 +105,7 @@ export default function TabComponent(props) {
 					<h4>Field: {commandData.data.select.join(', ')}</h4>
 				</div>
 				<div> <button className='btn-lg btn-success text-center border-0'
-					onClick={() => { setShowMappingPopUp(true) }}>
+					onClick={() => { if (props.data.active) setShowMappingPopUp(true) }}>
 					<div>Edit data</div>
 				</button></div>
 			</Tab>

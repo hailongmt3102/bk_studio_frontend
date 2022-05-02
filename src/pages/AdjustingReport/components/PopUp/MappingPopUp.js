@@ -3,8 +3,9 @@ import { Modal, Button } from 'react-bootstrap'
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import change from 'resources/icons/change.svg'
-
-
+import { Form } from 'react-bootstrap'
+import add_grey from 'resources/icons/add_grey.svg'
+import substract from 'resources/icons/substract.svg'
 
 export default function MappingPopUp(props) {
     const [step, setStep] = useState(1)
@@ -53,6 +54,7 @@ export default function MappingPopUp(props) {
         // props.onComplete("example", query)
         props.handleClose()
     }
+    useEffect(() => { setStep(1) }, [props.show])
 
     useEffect(() => {
         set_data_source(Object.keys(props.dataSource))
@@ -98,36 +100,11 @@ export default function MappingPopUp(props) {
                 return null
         }
     }
+    const [showField, setShowField] = useState(true)
 
     const MappingXColumComponent = () => {
-        // return <div className='row m-0 p-0 pe-5'>
-        //     <div className='col-5 text-center m-auto m-0 p-0'> Tên cột cũ </div>
-        //     <div className='col-2  m-0 p-0'> <img src={change} /> </div>
-        //     <div className='col-4  m-0 p-0'>
-        //         <Autocomplete
-        //             id="tags-standard"
-        //             options={selectFrom.reduce((pre, cur) => [...pre, ...props.dataSource[cur]], [])}
-        //             renderInput={(params) => (
-        //                 <TextField
-        //                     {...params}
-        //                     variant="standard"
-        //                     placeholder="Fields"
-        //                 />
-        //             )}
-        //             onChange={(e, val) => {
-        //                 setSelectXAxis(val)
-        //             }}
-        //         />
-        //     </div>
-        //     <div className='col-1'></div>
-        // </div>
-        return {
-
-        }
-    }
-    const MappingDataComponent = () => {
         return <div className='row m-0 p-0 pe-5'>
-            <div className='col-5 text-center m-auto m-0 p-0'> Tên cột cũ </div>
+            <div className='col-5 text-center m-auto m-0 p-0'>{props.commandData.data.select[0]} </div>
             <div className='col-2  m-0 p-0'> <img src={change} /> </div>
             <div className='col-4  m-0 p-0'>
                 <Autocomplete
@@ -146,6 +123,120 @@ export default function MappingPopUp(props) {
                 />
             </div>
             <div className='col-1'></div>
+        </div>
+
+
+    }
+    const MappingDataComponent = () => {
+        return <div>{props.commandData.data.select.map((ele, index) => (props.componentType === "Table" || index != 0) && <div className='row mt-4 m-0 p-0 pe-5'>
+            <div className='col-2 text-center m-auto m-0 p-0'> {ele} </div>
+            <div className='col-2 m-auto  m-0 p-0'> <img src={change} /> </div>
+            <div className='col-8'>
+                <div className='row'>
+                    <div className='col'>
+                        <Form.Check
+                            onClick={(e) => {
+                                setShowField(true)
+                            }}
+                            label="Field"
+                            name={`group${index}`}
+                            type='radio'
+                            checked={showField}
+                        />
+
+                    </div>
+                    <div className='col'>
+                        {showField === true ? <div>
+                            <Autocomplete
+                                multiple
+                                id="tags-standard"
+                                options={[]}
+                                renderInput={(params) => (
+                                    <TextField
+                                        {...params}
+                                        variant="standard"
+                                        placeholder="Fields"
+                                    />
+                                )}
+                                onChange={(e, val) => {
+                                    //setSelectedField(val)
+                                }}
+                            />
+                        </div> : <div className='col-11 m-auto'></div>}
+                    </div>
+                </div>
+                <div className='row mt-2'>
+                    <div className='col'>
+                        <Form.Check
+                            onClick={(e) => {
+                                setShowField(false)
+                            }}
+                            label="Function"
+                            name={`group${index}`}
+                            type='radio'
+
+                        />
+                    </div>
+                    {
+                        showField === false ? <div className='col'>
+                            <Autocomplete
+                                id="size-small-standard"
+                                size="small"
+                                options={[
+                                    'COUNT',
+                                    'SUM',
+                                    'MAX',
+                                    'MIN',
+                                    'AVG',
+                                ]}
+                                renderInput={(params) =>
+                                    <TextField
+                                        {...params}
+                                        variant="standard"
+                                        placeholder="Fx"
+                                    />
+                                }
+                                onChange={(e, value) => {
+                                    //updateFunctionClause(index, { ...clause, op: value ?? "" })
+                                }}
+                            />
+                        </div> : null
+                    }
+                    {
+                        showField === false ? <div className='col'>
+                            <Autocomplete
+                                id="function"
+                                size="small"
+                                options={selectFrom.reduce((pre, cur) => [...pre, ...props.dataSource[cur]], [])}
+                                renderInput={(params) =>
+                                    <TextField
+                                        {...params}
+                                        variant="standard"
+                                        placeholder="Field"
+                                    />
+                                }
+                                onChange={(e, value) => {
+                                    //updateFunctionClause(index, { ...clause, field: value ?? "" })
+                                }}
+                            />
+                        </div> : null
+                    }
+                    {
+                        showField === false ? <div className='col'>
+                            <TextField
+                                id="standard-textarea"
+                                placeholder="As Name"
+                                variant="standard"
+                                onChange={e => {
+                                    // updateFunctionClause(index, { ...clause, as: e.target.value ?? "" })
+                                }}
+                            />
+                        </div> : null
+                    }
+                </div>
+            </div>
+        </div>
+        )}
         </div>
     }
     const bodyComponent = () => {

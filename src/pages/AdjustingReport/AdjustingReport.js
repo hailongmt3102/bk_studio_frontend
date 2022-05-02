@@ -663,7 +663,22 @@ export default function AdjustingReport(props) {
                 }
             })
         } else {
-
+            setTabData({
+                active: false,
+                data: {
+                    title: "",
+                    script: "",
+                    type: ""
+                },
+                style: {
+                    font: "",
+                    size: "",
+                    decoration: "",
+                    alignment: "",
+                    fill: "",
+                    stroke: ""
+                }
+            })
         }
     }
 
@@ -694,9 +709,7 @@ export default function AdjustingReport(props) {
 
     // trigger on change focus component
     useEffect(() => {
-        if (followingIndexComponent != -1) {
-            onChangeFocusShape(followingIndexComponent);
-        }
+        onChangeFocusShape(followingIndexComponent);
     }, [followingIndexComponent])
 
     const [reportInformation, setReportInformation] = useState(
