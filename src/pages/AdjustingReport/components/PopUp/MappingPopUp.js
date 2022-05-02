@@ -54,7 +54,7 @@ export default function MappingPopUp(props) {
         // props.onComplete("example", query)
         props.handleClose()
     }
-    useEffect(() => { setStep(1) }, [props.show])
+    useEffect(() => { setStep(1); console.log(props.commandData.data) }, [props.show])
 
     useEffect(() => {
         set_data_source(Object.keys(props.dataSource))
@@ -62,6 +62,38 @@ export default function MappingPopUp(props) {
             setFieldList([...fieldList, ...props.dataSource[key]])
         })
     }, [props.dataSource])
+
+    useEffect(() => {
+
+        let whereClauseMap = props.commandData.data.where.map(w => {
+            return {
+                field: "",
+                op: "",
+                value: 0
+            }
+        })
+
+        setWhere_clause(whereClauseMap)
+
+        let HavingClauseMap = props.commandData.data.having.map(w => {
+            return {
+                field: "",
+                op: "",
+                value: 0
+            }
+        })
+
+        setHaving_clause(HavingClauseMap)
+
+        let OrderByClauseMap = props.commandData.data.having.map(w => {
+            return {
+                fx: "",
+                field: ""
+            }
+        })
+
+        setOrder_clause(OrderByClauseMap)
+    }, [props.commandData])
 
 
     const selectTableComponent = () => {
@@ -93,14 +125,14 @@ export default function MappingPopUp(props) {
             case 1:
                 return <div className='customFontBold PrimaryFontColor size32'>Select Table</div>
             case 2:
-                return <div className='customFontBold PrimaryFontColor size32'>Mapping X column</div>
+                return <div className='customFontBold PrimaryFontColor size32'>Edit Axis</div>
             case 3:
-                return <div className='customFontBold PrimaryFontColor size32'>Mapping data</div>
+                return <div className='customFontBold PrimaryFontColor size32'>Edit data</div>
             default:
                 return null
         }
     }
-    const [showField, setShowField] = useState(true)
+    const [showField, setShowField] = useState([])
 
     const MappingXColumComponent = () => {
         return <div className='row m-0 p-0 pe-5'>
@@ -127,116 +159,70 @@ export default function MappingPopUp(props) {
 
 
     }
+    {/* <div className='col-2 m-auto  m-0 p-0'> <img src={change} /> </div> */ }
     const MappingDataComponent = () => {
-        return <div>{props.commandData.data.select.map((ele, index) => (props.componentType === "Table" || index != 0) && <div className='row mt-4 m-0 p-0 pe-5'>
-            <div className='col-2 text-center m-auto m-0 p-0'> {ele} </div>
-            <div className='col-2 m-auto  m-0 p-0'> <img src={change} /> </div>
-            <div className='col-8'>
-                <div className='row'>
-                    <div className='col'>
-                        <Form.Check
-                            onClick={(e) => {
-                                setShowField(true)
-                            }}
-                            label="Field"
-                            name={`group${index}`}
-                            type='radio'
-                            checked={showField}
-                        />
+        return <div>
+            {props.commandData.data.select.map((ele, index) =>
+                (props.componentType === "Table" || index != 0) &&
+                <div className='row mt-4 m-0 p-0 pe-5'>
+                    <div className='col-2 text-center m-auto m-0 p-0'> {ele} </div>
+                    <div className='col-8'>
+                        {fieldClause()}
+                        {functionClause()}
 
-                    </div>
-                    <div className='col'>
-                        {showField === true ? <div>
-                            <Autocomplete
-                                multiple
-                                id="tags-standard"
-                                options={[]}
-                                renderInput={(params) => (
-                                    <TextField
-                                        {...params}
-                                        variant="standard"
-                                        placeholder="Fields"
-                                    />
-                                )}
-                                onChange={(e, val) => {
-                                    //setSelectedField(val)
-                                }}
-                            />
-                        </div> : <div className='col-11 m-auto'></div>}
                     </div>
                 </div>
-                <div className='row mt-2'>
-                    <div className='col'>
-                        <Form.Check
-                            onClick={(e) => {
-                                setShowField(false)
-                            }}
-                            label="Function"
-                            name={`group${index}`}
-                            type='radio'
-
-                        />
-                    </div>
-                    {
-                        showField === false ? <div className='col'>
-                            <Autocomplete
-                                id="size-small-standard"
-                                size="small"
-                                options={[
-                                    'COUNT',
-                                    'SUM',
-                                    'MAX',
-                                    'MIN',
-                                    'AVG',
-                                ]}
-                                renderInput={(params) =>
-                                    <TextField
-                                        {...params}
-                                        variant="standard"
-                                        placeholder="Fx"
-                                    />
-                                }
-                                onChange={(e, value) => {
-                                    //updateFunctionClause(index, { ...clause, op: value ?? "" })
-                                }}
-                            />
-                        </div> : null
-                    }
-                    {
-                        showField === false ? <div className='col'>
-                            <Autocomplete
-                                id="function"
-                                size="small"
-                                options={selectFrom.reduce((pre, cur) => [...pre, ...props.dataSource[cur]], [])}
-                                renderInput={(params) =>
-                                    <TextField
-                                        {...params}
-                                        variant="standard"
-                                        placeholder="Field"
-                                    />
-                                }
-                                onChange={(e, value) => {
-                                    //updateFunctionClause(index, { ...clause, field: value ?? "" })
-                                }}
-                            />
-                        </div> : null
-                    }
-                    {
-                        showField === false ? <div className='col'>
-                            <TextField
-                                id="standard-textarea"
-                                placeholder="As Name"
-                                variant="standard"
-                                onChange={e => {
-                                    // updateFunctionClause(index, { ...clause, as: e.target.value ?? "" })
-                                }}
-                            />
-                        </div> : null
-                    }
+            )}
+            <div className='row '>
+                <div className='col-1 m-auto' >
+                    WHERE
+                </div>
+                <div className='col m-auto '>
+                    <button type="button" class="btn btn-sm ms-2 p-2" onClick={() => {
+                        setWhere_clause([...where_clause, {
+                            field: "",
+                            op: "",
+                            value: 0
+                        }])
+                    }}><img src={add_grey} height="30px" width="30px" /></button>
                 </div>
             </div>
-        </div>
-        )}
+            {whereClause()}
+            {groupByClause()}
+            <div className='row '>
+                <div className='col-1 m-auto ' >
+                    HAVING
+                </div>
+                <div className='col m-auto '>
+                    <button type="button" class="btn btn-sm ms-2 p-2" onClick={() => {
+                        setHaving_clause([...having_clause, {
+                            field: "",
+                            op: "",
+                            value: 0
+                        }])
+                    }}><img src={add_grey} height="30px" width="30px" /></button>
+                </div>
+            </div>
+            {havingByClause()}
+            <div className='row'>
+                <div className='col-4'>
+                    <div className='row  m-auto m-0 p-0'>
+                        <div className='col-5  m-auto m-0 p-0'>
+                            ORDER BY
+                        </div>
+                        <div className='col m-auto m-0 p-0 '>
+                            <button type="button" class="btn btn-sm ms-2 p-2" onClick={() => {
+                                setOrder_clause([...order_clause, {
+                                    fx: "",
+                                    field: ""
+                                }])
+                            }}><img src={add_grey} height="30px" width="30px" /></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {orderByClause()}
+
         </div>
     }
     const bodyComponent = () => {
@@ -287,6 +273,367 @@ export default function MappingPopUp(props) {
                 return null
         }
     }
+
+
+    const op = ['=', "!=", ">", "<", ">=", "<="];
+    const [selectedField, setSelectedField] = useState([])
+    const [groupBy, setGroupBy] = useState([])
+    const [function_clause, setFunction_clause] = useState([])
+    const [where_clause, setWhere_clause] = useState([])
+    const [having_clause, setHaving_clause] = useState([])
+    const [order_clause, setOrder_clause] = useState([])
+    const updateFunctionClause = (index, value) => {
+        setFunction_clause([...function_clause.slice(0, index), value, ...function_clause.slice(index + 1)])
+    }
+    const updateWhereClause = (index, value) => {
+        setWhere_clause([...where_clause.slice(0, index), value, ...where_clause.slice(index + 1)])
+    }
+    const updateHavingClause = (index, value) => {
+        setHaving_clause([...having_clause.slice(0, index), value, ...having_clause.slice(index + 1)])
+    }
+    const updateOrderClause = (index, value) => {
+        setOrder_clause([...order_clause.slice(0, index), value, ...order_clause.slice(index + 1)])
+    }
+    const fieldClause = (index) => {
+        return <div>
+            <div className='row m-0 p-0'> SELECT</div>
+            <div className='row m-0 p-0 mt-3'>
+                <div className='col m-0 p-0'>
+                    <Form.Check
+                        onClick={(e) => {
+                            setShowField(true)
+                        }}
+                        label="Field"
+                        name={`group${index}`}
+                        type='radio'
+                        checked={showField}
+                    />
+                </div>
+                <div className='col m-0 p-0'>
+                    {showField === true ? <div>
+                        <Autocomplete
+                            multiple
+                            id="tags-standard"
+                            options={[]}
+                            renderInput={(params) => (
+                                <TextField
+                                    {...params}
+                                    variant="standard"
+                                    placeholder="Fields"
+                                />
+                            )}
+                            onChange={(e, val) => {
+                                setSelectedField(val)
+                            }}
+                        />
+                    </div> : <div className='col-11 m-auto'></div>}
+                </div>
+            </div>
+        </div>
+    }
+    const functionClause = (index) => {
+        return <div className='row mt-2'>
+            <div className='col'>
+                <Form.Check
+                    onClick={(e) => {
+                        setShowField(false)
+                    }}
+                    label="Function"
+                    name={`group${index}`}
+                    type='radio'
+
+                />
+            </div>
+            {
+                showField === false ? <div className='col'>
+                    <Autocomplete
+                        id="size-small-standard"
+                        size="small"
+                        options={[
+                            'COUNT',
+                            'SUM',
+                            'MAX',
+                            'MIN',
+                            'AVG',
+                        ]}
+                        renderInput={(params) =>
+                            <TextField
+                                {...params}
+                                variant="standard"
+                                placeholder="Fx"
+                            />
+                        }
+                        onChange={(e, value) => {
+                            // updateFunctionClause(index, { ...clause, op: value ?? "" })
+                        }}
+                    />
+                </div> : null
+            }
+            {
+                showField === false ? <div className='col'>
+                    <Autocomplete
+                        id="function"
+                        size="small"
+                        options={selectFrom.reduce((pre, cur) => [...pre, ...props.dataSource[cur]], [])}
+                        renderInput={(params) =>
+                            <TextField
+                                {...params}
+                                variant="standard"
+                                placeholder="Field"
+                            />
+                        }
+                        onChange={(e, value) => {
+                            //updateFunctionClause(index, { ...clause, field: value ?? "" })
+                        }}
+                    />
+                </div> : null
+            }
+            {
+                showField === false ? <div className='col'>
+                    <TextField
+                        id="standard-textarea"
+                        placeholder="As Name"
+                        variant="standard"
+                        onChange={e => {
+                            // updateFunctionClause(index, { ...clause, as: e.target.value ?? "" })
+                        }}
+                    />
+                </div> : null
+            }
+        </div>
+    }
+
+
+    const whereClause = () => {
+        return <div>
+            {
+                where_clause.map((clause, index) =>
+                    <div className='row m-0 p-0'>
+                        <div></div>
+                        {props.commandData.data.where[index]}
+                        <div className='col-5  ms-1 m-auto'>
+                            <Autocomplete
+                                className='ms-5'
+                                id="size-small-standard"
+                                size="small"
+                                options={selectFrom.reduce((pre, cur) => [...pre, ...props.dataSource[cur]], [])}
+                                renderInput={(params) =>
+                                    <TextField
+                                        {...params}
+                                        variant="standard"
+                                        placeholder="Field "
+                                    />
+                                }
+                                onChange={(e, value) => {
+                                    updateWhereClause(index, { ...clause, field: value ?? "" })
+                                }}
+                            />
+
+                        </div>
+                        <div className='col-2 m-auto'>
+                            <Autocomplete
+                                id="size-small-standard"
+                                size="small"
+                                options={op}
+                                renderInput={(params) =>
+                                    <TextField
+                                        {...params}
+                                        variant="standard"
+                                        placeholder="Fx"
+                                    />
+                                }
+                                onChange={(e, value) => {
+                                    updateWhereClause(index, { ...clause, op: value ?? "" })
+                                }}
+                            />
+                        </div>
+                        <div className='col-2 m-auto'>
+                            <TextField
+                                id="standard-textarea"
+                                placeholder="Value"
+                                multiline
+                                variant="standard"
+                                onChange={(e) => {
+                                    updateWhereClause(index, { ...clause, value: e.target.value ?? "" })
+                                }}
+                            />
+                        </div>
+                        <div className='col-2'>
+                            <button type="button" class="btn btn-sm p-2"
+                                onClick={() => {
+                                    setWhere_clause([...where_clause.slice(0, index), ...where_clause.slice(index + 1)])
+                                }}
+                            >
+                                <img src={substract} height="30px" width="30px" />
+                            </button>
+                        </div>
+                    </div>
+                )
+            }
+        </div>
+    }
+
+    const groupByClause = () => {
+        return <div className='row'>
+            <div className='' >
+                GROUP BY
+            </div>
+            <div className='row mt-2 ms-2 mb-2'>
+                <div className='col'>{props.commandData.data.groupby.join(", ")}</div>
+                <div className='col'>
+                    <Autocomplete
+                        className='ms-5 me-5'
+                        multiple
+                        id="tags-standard"
+                        options={selectFrom.reduce((pre, cur) => [...pre, ...props.dataSource[cur]], [])}
+                        renderInput={(params) => (
+                            <TextField
+                                {...params}
+                                variant="standard"
+                                placeholder="Fields"
+                            />
+                        )}
+                        onChange={(e, val) => {
+                            setGroupBy(val)
+                        }}
+                    />
+                </div>
+            </div>
+        </div>
+    }
+    const havingByClause = () => {
+        return <div>
+            {
+                having_clause.map((clause, index) =>
+                    <div className='row m-0 p-0'>
+                        <div className='col-2'>
+                            {props.commandData.data.having[index]}
+                        </div>
+                        <div className='col-3  m-auto'>
+                            <div className='ms-5'>
+                                <Autocomplete
+                                    id="size-small-standard"
+                                    size="small"
+                                    options={selectedField}
+                                    renderInput={(params) => (
+                                        <TextField
+                                            {...params}
+                                            variant="standard"
+                                            placeholder="Field"
+                                        />
+                                    )}
+                                    onChange={(_, value) => {
+                                        updateHavingClause(index, { ...clause, field: value })
+                                    }}
+                                />
+                            </div>
+                        </div>
+                        <div className='col-2 m-auto'>
+                            <Autocomplete
+                                id="size-small-standard"
+                                size="small"
+                                options={op}
+                                renderInput={(params) => (
+                                    <TextField
+                                        {...params}
+                                        variant="standard"
+                                        placeholder="Fx"
+                                    />
+                                )}
+                                onChange={(_, value) => {
+                                    updateHavingClause(index, { ...clause, op: value })
+                                }}
+                            />
+                        </div>
+                        <div className='col-2 m-auto'>
+                            <TextField
+                                id="standard-textarea"
+                                placeholder="Value"
+                                multiline
+                                variant="standard"
+                                onChange={e => {
+                                    updateHavingClause(index, { ...clause, value: e.target.value })
+                                }}
+                            />
+                        </div>
+                        <div className='col-2'>
+                            <button type="button" class="btn btn-sm ms-2 p-2" onClick={() => {
+                                setHaving_clause([...having_clause.slice(0, index), ...having_clause.slice(index + 1)])
+                            }}
+                            >
+                                <img src={substract} height="30px" width="30px" />
+                            </button>
+                        </div>
+                    </div>
+                )
+            }
+        </div>
+    }
+    const orderByClause = () => {
+        return <div>
+            <div className='row p-0 m-0 mt-3'>
+                {
+                    order_clause.map((clause, index) =>
+                        <div className='row'>
+                            <div className='col-2'>{props.commandData.data.orderby[index]}</div>
+                            <div className='col-3 m-auto'>
+                                <div className='ms-3'>
+                                    <Autocomplete
+                                        className='ms-5'
+                                        id="size-small-standard"
+                                        size="small"
+                                        options={[
+                                            'ASC',
+                                            'DESC',
+                                        ]}
+                                        renderInput={(params) => (
+                                            <TextField
+                                                {...params}
+                                                variant="standard"
+                                                placeholder="Fx"
+                                            />
+                                        )}
+                                        onChange={(e, value) => {
+                                            updateOrderClause(index, { ...clause, fx: value ?? "" })
+                                        }}
+                                    />
+                                </div>
+                            </div>
+                            <div className='col-5 m-auto'>
+                                <Autocomplete
+                                    id="size-small-standard"
+                                    size="small"
+                                    options={selectFrom.reduce((pre, cur) => [...pre, ...props.dataSource[cur]], [])}
+                                    renderInput={(params) => (
+                                        <TextField
+                                            {...params}
+                                            variant="standard"
+                                            //label="Size small"
+                                            placeholder="Field"
+                                        />
+                                    )}
+                                    onChange={(e, value) => {
+                                        updateOrderClause(index, { ...clause, field: value ?? "" })
+                                    }}
+                                />
+                            </div>
+                            <div className='col-2 m-auto'>
+                                <button type="button" class="btn btn-sm ms-2 p-2" onClick={() => {
+                                    setOrder_clause([...order_clause.slice(0, index), ...order_clause.slice(index + 1)])
+                                }}
+                                >
+                                    <img src={substract} height="30px" width="30px" />
+                                </button>
+                            </div>
+                        </div>
+                    )
+                }
+
+
+            </div>
+        </div>
+    }
+
     return (
         <Modal
             show={props.show}
