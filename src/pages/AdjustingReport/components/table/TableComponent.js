@@ -1,8 +1,15 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import { Rnd } from 'react-rnd'
 import './TableComponent.css'
 
+const selectReg = /select.*(?= from)/
 export default function TableComponent(props) {
+    const [columns, setColumns] = useState([])
+    useEffect(() => {
+        let selectArray = (selectReg.exec(props.data.QueryCommand) ?? [""])[0].replace("select ", "").split(",").map(ele => ele.trim())
+        setColumns(selectArray)
+    }, [props.data.data])
+    
     return (
         <Rnd
             disableDragging={props.disableDragging}
@@ -23,7 +30,22 @@ export default function TableComponent(props) {
             className={`${props.classstyle} component-container`}
         >
             {
-                props.data.data !== undefined ?
+                props.data.data !== undefined && props.data.data.length == 0 &&
+                <div>
+                    <h4 className='ms-2'>{props.data.Title}</h4>
+                    <table class='component-table'>
+                        <thead>
+                            <tr>
+                                {
+                                    columns.map(ele => <th>{ele}</th>)
+                                }
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            }
+            {
+                props.data.data !== undefined && props.data.data.length > 0 ?
                     <div>
                         <h4 className='ms-2'>{props.data.Title}</h4>
                         <table class='component-table'>

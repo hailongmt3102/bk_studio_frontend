@@ -73,8 +73,9 @@ export default function TabComponent(props) {
 
 	const [showMappingPopUp, setShowMappingPopUp] = useState(false)
 
-	const buildQueryComplete = () => {
-
+	const buildQueryComplete = (query) => {
+		// update this query to adjusting report
+		props.updateQueryOfAComponent(query)
 	}
 
 
