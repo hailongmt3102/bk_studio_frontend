@@ -24,6 +24,10 @@ const createAReportByTemplate = (RId, data) => {
     return axiosClient.post(`/template/${RId}/makeReport`, data)
 }
 
+const getAllDatasourceNameInTemplate = (RId) => {
+    return axiosClient.get(`/template/${RId}/dataSourceName`)
+}
+
 
 
 
@@ -33,5 +37,6 @@ export {
     unlikeTemplate,
     deleteTemplate,
     updateTemplateInformation,
-    createAReportByTemplate
+    createAReportByTemplate,
+    getAllDatasourceNameInTemplate
 }

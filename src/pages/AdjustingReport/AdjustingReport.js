@@ -1,6 +1,6 @@
 import { getColumnsOfTable, GetDataSourcesListInformationInProject, QueryData as QueryDataApi } from "api/DataSources";
 import { createNewComponent as createNewComponentApi, createNewReport, deleteShape as deleteShapeApi, getAllComponent, getReportInformation, updateAComponent, updateReportInformation, saveAsCopy, saveAsTemplate, getAllDatasourceNameInReport, deleteReport } from 'api/Report';
-import { createAReportByTemplate, deleteTemplate } from "api/Templates"
+import { createAReportByTemplate, deleteTemplate, getAllDatasourceNameInTemplate } from "api/Templates"
 import TabComponent from "pages/AdjustingReport/components/tabComponent/TabComponent";
 import { useEffect, useRef, useState } from "react";
 import { Form } from 'react-bootstrap';
@@ -697,6 +697,18 @@ export default function AdjustingReport(props) {
                     return
                 })
         }
+        else {
+            getAllDatasourceNameInTemplate(RId)
+                .then(res => {
+                    setListDataSourcesName(res.data)
+                    // console.log("listdata", res.data)
+                })
+                .catch(err => {
+                    Store.addNotification(content("Fail", err.response.data, "danger"))
+                    return
+                })
+        }
+
 
         // register mouse event
         // adjustedMouseEvent()
