@@ -14,47 +14,64 @@ export default function MappingPopUp(props) {
     const [selectXAxis, setSelectXAxis] = useState(null)
     const [selectFrom, setSelectFrom] = useState([])
 
+    const op = ['=', "!=", ">", "<", ">=", "<="];
+    const [selectedField, setSelectedField] = useState([])
+    const [groupBy, setGroupBy] = useState([])
+
+    const [select_clause, setSelect_clause] = useState([])
+    const [function_clause, setFunction_clause] = useState([])
+    const [where_clause, setWhere_clause] = useState([])
+    const [having_clause, setHaving_clause] = useState([])
+    const [order_clause, setOrder_clause] = useState([])
+
+
     const submit = () => {
-        // if (selectedField.length == 0 && function_clause.length == 0) {
-        //     alert("Nothing to compute")
-        //     return
-        // }
-        // if (selectFrom.length > 1) {
-        //     alert("Multi table now is not available")
-        //     return
-        // }
-        // let query = "select"
-        // if (selectXAxis != null) query += ` ${selectXAxis},`
-        // // select fields component
-        // if (selectedField.length > 0 && function_clause.length == 0) {
-        //     query += ` ${selectedField.join(',')}`
-        // } else if (selectedField.length == 0 && function_clause.length > 0) {
-        //     query += ` ${function_clause.map(clause => `${clause.op}(${clause.field})`).join(',')}`
-        // } else {
-        //     query += ` ${selectedField.join(',')} ,${function_clause.map(clause => `${clause.op}(${clause.field})`).join(',')}`
-        // }
-        // // from component
-        // query += ` from ${selectFrom[0]}`
-        // // where
-        // if (where_clause.length > 0) {
-        //     query += ` where ${where_clause.map(where => `${where.field} ${where.op} ${where.value}`).join(' and ')}`
-        // }
-        // // group by
-        // if (groupBy.length > 0) {
-        //     query += ` group by ${groupBy.join(',')}`
-        // }
-        // // having
-        // if (having_clause.length > 0) {
-        //     query += ` having ${having_clause.map(having => `${having.field} ${having.op} ${having.value}`).join(' and ')}`
-        // }
-        // // order by
-        // if (order_clause.length > 0) {
-        //     query += ` order by ${order_clause.map(order => `${order.field} ${order.fx}`).join(',')}`
-        // }
-        // props.onComplete("example", query)
+        let selectclause = select_clause.filter(ele => {
+            if (!ele.active) return false
+            if (ele.isField && ele.field != "") return true
+            if (!ele.isField && ele.op != "" && ele.field != "") return true
+            return false
+        })
+        let whereclause = where_clause.filter(ele => ele.active && ele.op != "" && ele.value != "" && ele.field != "")
+        let havingclause = having_clause.filter(ele => ele.active && ele.fx != "" && ele.field != "")
+        let orderclause = order_clause.filter(ele => ele.active && ele.fx != "" && ele.field != "")
+
+        if (selectclause.length == 0) {
+            alert("Nothing to compute")
+            return
+        }
+
+        if (selectFrom.length > 1) {
+            alert("Multi table now is not available")
+            return
+        }
+        let query = "select "
+
+        query += selectclause.map(s => s.isField ? `${s.field}` : `${s.op}(${s.field})${s.as != "" ? ` as ${s.as}` : ""}`).join(',')
+        // from component
+        query += ` from ${selectFrom[0]}`
+        // where
+        if (whereclause.length > 0) {
+            query += ` where ${whereclause.map(where => `${where.field} ${where.op} ${where.value}`).join(' and ')}`
+        }
+        // group by
+        if (groupBy.length > 0) {
+            query += ` group by ${groupBy.join(',')}`
+        }
+        // having
+        if (havingclause.length > 0) {
+            query += ` having ${havingclause.map(having => `${having.field} ${having.op} ${having.value}`).join(' and ')}`
+        }
+        // order by
+        if (orderclause.length > 0) {
+            query += ` order by ${orderclause.map(order => `${order.field} ${order.fx}`).join(',')}`
+        }
+        props.onComplete(query)
         props.handleClose()
     }
-    useEffect(() => { setStep(1); console.log(props.commandData.data) }, [props.show])
+    useEffect(() => {
+        setStep(1)
+    }, [props.show])
 
     useEffect(() => {
         set_data_source(Object.keys(props.dataSource))
@@ -65,11 +82,23 @@ export default function MappingPopUp(props) {
 
     useEffect(() => {
 
+        let selectMap = props.commandData.data.select.map(s => {
+            return {
+                isField: true,
+                field: "",
+                op: "",
+                as: "",
+                active: true
+            }
+        })
+        setSelect_clause(selectMap)
+
         let whereClauseMap = props.commandData.data.where.map(w => {
             return {
                 field: "",
                 op: "",
-                value: 0
+                value: 0,
+                active: true
             }
         })
 
@@ -79,7 +108,8 @@ export default function MappingPopUp(props) {
             return {
                 field: "",
                 op: "",
-                value: 0
+                value: 0,
+                active: true
             }
         })
 
@@ -88,7 +118,8 @@ export default function MappingPopUp(props) {
         let OrderByClauseMap = props.commandData.data.having.map(w => {
             return {
                 fx: "",
-                field: ""
+                field: "",
+                active: true
             }
         })
 
@@ -162,17 +193,28 @@ export default function MappingPopUp(props) {
     {/* <div className='col-2 m-auto  m-0 p-0'> <img src={change} /> </div> */ }
     const MappingDataComponent = () => {
         return <div>
-            {props.commandData.data.select.map((ele, index) =>
-                (props.componentType === "Table" || index != 0) &&
-                <div className='row mt-4 m-0 p-0 pe-5'>
-                    <div className='col-2 text-center m-auto m-0 p-0'> {ele} </div>
-                    <div className='col-8'>
-                        {fieldClause()}
-                        {functionClause()}
-
+            {
+                select_clause.map((ele, index) =>
+                    (props.componentType === "Table" || index != 0) && ele.active &&
+                    < div className='row mt-4 m-0 p-0 pe-5'>
+                        <div className='col'>{props.commandData.data.select[index]}</div>
+                        <div className='col-8'>
+                            {fieldClause(index, ele.isField, ele)}
+                            {functionClause(index, !ele.isField, ele)}
+                        </div>
+                        <div>
+                            <button type="button" class="btn btn-sm p-2"
+                                onClick={() => {
+                                    setSelect_clause([...select_clause.slice(0, index), { ...select_clause[index], active: false }, ...select_clause.slice(index + 1)])
+                                }}
+                            >
+                                <img src={substract} height="30px" width="30px" />
+                            </button>
+                        </div>
                     </div>
-                </div>
-            )}
+                )
+            }
+
             <div className='row '>
                 <div className='col-1 m-auto' >
                     WHERE
@@ -182,7 +224,8 @@ export default function MappingPopUp(props) {
                         setWhere_clause([...where_clause, {
                             field: "",
                             op: "",
-                            value: 0
+                            value: 0,
+                            active: true
                         }])
                     }}><img src={add_grey} height="30px" width="30px" /></button>
                 </div>
@@ -198,7 +241,8 @@ export default function MappingPopUp(props) {
                         setHaving_clause([...having_clause, {
                             field: "",
                             op: "",
-                            value: 0
+                            value: 0,
+                            active: true
                         }])
                     }}><img src={add_grey} height="30px" width="30px" /></button>
                 </div>
@@ -214,7 +258,9 @@ export default function MappingPopUp(props) {
                             <button type="button" class="btn btn-sm ms-2 p-2" onClick={() => {
                                 setOrder_clause([...order_clause, {
                                     fx: "",
-                                    field: ""
+                                    field: "",
+                                    active: true
+
                                 }])
                             }}><img src={add_grey} height="30px" width="30px" /></button>
                         </div>
@@ -274,14 +320,10 @@ export default function MappingPopUp(props) {
         }
     }
 
+    const updateSelectClause = (index, value) => {
+        setSelect_clause([...select_clause.slice(0, index), value, ...select_clause.slice(index + 1)])
+    }
 
-    const op = ['=', "!=", ">", "<", ">=", "<="];
-    const [selectedField, setSelectedField] = useState([])
-    const [groupBy, setGroupBy] = useState([])
-    const [function_clause, setFunction_clause] = useState([])
-    const [where_clause, setWhere_clause] = useState([])
-    const [having_clause, setHaving_clause] = useState([])
-    const [order_clause, setOrder_clause] = useState([])
     const updateFunctionClause = (index, value) => {
         setFunction_clause([...function_clause.slice(0, index), value, ...function_clause.slice(index + 1)])
     }
@@ -294,27 +336,29 @@ export default function MappingPopUp(props) {
     const updateOrderClause = (index, value) => {
         setOrder_clause([...order_clause.slice(0, index), value, ...order_clause.slice(index + 1)])
     }
-    const fieldClause = (index) => {
+
+    const fieldClause = (index, show, ele) => {
         return <div>
-            <div className='row m-0 p-0'> SELECT</div>
             <div className='row m-0 p-0 mt-3'>
                 <div className='col m-0 p-0'>
                     <Form.Check
                         onClick={(e) => {
-                            setShowField(true)
+                            updateSelectClause(index, {
+                                ...ele,
+                                isField: true
+                            })
                         }}
                         label="Field"
                         name={`group${index}`}
                         type='radio'
-                        checked={showField}
+                        checked={show}
                     />
                 </div>
                 <div className='col m-0 p-0'>
-                    {showField === true ? <div>
+                    {show && <div>
                         <Autocomplete
-                            multiple
                             id="tags-standard"
-                            options={[]}
+                            options={selectFrom.reduce((pre, cur) => [...pre, ...props.dataSource[cur]], [])}
                             renderInput={(params) => (
                                 <TextField
                                     {...params}
@@ -323,20 +367,27 @@ export default function MappingPopUp(props) {
                                 />
                             )}
                             onChange={(e, val) => {
-                                setSelectedField(val)
+                                updateSelectClause(index, {
+                                    ...ele,
+                                    field: val
+                                })
                             }}
                         />
-                    </div> : <div className='col-11 m-auto'></div>}
+                    </div>}
                 </div>
             </div>
         </div>
     }
-    const functionClause = (index) => {
+
+    const functionClause = (index, show, ele) => {
         return <div className='row mt-2'>
             <div className='col'>
                 <Form.Check
                     onClick={(e) => {
-                        setShowField(false)
+                        updateSelectClause(index, {
+                            ...ele,
+                            isField: false
+                        })
                     }}
                     label="Function"
                     name={`group${index}`}
@@ -345,7 +396,7 @@ export default function MappingPopUp(props) {
                 />
             </div>
             {
-                showField === false ? <div className='col'>
+                show && <div className='col'>
                     <Autocomplete
                         id="size-small-standard"
                         size="small"
@@ -364,13 +415,16 @@ export default function MappingPopUp(props) {
                             />
                         }
                         onChange={(e, value) => {
-                            // updateFunctionClause(index, { ...clause, op: value ?? "" })
+                            updateSelectClause(index, {
+                                ...ele,
+                                op: value
+                            })
                         }}
                     />
-                </div> : null
+                </div>
             }
             {
-                showField === false ? <div className='col'>
+                show && <div className='col'>
                     <Autocomplete
                         id="function"
                         size="small"
@@ -383,22 +437,28 @@ export default function MappingPopUp(props) {
                             />
                         }
                         onChange={(e, value) => {
-                            //updateFunctionClause(index, { ...clause, field: value ?? "" })
+                            updateSelectClause(index, {
+                                ...ele,
+                                field: value
+                            })
                         }}
                     />
-                </div> : null
+                </div>
             }
             {
-                showField === false ? <div className='col'>
+                show && <div className='col'>
                     <TextField
                         id="standard-textarea"
                         placeholder="As Name"
                         variant="standard"
                         onChange={e => {
-                            // updateFunctionClause(index, { ...clause, as: e.target.value ?? "" })
+                            updateSelectClause(index, {
+                                ...ele,
+                                as: e.target.value
+                            })
                         }}
                     />
-                </div> : null
+                </div>
             }
         </div>
     }
@@ -407,7 +467,7 @@ export default function MappingPopUp(props) {
     const whereClause = () => {
         return <div>
             {
-                where_clause.map((clause, index) =>
+                where_clause.map((clause, index) => clause.active &&
                     <div className='row m-0 p-0'>
                         <div></div>
                         {props.commandData.data.where[index]}
@@ -461,7 +521,7 @@ export default function MappingPopUp(props) {
                         <div className='col-2'>
                             <button type="button" class="btn btn-sm p-2"
                                 onClick={() => {
-                                    setWhere_clause([...where_clause.slice(0, index), ...where_clause.slice(index + 1)])
+                                    setWhere_clause([...where_clause.slice(0, index), { ...where_clause[index], active: false }, ...where_clause.slice(index + 1)])
                                 }}
                             >
                                 <img src={substract} height="30px" width="30px" />
@@ -504,7 +564,7 @@ export default function MappingPopUp(props) {
     const havingByClause = () => {
         return <div>
             {
-                having_clause.map((clause, index) =>
+                having_clause.map((clause, index) => clause.active &&
                     <div className='row m-0 p-0'>
                         <div className='col-2'>
                             {props.commandData.data.having[index]}
@@ -514,7 +574,12 @@ export default function MappingPopUp(props) {
                                 <Autocomplete
                                     id="size-small-standard"
                                     size="small"
-                                    options={selectedField}
+                                    options={select_clause.map(s => {
+                                        if (!s.active || s.field == "") return null
+                                        if (s.isField) return s.field
+                                        else if (s.op != "" && s.field != "") return `${s.op}(${s.field})`
+                                        return null
+                                    }).filter(ele => ele != null)}
                                     renderInput={(params) => (
                                         <TextField
                                             {...params}
@@ -558,7 +623,7 @@ export default function MappingPopUp(props) {
                         </div>
                         <div className='col-2'>
                             <button type="button" class="btn btn-sm ms-2 p-2" onClick={() => {
-                                setHaving_clause([...having_clause.slice(0, index), ...having_clause.slice(index + 1)])
+                                setHaving_clause([...having_clause.slice(0, index), { ...having_clause[index], active: false }, ...having_clause.slice(index + 1)])
                             }}
                             >
                                 <img src={substract} height="30px" width="30px" />
@@ -573,7 +638,7 @@ export default function MappingPopUp(props) {
         return <div>
             <div className='row p-0 m-0 mt-3'>
                 {
-                    order_clause.map((clause, index) =>
+                    order_clause.map((clause, index) => clause.active &&
                         <div className='row'>
                             <div className='col-2'>{props.commandData.data.orderby[index]}</div>
                             <div className='col-3 m-auto'>
@@ -619,7 +684,7 @@ export default function MappingPopUp(props) {
                             </div>
                             <div className='col-2 m-auto'>
                                 <button type="button" class="btn btn-sm ms-2 p-2" onClick={() => {
-                                    setOrder_clause([...order_clause.slice(0, index), ...order_clause.slice(index + 1)])
+                                    setOrder_clause([...order_clause.slice(0, index), { ...order_clause[index], active: false }, ...order_clause.slice(index + 1)])
                                 }}
                                 >
                                     <img src={substract} height="30px" width="30px" />

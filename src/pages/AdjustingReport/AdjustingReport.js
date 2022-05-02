@@ -449,6 +449,34 @@ export default function AdjustingReport(props) {
         }
     }
 
+    const updateQueryOfAComponent = async (query) => {
+        if (followingIndexComponent == -1 || followingIndexComponent > shapeComponents.length - 1) return
+        let index = followingIndexComponent
+        try {
+            let parseResult = {}
+            if (checkNeedToQueryData(shapeComponents[index].Type)) {
+                // fetch data
+                let queryResult = await queryDataOfAShape(query)
+                parseResult = parseDataQueried(shapeComponents[index].Type, queryResult)
+                let newTypeParse = queryResult == null ? "Error" : shapeComponents[index].Type
+                if (queryResult == null) {
+                    // error to query data of this shape
+                    parseResult.Type = "Error"
+                } else {
+                    // parse them json data from server
+                    setShapeComponent([...shapeComponents.slice(0, index), { ...shapeComponents[index], ...parseResult, QueryCommand: query, Type: newTypeParse }, ...shapeComponents.slice(index + 1)])
+                    saveAShapeComponent({
+                        ...shapeComponents[index],
+                        QueryCommand: query
+                    })
+                }
+            }
+
+        } catch (err) {
+            console.log("update a component error : ", err)
+        }
+    }
+
     const removeComponentInUI = (index) => {
         setShapeComponent([...shapeComponents.slice(0, index), ...shapeComponents.slice(index + 1)])
     }
@@ -464,7 +492,8 @@ export default function AdjustingReport(props) {
         }
     }
 
-    const saveAllShapeComponents = async () => {
+    const saveAllShapeComponents =  async () => {
+        console.log(shapeComponents)
         let componentData
         for (let i = 0; i < shapeComponents.length; i++) {
             componentData = shapeComponents[i]
@@ -484,6 +513,25 @@ export default function AdjustingReport(props) {
             } catch (error) {
                 console.log("Save shape error :", componentData.Id, " \n Error: ", error)
             }
+        }
+    }
+
+    const saveAShapeComponent = async (componentData) => {
+        try {
+            await updateAComponent(currentProject, RId, {
+                CId: componentData.Id,
+                Title: componentData.Title,
+                Type: componentData.Type,
+                QueryCommand: componentData.QueryCommand,
+                Height: parseInt(componentData.Height),
+                Width: parseInt(componentData.Width),
+                Position: JSON.stringify(componentData.Position),
+                TitleTheme: componentData.TitleTheme,
+                TextTheme: JSON.stringify(componentData.TextTheme),
+                FrameTheme: JSON.stringify(componentData.FrameTheme)
+            })
+        } catch (error) {
+            console.log("Save shape error :", componentData.Id, " \n Error: ", error)
         }
     }
 
@@ -805,6 +853,7 @@ export default function AdjustingReport(props) {
                 <TabComponent
                     data={tabData}
                     dataSource={dataSource}
+                    updateQueryOfAComponent={updateQueryOfAComponent}
                 />
                 <div className="col-10 h-200">
                     <div className="rightColumn p-3">

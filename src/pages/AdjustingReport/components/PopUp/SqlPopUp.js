@@ -60,10 +60,10 @@ export default function SqlPopUp(props) {
     }
 
     const submit = () => {
-        let functionclause = function_clause.filter(ele => ele.active)
-        let whereclause = where_clause.filter(ele => ele.active)
-        let havingclause = having_clause.filter(ele => ele.active)
-        let orderclause = order_clause.filter(ele => ele.active)
+        let functionclause = function_clause.filter(ele => ele.active && ele.op != "" && ele.field != "")
+        let whereclause = where_clause.filter(ele => ele.active && ele.op != "" && ele.value != "" && ele.field != "")
+        let havingclause = having_clause.filter(ele => ele.active && ele.fx != "" && ele.field != "")
+        let orderclause = order_clause.filter(ele => ele.active && ele.fx != "" && ele.field != "")
 
 
         if (selectedField.length == 0 && functionclause.length == 0) {
@@ -80,7 +80,7 @@ export default function SqlPopUp(props) {
         if (selectedField.length > 0 && functionclause.length == 0) {
             query += ` ${selectedField.join(',')}`
         } else if (selectedField.length == 0 && functionclause.length > 0) {
-            query += ` ${functionclause.map(clause => clause.as != "" ? `${clause.op}(${clause.field}) as ${clause.as}` : `${clause.op}(${clause.field})`).join(',')}`
+            query += ` ${functionclause.map(clause => `${clause.op}(${clause.field})${clause.as != "" ? ` as ${clause.as}` : ""}`).join(',')}`
         } else {
             query += ` ${selectedField.join(',')} ,${functionclause.map(clause => `${clause.op}(${clause.field})`).join(',')}`
         }
@@ -217,7 +217,6 @@ export default function SqlPopUp(props) {
             {
                 function_clause.map((clause, index) => clause.active &&
                     <div className='row'>
-                        {clause.op.toString()}
                         <div className='col-4 m-auto'>
                             <Autocomplete
                                 className='ms-5'
