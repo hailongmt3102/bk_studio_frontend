@@ -50,7 +50,12 @@ export default function AdjustingReport(props) {
     const [popUpType, setPopUpType] = useState("")
 
     const [tabData, setTabData] = useState({
-        data: "",
+        active: false,
+        data: {
+            title: "",
+            script: "",
+            dataSource: "",
+        },
         style: {
             font: "Roboto",
             size: 14,
@@ -584,7 +589,8 @@ export default function AdjustingReport(props) {
     const triggerClickContentBackground = (e) => {
         if (contentRef == null) return
         if (contentRef.current && !contentRef.current.contains(e.target)) {
-            executeWhenClickOutside(e)
+            setFollowingIndexComponent(-1)
+            // executeWhenClickOutside(e)
         }
     }
 
@@ -623,7 +629,7 @@ export default function AdjustingReport(props) {
     }
 
     const onMouseDownHandler = (e) => {
-        console.log(e.offsetX)
+
     }
 
     const onMouseMoveHandler = (e) => {
@@ -636,6 +642,30 @@ export default function AdjustingReport(props) {
 
 
     const [listDataSourcesName, setListDataSourcesName] = useState([])
+
+    const onChangeFocusShape = (index) => {
+        if (index < shapeComponents.length && index >= 0) {
+            let shapeData = shapeComponents[index]
+            setTabData({
+                active: true,
+                data: {
+                    title: shapeData.Title,
+                    script: shapeData.QueryCommand,
+                    type : shapeData.Type
+                },
+                style: {
+                    font: shapeData.TextTheme.font,
+                    size: shapeData.TextTheme.size,
+                    decoration: shapeData.TextTheme.decoration,
+                    alignment: shapeData.TextTheme.alignment,
+                    fill: shapeData.FrameTheme.color,
+                    stroke: ""
+                }
+            })
+        }else {
+            
+        }
+    }
 
     useEffect(() => {
         getReportInfo()
@@ -661,6 +691,13 @@ export default function AdjustingReport(props) {
     useEffect(() => {
         console.log(addShapeType)
     }, [addShapeType])
+
+    // trigger on change focus component
+    useEffect(() => {
+        if (followingIndexComponent != -1) {
+            onChangeFocusShape(followingIndexComponent);
+        }
+    }, [followingIndexComponent])
 
     const [reportInformation, setReportInformation] = useState(
         {
@@ -763,7 +800,8 @@ export default function AdjustingReport(props) {
             <div className="row">
                 <TabComponent
                     showMappingPopUpHandle={() => setShowMappingPopUp(true)}
-
+                    data={tabData}
+                    dataSource={dataSource}
                 />
                 <div className="col-10 h-200">
                     <div className="rightColumn p-3">
@@ -872,7 +910,7 @@ export default function AdjustingReport(props) {
                         />
 
                         <div className="content"
-                            // onClick={(e) => triggerClickContentBackground(e)}
+                            onClick={(e) => triggerClickContentBackground(e)}
                             onMouseDown={onMouseDownHandler}
                             onMouseMove={onMouseMoveHandler}
                             onMouseUp={onMouseUpHandler}

@@ -1,5 +1,5 @@
 import Autocomplete from '@mui/material/Autocomplete';
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Form } from 'react-bootstrap';
 import { Tab, Tabs } from 'react-bootstrap-tabs';
 import align_center from "resources/icons/align_center.svg";
@@ -10,22 +10,82 @@ import bold from "resources/icons/bold.svg";
 import italic from "resources/icons/italic.svg";
 import underline from "resources/icons/underline.svg";
 
+
+const selectReg = /select.*(?= from)/
+const fromReg = /from.*(?= where|$)/
+const whereReg = /where.*(?= group by|$)/
+const groupbyReg = /group by.*(?= having|$)/
+const havingReg = /having.*(?= order by|$)/
+const orderbyReg = /order by.*/
+
+
 export default function TabComponent(props) {
 	const [key, setKey] = useState('Data');
 	const fonts = ['Roboto', 'Poppins'];
 	const size = ['14', '16', "32", '45'];
+	const [commandData, setCommandData] = useState({
+		command: "",
+		data: {
+			select: [],
+			from: "",
+			where: [],
+			groupby: [], 
+			having: [], 
+			orderby: []
+		}
+	})
+
+
+	const parseSqlCommand = useCallback(
+		(command) => {
+			if (command != commandData.command) {
+				// parse this command
+				// get select data 
+
+				let selectArray = (selectReg.exec(command) ?? [""])[0].replace("select ", "").split(",").map(ele => ele.trim())
+				let from = (fromReg.exec(command) ?? [""])[0].replace("from ", "")
+				let where = (whereReg.exec(command) ?? [""])[0].replace("where ", "").split(",").map(ele => ele.trim())
+				let groupby = (groupbyReg.exec(command) ?? [""])[0].replace("where ", "").split(",").map(ele => ele.trim())
+				let having = (havingReg.exec(command) ?? [""])[0].replace("where ", "").split(",").map(ele => ele.trim())
+				let orderby = (orderbyReg.exec(command) ?? [""])[0].replace("where ", "").split(",").map(ele => ele.trim())
+
+				setCommandData({
+					command: command,
+					data: {
+						select: selectArray,
+						from: from,
+						where: where,
+						groupby: groupby, // array
+						having: having, // array
+						orderby: orderby
+					}
+				})
+			}
+		},
+		[props.dataSource],
+	)
+
+	
+
+	useEffect(() => {
+		parseSqlCommand(props.data.data.script)
+	}, [props.data])
+
 
 	return <div className="col-2 ">
+
 		<Tabs className="p-2" activeKey={key} onSelect={(k) => setKey(k)}>
 			<Tab className="p-4" eventKey="Data" label="Data">
+				<h4>Title: {props.data.data.title}</h4>
+				<h5>Type: {props.data.data.type}</h5>
 				<h4>Script</h4>
-				<div className="m-4">SELECT* FROM </div>
+				<div className="m-4">{props.data.data.script}</div>
 				<div className="mt-3">
-					<h4>Data sources:</h4>
+					<h4>Data sources: {commandData.data.from}</h4>
 				</div>
 				<div className="row mt-5">
 					<div className="col">
-						<h4>Field:</h4>
+						<h4>Field: {commandData.data.select.join(', ')}</h4>
 					</div>
 					<div className="col">
 						<h4>Type</h4>
