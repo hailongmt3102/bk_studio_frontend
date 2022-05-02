@@ -74,7 +74,7 @@ export default function SqlPopUp(props) {
         if (selectedField.length > 0 && function_clause.length == 0) {
             query += ` ${selectedField.join(',')}`
         } else if (selectedField.length == 0 && function_clause.length > 0) {
-            query += ` ${function_clause.map(clause => `${clause.op}(${clause.field})`).join(',')}`
+            query += ` ${function_clause.map(clause => clause.as != "" ? `${clause.op}(${clause.field}) as ${clause.as}` : `${clause.op}(${clause.field})`).join(',')}`
         } else {
             query += ` ${selectedField.join(',')} ,${function_clause.map(clause => `${clause.op}(${clause.field})`).join(',')}`
         }
@@ -96,7 +96,7 @@ export default function SqlPopUp(props) {
         if (order_clause.length > 0) {
             query += ` order by ${order_clause.map(order => `${order.field} ${order.fx}`).join(',')}`
         }
-        props.onComplete("example", query)
+        props.onComplete(typeChartName, query)
         props.handleClose()
     }
 
@@ -106,6 +106,10 @@ export default function SqlPopUp(props) {
             setFieldList([...fieldList, ...props.dataSource[key]])
         })
     }, [props.dataSource])
+
+    useEffect(()=>{
+        setStep(1)
+    }, [props.show])
 
 
     const selectTableComponent = () => {
@@ -184,7 +188,7 @@ export default function SqlPopUp(props) {
                                 setFunction_clause([...function_clause, {
                                     field: "",
                                     op: "",
-                                    value: 0
+                                    as: ""
                                 }])
                             }}>
                                 <img src={add_grey} height="30px" width="30px" />
@@ -199,7 +203,7 @@ export default function SqlPopUp(props) {
             {
                 function_clause.map((clause, index) =>
                     <div className='row'>
-                        <div className='col-5 m-auto'>
+                        <div className='col-4 m-auto'>
                             <div className='ms-3'>
                                 <Autocomplete
                                     className='ms-5'
@@ -219,7 +223,7 @@ export default function SqlPopUp(props) {
                                 />
                             </div>
                         </div>
-                        <div className='col-5 m-auto'>
+                        <div className='col-4 m-auto'>
                             <Autocomplete
                                 id="function"
                                 size="small"
@@ -237,6 +241,16 @@ export default function SqlPopUp(props) {
                             />
                         </div>
                         <div className='col-2 m-auto'>
+                        <TextField
+                            id="standard-textarea"
+                            placeholder="Name"
+                            variant="standard"
+                            onChange={e => {
+                                updateFunctionClause(index, { ...clause, as: e.target.value ?? "" })
+                            }}
+                        />
+                        </div>
+                        <div className='col-2 m-auto'>
                             <button type="button" class="btn btn-sm ms-2 p-2" onClick={() => {
                                 setFunction_clause([...function_clause.slice(0, index), ...function_clause.slice(index + 1)])
                             }}><img src={substract} height="30px" width="30px" /></button>
@@ -244,7 +258,6 @@ export default function SqlPopUp(props) {
                     </div>
                 )
             }
-
         </div>
     }
 
