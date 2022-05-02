@@ -100,27 +100,30 @@ export default function MappingPopUp(props) {
     }
 
     const MappingXColumComponent = () => {
-        return <div className='row m-0 p-0 pe-5'>
-            <div className='col-5 text-center m-auto m-0 p-0'> Tên cột cũ </div>
-            <div className='col-2  m-0 p-0'> <img src={change} /> </div>
-            <div className='col-4  m-0 p-0'>
-                <Autocomplete
-                    id="tags-standard"
-                    options={selectFrom.reduce((pre, cur) => [...pre, ...props.dataSource[cur]], [])}
-                    renderInput={(params) => (
-                        <TextField
-                            {...params}
-                            variant="standard"
-                            placeholder="Fields"
-                        />
-                    )}
-                    onChange={(e, val) => {
-                        setSelectXAxis(val)
-                    }}
-                />
-            </div>
-            <div className='col-1'></div>
-        </div>
+        // return <div className='row m-0 p-0 pe-5'>
+        //     <div className='col-5 text-center m-auto m-0 p-0'> Tên cột cũ </div>
+        //     <div className='col-2  m-0 p-0'> <img src={change} /> </div>
+        //     <div className='col-4  m-0 p-0'>
+        //         <Autocomplete
+        //             id="tags-standard"
+        //             options={selectFrom.reduce((pre, cur) => [...pre, ...props.dataSource[cur]], [])}
+        //             renderInput={(params) => (
+        //                 <TextField
+        //                     {...params}
+        //                     variant="standard"
+        //                     placeholder="Fields"
+        //                 />
+        //             )}
+        //             onChange={(e, val) => {
+        //                 setSelectXAxis(val)
+        //             }}
+        //         />
+        //     </div>
+        //     <div className='col-1'></div>
+        // </div>
+        return {
+
+        }
     }
     const MappingDataComponent = () => {
         return <div className='row m-0 p-0 pe-5'>
@@ -161,7 +164,9 @@ export default function MappingPopUp(props) {
         switch (step) {
             case 1:
                 return <Button onClick={() => {
-                    setStep(2)
+                    if (props.componentType === "Table")
+                        setStep(3)
+                    else setStep(2)
                 }} >Next
                 </Button>
             case 2:
@@ -178,7 +183,9 @@ export default function MappingPopUp(props) {
             case 3:
                 return <div>
                     <Button onClick={() => {
-                        setStep(2)
+                        if (props.componentType === "Table")
+                            setStep(1)
+                        else setStep(2)
                     }} >Back
                     </Button>
                     <Button className='ms-2' onClick={() => {

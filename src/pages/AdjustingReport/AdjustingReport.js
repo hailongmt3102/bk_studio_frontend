@@ -15,7 +15,7 @@ import Content from "./components/Content";
 import MenuBar from "./components/Bar/MenuBar";
 import ShareLinkPopUp from "./components/PopUp/ShareLinkPopUp";
 import ShareWithPopUp from "./components/PopUp/ShareWithPopUp";
-import MappingPopUp from "./components/PopUp/MappingPopUp";
+
 import SqlPopUp from "./components/PopUp/SqlPopUp";
 import './AdjustingReport.css';
 import Button from '@mui/material/Button';
@@ -651,7 +651,7 @@ export default function AdjustingReport(props) {
                 data: {
                     title: shapeData.Title,
                     script: shapeData.QueryCommand,
-                    type : shapeData.Type
+                    type: shapeData.Type
                 },
                 style: {
                     font: shapeData.TextTheme.font,
@@ -662,8 +662,8 @@ export default function AdjustingReport(props) {
                     stroke: ""
                 }
             })
-        }else {
-            
+        } else {
+
         }
     }
 
@@ -724,7 +724,7 @@ export default function AdjustingReport(props) {
             }
         })
     }
-    const [showMappingPopUp, setShowMappingPopUp] = useState(false)
+
 
     const deleteHandle = () => {
         if (location.state.Type === "Report") {
@@ -753,16 +753,7 @@ export default function AdjustingReport(props) {
         return <div>
             <div>
                 {/* some popup */}
-                <MappingPopUp
-                    type={popUpType}
-                    show={showMappingPopUp}
-                    handleClose={() => {
-                        setShowMappingPopUp(false)
-                    }}
-                    onComplete={buildQueryComplete}
-                    dataSource={dataSource}
 
-                />
                 <SqlPopUp
                     type={popUpType}
                     show={showSqlPopUp}
@@ -799,7 +790,6 @@ export default function AdjustingReport(props) {
             </div>
             <div className="row">
                 <TabComponent
-                    showMappingPopUpHandle={() => setShowMappingPopUp(true)}
                     data={tabData}
                     dataSource={dataSource}
                 />

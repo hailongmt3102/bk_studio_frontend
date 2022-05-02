@@ -9,7 +9,7 @@ import align_right from "resources/icons/align_right.svg";
 import bold from "resources/icons/bold.svg";
 import italic from "resources/icons/italic.svg";
 import underline from "resources/icons/underline.svg";
-
+import MappingPopUp from "../../components/PopUp/MappingPopUp";
 
 const selectReg = /select.*(?= from)/
 const fromReg = /from.*(?= where|$)/
@@ -29,8 +29,8 @@ export default function TabComponent(props) {
 			select: [],
 			from: "",
 			where: [],
-			groupby: [], 
-			having: [], 
+			groupby: [],
+			having: [],
 			orderby: []
 		}
 	})
@@ -65,14 +65,30 @@ export default function TabComponent(props) {
 		[props.dataSource],
 	)
 
-	
+
 
 	useEffect(() => {
 		parseSqlCommand(props.data.data.script)
 	}, [props.data])
 
+	const [showMappingPopUp, setShowMappingPopUp] = useState(false)
+
+	const buildQueryComplete = () => {
+
+	}
 
 	return <div className="col-2 ">
+		<MappingPopUp
+			componentType={props.data.data.type}
+			show={showMappingPopUp}
+			handleClose={() => {
+				setShowMappingPopUp(false)
+			}}
+			onComplete={buildQueryComplete}
+			commandData={commandData}
+			dataSource={props.dataSource}
+
+		/>
 
 		<Tabs className="p-2" activeKey={key} onSelect={(k) => setKey(k)}>
 			<Tab className="p-4" eventKey="Data" label="Data">
@@ -84,15 +100,10 @@ export default function TabComponent(props) {
 					<h4>Data sources: {commandData.data.from}</h4>
 				</div>
 				<div className="row mt-5">
-					<div className="col">
-						<h4>Field: {commandData.data.select.join(', ')}</h4>
-					</div>
-					<div className="col">
-						<h4>Type</h4>
-					</div>
+					<h4>Field: {commandData.data.select.join(', ')}</h4>
 				</div>
 				<div> <button className='btn-lg btn-success text-center border-0'
-					onClick={() => { props.showMappingPopUpHandle() }}>
+					onClick={() => { setShowMappingPopUp(true) }}>
 					<div>Edit data</div>
 				</button></div>
 			</Tab>
