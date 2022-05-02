@@ -60,7 +60,13 @@ export default function SqlPopUp(props) {
     }
 
     const submit = () => {
-        if (selectedField.length == 0 && function_clause.length == 0) {
+        let functionclause = function_clause.filter(ele => ele.active)
+        let whereclause = where_clause.filter(ele => ele.active)
+        let havingclause = having_clause.filter(ele => ele.active)
+        let orderclause = order_clause.filter(ele => ele.active)
+
+
+        if (selectedField.length == 0 && functionclause.length == 0) {
             alert("Nothing to compute")
             return
         }
@@ -71,30 +77,30 @@ export default function SqlPopUp(props) {
         let query = "select"
         if (selectXAxis != null) query += ` ${selectXAxis},`
         // select fields component
-        if (selectedField.length > 0 && function_clause.length == 0) {
+        if (selectedField.length > 0 && functionclause.length == 0) {
             query += ` ${selectedField.join(',')}`
-        } else if (selectedField.length == 0 && function_clause.length > 0) {
-            query += ` ${function_clause.map(clause => clause.as != "" ? `${clause.op}(${clause.field}) as ${clause.as}` : `${clause.op}(${clause.field})`).join(',')}`
+        } else if (selectedField.length == 0 && functionclause.length > 0) {
+            query += ` ${functionclause.map(clause => clause.as != "" ? `${clause.op}(${clause.field}) as ${clause.as}` : `${clause.op}(${clause.field})`).join(',')}`
         } else {
-            query += ` ${selectedField.join(',')} ,${function_clause.map(clause => `${clause.op}(${clause.field})`).join(',')}`
+            query += ` ${selectedField.join(',')} ,${functionclause.map(clause => `${clause.op}(${clause.field})`).join(',')}`
         }
         // from component
         query += ` from ${selectFrom[0]}`
         // where
-        if (where_clause.length > 0) {
-            query += ` where ${where_clause.map(where => `${where.field} ${where.op} ${where.value}`).join(' and ')}`
+        if (whereclause.length > 0) {
+            query += ` where ${whereclause.map(where => `${where.field} ${where.op} ${where.value}`).join(' and ')}`
         }
         // group by
         if (groupBy.length > 0) {
             query += ` group by ${groupBy.join(',')}`
         }
         // having
-        if (having_clause.length > 0) {
-            query += ` having ${having_clause.map(having => `${having.field} ${having.op} ${having.value}`).join(' and ')}`
+        if (havingclause.length > 0) {
+            query += ` having ${havingclause.map(having => `${having.field} ${having.op} ${having.value}`).join(' and ')}`
         }
         // order by
-        if (order_clause.length > 0) {
-            query += ` order by ${order_clause.map(order => `${order.field} ${order.fx}`).join(',')}`
+        if (orderclause.length > 0) {
+            query += ` order by ${orderclause.map(order => `${order.field} ${order.fx}`).join(',')}`
         }
         props.onComplete(typeChartName, query)
         props.handleClose()
@@ -107,7 +113,7 @@ export default function SqlPopUp(props) {
         })
     }, [props.dataSource])
 
-    useEffect(()=>{
+    useEffect(() => {
         setStep(1)
     }, [props.show])
 
@@ -135,6 +141,13 @@ export default function SqlPopUp(props) {
     }
 
     const [showField, setShowField] = useState(true)
+
+
+    const functionaaaaaaa = () => {
+        return <div>
+
+        </div>
+    }
 
 
     const selectClauseTypeLineAndBar = () => {
@@ -186,6 +199,7 @@ export default function SqlPopUp(props) {
                         <div className='col  m-auto'>
                             <button type="button" class="btn btn-sm ms-2 p-2 m-auto" onClick={() => {
                                 setFunction_clause([...function_clause, {
+                                    active: true,
                                     field: "",
                                     op: "",
                                     as: ""
@@ -201,27 +215,26 @@ export default function SqlPopUp(props) {
 
             </div>
             {
-                function_clause.map((clause, index) =>
+                function_clause.map((clause, index) => clause.active &&
                     <div className='row'>
+                        {clause.op.toString()}
                         <div className='col-4 m-auto'>
-                            <div className='ms-3'>
-                                <Autocomplete
-                                    className='ms-5'
-                                    id="size-small-standard"
-                                    size="small"
-                                    options={function_list}
-                                    renderInput={(params) =>
-                                        <TextField
-                                            {...params}
-                                            variant="standard"
-                                            placeholder="Fx"
-                                        />
-                                    }
-                                    onChange={(e, value) => {
-                                        updateFunctionClause(index, { ...clause, op: value ?? "" })
-                                    }}
-                                />
-                            </div>
+                            <Autocomplete
+                                className='ms-5'
+                                id="size-small-standard"
+                                size="small"
+                                options={function_list}
+                                renderInput={(params) =>
+                                    <TextField
+                                        {...params}
+                                        variant="standard"
+                                        placeholder="Fx"
+                                    />
+                                }
+                                onChange={(e, value) => {
+                                    updateFunctionClause(index, { ...clause, op: value ?? "" })
+                                }}
+                            />
                         </div>
                         <div className='col-4 m-auto'>
                             <Autocomplete
@@ -241,18 +254,18 @@ export default function SqlPopUp(props) {
                             />
                         </div>
                         <div className='col-2 m-auto'>
-                        <TextField
-                            id="standard-textarea"
-                            placeholder="Name"
-                            variant="standard"
-                            onChange={e => {
-                                updateFunctionClause(index, { ...clause, as: e.target.value ?? "" })
-                            }}
-                        />
+                            <TextField
+                                id="standard-textarea"
+                                placeholder="Name"
+                                variant="standard"
+                                onChange={e => {
+                                    updateFunctionClause(index, { ...clause, as: e.target.value ?? "" })
+                                }}
+                            />
                         </div>
                         <div className='col-2 m-auto'>
                             <button type="button" class="btn btn-sm ms-2 p-2" onClick={() => {
-                                setFunction_clause([...function_clause.slice(0, index), ...function_clause.slice(index + 1)])
+                                setFunction_clause([...function_clause.slice(0, index), { ...function_clause[index], active: false }, ...function_clause.slice(index + 1)])
                             }}><img src={substract} height="30px" width="30px" /></button>
                         </div>
                     </div>
@@ -326,6 +339,7 @@ export default function SqlPopUp(props) {
                                 {showField === false ?
                                     <button type="button" class="btn btn-sm ms-2 p-2" onClick={() => {
                                         setFunction_clause([...function_clause, {
+                                            active: true,
                                             field: "",
                                             op: "",
                                             value: 0
@@ -342,7 +356,7 @@ export default function SqlPopUp(props) {
 
                 </div>
                 {
-                    showField === false ? function_clause.map((clause, index) =>
+                    showField === false ? function_clause.map((clause, index) => clause.active &&
                         <div className='row'>
                             <div className='col-5 m-auto'>
                                 <div className='ms-3'>
@@ -383,7 +397,7 @@ export default function SqlPopUp(props) {
                             </div>
                             <div className='col-2 m-auto'>
                                 <button type="button" class="btn btn-sm ms-2 p-2" onClick={() => {
-                                    setFunction_clause([...function_clause.slice(0, index), ...function_clause.slice(index + 1)])
+                                    setFunction_clause([...function_clause.slice(0, index), { ...function_clause, active: false }, ...function_clause.slice(index + 1)])
                                 }}><img src={substract} height="30px" width="30px" /></button>
                             </div>
                         </div>
@@ -403,7 +417,8 @@ export default function SqlPopUp(props) {
                         setWhere_clause([...where_clause, {
                             field: "",
                             op: "",
-                            value: 0
+                            value: 0,
+                            active: true
                         }])
                     }}><img src={add_grey} height="30px" width="30px" /></button>
                 </div>
@@ -462,7 +477,7 @@ export default function SqlPopUp(props) {
                         <div className='col-2'>
                             <button type="button" class="btn btn-sm p-2"
                                 onClick={() => {
-                                    setWhere_clause([...where_clause.slice(0, index), ...where_clause.slice(index + 1)])
+                                    setWhere_clause([...where_clause.slice(0, index), { ...where_clause[index], active: false }, ...where_clause.slice(index + 1)])
                                 }}
                             >
                                 <img src={substract} height="30px" width="30px" />
@@ -512,7 +527,8 @@ export default function SqlPopUp(props) {
                         setHaving_clause([...having_clause, {
                             field: "",
                             op: "",
-                            value: 0
+                            value: 0,
+                            active: true,
                         }])
                     }}><img src={add_grey} height="30px" width="30px" /></button>
                 </div>
@@ -569,7 +585,7 @@ export default function SqlPopUp(props) {
                         </div>
                         <div className='col-2'>
                             <button type="button" class="btn btn-sm ms-2 p-2" onClick={() => {
-                                setHaving_clause([...having_clause.slice(0, index), ...having_clause.slice(index + 1)])
+                                setHaving_clause([...having_clause.slice(0, index), { ...having_clause, active: false }, ...having_clause.slice(index + 1)])
                             }}
                             >
                                 <img src={substract} height="30px" width="30px" />
@@ -596,7 +612,8 @@ export default function SqlPopUp(props) {
                             <button type="button" class="btn btn-sm ms-2 p-2" onClick={() => {
                                 setOrder_clause([...order_clause, {
                                     fx: "",
-                                    field: ""
+                                    field: "",
+                                    active: true
                                 }])
                             }}><img src={add_grey} height="30px" width="30px" /></button>
                         </div>
@@ -648,7 +665,7 @@ export default function SqlPopUp(props) {
                             </div>
                             <div className='col-2 m-auto'>
                                 <button type="button" class="btn btn-sm ms-2 p-2" onClick={() => {
-                                    setOrder_clause([...order_clause.slice(0, index), ...order_clause.slice(index + 1)])
+                                    setOrder_clause([...order_clause.slice(0, index), { ...order_clause, active: false }, ...order_clause.slice(index + 1)])
                                 }}
                                 >
                                     <img src={substract} height="30px" width="30px" />
