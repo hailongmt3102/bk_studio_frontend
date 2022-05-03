@@ -95,17 +95,21 @@ export default function TabComponent(props) {
 
 		<Tabs className="p-2" activeKey={key} onSelect={(k) => setKey(k)}>
 			<Tab className="p-4" eventKey="Data" label="Data">
-				<h4>Title: {props.data.data.title}</h4>
-				<h5>Type: {props.data.data.type}</h5>
-				<h4>Script</h4>
-				<div className="m-4">{props.data.data.script}</div>
-				<div className="mt-3">
-					<h4>Data sources: {commandData.data.from}</h4>
+				<div className="mt-4"><span className=' PrimaryFontColor customFontBold size16'>Name:</span> <span className='size16'>{props.data.data.title}</span> </div>
+				<div className="mt-4"><span className='  PrimaryFontColor customFontBold size16'>Type:</span> <span className='size16'>{props.data.data.type}</span></div>
+				<div className="mt-4"> <span className=' PrimaryFontColor customFontBold size16'>Script </span></div>
+				<div className="">{props.data.data.script}</div>
+				<div className="mt-4">
+					<div> <span className='PrimaryFontColor customFontBold size16'>Data sources: </span><span className='size16'>{commandData.data.from}</span></div>
 				</div>
-				<div className="row mt-5">
-					<h4>Field: {commandData.data.select.join(', ')}</h4>
+				<div className="row mt-4">
+					<div className='PrimaryFontColor customFontBold size16'>Field:</div>
+					{/* <div>{commandData.data.select.join('\n ')}</div> */}
+					{
+						commandData.data.select.map((e) => <div>{e}</div>)
+					}
 				</div>
-				<div> <button className='btn-lg btn-success text-center border-0'
+				<div> <button className='btn-lg btn-success text-center border-0 mt-4'
 					onClick={() => { if (props.data.active) setShowMappingPopUp(true) }}>
 					<div>Edit data</div>
 				</button></div>

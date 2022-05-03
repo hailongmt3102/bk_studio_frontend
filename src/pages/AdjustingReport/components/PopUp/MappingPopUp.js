@@ -192,18 +192,34 @@ export default function MappingPopUp(props) {
     }
     {/* <div className='col-2 m-auto  m-0 p-0'> <img src={change} /> </div> */ }
     const MappingDataComponent = () => {
-        return <div>
+        return <div className='p-2'>
+            <div className='row '>
+                <div className='col-1 m-auto size20 SecondFontColor customFontBold' >
+                    SELECT
+                </div>
+                <div className='col m-auto '>
+                    <button type="button" class="btn btn-sm ms-2 p-2" onClick={() => {
+                        setSelect_clause([...select_clause, {
+                            isField: true,
+                            field: "",
+                            op: "",
+                            as: "",
+                            active: true
+                        }])
+                    }}><img src={add_grey} height="30px" width="30px" /></button>
+                </div>
+            </div>
             {
                 select_clause.map((ele, index) =>
                     (props.componentType === "Table" || index != 0) && ele.active &&
-                    < div className='row mt-4 m-0 p-0 pe-5'>
-                        <div className='col'>{props.commandData.data.select[index]}</div>
-                        <div className='col-8'>
+                    < div className='row m-0 p-0'>
+                        <div className='col m-auto m-0 p-0'>{props.commandData.data.select[index]}</div>
+                        <div className='col-8 m-0 p-0'>
                             {fieldClause(index, ele.isField, ele)}
                             {functionClause(index, !ele.isField, ele)}
                         </div>
-                        <div>
-                            <button type="button" class="btn btn-sm p-2"
+                        <div className='col m-0 p-0'>
+                            <button type="button" class="btn btn-sm "
                                 onClick={() => {
                                     setSelect_clause([...select_clause.slice(0, index), { ...select_clause[index], active: false }, ...select_clause.slice(index + 1)])
                                 }}
@@ -216,7 +232,7 @@ export default function MappingPopUp(props) {
             }
 
             <div className='row '>
-                <div className='col-1 m-auto' >
+                <div className='col-1 m-auto size20 SecondFontColor customFontBold' >
                     WHERE
                 </div>
                 <div className='col m-auto '>
@@ -231,9 +247,12 @@ export default function MappingPopUp(props) {
                 </div>
             </div>
             {whereClause()}
+            <div className='row m-0 p-0 mt-3 size20 SecondFontColor customFontBold' >
+                GROUP BY
+            </div>
             {groupByClause()}
             <div className='row '>
-                <div className='col-1 m-auto ' >
+                <div className='col-1 m-auto size20 SecondFontColor customFontBold ' >
                     HAVING
                 </div>
                 <div className='col m-auto '>
@@ -248,10 +267,10 @@ export default function MappingPopUp(props) {
                 </div>
             </div>
             {havingByClause()}
-            <div className='row'>
+            <div className='row mt-3'>
                 <div className='col-4'>
                     <div className='row  m-auto m-0 p-0'>
-                        <div className='col-5  m-auto m-0 p-0'>
+                        <div className='col-5  m-auto m-0 p-0 size20 SecondFontColor customFontBold'>
                             ORDER BY
                         </div>
                         <div className='col m-auto m-0 p-0 '>
@@ -469,9 +488,8 @@ export default function MappingPopUp(props) {
             {
                 where_clause.map((clause, index) => clause.active &&
                     <div className='row m-0 p-0'>
-                        <div></div>
-                        {props.commandData.data.where[index]}
-                        <div className='col-5  ms-1 m-auto'>
+                        <div className='col-2 m-auto'> {props.commandData.data.where[index]}</div>
+                        <div className='col-4 m-auto'>
                             <Autocomplete
                                 className='ms-5'
                                 id="size-small-standard"
@@ -534,39 +552,35 @@ export default function MappingPopUp(props) {
     }
 
     const groupByClause = () => {
-        return <div className='row'>
-            <div className='' >
-                GROUP BY
+        return <div className='row m-0 p-0'>
+            <div className='col-4 text-end m-auto'>{props.commandData.data.groupby.join(", ")}</div>
+            <div className='col-8'>
+                <Autocomplete
+                    className='ms-5 me-5'
+                    multiple
+                    id="tags-standard"
+                    options={selectFrom.reduce((pre, cur) => [...pre, ...props.dataSource[cur]], [])}
+                    renderInput={(params) => (
+                        <TextField
+                            {...params}
+                            variant="standard"
+                            placeholder="Fields"
+                        />
+                    )}
+                    onChange={(e, val) => {
+                        setGroupBy(val)
+                    }}
+                />
             </div>
-            <div className='row mt-2 ms-2 mb-2'>
-                <div className='col'>{props.commandData.data.groupby.join(", ")}</div>
-                <div className='col'>
-                    <Autocomplete
-                        className='ms-5 me-5'
-                        multiple
-                        id="tags-standard"
-                        options={selectFrom.reduce((pre, cur) => [...pre, ...props.dataSource[cur]], [])}
-                        renderInput={(params) => (
-                            <TextField
-                                {...params}
-                                variant="standard"
-                                placeholder="Fields"
-                            />
-                        )}
-                        onChange={(e, val) => {
-                            setGroupBy(val)
-                        }}
-                    />
-                </div>
-            </div>
+
         </div>
     }
     const havingByClause = () => {
-        return <div>
+        return <div className='mt-3'>
             {
                 having_clause.map((clause, index) => clause.active &&
                     <div className='row m-0 p-0'>
-                        <div className='col-2'>
+                        <div className='col-2 m-auto'>
                             {props.commandData.data.having[index]}
                         </div>
                         <div className='col-3  m-auto'>
@@ -640,7 +654,7 @@ export default function MappingPopUp(props) {
                 {
                     order_clause.map((clause, index) => clause.active &&
                         <div className='row'>
-                            <div className='col-2'>{props.commandData.data.orderby[index]}</div>
+                            <div className='col-2 m-auto'>{props.commandData.data.orderby[index]}</div>
                             <div className='col-3 m-auto'>
                                 <div className='ms-3'>
                                     <Autocomplete

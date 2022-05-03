@@ -276,7 +276,7 @@ export default function SqlPopUp(props) {
     const selectClauseTypePieandDonut = () => {
         return <div>
             <div className='row m-0 p-0'>
-                <div style={{ color: blue_cloud, fontWeight: "bold", fontSize: "20px" }}>
+                <div className='size20 SecondFontColor customFontBold'>
                     SELECT
                 </div>
                 <div className='row mt-3 m-0 p-0'>
