@@ -252,6 +252,7 @@ export default function AdjustingReport(props) {
                 if (queryResult == null) {
                     // error to query data of this shape
                     componentResult[i].Type = "Error"
+                    componentResult[i].Position = JSON.parse(componentResult[i].Position)
                 } else {
                     try {
                         parseResult = parseDataQueried(componentResult[i].Type, queryResult)
@@ -434,6 +435,7 @@ export default function AdjustingReport(props) {
                 if (queryResult == null) {
                     // error to query data of this shape
                     component.Type = "Error"
+                    component.Position = JSON.parse(component.Position)
                 } else {
                     // parse them json data from server
                     component.Position = JSON.parse(component.Position)

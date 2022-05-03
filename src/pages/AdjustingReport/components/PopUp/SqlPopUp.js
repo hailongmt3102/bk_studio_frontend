@@ -82,7 +82,7 @@ export default function SqlPopUp(props) {
         } else if (selectedField.length == 0 && functionclause.length > 0) {
             query += ` ${functionclause.map(clause => `${clause.op}(${clause.field})${clause.as != "" ? ` as ${clause.as}` : ""}`).join(',')}`
         } else {
-            query += ` ${selectedField.join(',')} ,${functionclause.map(clause => `${clause.op}(${clause.field})`).join(',')}`
+            query += ` ${selectedField.join(',')} ,${functionclause.map(clause => `${clause.op}(${clause.field})${clause.as != "" ? ` as ${clause.as}` : ""}`).join(',')}`
         }
         // from component
         query += ` from ${selectFrom[0]}`
