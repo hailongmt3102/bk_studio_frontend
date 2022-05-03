@@ -42,8 +42,23 @@ export default function SelectData(props) {
         const fileReader = new FileReader();
         fileReader.onload = function (event) {
             const csvOutput = event.target.result;
-            console.log("Out", csvOutput)
+            console.log("XLXS", csvOutput)
             executeStringResult(csvOutput)
+        };
+        fileReader.readAsText(file);
+    };
+    const JsonHandleOnChange = (e) => {
+        let file = e.target.files[0];
+        if (!file.name.includes('.json')) {
+            alert("invalid format, expected : .json")
+            return
+        }
+        props.setFileInformation({ ...file, name: file.name.replaceAll('.', '_') })
+        const fileReader = new FileReader();
+        fileReader.onload = function (event) {
+            const jsonOutput = event.target.result;
+            console.log("Json", jsonOutput)
+            // executeStringResult(csvOutput)
         };
         fileReader.readAsText(file);
     };
@@ -129,7 +144,7 @@ export default function SelectData(props) {
                             type={"file"}
                             id={"jsonFileInput"}
                             accept={".json"}
-                            onChange={handleOnChange}
+                            onChange={JsonHandleOnChange}
                             style={{ display: "none" }}
                         />
                         <ImportButton text="Import json file" image={json_file} onClick={() => {
