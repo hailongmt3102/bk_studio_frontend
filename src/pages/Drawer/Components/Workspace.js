@@ -11,6 +11,7 @@ import { ReactComponent as TemplateIcon } from "resources/icons/drawerIcons/temp
 
 import SwitchSvg from 'resources/icons/drawerIcons/switch.svg'
 import CheckedSvg from 'resources/icons/drawerIcons/checked.svg'
+import { currentFollowingDrawer } from "utils/utils";
 
 
 export default function Workspace(props) {
@@ -20,42 +21,41 @@ export default function Workspace(props) {
 			<ul class="list-group">
 				<DrawerItem
 					link="/"
-					active={props.selectedIndex === 0 ? true : false}
-					child={<DashboardIcon fill={props.selectedIndex === 0 ? colors.drawerActive : colors.drawerToggle} />}
+					active={props.selectedIndex === currentFollowingDrawer.dashboard ? true : false}
+					child={<DashboardIcon fill={props.selectedIndex === currentFollowingDrawer.dashboard ? colors.drawerActive : colors.drawerToggle} />}
 					title="Dashboard"
 					onClick={props.swapDrawerVisible}
 				/>
 				<DrawerItem
 					link="/datasources"
-					active={props.selectedIndex === 1 ? true : false}
-					child={<DataSourceIcon fill={props.selectedIndex === 1 ? colors.drawerActive : colors.drawerToggle} />}
+					active={props.selectedIndex === currentFollowingDrawer.dataSource ? true : false}
+					child={<DataSourceIcon fill={props.selectedIndex === currentFollowingDrawer.dataSource ? colors.drawerActive : colors.drawerToggle} />}
 					title="DataSource"
 					onClick={props.swapDrawerVisible}
 				/>
 				<DrawerItem
 					link="/people"
-					active={props.selectedIndex === 2 ? true : false}
-					child={<PeopleIcon fill={props.selectedIndex === 2 ? colors.drawerActive : colors.drawerToggle} />}
+					active={props.selectedIndex === currentFollowingDrawer.people ? true : false}
+					child={<PeopleIcon fill={props.selectedIndex === currentFollowingDrawer.people ? colors.drawerActive : colors.drawerToggle} />}
 					title="People"
 					onClick={props.swapDrawerVisible}
 				/>
 				<DrawerItem
 					link="/templates"
-					active={props.selectedIndex === 7 ? true : false}
-
-					child={<TemplateIcon fill={props.selectedIndex === 7 ? colors.drawerActive : colors.drawerToggle} />}
+					active={props.selectedIndex === currentFollowingDrawer.template ? true : false}
+					child={<TemplateIcon fill={props.selectedIndex === currentFollowingDrawer.template  ? colors.drawerActive : colors.drawerToggle} />}
 					title="Templates"
 					onClick={props.swapDrawerVisible}
 				/>
 
-				<div className="d-flex justify-content-start p-2 ps-4" style={{ textDecoration: "none", backgroundColor: props.selectedIndex === 3 ? colors.drawerBackgroundActive : colors.drawerBackgroundToggle }}
+				<div className="d-flex justify-content-start p-2 ps-4" style={{ textDecoration: "none", backgroundColor: props.selectedIndex === currentFollowingDrawer.yourProject ? colors.drawerBackgroundActive : colors.drawerBackgroundToggle }}
 					onClick={() => {
 						setShowProject(!showProject)
-						props.setSelectedIndex(3)
+						props.setSelectedIndex(currentFollowingDrawer.yourProject)
 					}}
 				>
-					<YourProjectIcon fill={props.selectedIndex == 3 ? colors.drawerActive : colors.drawerToggle} />
-					<p className="ms-2 mb-0" style={{ color: props.selectedIndex === 3 ? colors.drawerActive : colors.drawerToggle }}>
+					<YourProjectIcon fill={props.selectedIndex == currentFollowingDrawer.yourProject ? colors.drawerActive : colors.drawerToggle} />
+					<p className="ms-2 mb-0" style={{ color: props.selectedIndex === currentFollowingDrawer.yourProject ? colors.drawerActive : colors.drawerToggle }}>
 						Your projects
 					</p>
 				</div>

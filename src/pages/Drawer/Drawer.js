@@ -7,6 +7,7 @@ import Personal from "./Components/Personal";
 import MenuIcon from 'resources/icons/menu.svg'
 import threeLine from "resources/icons/threeLine.svg"
 import './Drawer.css'
+import { currentFollowingDrawer } from "utils/utils";
 
 
 export default function Drawer(props) {
@@ -15,7 +16,7 @@ export default function Drawer(props) {
 	var navigate = useNavigate()
 
 	const [projectList, setProjectList] = useState([])
-	const [selectedIndex, setSelectedIndex] = useState(0)
+	const [selectedIndex, setSelectedIndex] = useState(currentFollowingDrawer.dashboard)
 
 	const [selectedProject, setSelectedProject] = useState("")
 
@@ -56,20 +57,20 @@ export default function Drawer(props) {
 			} else {
 				props.setDrawerState("project")
 				if (/create/.test(url)) {
-					setSelectedIndex(4)
+					setSelectedIndex(currentFollowingDrawer.createReport)
 				} else if (/gallery/.test(url)) {
-					setSelectedIndex(5)
+					setSelectedIndex(currentFollowingDrawer.gallery)
 				} else if (/import/.test(url)) {
-					setSelectedIndex(6)
+					setSelectedIndex(currentFollowingDrawer.importData)
 				}
 			}
 		} else if (personalExp.test(url)) {
 			// launch personal state
 			props.setDrawerState("personal")
 			if (/profile/.test(url)) {
-				setSelectedIndex(8)
+				setSelectedIndex(currentFollowingDrawer.profile)
 			} else {
-				setSelectedIndex(9)
+				setSelectedIndex(currentFollowingDrawer.setting)
 			}
 
 		} else if (accountExp.test(url)) {
@@ -79,18 +80,18 @@ export default function Drawer(props) {
 			// launch workspace state
 			props.setDrawerState("workspace")
 			if (/datasources/.test(url)) {
-				setSelectedIndex(1)
+				setSelectedIndex(currentFollowingDrawer.dataSource)
 				setSelectedProject(-1)
 			} else if (/templates/.test(url)) {
-				setSelectedIndex(7)
+				setSelectedIndex(currentFollowingDrawer.template)
 			} else if (/people/.test(url)) {
-				setSelectedIndex(2)
+				setSelectedIndex(currentFollowingDrawer.people)
 				setSelectedProject(-1)
 			} else if (url.length === 1) {
-				setSelectedIndex(0)
+				setSelectedIndex(currentFollowingDrawer.dashboard)
 				setSelectedProject(-1)
 			} else {
-				setSelectedIndex(3)
+				setSelectedIndex(currentFollowingDrawer.yourProject)
 			}
 		}
 	}, [location])
