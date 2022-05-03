@@ -1,8 +1,8 @@
 import { getColumnsOfTable, GetDataSourcesListInformationInProject, QueryData as QueryDataApi } from "api/DataSources";
-import { createNewComponent as createNewComponentApi, createNewReport, deleteShape as deleteShapeApi, getAllComponent, getReportInformation, updateAComponent, updateReportInformation, saveAsCopy, saveAsTemplate, getAllDatasourceNameInReport, deleteReport } from 'api/Report';
-import { createAReportByTemplate, deleteTemplate, getAllDatasourceNameInTemplate } from "api/Templates"
+import { createNewComponent as createNewComponentApi, createNewReport, deleteReport, deleteShape as deleteShapeApi, getAllComponent, getAllDatasourceNameInReport, getReportInformation, saveAsCopy, saveAsTemplate, updateAComponent, updateReportInformation } from 'api/Report';
+import { createAReportByTemplate, deleteTemplate, getAllDatasourceNameInTemplate } from "api/Templates";
 import TabComponent from "pages/AdjustingReport/components/tabComponent/TabComponent";
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Form } from 'react-bootstrap';
 import { Store } from 'react-notifications-component';
 import { useLocation, useNavigate } from "react-router-dom";
@@ -10,18 +10,16 @@ import back from "resources/icons/back_round_deep_blue.svg";
 import { deep_blue_primary } from "utils/color";
 import { content } from "utils/notification";
 import { frameStyleDefault, heightDefault, positionDefault, textStyleDefault, widthDefault } from 'utils/shape';
+import MenuBar from "./components/Bar/MenuBar";
 import ToolBar from "./components/Bar/ToolBar";
 import Content from "./components/Content";
-import MenuBar from "./components/Bar/MenuBar";
 import ShareLinkPopUp from "./components/PopUp/ShareLinkPopUp";
 import ShareWithPopUp from "./components/PopUp/ShareWithPopUp";
 
-import SqlPopUp from "./components/PopUp/SqlPopUp";
 import './AdjustingReport.css';
-import Button from '@mui/material/Button';
+import SqlPopUp from "./components/PopUp/SqlPopUp";
 
 import { shapeBackgroundColors, shapeBorderColors } from 'utils/color';
-import { WindowRounded } from "@mui/icons-material";
 
 // declare some chart type of this app 
 const shapeTypes = ["Table", "Pie Chart", "Doughnut Chart", "Line Chart", "Bar Chart"]
@@ -36,7 +34,6 @@ export default function AdjustingReport(props) {
     const isTemplate = location.state.Type == "Template"
     const isEdit = location.state.Permission == "Edit" && !isTemplate
 
-    const navigate = useNavigate()
     const nav = useNavigate()
     const contentWrappingBox = useRef(null)
     const contentRef = useRef()
@@ -44,9 +41,8 @@ export default function AdjustingReport(props) {
     // list data sources of the report
     const [dataSource, setDataSource] = useState({})
 
-    const [key, setKey] = useState('Data');
 
-    const [showSqlPopUp, setshowSqlPopUp] = useState(false)
+    const [showSqlPopUp, setShowSqlPopUp] = useState(false)
     const [popUpType, setPopUpType] = useState("")
 
     const [tabData, setTabData] = useState({
@@ -68,8 +64,8 @@ export default function AdjustingReport(props) {
 
     const [componentType, setComponentType] = useState("")
 
-    const [showSharePopUp, setshowSharePopUp] = useState(false)
-    const [showShareLinkPopUp, setshowShareLinkPopUp] = useState(false)
+    const [showSharePopUp, setShowSharePopUp] = useState(false)
+    const [showShareLinkPopUp, setShowShareLinkPopUp] = useState(false)
 
     const defaultLocation = {
         size: {
@@ -176,7 +172,7 @@ export default function AdjustingReport(props) {
         saveAsTemplate(currentProject, RId)
             .then(res => {
                 // console.log(res.data)
-                nav('/project/templates')
+                nav('/templates')
             })
             .catch(err => {
                 Store.addNotification(content("Fail", err.response.data, "danger"))
@@ -202,7 +198,7 @@ export default function AdjustingReport(props) {
     }
 
     const showSqlPopUpFunction = (type) => {
-        setshowSqlPopUp(true)
+        setShowSqlPopUp(true)
         setPopUpType(type)
     }
 
@@ -248,6 +244,8 @@ export default function AdjustingReport(props) {
                 // don't need to fetch data from query command
                 if (!checkNeedToQueryData(componentResult[i].Type)) {
                     componentResult[i].Position = JSON.parse(componentResult[i].Position)
+                    componentResult[i].TextTheme = JSON.parse(componentResult[i].TextTheme)
+                    componentResult[i].FrameTheme = JSON.parse(componentResult[i].FrameTheme)
                     continue
                 }
                 // fetch data
@@ -448,8 +446,9 @@ export default function AdjustingReport(props) {
                 }
             } else {
                 component.Position = JSON.parse(component.Position)
+                component.TextTheme = JSON.parse(component.TextTheme)
+                component.FrameTheme = JSON.parse(component.FrameTheme)
             }
-            console.log(shapeComponents, 1)
             setShapeComponent([...shapeComponents, component])
         } catch (err) {
             console.log("adding new component error : ", err)
@@ -647,10 +646,11 @@ export default function AdjustingReport(props) {
     }
 
     // ** check menu status and create relative information
-    const executeWhenClickOutside = (position) => {
+    const executeWhenClickOutside = (event) => {
+        console.log(contentRef)
         switch (addShapeType) {
             case "text":
-                createTextComponent()
+                createTextComponent({ x: event.clientX, y: event.clientY })
                 break
             default:
                 break
@@ -658,21 +658,20 @@ export default function AdjustingReport(props) {
     }
 
     // ** create text component
-    const createTextComponent = async () => {
+    const createTextComponent = async (position) => {
         try {
-            // let newShape = {
-            //     Title: "Title",
-            //     Type: componentType,
-            //     QueryCommand: "",
-            //     Height: 100,
-            //     Width: 300,
-            //     Position: JSON.stringify(info.position),
-            //     TitleTheme: "",
-            //     TextTheme: JSON.stringify(textStyleDefault),
-            //     FrameTheme: JSON.stringify(frameStyleDefault)
-            // }
-            // await createNewComponent(currentProject, RId, newShape)
-            // pushNewComponentToUI(newShape)
+            let newTextShape = {
+                Title: "Title",
+                Type: "Text",
+                QueryCommand: "",
+                Height: 100,
+                Width: 300,
+                Position: JSON.stringify(position),
+                TitleTheme: "",
+                TextTheme: JSON.stringify(textStyleDefault),
+                FrameTheme: JSON.stringify(frameStyleDefault)
+            }
+            await createNewComponent(newTextShape)
         }
         catch (err) {
             console.log(err)
@@ -834,7 +833,7 @@ export default function AdjustingReport(props) {
                     type={popUpType}
                     show={showSqlPopUp}
                     handleClose={() => {
-                        setshowSqlPopUp(false)
+                        setShowSqlPopUp(false)
                     }}
                     onComplete={buildQueryComplete}
                     dataSource={dataSource}
@@ -845,10 +844,10 @@ export default function AdjustingReport(props) {
                     RId={RId}
                     show={showSharePopUp}
                     handleOpen={() => {
-                        setshowSharePopUp(true)
+                        setShowSharePopUp(true)
                     }}
                     handleClose={() => {
-                        setshowSharePopUp(false)
+                        setShowSharePopUp(false)
                     }}
                 />
                 <ShareLinkPopUp
@@ -856,10 +855,10 @@ export default function AdjustingReport(props) {
                     RId={RId}
                     show={showShareLinkPopUp}
                     handleOpen={() => {
-                        setshowShareLinkPopUp(true)
+                        setShowShareLinkPopUp(true)
                     }}
                     handleClose={() => {
-                        setshowShareLinkPopUp(false)
+                        setShowShareLinkPopUp(false)
                     }}
 
                 />
@@ -876,7 +875,7 @@ export default function AdjustingReport(props) {
                             <div className="col-7 m-0 p-0">
                                 <div className="row m-0 p-0" >
                                     <div className="col-1 m-0 p-0 mt-1">
-                                        <button type="button" class="btn btn-sm" onClick={() => { navigate(-1) }}>
+                                        <button type="button" class="btn btn-sm" onClick={() => { nav(-1) }}>
                                             <img src={back} />
                                         </button>
                                     </div>
@@ -968,8 +967,8 @@ export default function AdjustingReport(props) {
                         />
 
                         <ToolBar
-                            OpenSharePopUp={() => setshowSharePopUp(true)}
-                            OpenShareLinkPopUp={() => setshowShareLinkPopUp(true)}
+                            OpenSharePopUp={() => setShowSharePopUp(true)}
+                            OpenShareLinkPopUp={() => setShowShareLinkPopUp(true)}
                             addShapeType={addShapeType}
                             setAddShapeType={setAddShapeType}
                             isEdit={isEdit}
@@ -1001,9 +1000,6 @@ export default function AdjustingReport(props) {
         </div>
     }
 
-
-
-
     const createAReportByTemplateHandle = () => {
         createAReportByTemplate(RId, {
             ProjectId: currentProject,
@@ -1033,7 +1029,7 @@ export default function AdjustingReport(props) {
                     <div className="col-8 m-0 p-0">
                         <div className="row m-0 p-0" >
                             <div className="col-1 m-0 p-0 mt-1">
-                                <button type="button" class="btn btn-sm" onClick={() => { navigate(-1) }}>
+                                <button type="button" class="btn btn-sm" onClick={() => { nav(-1) }}>
                                     <img src={back} />
                                 </button>
                             </div>

@@ -20,27 +20,58 @@ export default function ToolBar(props) {
     return (
         <div>
             <div className="m-auto row toolbar-container" style={{ zIndex: 10 }}>
-                <button className="col m-0 p-0 btn" style={{ "minHeight": "50px" }}>
+                <button
+                    className="col m-0 p-0 btn"
+                    style={{ "minHeight": "50px" }}
+                    onClick={() => {
+                        if (props.isEdit)
+                            props.setAddShapeType("none")
+                    }}
+                >
                     <img src={plus} width="20px" height="20px" />
                     <p className="p-0 m-0 text-center">add data</p>
                 </button>
-                <button className="col m-0 p-0 btn btn-sm" style={{ "minWidth": "80px", "minHeight": "50px" }}>
+                <button
+                    className="col m-0 p-0 btn btn-sm"
+                    style={{ "minWidth": "80px", "minHeight": "50px" }}
+                    onClick={() => {
+                        if (props.isEdit)
+                            props.setAddShapeType("none")
+                    }}
+                >
                     <img src={dataBoard} width="20px" height="20px" />
                     <p className="p-0 m-0 text-center">add databoard</p>
                 </button>
-                <button className="col m-0 p-0 btn btn-sm" style={{ "minWidth": "80px", "minHeight": "50px" }}>
+                <button
+                    className="col m-0 p-0 btn btn-sm"
+                    onClick={() => {
+                        if (props.isEdit)
+                            props.setAddShapeType("image")
+                    }}
+                    style={{ "minWidth": "80px", "minHeight": "50px" }}
+                >
                     <img src={addImage} width="20px" height="20px" />
                     <p className="p-0 m-0">add image</p>
                 </button>
-                <button className={props.addShapeType == "text" ? "col m-0 p-0 btn btn-sm customshine" :"col m-0 p-0 btn btn-sm"} style={{ "minWidth": "80px", "minHeight": "50px" }}
+                <button
+                    className={props.addShapeType == "text" ? "col m-0 p-0 btn btn-sm customshine" : "col m-0 p-0 btn btn-sm"}
+                    style={{ "minWidth": "80px", "minHeight": "50px" }}
                     onClick={() => {
-                        props.setAddShapeType("text")
+                        if (props.isEdit)
+                            props.setAddShapeType("text")
                     }}
                 >
                     <img src={addText} width="20px" height="20px" />
                     <p className="p-0 m-0">add text</p>
                 </button>
-                <button className="col m-0 p-0 btn btn-sm" style={{ "minWidth": "80px", "minHeight": "50px" }}>
+                <button
+                    className="col m-0 p-0 btn btn-sm"
+                    style={{ "minWidth": "80px", "minHeight": "50px" }}
+                    onClick={() => {
+                        if (props.isEdit)
+                            props.setAddShapeType("none")
+                    }}
+                >
                     aaa
                 </button>
                 {/* <button className="col m-0 p-0 btn btn-sm" style={{ "minWidth": "80px", "minHeight": "50px" }}>
@@ -51,35 +82,62 @@ export default function ToolBar(props) {
                     <img src={redo} width="20px" height="20px" />
                     <p className="p-0 m-0">redo</p>
                 </button> */}
-                <button className="col m-0 p-0 btn btn-sm" style={{ "minWidth": "80px", "minHeight": "50px" }}
-                    onClick={() => props.saveATemplateHandle()}>
+                <button
+                    className="col m-0 p-0 btn btn-sm"
+                    style={{ "minWidth": "80px", "minHeight": "50px" }}
+                    onClick={() => {
+                        if (props.isEdit) {
+                            props.saveATemplateHandle()
+                            props.setAddShapeType("none")
+                        }
+                    }}>
                     <img src={comment} width="20px" height="20px" />
                     <p className="p-0 m-0">save as template</p>
                 </button>
-                <button className="col m-0 p-0 btn btn-sm" style={{ "minWidth": "80px", "minHeight": "50px" }}
+                <button
+                    className="col m-0 p-0 btn btn-sm"
+                    style={{ "minWidth": "80px", "minHeight": "50px" }}
                     onClick={() => {
-                        props.saveACopyHandle()
+                        if (props.isEdit) {
+                            props.saveACopyHandle()
+                            props.setAddShapeType("none")
+                        }
                     }}>
                     <img src={copy} width="20px" height="20px" />
                     <p className="p-0 m-0">create a copy</p>
                 </button>
-                <button className="col m-0 p-0 btn btn-sm" style={{ "minWidth": "80px", "minHeight": "50px" }}>
+                <button
+                    className="col m-0 p-0 btn btn-sm"
+                    style={{ "minWidth": "80px", "minHeight": "50px" }}
+                    onClick={() => {
+                        if (props.isEdit)
+                            props.setAddShapeType("none")
+                    }}
+                >
                     <img src={save} width="20px" height="20px" />
                     <p className="p-0 m-0">save</p>
                 </button>
-                <button className="col m-0 p-0 btn btn-sm" style={{ "minWidth": "80px", "minHeight": "50px" }}
+                <button
+                    className="col m-0 p-0 btn btn-sm"
+                    style={{ "minWidth": "80px", "minHeight": "50px" }}
                     onClick={() => {
-                        if (props.isEdit)
+                        if (props.isEdit) {
                             props.OpenShareLinkPopUp()
+                            props.setAddShapeType("none")
+                        }
                     }}
                 >
                     <img src={share} width="20px" height="20px" />
                     <p className="p-0 m-0">share</p>
                 </button>
-                <button className="col m-0 p-0 btn btn-sm" style={{ "minWidth": "80px", "minHeight": "50px" }}
+                <button
+                    className="col m-0 p-0 btn btn-sm"
+                    style={{ "minWidth": "80px", "minHeight": "50px" }}
                     onClick={() => {
-                        if (props.isEdit)
+                        if (props.isEdit) {
                             props.OpenSharePopUp()
+                            props.setAddShapeType("none")
+                        }
                     }}
                 >
                     <img src={shareWith} width="20px" height="20px" />
