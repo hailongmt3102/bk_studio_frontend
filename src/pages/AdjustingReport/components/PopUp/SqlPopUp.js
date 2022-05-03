@@ -143,11 +143,6 @@ export default function SqlPopUp(props) {
     const [showField, setShowField] = useState(true)
 
 
-    const functionaaaaaaa = () => {
-        return <div>
-
-        </div>
-    }
 
 
     const selectClauseTypeLineAndBar = () => {
