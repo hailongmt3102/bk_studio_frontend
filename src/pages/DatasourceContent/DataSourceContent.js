@@ -4,6 +4,8 @@ import Table from '../ImportData/Components/Table'
 import { getDataSourcesInformationByDId, showDataSourceContent } from "api/DataSources"
 import { deep_blue_primary } from "../../utils/color"
 import { DataGrid, GridCellEditStopReasons } from '@mui/x-data-grid';
+import { GridCellParams } from '@mui/x-data-grid-pro';
+import { DataGridPro } from '@mui/x-data-grid-pro';
 import {
     randomCreatedDate,
     randomTraderName,
@@ -106,41 +108,56 @@ export default function DataSourceContent(props) {
             })
 
     }, [])
+    // const handleRowEditStart = (params, event) => {
+    //     console.log("Chạy start")
+    //     event.defaultMuiPrevented = true;
+    // };
+
+    const handleRowEditStop = (params, event) => {
+        console.log("Hàng ", params.id);
+        console.log("Field  ", params.field);
+        console.log("Value ", event.target.value);
+        event.defaultMuiPrevented = true;
+    };
 
 
     const EditUI = () => {
         return <div>
-            <div className='row'>
-                <h2 class="ms-4 mt-2" style={{ color: deep_blue_primary, "fontWeight": "bold", fontSize: "40px" }}>
-                    Edit data source:
+            <div className='row m-0 p-0'>
+                <h2 class="col-8  mt-2" >
+                    <div className='ms-4 customFontBold size40 PrimaryFontColor'>Edit data source:</div>
                 </h2>
 
-                <div className='col'>
-                    <button className='btn btn-success' onClick={() => { }}>
+                <div className='col-1 text-end'>
+                    <button className='me-2 btn btn-success' onClick={() => { }}>
                         Finish
                     </button>
                 </div>
+                <div className='col-3'></div>
 
             </div>
             <div className='bg-white row m-2'>
                 <div className='col-9'>
                     {
-                        <div style={{ height: 500, width: '100%' }}>
+                        <div style={{ height: 700, width: '100%' }}>
                             <DataGrid rows={rows} columns={columns}
                                 columnVisibilityModel={{
                                     // Hide columns status and traderName, the other columns will remain visible
                                     id: false,
                                 }}
                                 experimentalFeatures={{ newEditingApi: true }}
+                                editMode="row"
 
-                                onCellEditStop={(params, event) => {
-                                    if (params.reason === GridCellEditStopReasons.cellFocusOut) {
-                                        event.defaultMuiPrevented = true;
-                                        console.log("param", params)
-                                        console.log("event", event.target)
-                                    }
+                                onRowEditStop={handleRowEditStop}
 
-                                }}
+                            // onCellEditStop={(params, event) => {
+                            //     if (params.reason === GridCellEditStopReasons.cellFocusOut) {
+                            //         event.defaultMuiPrevented = true;
+                            //         console.log("param", params)
+                            //         console.log("event", event.target)
+                            //     }
+
+                            // }}
 
                             />
                         </div>
@@ -148,10 +165,10 @@ export default function DataSourceContent(props) {
                     {/* <Table name={datasource.Information} data={dataFile} rows={rows} columns={columns} /> */}
                 </div>
                 <div className='col-3'>
-                    <h4>Properties</h4>
+                    <div className='mt-4 ms-4 mb-4 customFontBold size32 PrimaryFontColor'>Properties</div>
                     {
                         columns.map((ele, index) =>
-                            index !== 0 && <div>{ele.field}</div>)
+                            index !== 0 && <div className='mt-3 ms-4  size18 '>{ele.field}</div>)
                     }
                     {/* <h6>{props.fileInformation.name}</h6> */}
                     {/* <ul className="list-group bd-none">
