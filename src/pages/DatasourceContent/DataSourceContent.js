@@ -1,16 +1,10 @@
-import React, { useState, useEffect } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
-import Table from '../ImportData/Components/Table'
-import { getDataSourcesInformationByDId, showDataSourceContent } from "api/DataSources"
-import { deep_blue_primary } from "../../utils/color"
-import { DataGrid, GridCellEditStopReasons } from '@mui/x-data-grid';
-import { GridCellParams } from '@mui/x-data-grid-pro';
-import { DataGridPro } from '@mui/x-data-grid-pro';
-import {
-    randomCreatedDate,
-    randomTraderName,
-    randomUpdatedDate,
-} from '@mui/x-data-grid-generator';
+import { DataGrid } from '@mui/x-data-grid'
+import { getDataSourcesInformationByDId, showDataSourceContent, updateTableContentApi } from "api/DataSources"
+import { useEffect, useState } from 'react'
+import { useLocation } from 'react-router-dom'
+
+import { content } from 'utils/notification'
+import { Store } from 'react-notifications-component'
 
 export default function DataSourceContent(props) {
     var location = useLocation()
@@ -18,52 +12,14 @@ export default function DataSourceContent(props) {
     var DId = location.state.Did
     const role = location.state.isEdit ?? false
 
-    // const [dataFile, setDataFile] = useState([])
-
-
-    //KT inclue updateContent
-    // Object.keys(updateContent).includes(id)
-    //if k inclue => push() : 
-    // setUpdateContent({
-    //         ...updateContent, {
-    //         [id]: {
-    //             [field]: value
-    //         }
-    //     }
-    // })
-    //else include rồi => setUpdateContent({
-    //         ...updateContent, 
-    //         [id]: {...updateContent[id], 
-    //             [field]: value
-    //         }
-    //     
-    // })
-
-    const [updateContent, setUpdateContent] = useState({
-        "1": {
-            "username": "rog1",
-            "first_name": "david"
-        },
-        "2": {
-            "username": "mike1",
-            "first_name": "roge",
-            "last_name": "paul"
-        }
-    })
-
+    const [updateContent, setUpdateContent] = useState({})
     const [rows, setRows] = useState([])
     const [columns, setColumns] = useState([])
-
-    useEffect(() => {
-        console.log(rows)
-        console.log("colum", columns)
-    }, [rows, columns])
 
     useEffect(() => {
         getDataSourcesInformationByDId(DId)
             .then(res => {
                 setDatasource(res.data)
-                console.log(res.data)
             })
             .catch(err => {
                 console.log(err)
@@ -106,19 +62,33 @@ export default function DataSourceContent(props) {
             .catch(err => {
                 console.log(err)
             })
-
     }, [])
-    // const handleRowEditStart = (params, event) => {
-    //     console.log("Chạy start")
-    //     event.defaultMuiPrevented = true;
-    // };
 
     const handleRowEditStop = (params, event) => {
-        console.log("Hàng ", params.id);
-        console.log("Field  ", params.field);
-        console.log("Value ", event.target.value);
-        event.defaultMuiPrevented = true;
+        let row = params.id
+        let field = params.field
+        let value = event.target.value
+        if (value) {
+            setUpdateContent({ ...updateContent, [row]: { ...updateContent[row], [field]: value } })
+        }
+        // event.defaultMuiPrevented = true;
     };
+
+    const submit = () => {
+        let sendInfo = {
+            Table: datasource.Information,
+            Data: updateContent
+        }
+
+        updateTableContentApi(DId, sendInfo)
+            .then(res => {
+                Store.addNotification(content("Success", res.data, "success"))
+                // setTimeout(() => { window.location.reload() }, 1500)
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }
 
 
     const EditUI = () => {
@@ -129,7 +99,7 @@ export default function DataSourceContent(props) {
                 </h2>
 
                 <div className='col-1 text-end'>
-                    <button className='me-2 btn btn-success' onClick={() => { }}>
+                    <button className='me-2 btn btn-success' onClick={() => { submit() }}>
                         Finish
                     </button>
                 </div>
@@ -140,25 +110,15 @@ export default function DataSourceContent(props) {
                 <div className='col-9'>
                     {
                         <div style={{ height: 700, width: '100%' }}>
-                            <DataGrid rows={rows} columns={columns}
+                            <DataGrid
+                                rows={rows}
+                                columns={columns}
                                 columnVisibilityModel={{
-                                    // Hide columns status and traderName, the other columns will remain visible
                                     id: false,
                                 }}
                                 experimentalFeatures={{ newEditingApi: true }}
-                                editMode="row"
-
-                                onRowEditStop={handleRowEditStop}
-
-                            // onCellEditStop={(params, event) => {
-                            //     if (params.reason === GridCellEditStopReasons.cellFocusOut) {
-                            //         event.defaultMuiPrevented = true;
-                            //         console.log("param", params)
-                            //         console.log("event", event.target)
-                            //     }
-
-                            // }}
-
+                                editMode="cell"
+                                onCellEditStop={handleRowEditStop}
                             />
                         </div>
                     }

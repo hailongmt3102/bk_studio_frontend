@@ -77,6 +77,10 @@ const updateShareDataSourcePermission = (Did, data) => {
     return axiosClient.post("/data/" + Did + "/share/update", data)
 }
 
+const updateTableContentApi = (DId, data) => {
+    return axiosClient.post(`/data/${DId}/updateContent`, data)
+}
+
 
 
 
@@ -97,5 +101,6 @@ export {
     showDataSourceContent,
     checkPermissionWithDatasource,
     updateShareDataSourcePermission,
-    GetSampleDataSource
+    GetSampleDataSource,
+    updateTableContentApi
 }
