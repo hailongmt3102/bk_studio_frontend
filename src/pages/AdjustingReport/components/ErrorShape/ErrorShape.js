@@ -8,8 +8,8 @@ export default function ErrorShape() {
             <div className='row justify-content-center'>
                 Can't build
             </div>
-            <div className='row'>
-                <img src={warning} />
+            <div className='row m-auto'>
+                <img src={warning} height="200px" width="200px" />
             </div>
 
         </div>
