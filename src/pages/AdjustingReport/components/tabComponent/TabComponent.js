@@ -81,6 +81,7 @@ export default function TabComponent(props) {
 
 	return <div className="col-2 ">
 		<MappingPopUp
+			ComponentName={props.data.data.title}
 			componentType={props.data.data.type}
 			show={showMappingPopUp}
 			handleClose={() => {

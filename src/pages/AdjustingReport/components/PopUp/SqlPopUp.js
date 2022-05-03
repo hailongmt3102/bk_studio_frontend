@@ -4,7 +4,7 @@ import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import add_grey from 'resources/icons/add_grey.svg'
 import substract from 'resources/icons/substract.svg'
-
+import edit_right from 'resources/icons/edit_right.svg'
 import { blue_cloud } from "utils/color"
 import { Form } from 'react-bootstrap'
 export default function SqlPopUp(props) {
@@ -714,12 +714,17 @@ export default function SqlPopUp(props) {
     const titleComponent = () => {
         switch (step) {
             case 1:
-                return <div> <Form.Control type="text" value={typeChartName} onChange={(event) => {
-                    setTypeChartName(event.target.value)
+                return <div className='row m-auto'>
+                    <div className='col-1 '> <img src={edit_right} height="33px" width="33px" /></div>
+                    <div className='col-10 ms-2'>
+                        <Form.Control type="text" value={typeChartName} onChange={(event) => {
+                            setTypeChartName(event.target.value)
+                        }}
+                            className="border-0 mb-2 m-0 p-0 PrimaryFontColor size32 customFontBold"
+                        />
+                    </div>
 
-                }}
-                    className="border-0 mb-2 m-0 p-0 PrimaryFontColor size32 customFontBold"
-                /></div>
+                </div>
             case 2:
                 return <div className='customFontBold PrimaryFontColor size32'>Select Axis</div>
             case 3:

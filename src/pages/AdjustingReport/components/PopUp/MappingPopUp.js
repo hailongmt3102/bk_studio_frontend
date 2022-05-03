@@ -6,7 +6,7 @@ import change from 'resources/icons/change.svg'
 import { Form } from 'react-bootstrap'
 import add_grey from 'resources/icons/add_grey.svg'
 import substract from 'resources/icons/substract.svg'
-
+import edit_right from 'resources/icons/edit_right.svg'
 export default function MappingPopUp(props) {
     const [step, setStep] = useState(1)
     const [fieldList, setFieldList] = useState([])
@@ -129,6 +129,7 @@ export default function MappingPopUp(props) {
 
     const selectTableComponent = () => {
         return <div>
+            <div className='customFontBold ms-5 mb-3 size22' >Select a datasource</div>
             <Autocomplete
                 className='ms-5 me-5'
                 id="tags-standard"
@@ -148,13 +149,28 @@ export default function MappingPopUp(props) {
         </div>
     }
 
+    useEffect(() => {
+        setTypeChartName(props.ComponentName)
+    }, [props.ComponentName])
 
 
+
+    const [typeChartName, setTypeChartName] = useState("")
 
     const titleComponent = () => {
         switch (step) {
             case 1:
-                return <div className='customFontBold PrimaryFontColor size32'>Select Table</div>
+                return <div className='row m-auto'>
+                    <div className='col-1 '> <img src={edit_right} height="33px" width="33px" /></div>
+                    <div className='col-10 ms-2'>
+                        <Form.Control type="text" value={typeChartName} onChange={(event) => {
+                            setTypeChartName(event.target.value)
+                        }}
+                            className="border-0 mb-2 m-0 p-0 PrimaryFontColor size32 customFontBold"
+                        />
+                    </div>
+
+                </div>
             case 2:
                 return <div className='customFontBold PrimaryFontColor size32'>Edit Axis</div>
             case 3:
