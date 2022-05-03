@@ -4,6 +4,7 @@ import { Rnd } from 'react-rnd';
 import React from 'react';
 import TableComponent from './table/TableComponent';
 import Text from './Text/Text';
+import ErrorShape from './ErrorShape/ErrorShape';
 
 ChartJS.register(
     CategoryScale,
@@ -143,8 +144,53 @@ const Content = React.forwardRef((props, ref) => {
                         <Pie data={shape.pieData} />
                     </Rnd>)
             case "Text":
-                <Text data={shape} />
-                break
+                return (
+                    <Rnd
+                        disableDragging={!props.isEdit}
+                        enableResizing={props.isEdit}
+                        size={{ width: shape.Width, height: shape.Height }}
+                        position={{ x: shape.Position.x, y: shape.Position.y }}
+                        onDragStop={(e, d) => {
+                            props.updateShapeComponent(index, {
+                                ...shape, Position: {
+                                    x: d.x,
+                                    y: d.y
+                                }
+                            })
+
+                        }}
+                        onResizeStop={(e, direction, ref, delta, position) => {
+                            props.updateShapeComponent(index, { ...shape, Width: ref.style.width, Height: ref.style.height })
+                        }}
+                        className={props.followingIndexComponent === index ? "border border-5 customBorder" : "border border-5"}
+                    >
+                        <Text data={shape} />
+                    </Rnd>
+                )
+            case "Error":
+                return (
+                    <Rnd
+                        disableDragging={!props.isEdit}
+                        enableResizing={props.isEdit}
+                        size={{ width: shape.Width, height: shape.Height }}
+                        position={{ x: shape.Position.x, y: shape.Position.y }}
+                        onDragStop={(e, d) => {
+                            props.updateShapeComponent(index, {
+                                ...shape, Position: {
+                                    x: d.x,
+                                    y: d.y
+                                }
+                            })
+
+                        }}
+                        onResizeStop={(e, direction, ref, delta, position) => {
+                            props.updateShapeComponent(index, { ...shape, Width: ref.style.width, Height: ref.style.height })
+                        }}
+                        className={props.followingIndexComponent === index ? "border border-5 customBorder" : "border border-5"}
+                    >
+                        <ErrorShape/>
+                    </Rnd>
+                )
             default:
                 break
 
