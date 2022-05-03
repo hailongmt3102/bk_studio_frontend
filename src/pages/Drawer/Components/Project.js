@@ -6,7 +6,6 @@ import { colors } from "components/Colors";
 import { ReactComponent as ReportIcon } from "resources/icons/drawerIcons/report.svg"
 import { ReactComponent as GalleryIcon } from "resources/icons/drawerIcons/gallery.svg"
 import { ReactComponent as ImportDataIcon } from "resources/icons/drawerIcons/importdata.svg"
-import { ReactComponent as TemplateIcon } from "resources/icons/drawerIcons/template.svg"
 
 export default function Project(props) {
 	return (
@@ -31,13 +30,6 @@ export default function Project(props) {
 					active={props.selectedIndex === 6 ? true : false}
 					child={<ImportDataIcon fill={props.selectedIndex === 6 ? colors.drawerActive : colors.drawerToggle} />}
 					title="Import data"
-					onClick={props.swapDrawerVisible}
-				/>
-				<DrawerItem
-					link="/project/templates"
-					active={props.selectedIndex === 7 ? true : false}
-					child={<TemplateIcon fill={props.selectedIndex === 7 ? colors.drawerActive : colors.drawerToggle} />}
-					title="Templates"
 					onClick={props.swapDrawerVisible}
 				/>
 			</ul>

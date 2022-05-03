@@ -8,6 +8,7 @@ import MenuIcon from 'resources/icons/menu.svg'
 import threeLine from "resources/icons/threeLine.svg"
 import './Drawer.css'
 
+
 export default function Drawer(props) {
 
 	var location = useLocation()
@@ -60,8 +61,6 @@ export default function Drawer(props) {
 					setSelectedIndex(5)
 				} else if (/import/.test(url)) {
 					setSelectedIndex(6)
-				} else if (/templates/.test(url)) {
-					setSelectedIndex(7)
 				}
 			}
 		} else if (personalExp.test(url)) {
@@ -82,6 +81,8 @@ export default function Drawer(props) {
 			if (/datasources/.test(url)) {
 				setSelectedIndex(1)
 				setSelectedProject(-1)
+			} else if (/templates/.test(url)) {
+				setSelectedIndex(7)
 			} else if (/people/.test(url)) {
 				setSelectedIndex(2)
 				setSelectedProject(-1)

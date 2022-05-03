@@ -7,6 +7,7 @@ import { ReactComponent as DashboardIcon } from "resources/icons/drawerIcons/das
 import { ReactComponent as DataSourceIcon } from "resources/icons/drawerIcons/dataSource.svg"
 import { ReactComponent as PeopleIcon } from "resources/icons/drawerIcons/people.svg"
 import { ReactComponent as YourProjectIcon } from 'resources/icons/drawerIcons/cart.svg'
+import { ReactComponent as TemplateIcon } from "resources/icons/drawerIcons/template.svg"
 
 import SwitchSvg from 'resources/icons/drawerIcons/switch.svg'
 import CheckedSvg from 'resources/icons/drawerIcons/checked.svg'
@@ -38,6 +39,14 @@ export default function Workspace(props) {
 					title="People"
 					onClick={props.swapDrawerVisible}
 				/>
+				<DrawerItem
+					link="/templates"
+					active={props.selectedIndex === 7 ? true : false}
+
+					child={<TemplateIcon fill={props.selectedIndex === 7 ? colors.drawerActive : colors.drawerToggle} />}
+					title="Templates"
+					onClick={props.swapDrawerVisible}
+				/>
 
 				<div className="d-flex justify-content-start p-2 ps-4" style={{ textDecoration: "none", backgroundColor: props.selectedIndex === 3 ? colors.drawerBackgroundActive : colors.drawerBackgroundToggle }}
 					onClick={() => {
@@ -61,18 +70,18 @@ export default function Workspace(props) {
 											props.setSelectedProject(ele.Id)
 										}}>
 											<div className="col-10">
-											<DrawerItem
-												link={"/pDetail/" + ele.Id}
-												active={false}
-												title={ele.Name}
-												customBackgroundColor={props.selectedProject === ele.Id ? false : false}
-												onClick={props.swapDrawerVisible}
-											/>
+												<DrawerItem
+													link={"/pDetail/" + ele.Id}
+													active={false}
+													title={ele.Name}
+													customBackgroundColor={props.selectedProject === ele.Id ? false : false}
+													onClick={props.swapDrawerVisible}
+												/>
 											</div>
 											<div className="col-2 m-auto" onClick={() => {
 												if (props.currentProject != ele.Id) props.setCurrentProject(ele.Id)
 											}}>
-												<img width="20px" height="20px" src={props.currentProject == ele.Id ? CheckedSvg : SwitchSvg}/>	
+												<img width="20px" height="20px" src={props.currentProject == ele.Id ? CheckedSvg : SwitchSvg} />
 											</div>
 										</div>
 									)

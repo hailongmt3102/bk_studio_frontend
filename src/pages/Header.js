@@ -72,7 +72,7 @@ export default function Header() {
                                 nav("/project/import")
                             }
                             else if (val === "Templates") {
-                                nav("/project/templates")
+                                nav("/templates")
                             }
                             else if (val === "Profile") {
                                 nav("/personal/profile")

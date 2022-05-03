@@ -84,7 +84,7 @@ function App() {
                             exact
                             element={<Gallery />}
                         />
-                        <Route path="/project/templates" element={<Templates />} />
+                        <Route path="/templates" element={<Templates />} />
 
                         <Route
                             path="/project/gallery/:id/edit"
