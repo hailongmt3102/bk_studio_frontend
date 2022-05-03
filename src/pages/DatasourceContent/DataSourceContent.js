@@ -97,12 +97,13 @@ export default function DataSourceContent(props) {
                 <h2 class="col-8  mt-2" >
                     <div className='ms-4 customFontBold size40 PrimaryFontColor'>Edit data source:</div>
                 </h2>
-
-                <div className='col-1 text-end'>
-                    <button className='me-2 btn btn-success' onClick={() => { submit() }}>
-                        Finish
-                    </button>
-                </div>
+                {
+                    role ? <div className='col-1 text-end'>
+                        <button className='me-2 btn btn-success' onClick={() => { submit() }}>
+                            Finish
+                        </button>
+                    </div> : null
+                }
                 <div className='col-3'></div>
 
             </div>
