@@ -32,7 +32,7 @@ export default function ToolBar(props) {
                     <img src={addImage} width="20px" height="20px" />
                     <p className="p-0 m-0">add image</p>
                 </button>
-                <button className="col m-0 p-0 btn btn-sm" style={{ "minWidth": "80px", "minHeight": "50px" }}
+                <button className={props.addShapeType == "text" ? "col m-0 p-0 btn btn-sm customshine" :"col m-0 p-0 btn btn-sm"} style={{ "minWidth": "80px", "minHeight": "50px" }}
                     onClick={() => {
                         props.setAddShapeType("text")
                     }}
@@ -43,14 +43,14 @@ export default function ToolBar(props) {
                 <button className="col m-0 p-0 btn btn-sm" style={{ "minWidth": "80px", "minHeight": "50px" }}>
                     aaa
                 </button>
-                <button className="col m-0 p-0 btn btn-sm" style={{ "minWidth": "80px", "minHeight": "50px" }}>
+                {/* <button className="col m-0 p-0 btn btn-sm" style={{ "minWidth": "80px", "minHeight": "50px" }}>
                     <img src={undo} width="20px" height="20px" />
                     <p className="p-0 m-0">undo</p>
                 </button>
                 <button className="col m-0 p-0 btn btn-sm" style={{ "minWidth": "80px", "minHeight": "50px" }}>
                     <img src={redo} width="20px" height="20px" />
                     <p className="p-0 m-0">redo</p>
-                </button>
+                </button> */}
                 <button className="col m-0 p-0 btn btn-sm" style={{ "minWidth": "80px", "minHeight": "50px" }}
                     onClick={() => props.saveATemplateHandle()}>
                     <img src={comment} width="20px" height="20px" />
