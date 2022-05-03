@@ -1,9 +1,9 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import ImportFileImage from 'resources/images/importFile.png'
 import json_file from 'resources/icons/json_file.svg'
 import db from "resources/icons/db.svg"
 import ImportButton from '../Components/ImportButton'
-
+import * as XLSX from "xlsx";
 import { deep_blue_primary } from "../../../utils/color"
 export default function SelectData(props) {
     const executeStringResult = (result) => {
@@ -32,7 +32,6 @@ export default function SelectData(props) {
         props.onloadComplete()
     }
 
-    const inputFile = useRef(null)
     const handleOnChange = (e) => {
         let file = e.target.files[0];
         if (!file.name.includes('.csv')) {
@@ -43,13 +42,48 @@ export default function SelectData(props) {
         const fileReader = new FileReader();
         fileReader.onload = function (event) {
             const csvOutput = event.target.result;
+            console.log("Out", csvOutput)
             executeStringResult(csvOutput)
         };
         fileReader.readAsText(file);
     };
-    const openFile = () => {
-        inputFile.current.click()
+
+    const [items, setItems] = useState([]);
+
+    const readExcel = (file) => {
+        const promise = new Promise((resolve, reject) => {
+            const fileReader = new FileReader();
+            fileReader.readAsArrayBuffer(file);
+
+            fileReader.onload = (e) => {
+                const bufferArray = e.target.result;
+
+                const wb = XLSX.read(bufferArray, { type: "buffer" });
+
+                const wsname = wb.SheetNames[0];
+
+                const ws = wb.Sheets[wsname];
+
+                const data = XLSX.utils.sheet_to_json(ws);
+
+                console.log("datajson", data)
+            };
+
+            fileReader.onerror = (error) => {
+                reject(error);
+            };
+        });
+
+        promise.then((d) => {
+            setItems(d);
+        });
     };
+
+
+
+    const inputFile = useRef(null)
+    const inputXLSXFile = useRef(null)
+    const inputJsonFile = useRef(null)
 
     return (
         <div>
@@ -70,19 +104,36 @@ export default function SelectData(props) {
                             style={{ display: "none" }}
                         />
                         <ImportButton text="Import csv file" image={ImportFileImage} onClick={() => {
-                            openFile()
+                            inputFile.current.click()
+                        }} />
+                    </div>
+                    <div className='col-4  ms-4 m-0 p-0' style={{ maxWidth: "240px" }}>
+                        <input
+                            ref={inputXLSXFile}
+                            type={"file"}
+                            id={"xlxsFileInput"}
+                            accept={".xlsx"}
+                            onChange={(e) => {
+                                const file = e.target.files[0];
+                                readExcel(file);
+                            }}
+                            style={{ display: "none" }}
+                        />
+                        <ImportButton text="Import xlsx file" image={ImportFileImage} onClick={() => {
+                            inputXLSXFile.current.click()
                         }} />
                     </div>
                     <div className='col-4 ms-4 m-0 p-0' style={{ maxWidth: "240px" }}>
                         <input
+                            ref={inputJsonFile}
                             type={"file"}
                             id={"jsonFileInput"}
                             accept={".json"}
-                            //onChange={handleOnChange}
+                            onChange={handleOnChange}
                             style={{ display: "none" }}
                         />
                         <ImportButton text="Import json file" image={json_file} onClick={() => {
-                            //openFile()
+                            inputJsonFile.current.click()
                         }} />
                     </div>
                     <div className='col-4 ms-4 m-0 p-0' style={{ maxWidth: "240px" }}>
@@ -96,6 +147,32 @@ export default function SelectData(props) {
                         <ImportButton text="Connect to database" image={db} onClick={() => {
                             // openFile()
                         }} />
+                        {/* <div>
+                            <input
+                                type="file"
+                                onChange={(e) => {
+                                    const file = e.target.files[0];
+                                    readExcel(file);
+                                }}
+                            />
+
+                            <table class="table container">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Item</th>
+                                        <th scope="col">Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {items.map((d) => (
+                                        <tr key={d.Item}>
+                                            <th>{d.Item}</th>
+                                            <td>{d.Description}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div> */}
                     </div>
                 </div>
             </div>
