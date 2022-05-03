@@ -10,3 +10,7 @@
     border-radius: 20px 20px 0px 0px;
     
 }
+
+.customshine{
+    box-shadow: 0px 0px 3px 3px rgba(95, 151, 224, 0.685);
+}

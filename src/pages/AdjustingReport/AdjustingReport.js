@@ -2,7 +2,7 @@ import { getColumnsOfTable, GetDataSourcesListInformationInProject, QueryData as
 import { createNewComponent as createNewComponentApi, createNewReport, deleteShape as deleteShapeApi, getAllComponent, getReportInformation, updateAComponent, updateReportInformation, saveAsCopy, saveAsTemplate, getAllDatasourceNameInReport, deleteReport } from 'api/Report';
 import { createAReportByTemplate, deleteTemplate, getAllDatasourceNameInTemplate } from "api/Templates"
 import TabComponent from "pages/AdjustingReport/components/tabComponent/TabComponent";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { Form } from 'react-bootstrap';
 import { Store } from 'react-notifications-component';
 import { useLocation, useNavigate } from "react-router-dom";
@@ -246,12 +246,15 @@ export default function AdjustingReport(props) {
             let queryResult, parseResult
             for (let i = 0; i < componentResult.length; i++) {
                 // don't need to fetch data from query command
-                if (!checkNeedToQueryData(componentResult[i].Type)) continue
+                if (!checkNeedToQueryData(componentResult[i].Type)) {
+                    componentResult[i].Position = JSON.parse(componentResult[i].Position)
+                    continue
+                }
                 // fetch data
                 queryResult = await queryDataOfAShape(componentResult[i].QueryCommand)
                 if (queryResult == null) {
                     // error to query data of this shape
-                    componentResult[i].Type = "Error"
+                    componentResult[i].TypeParsed = "Error"
                     componentResult[i].Position = JSON.parse(componentResult[i].Position)
                 } else {
                     try {
@@ -434,7 +437,7 @@ export default function AdjustingReport(props) {
                 parseResult = parseDataQueried(component.Type, queryResult)
                 if (queryResult == null) {
                     // error to query data of this shape
-                    component.Type = "Error"
+                    component.TypeParsed = "Error"
                     component.Position = JSON.parse(component.Position)
                 } else {
                     // parse them json data from server
@@ -443,6 +446,8 @@ export default function AdjustingReport(props) {
                     component.FrameTheme = JSON.parse(component.FrameTheme)
                     component = { ...component, ...parseResult }
                 }
+            } else {
+                component.Position = JSON.parse(component.Position)
             }
             console.log(shapeComponents, 1)
             setShapeComponent([...shapeComponents, component])
@@ -451,7 +456,7 @@ export default function AdjustingReport(props) {
         }
     }
 
-    const updateQueryOfAComponent = async (query) => {
+    const updateQueryOfAComponent = async (query, name) => {
         if (followingIndexComponent == -1 || followingIndexComponent > shapeComponents.length - 1) return
         let index = followingIndexComponent
         try {
@@ -460,15 +465,15 @@ export default function AdjustingReport(props) {
                 // fetch data
                 let queryResult = await queryDataOfAShape(query)
                 parseResult = parseDataQueried(shapeComponents[index].Type, queryResult)
-                let newTypeParse = queryResult == null ? "Error" : shapeComponents[index].Type
                 if (queryResult == null) {
                     // error to query data of this shape
-                    parseResult.Type = "Error"
+                    parseResult.TypeParsed = "Error"
                 } else {
                     // parse them json data from server
-                    setShapeComponent([...shapeComponents.slice(0, index), { ...shapeComponents[index], ...parseResult, QueryCommand: query, Type: newTypeParse }, ...shapeComponents.slice(index + 1)])
+                    setShapeComponent([...shapeComponents.slice(0, index), { ...shapeComponents[index], ...parseResult, QueryCommand: query, Title: name }, ...shapeComponents.slice(index + 1)])
                     saveAShapeComponent({
                         ...shapeComponents[index],
+                        Title: name,
                         QueryCommand: query
                     })
                 }
@@ -494,8 +499,7 @@ export default function AdjustingReport(props) {
         }
     }
 
-    const saveAllShapeComponents =  async () => {
-        console.log(shapeComponents)
+    const saveAllShapeComponents = async () => {
         let componentData
         for (let i = 0; i < shapeComponents.length; i++) {
             componentData = shapeComponents[i]
@@ -606,26 +610,24 @@ export default function AdjustingReport(props) {
             canvas.addEventListener("mouseup", () => {
                 canvas.removeEventListener("mousemove", onMouseMove)
                 // if (shapeTypeVariable == null) return
-                executeWhenDragged({ ...dragAreaLocation })
+                executeWhenDragged()
                 setDragAreaLocation(defaultLocation)
             })
         })
-
-        console.log("added mouse event")
     }
 
+
     // ** when drag complete
-    const executeWhenDragged = (dragInfo) => {
-        console.log(dragInfo)
+    const executeWhenDragged = () => {
+        console.log(dragAreaLocation)
         switch (addShapeType) {
             case "text":
-                createTextComponent(dragInfo)
+                createTextComponent()
                 break
             default:
                 break
         }
     }
-
 
     // ** ---------------------------------------------------------------------------------------------
     //! end
@@ -640,13 +642,12 @@ export default function AdjustingReport(props) {
         if (contentRef == null) return
         if (contentRef.current && !contentRef.current.contains(e.target)) {
             setFollowingIndexComponent(-1)
-            // executeWhenClickOutside(e)
+            executeWhenClickOutside(e)
         }
     }
 
     // ** check menu status and create relative information
     const executeWhenClickOutside = (position) => {
-        console.log(position)
         switch (addShapeType) {
             case "text":
                 createTextComponent()
@@ -765,9 +766,9 @@ export default function AdjustingReport(props) {
     }, [])
 
     // trigger on change of tabData
-    useEffect(() => {
-        console.log(addShapeType)
-    }, [addShapeType])
+    // useEffect(() => {
+    //     console.log(addShapeType)
+    // }, [addShapeType])
 
     // trigger on change focus component
     useEffect(() => {
@@ -969,6 +970,7 @@ export default function AdjustingReport(props) {
                         <ToolBar
                             OpenSharePopUp={() => setshowSharePopUp(true)}
                             OpenShareLinkPopUp={() => setshowShareLinkPopUp(true)}
+                            addShapeType={addShapeType}
                             setAddShapeType={setAddShapeType}
                             isEdit={isEdit}
                             saveACopyHandle={() => saveACopyHandle()}
@@ -980,6 +982,7 @@ export default function AdjustingReport(props) {
                             onMouseDown={onMouseDownHandler}
                             onMouseMove={onMouseMoveHandler}
                             onMouseUp={onMouseUpHandler}
+                            ref={contentWrappingBox}
                         >
                             <Content
                                 isEdit={isEdit}

@@ -23,6 +23,8 @@ export default function MappingPopUp(props) {
     const [where_clause, setWhere_clause] = useState([])
     const [having_clause, setHaving_clause] = useState([])
     const [order_clause, setOrder_clause] = useState([])
+    const [typeChartName, setTypeChartName] = useState("")
+
 
 
     const submit = () => {
@@ -66,7 +68,8 @@ export default function MappingPopUp(props) {
         if (orderclause.length > 0) {
             query += ` order by ${orderclause.map(order => `${order.field} ${order.fx}`).join(',')}`
         }
-        props.onComplete(query)
+        console.log(typeChartName)
+        props.onComplete(query, typeChartName)
         props.handleClose()
     }
     useEffect(() => {
@@ -155,7 +158,6 @@ export default function MappingPopUp(props) {
 
 
 
-    const [typeChartName, setTypeChartName] = useState("")
 
     const titleComponent = () => {
         switch (step) {
