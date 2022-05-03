@@ -11,15 +11,12 @@ export default function MappingPopUp(props) {
     const [step, setStep] = useState(1)
     const [fieldList, setFieldList] = useState([])
     const [data_source, set_data_source] = useState([]);
-    const [selectXAxis, setSelectXAxis] = useState(null)
     const [selectFrom, setSelectFrom] = useState([])
 
     const op = ['=', "!=", ">", "<", ">=", "<="];
-    const [selectedField, setSelectedField] = useState([])
     const [groupBy, setGroupBy] = useState([])
 
     const [select_clause, setSelect_clause] = useState([])
-    const [function_clause, setFunction_clause] = useState([])
     const [where_clause, setWhere_clause] = useState([])
     const [having_clause, setHaving_clause] = useState([])
     const [order_clause, setOrder_clause] = useState([])
@@ -68,7 +65,6 @@ export default function MappingPopUp(props) {
         if (orderclause.length > 0) {
             query += ` order by ${orderclause.map(order => `${order.field} ${order.fx}`).join(',')}`
         }
-        console.log(typeChartName)
         props.onComplete(query, typeChartName)
         props.handleClose()
     }
@@ -181,7 +177,6 @@ export default function MappingPopUp(props) {
                 return null
         }
     }
-    const [showField, setShowField] = useState([])
 
     const MappingXColumComponent = () => {
         return <div className='row m-0 p-0 pe-5'>
@@ -199,7 +194,9 @@ export default function MappingPopUp(props) {
                         />
                     )}
                     onChange={(e, val) => {
-                        setSelectXAxis(val)
+                        if (select_clause.length > 0) {
+                            setSelect_clause([{...select_clause[0], field: val}, ...select_clause.slice(1)])
+                        }
                     }}
                 />
             </div>
@@ -361,9 +358,6 @@ export default function MappingPopUp(props) {
         setSelect_clause([...select_clause.slice(0, index), value, ...select_clause.slice(index + 1)])
     }
 
-    const updateFunctionClause = (index, value) => {
-        setFunction_clause([...function_clause.slice(0, index), value, ...function_clause.slice(index + 1)])
-    }
     const updateWhereClause = (index, value) => {
         setWhere_clause([...where_clause.slice(0, index), value, ...where_clause.slice(index + 1)])
     }
