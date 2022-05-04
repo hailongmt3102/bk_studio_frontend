@@ -294,7 +294,7 @@ export default function ReportCard(props) {
                 <div className='col-5 m-0 p-0 m-auto text-center ' onClick={() => {
                     props.type === "Template" ? viewReportNav(props.data.Id) : NavigationHandle(props.data.Id)
                 }}>
-                    <img src={props.data.Image || default_report_img} alt={default_report_img} style={{width : "200px", height : "auto"}} />
+                    <img src={props.data.Image || default_report_img} alt={default_report_img} style={{ width: "200px", height: "auto" }} />
                 </div>
                 <div className='col-7  m-0 p-0'>
                     <div class="d-flex flex-row-reverse me-3">
@@ -332,7 +332,7 @@ export default function ReportCard(props) {
                     </div>
                     <div className='row' >
                     </div>
-                    <div className='ms-5 mb-4'>{ContentComponent()}</div>
+                    <div className='ms-5 mb-5'>{ContentComponent()}</div>
                 </div>
             </div >
         </div>

@@ -144,7 +144,7 @@ export default function TemplateMiniCard(props) {
                     </div> :
 
                     <h5 className='text-center mt-3' style={{ "color": deep_blue_primary, "fontSize": "28px", "fontWeight": "bold" }}>
-                        {props.data.Name.slice(0, 20)}
+                        {props.data.Name.slice(0, 15)}
                     </h5>
 
             }
