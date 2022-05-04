@@ -633,7 +633,6 @@ export default function AdjustingReport(props) {
 
 
 
-
     // ** ---------------------------------------------------------------------------------------------
     // ** trigger click outside of component 
     // ** can create new component 
@@ -647,10 +646,11 @@ export default function AdjustingReport(props) {
 
     // ** check menu status and create relative information
     const executeWhenClickOutside = (event) => {
-        console.log(contentRef)
+        let rect = event.target.getBoundingClientRect();
+        let pos = {x: event.clientX - rect.left, y :event.clientY - rect.top}
         switch (addShapeType) {
             case "text":
-                createTextComponent({ x: event.clientX, y: event.clientY })
+                createTextComponent(pos)
                 break
             default:
                 break
