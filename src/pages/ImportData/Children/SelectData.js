@@ -28,6 +28,7 @@ export default function SelectData(props) {
                 }
             }
         })
+        console.log(data)
         props.setDataFile([...data])
         props.onloadComplete()
     }
@@ -42,11 +43,11 @@ export default function SelectData(props) {
         const fileReader = new FileReader();
         fileReader.onload = function (event) {
             const csvOutput = event.target.result;
-            console.log("XLXS", csvOutput)
             executeStringResult(csvOutput)
         };
         fileReader.readAsText(file);
     };
+
     const JsonHandleOnChange = (e) => {
         let file = e.target.files[0];
         if (!file.name.includes('.json')) {
@@ -57,8 +58,8 @@ export default function SelectData(props) {
         const fileReader = new FileReader();
         fileReader.onload = function (event) {
             const jsonOutput = event.target.result;
-            console.log("Json", jsonOutput)
-            // executeStringResult(csvOutput)
+            props.setDataFile(JSON.parse(jsonOutput))
+            props.onloadComplete()
         };
         fileReader.readAsText(file);
     };
@@ -66,6 +67,7 @@ export default function SelectData(props) {
     const [items, setItems] = useState([]);
 
     const readExcel = (file) => {
+        props.setFileInformation({ ...file, name: file.name.replaceAll('.', '_') })
         const promise = new Promise((resolve, reject) => {
             const fileReader = new FileReader();
             fileReader.readAsArrayBuffer(file);
@@ -81,7 +83,8 @@ export default function SelectData(props) {
 
                 const data = XLSX.utils.sheet_to_json(ws);
 
-                console.log("datajson", data)
+                props.setDataFile(data)
+                props.onloadComplete()
             };
 
             fileReader.onerror = (error) => {
