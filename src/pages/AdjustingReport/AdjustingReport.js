@@ -20,6 +20,7 @@ import './AdjustingReport.css';
 import SqlPopUp from "./components/PopUp/SqlPopUp";
 
 import { shapeBackgroundColors, shapeBorderColors } from 'utils/color';
+import * as htmlToImage from 'html-to-image';
 
 // declare some chart type of this app 
 const shapeTypes = ["Table", "Pie Chart", "Doughnut Chart", "Line Chart", "Bar Chart"]
@@ -84,6 +85,7 @@ export default function AdjustingReport(props) {
 
     const [followingIndexComponent, setFollowingIndexComponent] = useState(-1)
     const [copyIndexComponent, setCopyIndexComponent] = useState(-1)
+    const [reportImage, setReportImage] = useState("")
 
 
     // ** ---------------------------------------------------------------------------------------------
@@ -183,10 +185,12 @@ export default function AdjustingReport(props) {
 
     const updateSubmit = async () => {
         try {
+            let screenShoot = await takeScreenShot()
             await updateReportInformation(currentProject, RId, {
                 "Hastag": reportInformation.Hastag,
                 "Description": "",
-                "Name": reportInformation.Name
+                "Name": reportInformation.Name,
+                "Image" : screenShoot
             })
             saveAllShapeComponents()
             Store.addNotification(content("Success", "Saved", "success"))
@@ -647,7 +651,7 @@ export default function AdjustingReport(props) {
     // ** check menu status and create relative information
     const executeWhenClickOutside = (event) => {
         let rect = event.target.getBoundingClientRect();
-        let pos = {x: event.clientX - rect.left, y :event.clientY - rect.top}
+        let pos = { x: event.clientX - rect.left, y: event.clientY - rect.top }
         switch (addShapeType) {
             case "text":
                 createTextComponent(pos)
@@ -774,6 +778,8 @@ export default function AdjustingReport(props) {
         onChangeFocusShape(followingIndexComponent);
     }, [followingIndexComponent])
 
+
+
     const [reportInformation, setReportInformation] = useState(
         {
             "Id": 0,
@@ -824,6 +830,19 @@ export default function AdjustingReport(props) {
                 })
 
     }
+
+
+    const takeScreenShot = async () => {
+        var node = document.getElementById('bkstudiocontent')
+        try {
+            let dataUrl = await htmlToImage.toPng(node)
+            return dataUrl
+        } catch (error) {
+            console.error('oops, something went wrong!', error);
+            return ""
+        }
+    }
+
     const EditUI = () => {
         return <div>
             <div>
@@ -977,6 +996,7 @@ export default function AdjustingReport(props) {
                         />
 
                         <div className="content"
+                            id="bkstudiocontent"
                             onClick={(e) => triggerClickContentBackground(e)}
                             onMouseDown={onMouseDownHandler}
                             onMouseMove={onMouseMoveHandler}
