@@ -31,7 +31,7 @@ export default function EditData(props) {
         <div>
             <div>
                 <div className='row'>
-                    <h2 className='m-3 col'>
+                    <h2 className='m-3 col PrimaryFontColor size40 customFontBold '>
                         Review data source
                     </h2>
                     <div className='col'>
@@ -46,7 +46,7 @@ export default function EditData(props) {
                         <Table name={props.fileInformation.name} data={props.dataFile} rows={rows} columns={columns} />
                     </div>
                     <div className='col-3'>
-                        <h4>Properties</h4>
+                        <div className='mt-4 mb-4 customFontBold size32 PrimaryFontColor'>Properties</div>
                         <h6>{props.fileInformation.name}</h6>
                         <ul className="list-group bd-none">
                             {

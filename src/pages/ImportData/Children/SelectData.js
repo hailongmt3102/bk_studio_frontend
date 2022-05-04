@@ -107,7 +107,7 @@ export default function SelectData(props) {
         <div>
             <div>
                 <div>
-                    <h2 class="ms-4 mt-2" style={{ color: deep_blue_primary, "fontWeight": "bold", fontSize: "40px" }}>
+                    <h2 class="ms-4 mt-2 PrimaryFontColor size40 customFontBold" >
                         Import data:
                     </h2>
                 </div>
