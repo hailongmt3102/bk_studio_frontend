@@ -14,7 +14,7 @@ export default function TestModel() {
     return (
 
         <div>
-            <Selection showDialog={showDialog} />
+            <Selection showDialog={showDialog} handleClose={handleClose} />
 
             <div className="row ms-2 m-0 p-0" >
                 <div className="col-5">

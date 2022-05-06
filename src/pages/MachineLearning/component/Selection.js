@@ -14,7 +14,7 @@ export default function Selection(props) {
         <div
         ><Dialog
             open={props.showDialog}
-            onClose={props.handleCloseNo}
+            onClose={props.handleClose}
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description"
         >
