@@ -5,7 +5,7 @@ import React from 'react';
 import TableComponent from './table/TableComponent';
 import ErrorShape from './ErrorShape/ErrorShape';
 import { TextField } from '@mui/material';
-
+import { Form } from 'react-bootstrap'
 ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -190,15 +190,38 @@ const Content = React.forwardRef((props, ref) => {
                         }}
                         className={props.followingIndexComponent === index ? "border border-5 customBorder" : "border border-5"}
                     >
-                        <h4>{shape.Title}</h4>
+                        {/* <h4>{shape.Title}</h4> */}
                         <TextField
+                            sx={{
+                                "& .MuiOutlinedInput-root": {
+                                    "& > fieldset": {
+                                        border: "none"
+                                    }
+                                }
+                            }}
+                            placeholder="text"
+                            multiline
+                            rows={3}
+                            value={shape.QueryCommand}
+                            onChange={(e) => {
+                                props.updateShapeComponent(index, { ...shape, QueryCommand: e.target.value })
+                            }}
+
+                        />
+                        {/* <Form.Group className="mb-5" controlId="exampleForm.ControlTextarea1" >
+
+                            <Form.Control as="textarea" rows={3} style={{ "overflow": "auto", "resize": "none" }} value={shape.QueryCommand} onChange={(e) => {
+                                props.updateShapeComponent(index, { ...shape, QueryCommand: e.target.value })
+                            }} />
+                        </Form.Group> */}
+                        {/* <TextField
                             variant="standard"
                             placeholder="text"
                             value={shape.QueryCommand}
                             onChange={(e) => {
                                 props.updateShapeComponent(index, { ...shape, QueryCommand: e.target.value })
                             }}
-                        />
+                        /> */}
                     </Rnd>
                 )
             default:

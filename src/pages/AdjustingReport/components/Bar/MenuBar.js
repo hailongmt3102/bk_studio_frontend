@@ -36,8 +36,8 @@ export default function MenuBar(props) {
     };
     const file_option = ['New', 'Open', 'Upload', 'Save', 'Download', 'Print', 'Delete']
     const file_option_icon_list = [new_file, open_file, upload, save_grey, save, print, remove_file]
-    const edit_option_icon_list = [undo, redo, keo, copy, paste, done_round]
-    const edit_option = ['Undo', 'Redo', 'Cut', 'Copy', 'Paste', 'Delete']
+    const edit_option_icon_list = [keo, copy, paste, done_round]
+    const edit_option = ['Cut', 'Copy', 'Paste', 'Delete']
     const function_option = ['SUM', 'MAX', 'MIN', 'AVERAGE']
     const insert_option = ['Table', 'Bar Chart', 'Pie Chart', 'Doughnut Chart', 'Line Chart']
     const insert_option_icon_list = [table, bar_chart, pie_chart, donut, linechart]
