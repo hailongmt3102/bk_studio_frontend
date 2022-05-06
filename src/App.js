@@ -28,6 +28,11 @@ import 'react-notifications-component/dist/theme.css';
 import LocalizedStrings from 'react-localization';
 import { data } from './utils/localizationData'
 import AdjustingReport from "pages/AdjustingReport/AdjustingReport";
+import ML from "pages/MachineLearning/ML";
+
+import CreateANewModel from "pages/MachineLearning/CreateANewModel/CreateANewModel";
+import ModelDetail from "pages/MachineLearning/ModelDetail/ModelDetail";
+import TestModel from "pages/MachineLearning/TestModel/TestModel";
 const translations = new LocalizedStrings(data);
 const localizationContext = React.createContext(translations);
 
@@ -85,7 +90,10 @@ function App() {
                             element={<Gallery />}
                         />
                         <Route path="/templates" element={<Templates />} />
-
+                        <Route path="/machinelearning" element={<ML />} />
+                        <Route path="/createmodel" element={<CreateANewModel />} />
+                        <Route path="/model" element={<ModelDetail />} />
+                        <Route path="/testmodel" element={<TestModel />} />
                         <Route
                             path="/project/gallery/:id/edit"
                             exact
