@@ -1,15 +1,55 @@
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import { Rnd } from 'react-rnd'
 import './TableComponent.css'
-
+import {
+    DataGrid, GridToolbarContainer,
+    GridToolbarExport
+} from '@mui/x-data-grid'
+import { useDemoData } from "@mui/x-data-grid-generator";
 const selectReg = /select.*(?= from)/
 export default function TableComponent(props) {
+
+    // console.log("propsdatadata[0]", props.data.data[0])
+    // console.log("propsdata[0]", props.data)
+    const [rows, setRows] = useState([])
     const [columns, setColumns] = useState([])
     useEffect(() => {
-        let selectArray = (selectReg.exec(props.data.QueryCommand) ?? [""])[0].replace("select ", "").split(",").map(ele => ele.trim())
-        setColumns(selectArray)
+        // let selectArray = (selectReg.exec(props.data.QueryCommand) ?? [""])[0].replace("select ", "").split(",").map(ele => ele.trim())
+        // setColumns(selectArray)
+        const width = 150
+        const keys = Object.keys(props.data.data[0])
+
+        let columns = keys.map((key) => {
+            return {
+                field: key,
+                headerName: key,
+                editable: false,
+                width: width
+            }
+        })
+
+        setColumns(columns)
+
+
+        let rows = props.data.data.map((row, index) => {
+            return { ...row, id: index }
+        })
+        console.log("row", rows)
+        setRows(rows)
     }, [props.data.data])
-    
+    function CustomToolbar() {
+        return (
+            <GridToolbarContainer>
+                <GridToolbarExport />
+            </GridToolbarContainer>
+        );
+    }
+    const { loading } = useDemoData({
+        // dataSet: 'Commodity',
+        rowLength: 4,
+        maxColumns: 6
+    });
+
     return (
         <Rnd
             disableDragging={props.disableDragging}
@@ -48,7 +88,7 @@ export default function TableComponent(props) {
                 props.data.data !== undefined && props.data.data.length > 0 ?
                     <div>
                         <h4 className='ms-2'>{props.data.Title}</h4>
-                        <table class='component-table'>
+                        {/* <table class='component-table'>
                             <thead>
                                 <tr>
                                     {
@@ -69,7 +109,21 @@ export default function TableComponent(props) {
                                     )
                                 }
                             </tbody>
-                        </table>
+                        </table> */}
+                        <DataGrid
+                            loading={loading}
+                            components={{
+                                Toolbar: CustomToolbar
+                            }}
+                            rows={rows}
+                            columns={columns}
+                            columnVisibilityModel={{
+                                id: true,
+                            }}
+                            experimentalFeatures={{ newEditingApi: true }}
+                        // editMode="cell"
+                        // onCellEditStop={handleRowEditStop}
+                        />
                     </div>
                     : null
             }
