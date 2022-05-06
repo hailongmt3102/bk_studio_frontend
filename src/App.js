@@ -33,6 +33,7 @@ import ML from "pages/MachineLearning/ML";
 import CreateANewModel from "pages/MachineLearning/CreateANewModel/CreateANewModel";
 import ModelDetail from "pages/MachineLearning/ModelDetail/ModelDetail";
 import TestModel from "pages/MachineLearning/TestModel/TestModel";
+import PredictData from "pages/MachineLearning/PredictData/PredictData";
 const translations = new LocalizedStrings(data);
 const localizationContext = React.createContext(translations);
 
@@ -92,8 +93,9 @@ function App() {
                         <Route path="/templates" element={<Templates />} />
                         <Route path="/machinelearning" element={<ML />} />
                         <Route path="/createmodel" element={<CreateANewModel />} />
-                        <Route path="/model" element={<ModelDetail />} />
+                        <Route path="/modelDetail" element={<ModelDetail />} />
                         <Route path="/testmodel" element={<TestModel />} />
+                        <Route path="/predict" element={<PredictData />} />
                         <Route
                             path="/project/gallery/:id/edit"
                             exact

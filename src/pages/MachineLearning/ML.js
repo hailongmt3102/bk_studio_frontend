@@ -24,7 +24,7 @@ export default function ML() {
                         style={{ height: "120px", width: "120px" }}
                         className=' ms-4 btn btn-lg btn-default m-2  shadow p-3 mb-5 bg-body rounded'
                         onClick={() => {
-                            // newReport()
+                            nav("/createmodel")
                         }}>
                         <img src={BlankReportIcon} width="180px" height="180px" />
                     </button>

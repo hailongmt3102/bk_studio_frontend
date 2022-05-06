@@ -1,6 +1,6 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-export default function ModelDetail() {
+export default function PredictData() {
     const nav = useNavigate()
     return (
         <div>
@@ -14,7 +14,7 @@ export default function ModelDetail() {
                     >
                         <div className='row p-2 text-center'>
                             <div className='col-9  text-center'>
-                                <div className='col-2'>Apply</div>
+                                <div className='col-2'>Predict</div>
                             </div>
                         </div>
                     </button>

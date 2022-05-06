@@ -11,7 +11,7 @@ export default function CreateANewModel(props) {
         <div>
             <div className='row m-2 mt-4 mb-4'>
                 <div class="col  mt-1 customFontBold PrimaryFontColor size40" >
-                    Sample Model
+                    Create a new Model
                 </div>
                 <div className='col text-end'>
                     <button className='btn-lg btn-success text-center border-0' style={{ backgroundColor: "#3B97C6" }}
