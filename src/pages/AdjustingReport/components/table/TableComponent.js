@@ -9,14 +9,6 @@ import { useDemoData } from "@mui/x-data-grid-generator";
 const selectReg = /select.*(?= from)/
 
 
-function CustomToolbar() {
-    return (
-        <GridToolbarContainer>
-            <GridToolbarExport printOptions={{ disableToolbarButton: true }} />
-        </GridToolbarContainer>
-    );
-}
-
 export default function TableComponent(props) {
 
 
