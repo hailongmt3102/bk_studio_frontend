@@ -87,7 +87,11 @@ export default function Drawer(props) {
 			} else if (/people/.test(url)) {
 				setSelectedIndex(currentFollowingDrawer.people)
 				setSelectedProject(-1)
-			} else if (url.length === 1) {
+			} else if (/machinelearning/.test(url)) {
+				setSelectedIndex(currentFollowingDrawer.machineLearning)
+				setSelectedProject(-1)
+			}
+			else if (url.length === 1) {
 				setSelectedIndex(currentFollowingDrawer.dashboard)
 				setSelectedProject(-1)
 			} else {

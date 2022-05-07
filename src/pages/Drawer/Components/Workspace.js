@@ -8,6 +8,8 @@ import { ReactComponent as DataSourceIcon } from "resources/icons/drawerIcons/da
 import { ReactComponent as PeopleIcon } from "resources/icons/drawerIcons/people.svg"
 import { ReactComponent as YourProjectIcon } from 'resources/icons/drawerIcons/cart.svg'
 import { ReactComponent as TemplateIcon } from "resources/icons/drawerIcons/template.svg"
+import { ReactComponent as MachineLearningIcon } from "resources/icons/ML_icon.svg"
+
 
 import SwitchSvg from 'resources/icons/drawerIcons/switch.svg'
 import CheckedSvg from 'resources/icons/drawerIcons/checked.svg'
@@ -43,8 +45,16 @@ export default function Workspace(props) {
 				<DrawerItem
 					link="/templates"
 					active={props.selectedIndex === currentFollowingDrawer.template ? true : false}
-					child={<TemplateIcon fill={props.selectedIndex === currentFollowingDrawer.template  ? colors.drawerActive : colors.drawerToggle} />}
+					child={<TemplateIcon fill={props.selectedIndex === currentFollowingDrawer.template ? colors.drawerActive : colors.drawerToggle} />}
 					title="Templates"
+					onClick={props.swapDrawerVisible}
+				/>
+
+				<DrawerItem
+					link="/machinelearning"
+					active={props.selectedIndex === currentFollowingDrawer.machineLearning ? true : false}
+					child={<MachineLearningIcon fill={props.selectedIndex === currentFollowingDrawer.machineLearning ? colors.drawerActive : colors.drawerToggle} />}
+					title="Machine learning"
 					onClick={props.swapDrawerVisible}
 				/>
 

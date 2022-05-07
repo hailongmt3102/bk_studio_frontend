@@ -16,7 +16,8 @@ const currentFollowingDrawer = {
     gallery: 6,
     importData: 7,
     profile: 8,
-    setting: 9
+    setting: 9,
+    machineLearning : 10,
 }
 module.exports = {
     checkVariable,
