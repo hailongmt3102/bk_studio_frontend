@@ -1,28 +1,76 @@
-import React, { useState, useEffect } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
+import {
+    DataGrid
+} from '@mui/x-data-grid';
+import { useDemoData } from "@mui/x-data-grid-generator";
+import { getDataSourcesInformationByDId, showDataSourceContent } from "api/DataSources";
+import { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+
 // import Table from '../Components/Table'
 
 export default function ReviewTestData(props) {
-    const location  = useLocation()
+    const location = useLocation()
     const nav = useNavigate()
     const Id = location.state ? location.state.Did : -1
 
-    useEffect(() => {   
-        // if (Id == -1)  nav.push
+    const [datasource, setDatasource] = useState([])
+    const [columns, setColumns] = useState([])
+    const [rows, setRows] = useState([])
 
-        // setColumns({
-        //     data: Object.keys(props.dataFile[0]),
-        //     active: new Array(Object.keys(props.dataFile[0]).length).fill(true)
-        // })
-        // setRows(Array.from({ length: props.dataFile.length }, (_, i) => i))
+    useEffect(() => {
+        if (Id == -1) {
+            nav("/machinelearning")
+            return
+        }
+
+        getDataSourcesInformationByDId(Id)
+            .then(res => {
+                setDatasource(res.data)
+            })
+            .catch(err => {
+                console.log(err)
+            })
+        showDataSourceContent(Id)
+            .then(res => {
+                // set rows and columns
+                if (res.data.length == 0) return
+                const keys = Object.keys(res.data[0])
+                // parse keys to columns data
+
+                const width = 150
+
+                // TODO : parse type of content and set to Grid UI
+                let columns = keys.map(key => {
+                    if (key == "DataSource_Id")
+                        return {
+                            field: 'id',
+                            headerName: key,
+                            editable: false,
+                            width: width
+                        }
+                    return {
+                        field: key,
+                        headerName: key,
+                        editable: false,
+                        width: width
+                    }
+                })
+
+                setColumns(columns)
+                // set row data
+                let rows = res.data.map(row => {
+                    row.id = row.DataSource_Id
+                    delete row.DataSource_Id
+                    return row
+                })
+                setRows(rows)
+            })
+            .catch(err => {
+                console.log(err)
+            })
     }, [])
 
-    // rows, columns of table 1
-    const [columns, setColumns] = useState({
-        data: [],
-        active: []
-    })
-    const [rows, setRows] = useState([])
+
 
 
     const editColumns = (index) => {
@@ -34,6 +82,12 @@ export default function ReviewTestData(props) {
         })
     }
 
+    const { loading } = useDemoData({
+        // dataSet: 'Commodity',
+        rowLength: 4,
+        maxColumns: 6
+    });
+
     return (
         <div>
             <div>
@@ -42,7 +96,14 @@ export default function ReviewTestData(props) {
                         Review data source
                     </h2>
                     <div className='col'>
-                        <button className='btn btn-success' onClick={() => { props.submit(props.fileInformation.name, columns) }}>
+                        <button className='btn btn-success' onClick={() => { 
+                            nav("/machinelearning/predict",  {
+                                state: {
+                                    rows: rows,
+                                    columns: columns
+                                }
+                            })
+                        }}>
                             Finish
                         </button>
                     </div>
@@ -50,12 +111,26 @@ export default function ReviewTestData(props) {
                 </div>
                 <div className='bg-white row m-2'>
                     <div className='col-9'>
-                        {/* <Table name={props.fileInformation.name} data={props.dataFile} rows={rows} columns={columns} /> */}
+                        <div style={{ height: 700, width: '100%' }}>
+                            {/* <Table name={props.fileInformation.name} data={props.dataFile} rows={rows} columns={columns} /> */}
+                            <DataGrid
+                                loading={loading}
+                                rows={rows}
+                                columns={columns}
+                                columnVisibilityModel={{
+                                    id: false,
+                                }}
+                                experimentalFeatures={{ newEditingApi: true }}
+                                editMode="cell"
+                            />
+                        </div>
                     </div>
                     <div className='col-3'>
                         <div className='mt-4 mb-4 customFontBold size32 PrimaryFontColor'>Properties</div>
                         <ul className="list-group bd-none">
+
                             {
+
                                 // Object.keys(props.dataFile[0]).map((field, index) => {
                                 //     return (
                                 //         <li key={index} class="list-group-item border-0 row">

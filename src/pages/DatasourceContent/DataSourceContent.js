@@ -110,7 +110,6 @@ export default function DataSourceContent(props) {
 
 
     const EditUI = () => {
-
         return <div>
             <div className='row m-0 p-0'>
                 <h2 class="col-8  mt-2" >
@@ -146,7 +145,6 @@ export default function DataSourceContent(props) {
                             />
                         </div>
                     }
-                    {/* <Table name={datasource.Information} data={dataFile} rows={rows} columns={columns} /> */}
                 </div>
                 <div className='col-3'>
                     <div className='mt-4 ms-4 mb-4 customFontBold size32 PrimaryFontColor'>Properties</div>
