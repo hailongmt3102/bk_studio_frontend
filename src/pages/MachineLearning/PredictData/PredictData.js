@@ -4,7 +4,7 @@ import {
 import { useDemoData } from "@mui/x-data-grid-generator";
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-
+import { bayesModelAPI } from "api/ML_API"
 
 export default function PredictData() {
     const nav = useNavigate()
@@ -27,6 +27,20 @@ export default function PredictData() {
         }
     }, [])
 
+    const predictHandle = () => {
+        bayesModelAPI(rows)
+            .then(response => {
+                console.log(response)
+                // setlistCompany(response.data)
+            })
+            .catch(
+                err => {
+                    // Store.addNotification(content("Fail", err.response.data, "danger"))
+                    return
+                }
+            )
+    }
+
     return (
         <div>
             <div className='row m-2 mt-4 mb-4'>
@@ -35,7 +49,10 @@ export default function PredictData() {
                 </div>
                 <div className='col text-end'>
                     <button className='btn-lg btn-success text-center border-0' style={{ backgroundColor: "#3B97C6" }}
-                        onClick={() => { nav("/machinelearning/testModel") }}
+                        onClick={() => {
+                            predictHandle()
+                            // nav("/machinelearning/testModel") 
+                        }}
                     >
                         <div className='row p-2 text-center'>
                             <div className='col-9  text-center'>
