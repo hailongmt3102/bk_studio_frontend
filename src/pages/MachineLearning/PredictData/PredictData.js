@@ -1,7 +1,32 @@
-import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import {
+    DataGrid
+} from '@mui/x-data-grid';
+import { useDemoData } from "@mui/x-data-grid-generator";
+import { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+
+
 export default function PredictData() {
     const nav = useNavigate()
+    const location = useLocation()
+    const [columns, setColumns] = useState([])
+    const [rows, setRows] = useState([])
+
+    const { loading } = useDemoData({
+        // dataSet: 'Commodity',
+        rowLength: 4,
+        maxColumns: 6
+    });
+
+    useEffect(() => {
+        if (location.state) {
+            setColumns(location.state.columns)
+            setRows(location.state.rows)
+        } else {
+            nav("/machinelearning")
+        }
+    }, [])
+
     return (
         <div>
             <div className='row m-2 mt-4 mb-4'>
@@ -23,6 +48,18 @@ export default function PredictData() {
             <div className='bg-white p-3'>
                 <div className='col ms-4 mt-1 customFontBold SecondFontColor size40'>
                     Test data:
+                    <div style={{ height: 700, width: '100%' }}>
+                        <DataGrid
+                            loading={loading}
+                            rows={rows}
+                            columns={columns}
+                            columnVisibilityModel={{
+                                id: false,
+                            }}
+                            experimentalFeatures={{ newEditingApi: true }}
+                            editMode="cell"
+                        />
+                    </div>
                 </div>
                 <div className='ms-4 mt-1 customFontBold SecondFontColor size40'>
                     Output:

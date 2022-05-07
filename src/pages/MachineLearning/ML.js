@@ -43,7 +43,9 @@ export default function ML() {
                             </div>
                         </div>
                     )} */}
-                    <div className='col m-0 p-0'>
+                    <div className='col m-0 p-0' onClick={() => {
+                        nav("/machinelearning/modelDetail")
+                    }}>
                         <ModelCard minwidth="200px" minheight="400px" />
                     </div>
                     <div className='col m-0 p-0'>
