@@ -80,6 +80,14 @@ export default function DataSourceBox(props) {
     }
 
     const ClickHandle = (id) => {
+        if (props.isModel) {
+            navigate("/machinelearning/reviewTestData", {
+                state: {
+                    Did: id
+                }
+            })
+            return
+        }
 
         console.log("id gui len ne,", id)
         checkPermissionWithDatasource(id)

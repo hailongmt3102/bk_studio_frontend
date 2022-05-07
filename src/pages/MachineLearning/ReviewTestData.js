@@ -1,13 +1,20 @@
 import React, { useState, useEffect } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 // import Table from '../Components/Table'
 
 export default function ReviewTestData(props) {
-    useEffect(() => {
-        setColumns({
-            data: Object.keys(props.dataFile[0]),
-            active: new Array(Object.keys(props.dataFile[0]).length).fill(true)
-        })
-        setRows(Array.from({ length: props.dataFile.length }, (_, i) => i))
+    const location  = useLocation()
+    const nav = useNavigate()
+    const Id = location.state ? location.state.Did : -1
+
+    useEffect(() => {   
+        // if (Id == -1)  nav.push
+
+        // setColumns({
+        //     data: Object.keys(props.dataFile[0]),
+        //     active: new Array(Object.keys(props.dataFile[0]).length).fill(true)
+        // })
+        // setRows(Array.from({ length: props.dataFile.length }, (_, i) => i))
     }, [])
 
     // rows, columns of table 1
@@ -47,19 +54,18 @@ export default function ReviewTestData(props) {
                     </div>
                     <div className='col-3'>
                         <div className='mt-4 mb-4 customFontBold size32 PrimaryFontColor'>Properties</div>
-                        <h6>{props.fileInformation.name}</h6>
                         <ul className="list-group bd-none">
                             {
-                                Object.keys(props.dataFile[0]).map((field, index) => {
-                                    return (
-                                        <li key={index} class="list-group-item border-0 row">
-                                            <div class="form-check form-switch">
-                                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" onChange={() => { }} checked={columns.active[index]} onClick={() => { editColumns(index) }} />
-                                                <label class="form-check-label" for="flexSwitchCheckChecked">{field}</label>
-                                            </div>
-                                        </li>
-                                    )
-                                })
+                                // Object.keys(props.dataFile[0]).map((field, index) => {
+                                //     return (
+                                //         <li key={index} class="list-group-item border-0 row">
+                                //             <div class="form-check form-switch">
+                                //                 <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" onChange={() => { }} checked={columns.active[index]} onClick={() => { editColumns(index) }} />
+                                //                 <label class="form-check-label" for="flexSwitchCheckChecked">{field}</label>
+                                //             </div>
+                                //         </li>
+                                //     )
+                                // })
                             }
                         </ul>
                     </div>

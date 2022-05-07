@@ -24,7 +24,13 @@ export default function Selection(props) {
                 <DialogContent className='p-5'>
                     <div className='row'>
 
-                        <Button variant="outline-primary" onClick={() => { }}><div className='p-3'>Select from Data sources</div></Button>
+                        <Button variant="outline-primary"
+                            onClick={() => {
+                                props.selectDataSource()
+                            }}
+                        >
+                            <div className='p-3'>Select from Data sources</div>
+                        </Button>
                     </div>
                     <div className='row mt-3'>
 

@@ -1,18 +1,18 @@
-import React, { useEffect, useState, useRef } from 'react'
+import { useEffect, useState } from 'react'
 
-import { blue_cloud } from "../../utils/color"
-import { deep_blue_primary } from "../../utils/color"
-import { GetDataSourcesListInformationInWorkSpace, GetSampleDataSource } from '../../api/DataSources'
-import DataSourceBox from './component/DataSourceBox'
-import add_round from "resources/icons/add_round.svg"
-import edit from "resources/icons/edit.svg"
+import { ScrollMenu } from 'react-horizontal-scrolling-menu'
+import { useLocation } from "react-router-dom"
 import delete_icon from "resources/icons/delete.svg"
 import download_blue from "resources/icons/download_blue.svg"
+import edit from "resources/icons/edit.svg"
 import share_blue from "resources/icons/share_blue.svg"
-import { useLocation, useNavigate } from "react-router-dom";
+import { GetDataSourcesListInformationInWorkSpace, GetSampleDataSource } from '../../api/DataSources'
 import ShareDataSourcesPopUp from "../DataSources/component/ShareDataSourcesPopUp"
-import { ScrollMenu } from 'react-horizontal-scrolling-menu';
+import DataSourceBox from './component/DataSourceBox'
 export default function DataSources() {
+    const location = useLocation()
+    const isModel = location.state ? location.state.isModel : false
+    
     const [datasourceslist, setDatasourceslist] = useState([])
     const [sampleList, setSampleList] = useState([])
 
@@ -75,6 +75,7 @@ export default function DataSources() {
                             {datasourceslist.map((ele, index) => (
                                 <div className='ms-4 mb-5'>
                                     <DataSourceBox
+                                        isModel={isModel}
                                         option_list={option_list}
                                         icon_list={icon_list}
                                         setDatasourceslist={setDatasourceslist}
@@ -95,6 +96,7 @@ export default function DataSources() {
                             {sampleList.map((ele, index) => (
                                 <div className='ms-4 mb-5'>
                                     <DataSourceBox
+                                        isModel={isModel}
                                         option_list={sample_option_list}
                                         icon_list={sample_icon_list}
                                         setDatasourceslist={setDatasourceslist}
