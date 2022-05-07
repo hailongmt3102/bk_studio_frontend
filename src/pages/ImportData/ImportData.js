@@ -27,8 +27,7 @@ export default function ImportData() {
 
     useEffect(() => {
         if (isModel) {
-            if (dataFile.length != 0)
-             {
+            if (dataFile.length != 0) {
                 const keys = Object.keys(dataFile[0])
 
                 let rows = dataFile.map((row, index) => {
@@ -43,13 +42,13 @@ export default function ImportData() {
                     }
                 })
 
-                
+                navigate("/machinelearning/predict", {
+                    state: {
+                        rows: rows,
+                        columns: columns
+                    }
+                })
             }
-
-
-
-            // let columns = 
-            console.log(dataFile)
         }
     }, [dataFile])
 

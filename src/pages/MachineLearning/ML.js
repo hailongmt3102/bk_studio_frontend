@@ -1,10 +1,6 @@
-import React, { useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import { content } from "utils/notification"
-import { Store } from 'react-notifications-component'
+import { useNavigate } from 'react-router-dom'
 
 import BlankReportIcon from 'resources/icons/blankReport.svg'
-import { Mode } from '@mui/icons-material'
 import ModelCard from './component/ModelCard'
 export default function ML() {
     const nav = useNavigate()

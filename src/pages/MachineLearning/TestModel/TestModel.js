@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import back from "resources/icons/back_round_deep_blue.svg";
 import Selection from "../component/Selection";
 export default function TestModel() {

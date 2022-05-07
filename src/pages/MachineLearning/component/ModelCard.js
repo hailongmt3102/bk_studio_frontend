@@ -1,4 +1,3 @@
-import React from 'react'
 import ML from "resources/icons/ML.svg"
 export default function ModelCard() {
     return (

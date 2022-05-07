@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { Form } from 'react-bootstrap'
+import { useState } from 'react';
+import { Form } from 'react-bootstrap';
 import save_white from "resources/icons/save_white.svg";
 export default function CreateANewModel(props) {
 

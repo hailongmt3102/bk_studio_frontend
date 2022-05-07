@@ -1,13 +1,13 @@
-import { useDemoData } from "@mui/x-data-grid-generator";
-import { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { bayesModelAPI } from "api/ML_API"
-import { content } from 'utils/notification'
-import { Store } from 'react-notifications-component'
 import {
     DataGrid, GridToolbarContainer,
     GridToolbarExport
-} from '@mui/x-data-grid'
+} from '@mui/x-data-grid';
+import { useDemoData } from "@mui/x-data-grid-generator";
+import { bayesModelAPI } from "api/ML_API";
+import { useEffect, useState } from 'react';
+import { Store } from 'react-notifications-component';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { content } from 'utils/notification';
 export default function PredictData() {
     const nav = useNavigate()
     const location = useLocation()

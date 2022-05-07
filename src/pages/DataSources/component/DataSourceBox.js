@@ -1,19 +1,16 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Form } from 'react-bootstrap'
 
 import excel_icon from "resources/icons/excel_icon.svg"
 
-import { blue_cloud } from "utils/color"
-import { deep_blue_primary } from "utils/color"
-import three_dot from "resources/icons/three-dot.svg"
-import { orange } from "utils/color"
 import ThreeDotButton from 'components/ThreeDotButton'
+import three_dot from "resources/icons/three-dot.svg"
 
-import { Rename, deleteDatasource, SendToWorkspace, checkPermissionWithDatasource } from 'api/DataSources'
+import { checkPermissionWithDatasource, deleteDatasource, Rename, SendToWorkspace, showDataSourceContent } from 'api/DataSources'
 
 import { Store } from 'react-notifications-component'
-import { content } from "utils/notification"
 import { useNavigate } from 'react-router-dom'
+import { content } from "utils/notification"
 
 export default function DataSourceBox(props) {
 
@@ -82,17 +79,58 @@ export default function DataSourceBox(props) {
     const ClickHandle = (id) => {
         checkPermissionWithDatasource(id)
             .then(res => {
+
                 // navigate to machine learning model
                 if (props.isModel && (res.data === "View" || res.data === "Edit")) {
-                    navigate("/machinelearning/reviewTestData", {
-                        state: {
-                            Did: id,
-                            isFile : false,
-                        }
-                    })
+                    // get data from server
+                    showDataSourceContent(id)
+                        .then(res => {
+                            // set rows and columns
+                            if (res.data.length == 0) {
+                                // nothing to compute
+                                alert("Your data source has not content")
+                                return
+                            }
+                            const keys = Object.keys(res.data[0])
+
+                            // parse keys to columns data
+                            let columns = keys.map(key => {
+                                if (key == "DataSource_Id")
+                                    return {
+                                        field: 'id',
+                                        headerName: key,
+                                        editable: false,
+                                    }
+                                return {
+                                    field: key,
+                                    headerName: key,
+                                    editable: false,
+                                }
+                            })
+
+                            // set row data
+                            let rows = res.data.map(row => {
+                                row.id = row.DataSource_Id
+                                delete row.DataSource_Id
+                                return row
+                            })
+
+                            navigate("/machinelearning/predict", {
+                                state: {
+                                    rows: rows,
+                                    columns: columns
+                                }
+                            })
+
+                        })
+                        .catch(err => {
+                            console.log(err)
+                        })
                     return
                 }
+                
 
+                // navigate to view datasource page
                 if (res.data === "View") {
                     navigate(`/datasources/${id}`, {
                         state: {
@@ -101,6 +139,7 @@ export default function DataSourceBox(props) {
                         }
                     })
                 }
+                // navigate to view datasource page with edit permission
                 else if (res.data === "Edit") {
                     navigate(`/datasources/${id}`, {
                         state: {

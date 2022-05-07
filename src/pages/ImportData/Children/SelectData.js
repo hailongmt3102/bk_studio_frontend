@@ -1,10 +1,9 @@
-import React, { useRef, useState } from 'react'
-import ImportFileImage from 'resources/images/importFile.png'
-import json_file from 'resources/icons/json_file.svg'
+import { useRef, useState } from 'react'
 import db from "resources/icons/db.svg"
+import json_file from 'resources/icons/json_file.svg'
+import ImportFileImage from 'resources/images/importFile.png'
+import * as XLSX from "xlsx"
 import ImportButton from '../Components/ImportButton'
-import * as XLSX from "xlsx";
-import { deep_blue_primary } from "../../../utils/color"
 export default function SelectData(props) {
     const executeStringResult = (result) => {
         let data = []
