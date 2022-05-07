@@ -92,10 +92,10 @@ function App() {
                         />
                         <Route path="/templates" element={<Templates />} />
                         <Route path="/machinelearning" element={<ML />} />
-                        <Route path="/createmodel" element={<CreateANewModel />} />
-                        <Route path="/modelDetail" element={<ModelDetail />} />
-                        <Route path="/testmodel" element={<TestModel />} />
-                        <Route path="/predict" element={<PredictData />} />
+                        <Route path="/machinelearning/createmodel" element={<CreateANewModel />} />
+                        <Route path="/machinelearning/modelDetail" element={<ModelDetail />} />
+                        <Route path="/machinelearningtestmodel" element={<TestModel />} />
+                        <Route path="/machinelearning/predict" element={<PredictData />} />
                         <Route
                             path="/project/gallery/:id/edit"
                             exact
