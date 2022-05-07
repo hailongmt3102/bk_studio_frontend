@@ -131,7 +131,8 @@ export default function ReportCard(props) {
             updateReportInformation(currentProject, RId, dataToUpdate)
                 .then(res => {
                     Store.addNotification(content("Success", "Updated Report Information", "success"))
-                    setTimeout(() => window.location.reload(), 1000);
+                    setPressEdit(false)
+                    // setTimeout(() => window.location.reload(), 1000);
                 })
                 .catch(err => {
                     Store.addNotification(content("Fail", err.response.data, "danger"))
@@ -144,7 +145,8 @@ export default function ReportCard(props) {
             updateTemplateInformation(RId, dataToUpdate)
                 .then(res => {
                     Store.addNotification(content("Success", "Updated Template Information", "success"))
-                    setTimeout(() => window.location.reload(), 1000);
+                    setPressEdit(false)
+                    // setTimeout(() => window.location.reload(), 1000);
                 })
                 .catch(err => {
                     Store.addNotification(content("Fail", err.response.data, "danger"))
