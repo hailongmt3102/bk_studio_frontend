@@ -34,6 +34,7 @@ import CreateANewModel from "pages/MachineLearning/CreateANewModel/CreateANewMod
 import ModelDetail from "pages/MachineLearning/ModelDetail/ModelDetail";
 import TestModel from "pages/MachineLearning/TestModel/TestModel";
 import PredictData from "pages/MachineLearning/PredictData/PredictData";
+import ReviewTestData from "pages/MachineLearning/ReviewTestData";
 const translations = new LocalizedStrings(data);
 const localizationContext = React.createContext(translations);
 
@@ -96,6 +97,7 @@ function App() {
                         <Route path="/machinelearning/modelDetail" element={<ModelDetail />} />
                         <Route path="/machinelearningtestmodel" element={<TestModel />} />
                         <Route path="/machinelearning/predict" element={<PredictData />} />
+                        <Route path="/machinelearning/reviewTestData" element={<ReviewTestData />} />
                         <Route
                             path="/project/gallery/:id/edit"
                             exact
