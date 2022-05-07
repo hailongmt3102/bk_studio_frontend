@@ -87,6 +87,14 @@ export default function AdjustingReport(props) {
     const [copyIndexComponent, setCopyIndexComponent] = useState(-1)
     const [reportImage, setReportImage] = useState("")
 
+    const EditStyle = (newStyle) => {
+        setTabData({ ...tabData, style: newStyle })
+    }
+
+    useEffect(() => {
+        console.log(tabData)
+    }, [tabData])
+
 
     // ** ---------------------------------------------------------------------------------------------
     // ** some function get info of this report
@@ -190,7 +198,7 @@ export default function AdjustingReport(props) {
                 "Hastag": reportInformation.Hastag,
                 "Description": "",
                 "Name": reportInformation.Name,
-                "Image" : screenShoot
+                "Image": screenShoot
             })
             saveAllShapeComponents()
             Store.addNotification(content("Success", "Saved", "success"))
@@ -884,6 +892,7 @@ export default function AdjustingReport(props) {
             </div>
             <div className="row">
                 <TabComponent
+                    EditStyle={EditStyle}
                     data={tabData}
                     dataSource={dataSource}
                     updateQueryOfAComponent={updateQueryOfAComponent}

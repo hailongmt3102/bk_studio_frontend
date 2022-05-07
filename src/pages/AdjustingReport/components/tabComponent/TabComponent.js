@@ -68,6 +68,7 @@ export default function TabComponent(props) {
 
 
 	useEffect(() => {
+		console.log(props.data)
 		parseSqlCommand(props.data.data.script)
 	}, [props.data])
 
@@ -116,15 +117,20 @@ export default function TabComponent(props) {
 				</button></div>
 			</Tab>
 			<Tab className="p-4" eventKey="Format" label="Style">
-				<div className="mt-2">Text</div>
+				<div className="mt-2">Font</div>
 				<div className="row mt-2">
 					<div className="col">
 						<Autocomplete
+							onChange={(e, value) => {
+								props.EditStyle({ ...props.data.style, font: value })
+								// console.log(value)
+							}}
 							id="custom-input-demo"
 							options={fonts}
 							renderInput={(params) => (
 								<div ref={params.InputProps.ref}>
-									<input type="text" {...params.inputProps} />
+									<input type="text" {...params.inputProps}
+									/>
 								</div>
 							)}
 						/>
@@ -134,6 +140,9 @@ export default function TabComponent(props) {
 				<div className="row mt-2">
 					<div className="col">
 						<Autocomplete
+							onChange={(e, value) => {
+								props.EditStyle({ ...props.data.style, size: value })
+							}}
 							id="custom-input-demo"
 							options={size}
 							renderInput={(params) => (
@@ -146,13 +155,68 @@ export default function TabComponent(props) {
 				</div>
 				<div className="row m-2 m-0 p-0 mt-2  h-100  align-items-center">
 					<div className="col-1 m-0 p-0 text-center" >
-						<button type="button" class="btn btn-sm ms-2 p-2" onClick={() => { }}><img src={bold} height="15px" width="15px" /></button>
+						<div
+							className={props.data.style.decoration["font-weight"] == "bold" ? "btn btn-sm ms-2 p-2 customshine" : "btn btn-sm ms-2 p-2"}
+							onClick={() => {
+								if (props.data.style.decoration["font-weight"] != "bold")
+									props.EditStyle({
+										...props.data.style, decoration: {
+											...props.data.style.decoration, "font-weight": "bold"
+										}
+									})
+								else props.EditStyle({
+									...props.data.style, decoration: {
+										...props.data.style.decoration, "font-weight": "normal"
+									}
+								})
+							}}><img src={bold} height="15px" width="15px" />
+						</div>
 					</div>
-					<div className="col-1 m-0 p-0 ms-5" onClick={() => { }}>
-						<button type="button" class="btn m-0 p-0 btn-sm ms-2" onClick={() => { }}> <img src={italic} height="30px" width="30px" /></button>
+					<div className="col-1 m-0 p-0 ms-5"  >
+						<div
+							className={props.data.style.decoration["font-style"] == "italic" ? "btn btn-sm ms-2 p-2 customshine" : "btn btn-sm ms-2 p-2"}
+							onClick={() => {
+								if (props.data.style.decoration["font-style"] != "italic") {
+									props.EditStyle({
+										...props.data.style, decoration: {
+											...props.data.style.decoration, "font-style": "italic"
+										}
+									})
+								}
+
+								else {
+									props.EditStyle({
+										...props.data.style, decoration: {
+											...props.data.style.decoration, "font-style": "normal"
+										}
+									})
+								}
+							}}> <img src={italic} height="30px" width="30px" />
+						</div>
 					</div>
-					<div className="col-1 m-0 p-0 ms-5" onClick={() => { }}>
-						<button type="button" class="btn m-0 p-0 btn-sm ms-2" onClick={() => { }}> <img src={underline} height="20px" width="20px" /></button>
+					<div className="col-1 m-0 p-0 ms-5" >
+						<div
+							className={props.data.style.decoration["text-decoration"] == "underline" ? "btn btn-sm ms-2 p-2 customshine" : "btn btn-sm ms-2 p-2"}
+							onClick={() => {
+								if (props.data.style.decoration["text-decoration"] != "underline") {
+									props.EditStyle({
+										...props.data.style, decoration: {
+											...props.data.style.decoration,
+											"text-decoration": "underline"
+										}
+									})
+								}
+								else {
+									props.EditStyle({
+										...props.data.style, decoration: {
+											...props.data.style.decoration,
+											"text-decoration": "normal"
+										}
+									})
+								}
+
+							}}> <img src={underline} height="20px" width="20px" />
+						</div>
 					</div>
 
 				</div>
@@ -189,5 +253,5 @@ export default function TabComponent(props) {
 				/>
 			</Tab>
 		</Tabs>
-	</div>
+	</div >
 }

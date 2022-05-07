@@ -2,7 +2,11 @@ const textStyleDefault = {
     font: "Roboto",
     size: 14,
     alignment: "left",
-    decoration: "bold",
+    decoration: {
+        "font-weight": "normal",
+        "font-style": "normal",
+        "text-decoration": "normal"
+    },
     color: "#FFFFFF"
 }
 
