@@ -28,7 +28,10 @@ export default function PredictData() {
     }, [])
 
     const predictHandle = () => {
-        bayesModelAPI(rows)
+        bayesModelAPI(rows.map(ele => {
+            delete ele.id
+            return ele
+        }))
             .then(response => {
                 console.log(response)
                 // setlistCompany(response.data)

@@ -6,7 +6,7 @@ const bayesModelAPI = (testdata) => {
             method: "POST",
 
             // Adding body or contents to send
-            body: testdata,
+            body: JSON.stringify(testdata),
 
             // Adding headers to the request
             headers: {
