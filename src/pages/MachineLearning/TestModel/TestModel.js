@@ -8,13 +8,31 @@ export default function TestModel() {
     const handleOpen = () => {
         setShowDialog(true)
     }
+
     const handleClose = () => {
         setShowDialog(false)
     }
+
+    const selectDataSource = () => {
+        // navigate to datasource page
+        nav("/datasources", {
+            state : {
+                isModel: true,
+            }
+        })
+    }
+
+    const openFile = () => {
+        // open file
+        
+    }
+
+
     return (
 
+
         <div>
-            <Selection showDialog={showDialog} handleClose={handleClose} />
+            <Selection showDialog={showDialog} handleClose={handleClose} selectDataSource={selectDataSource} />
 
             <div className="row ms-2 m-0 p-0" >
                 <div className="col-5">

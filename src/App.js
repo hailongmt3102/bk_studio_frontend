@@ -93,9 +93,9 @@ function App() {
                         />
                         <Route path="/templates" element={<Templates />} />
                         <Route path="/machinelearning" element={<ML />} />
-                        <Route path="/machinelearning/createmodel" element={<CreateANewModel />} />
+                        <Route path="/machinelearning/createModel" element={<CreateANewModel />} />
                         <Route path="/machinelearning/modelDetail" element={<ModelDetail />} />
-                        <Route path="/machinelearningtestmodel" element={<TestModel />} />
+                        <Route path="/machinelearning/testModel" element={<TestModel />} />
                         <Route path="/machinelearning/predict" element={<PredictData />} />
                         <Route path="/machinelearning/reviewTestData" element={<ReviewTestData />} />
                         <Route

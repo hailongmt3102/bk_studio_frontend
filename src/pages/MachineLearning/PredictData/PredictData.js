@@ -10,7 +10,7 @@ export default function PredictData() {
                 </div>
                 <div className='col text-end'>
                     <button className='btn-lg btn-success text-center border-0' style={{ backgroundColor: "#3B97C6" }}
-                        onClick={() => { nav("/testmodel") }}
+                        onClick={() => { nav("/machinelearning/testModel") }}
                     >
                         <div className='row p-2 text-center'>
                             <div className='col-9  text-center'>
