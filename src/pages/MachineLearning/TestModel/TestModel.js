@@ -24,7 +24,11 @@ export default function TestModel() {
 
     const openFile = () => {
         // open file
-        
+        nav("/project/import", {
+            state: {
+                isModel: true,
+            }
+        })
     }
 
 
@@ -32,7 +36,7 @@ export default function TestModel() {
 
 
         <div>
-            <Selection showDialog={showDialog} handleClose={handleClose} selectDataSource={selectDataSource} />
+            <Selection showDialog={showDialog} handleClose={handleClose} selectDataSource={selectDataSource} openFile={openFile} />
 
             <div className="row ms-2 m-0 p-0" >
                 <div className="col-5">

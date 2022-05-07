@@ -1,11 +1,7 @@
-import React from 'react'
-import { Button } from 'react-bootstrap'
 import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import { styled } from '@mui/material/styles';
-import DialogTitle from '@mui/material/DialogTitle';
+import { Button } from 'react-bootstrap';
 export default function Selection(props) {
     const Input = styled('input')({
         display: 'none',
@@ -34,7 +30,12 @@ export default function Selection(props) {
                     </div>
                     <div className='row mt-3'>
 
-                        <Button variant="outline-primary" onClick={() => { }}><div className='p-3'>Import data</div></Button>
+                        <Button variant="outline-primary" onClick={() => {
+                            props.openFile()
+                        }}
+                        >
+                            <div className='p-3'>Import data</div>
+                        </Button>
                     </div>
                 </DialogContent>
                 {/* <DialogActions>

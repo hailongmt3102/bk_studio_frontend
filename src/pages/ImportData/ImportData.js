@@ -1,14 +1,17 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import SelectData from './Children/SelectData'
 import EditData from './Children/EditData'
 import { ImportDataApi } from 'api/DataSources'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 
 import { Store } from 'react-notifications-component'
 import { content } from "../../utils/notification"
 
 export default function ImportData() {
+    const location = useLocation()
+    const isModel = location.state ? location.state.isModel : false
+
     const [dataFile, setDataFile] = useState([])
     const [fileInformation, setFileInformation] = useState()
 
@@ -16,9 +19,40 @@ export default function ImportData() {
 
     const navigate = useNavigate()
     const onloadComplete = () => {
+        if (!isModel) {
+            setStep(2)
+        }
         // navigate to next step, execute data file
-        setStep(2)
     }
+
+    useEffect(() => {
+        if (isModel) {
+            if (dataFile.length != 0)
+             {
+                const keys = Object.keys(dataFile[0])
+
+                let rows = dataFile.map((row, index) => {
+                    return { ...row, id: index }
+                })
+
+                let columns = keys.map((key) => {
+                    return {
+                        field: key,
+                        headerName: key,
+                        editable: false,
+                    }
+                })
+
+                
+            }
+
+
+
+            // let columns = 
+            console.log(dataFile)
+        }
+    }, [dataFile])
+
     let currentProjectId = localStorage.getItem("currentProject")
 
     // send data to server

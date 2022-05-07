@@ -28,7 +28,6 @@ export default function SelectData(props) {
                 }
             }
         })
-        console.log(data)
         props.setDataFile([...data])
         props.onloadComplete()
     }
