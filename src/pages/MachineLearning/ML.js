@@ -51,7 +51,7 @@ export default function ML() {
                 <div className='row m-0 p-0 justify-content-center'>
                     {modelList.map(ele =>
                         <div className='col m-0 p-0' style={{ "minWidth": "600px", "maxWidth": "600px" }} >
-                            <div className='ms-4 mt-5'>
+                            <div className='ms-4 mt-4'>
                                 <ModelCard info={ele} />
                             </div>
                         </div>
