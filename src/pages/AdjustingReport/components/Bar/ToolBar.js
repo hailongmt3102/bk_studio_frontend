@@ -43,7 +43,7 @@ export default function ToolBar(props) {
                     <p className="p-0 m-0 text-center">add databoard</p>
                 </button>
                 <button
-                    className="col m-0 p-0 btn btn-sm"
+                    className={props.addShapeType == "image" ? "col m-0 p-0 btn btn-sm customshine" : "col m-0 p-0 btn btn-sm"}
                     onClick={() => {
                         if (props.isEdit)
                             props.setAddShapeType("image")

@@ -31,7 +31,6 @@ const shapeTypes = ["Table", "Pie Chart", "Doughnut Chart", "Line Chart", "Bar C
 
 export default function AdjustingReport(props) {
     const setIsLoading = useContext(loadingContext)
-
     const location = useLocation()
 
     // some hiddenInfo of this report
@@ -44,6 +43,9 @@ export default function AdjustingReport(props) {
     const nav = useNavigate()
     const contentWrappingBox = useRef(null)
     const contentRef = useRef()
+    const openImageRef = useRef()
+    const [cursor, setCursor] = useState("default")
+
 
     // list data sources of the report
     const [dataSource, setDataSource] = useState({})
@@ -676,6 +678,10 @@ export default function AdjustingReport(props) {
             case "text":
                 createTextComponent(pos)
                 break
+            case "image":
+                if (openImageRef) openImageRef.current.click()
+
+                break
             default:
                 break
         }
@@ -798,6 +804,21 @@ export default function AdjustingReport(props) {
         onChangeFocusShape(followingIndexComponent);
     }, [followingIndexComponent])
 
+    useEffect(() => {
+        switch (addShapeType) {
+            case "text" :
+                setCursor("crosshair")
+                break
+            case "image" :
+                setCursor("grabbing")
+                break
+            default:
+                setCursor("default")
+                break
+        }
+    }, [addShapeType])
+
+
 
 
     const [reportInformation, setReportInformation] = useState(
@@ -864,7 +885,8 @@ export default function AdjustingReport(props) {
     }
 
     const EditUI = () => {
-        return <div>
+        return <div style={{cursor : cursor}}>
+            <input ref={openImageRef} type={"file"} style={{ display: "none" }} accept="image/*" />
             <div>
                 {/* some popup */}
 
