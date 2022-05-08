@@ -27,11 +27,12 @@ export default function Header() {
         nav('account/login')
     }
     const [searchContent, setSearchContent] = useState("")
+
     return (
         visible ?
             <div className='text-center row m-0 p-0'>
                 <div className='col-2 m-0 p-0' >
-                    <img className='mt-2 ms-5' src={logoapp} height="50%" width="50%" />
+                    <img onClick={() => { nav("/") }} className='mt-2 ms-5' src={logoapp} height="50%" width="50%" />
                 </div>
                 <div className='col-8 m-0 p-0 mt-4'  >
                     <Autocomplete
