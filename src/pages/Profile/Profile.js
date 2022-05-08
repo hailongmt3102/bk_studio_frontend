@@ -16,8 +16,6 @@ export default function Profile() {
     const avatarInputRef = useRef()
     const navigate = useNavigate()
     useEffect(() => {
-        // get 
-        console.log('Chay ham get info ne')
         GetInformationApi()
             .then(response => {
                 console.log(response.data)
@@ -75,8 +73,6 @@ export default function Profile() {
     const onChange = (e) => {
         setIsLoading(true)
         let files = e.target.files;
-        let reader = new FileReader();
-        reader.readAsDataURL(files[0]);
         updateAvatar(e.target.files[0])
             .then((res) => {
                 if (res.data.length > 0)
