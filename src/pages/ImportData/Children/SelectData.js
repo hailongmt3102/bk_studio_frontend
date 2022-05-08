@@ -4,8 +4,15 @@ import json_file from 'resources/icons/json_file.svg'
 import ImportFileImage from 'resources/images/importFile.png'
 import * as XLSX from "xlsx"
 import ImportButton from '../Components/ImportButton'
+
+import { Store } from 'react-notifications-component'
+import { content } from "utils/notification"
 export default function SelectData(props) {
     const executeStringResult = (result) => {
+        if (!result) {
+            Store.addNotification(content("Warning", "Some thing went wrong from your data source\nPlease check carefully", "danger"))
+            return
+        }
         let data = []
         let endline = "\n"
         if (/\r\n/.test(result)) endline = "\r\n"
@@ -14,7 +21,7 @@ export default function SelectData(props) {
         if (dataSheet.length === 0) return
         // find the sign to split string
         let divider = dataSheet[0].includes(',') ? ',' : ';'
-        let keys = dataSheet[0].split(divider)
+        let keys = dataSheet[0].split(divider).filter(key => key != "")
         keys.map((ele, index) => ele.includes('\"') ? keys[index] = ele.substring(1, ele.length - 1) : ele)
         dataSheet.map((row, index) => {
             if (row.includes(divider)) {
@@ -163,32 +170,6 @@ export default function SelectData(props) {
                         <ImportButton text="Connect to database" image={db} onClick={() => {
                             // openFile()
                         }} />
-                        {/* <div>
-                            <input
-                                type="file"
-                                onChange={(e) => {
-                                    const file = e.target.files[0];
-                                    readExcel(file);
-                                }}
-                            />
-
-                            <table class="table container">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Item</th>
-                                        <th scope="col">Description</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {items.map((d) => (
-                                        <tr key={d.Item}>
-                                            <th>{d.Item}</th>
-                                            <td>{d.Description}</td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        </div> */}
                     </div>
                 </div>
             </div>

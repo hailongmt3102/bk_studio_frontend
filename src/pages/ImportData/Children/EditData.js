@@ -1,32 +1,71 @@
-import React, { useState, useEffect } from 'react'
-import Table from '../Components/Table'
+import { useEffect, useState } from 'react';
+
+import {
+    DataGrid, GridToolbarContainer,
+    GridToolbarExport
+} from '@mui/x-data-grid';
+import { useDemoData } from "@mui/x-data-grid-generator";
+import { TextField } from '@mui/material';
 
 export default function EditData(props) {
     useEffect(() => {
-        setColumns({
+        setColumnProperties({
             data: Object.keys(props.dataFile[0]),
             active: new Array(Object.keys(props.dataFile[0]).length).fill(true)
         })
-        setRows(Array.from({ length: props.dataFile.length }, (_, i) => i))
-    }, [])
+
+        if (props.dataFile.length == 0) return
+
+        const keys = Object.keys(props.dataFile[0])
+
+        let columns = keys.map(key => {
+            if (key != "")
+                return {
+                    field: key,
+                    headerName: key,
+                    editable: false,
+                }
+        })
+        setColumns(columns)
+        // set row data
+        let rows = props.dataFile.map((row, index) => {
+            return { ...row, id: index }
+        })
+        setRows(rows)
+
+    }, [props.dataFile])
 
     // rows, columns of table 1
-    const [columns, setColumns] = useState({
+    const [columnProperties, setColumnProperties] = useState({
         data: [],
         active: []
     })
     const [rows, setRows] = useState([])
+    const [columns, setColumns] = useState([])
 
 
     const editColumns = (index) => {
-        setColumns({
-            ...columns, active: columns.active.map((element, i) => {
+        setColumnProperties({
+            ...columnProperties, active: columnProperties.active.map((element, i) => {
                 if (i === index) return !element
                 else return element
             })
         })
     }
 
+    const { loading } = useDemoData({
+        rowLength: 4,
+        maxColumns: 6
+    });
+
+
+    function CustomToolbar() {
+        return (
+            <GridToolbarContainer>
+                <GridToolbarExport />
+            </GridToolbarContainer>
+        );
+    }
     return (
         <div>
             <div>
@@ -35,7 +74,7 @@ export default function EditData(props) {
                         Review data source
                     </h2>
                     <div className='col'>
-                        <button className='btn btn-success' onClick={() => { props.submit(props.fileInformation.name, columns) }}>
+                        <button className='btn btn-success' onClick={() => { props.submit(props.fileInformation.name, columnProperties) }}>
                             Finish
                         </button>
                     </div>
@@ -43,7 +82,27 @@ export default function EditData(props) {
                 </div>
                 <div className='bg-white row m-2'>
                     <div className='col-9'>
-                        <Table name={props.fileInformation.name} data={props.dataFile} rows={rows} columns={columns} />
+                        <TextField
+                            id="standard-textarea"
+                            variant="standard"
+                            value={props.fileInformation.name}
+                            onChange={(e) => {
+                                props.setFileInformation({ ...props.fileInformation, name: e.target.value.replace(/[\s\.]/g, "_") })
+                            }}
+                        />
+                        <DataGrid
+                            loading={loading}
+                            components={{
+                                Toolbar: CustomToolbar
+                            }}
+                            rows={rows}
+                            columns={columns}
+                            columnVisibilityModel={{
+                                id: false,
+                            }}
+                            experimentalFeatures={{ newEditingApi: true }}
+                            editMode="cell"
+                        />
                     </div>
                     <div className='col-3'>
                         <div className='mt-4 mb-4 customFontBold size32 PrimaryFontColor'>Properties</div>
@@ -54,7 +113,11 @@ export default function EditData(props) {
                                     return (
                                         <li key={index} class="list-group-item border-0 row">
                                             <div class="form-check form-switch">
-                                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" onChange={() => { }} checked={columns.active[index]} onClick={() => { editColumns(index) }} />
+                                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked"
+                                                    onChange={() => { }}
+                                                    checked={columnProperties.active[index]}
+                                                    onClick={() => { editColumns(index) }}
+                                                />
                                                 <label class="form-check-label" for="flexSwitchCheckChecked">{field}</label>
                                             </div>
                                         </li>

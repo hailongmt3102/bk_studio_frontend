@@ -101,7 +101,7 @@ export default function TableComponent(props) {
                             </table>
                         </div>
                         :
-                        <div style={{ height: '100%', width: '100%' }} >
+                        <div style={{ height: '90%', width: '100%' }} >
                             <div className='text-start'>
                                 <button
                                     className='btn btn-default'

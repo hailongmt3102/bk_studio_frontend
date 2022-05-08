@@ -2,7 +2,7 @@ import { getColumnsOfTable, GetDataSourcesListInformationInProject, QueryData as
 import { createNewComponent as createNewComponentApi, createNewReport, deleteReport, deleteShape as deleteShapeApi, getAllComponent, getAllDatasourceNameInReport, getReportInformation, saveAsCopy, saveAsTemplate, updateAComponent, updateReportInformation } from 'api/Report';
 import { createAReportByTemplate, deleteTemplate, getAllDatasourceNameInTemplate } from "api/Templates";
 import TabComponent from "pages/AdjustingReport/components/tabComponent/TabComponent";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useContext } from "react";
 import { Form } from 'react-bootstrap';
 import { Store } from 'react-notifications-component';
 import { useLocation, useNavigate } from "react-router-dom";
@@ -21,11 +21,15 @@ import SqlPopUp from "./components/PopUp/SqlPopUp";
 
 import { shapeBackgroundColors, shapeBorderColors } from 'utils/color';
 import * as htmlToImage from 'html-to-image';
+import { loadingContext } from 'App'
+
 
 // declare some chart type of this app 
 const shapeTypes = ["Table", "Pie Chart", "Doughnut Chart", "Line Chart", "Bar Chart"]
 
 export default function AdjustingReport(props) {
+    const setIsLoading = useContext(loadingContext)
+
     const location = useLocation()
 
     // some hiddenInfo of this report
@@ -192,6 +196,7 @@ export default function AdjustingReport(props) {
 
 
     const updateSubmit = async () => {
+        setIsLoading(true)
         try {
             let screenShoot = await takeScreenShot()
             await updateReportInformation(currentProject, RId, {
@@ -202,10 +207,12 @@ export default function AdjustingReport(props) {
             })
             saveAllShapeComponents()
             Store.addNotification(content("Success", "Saved", "success"))
+            setIsLoading(false)
         }
         catch (err) {
             Store.addNotification(content("Fail", "Fail update", "danger"))
             console.log(err.response.data)
+            setIsLoading(false)
         }
     }
 

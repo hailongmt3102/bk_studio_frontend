@@ -5,7 +5,7 @@ import './Loading.css'
 export default function Loading() {
     return (
         <div className='customLoading'>
-            <CircularProgress className='m-auto' />
+            <CircularProgress className='loadingContent' color="success"/>
         </div>
     )
 }

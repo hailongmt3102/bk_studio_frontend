@@ -90,7 +90,7 @@ export default function ImportData() {
             )
         case 2:
             return (
-                <EditData dataFile={dataFile} fileInformation={fileInformation} submit={submit} />
+                <EditData dataFile={dataFile} fileInformation={fileInformation} submit={submit} setFileInformation={setFileInformation} />
             )
         default:
             break;

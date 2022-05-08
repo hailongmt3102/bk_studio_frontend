@@ -4,5 +4,12 @@
     height: 100vh;
     z-index: 30;
     background-color: black;
-    opacity: 0.5;
+    opacity: 0.4;
+}
+
+.loadingContent{
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    z-index: 31;
 }
