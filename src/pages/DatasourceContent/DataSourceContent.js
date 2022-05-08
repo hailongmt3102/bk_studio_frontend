@@ -2,15 +2,17 @@ import {
     DataGrid, GridToolbarContainer,
     GridToolbarExport
 } from '@mui/x-data-grid'
+import { loadingContext } from 'App'
 import { useDemoData } from "@mui/x-data-grid-generator";
 import { getDataSourcesInformationByDId, showDataSourceContent, updateTableContentApi } from "api/DataSources"
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
 import { useLocation } from 'react-router-dom'
 
 import { content } from 'utils/notification'
 import { Store } from 'react-notifications-component'
 
 export default function DataSourceContent(props) {
+    const setIsLoading = useContext(loadingContext)
     var location = useLocation()
     const [datasource, setDatasource] = useState([])
     var DId = location.state.Did
@@ -27,6 +29,7 @@ export default function DataSourceContent(props) {
     });
 
     useEffect(() => {
+        setIsLoading(true)
         getDataSourcesInformationByDId(DId)
             .then(res => {
                 setDatasource(res.data)
@@ -68,6 +71,7 @@ export default function DataSourceContent(props) {
                     return row
                 })
                 setRows(rows)
+                setIsLoading(false)
             })
             .catch(err => {
                 console.log(err)

@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
-
+import { Form } from 'react-bootstrap';
 import {
     DataGrid, GridToolbarContainer,
     GridToolbarExport
 } from '@mui/x-data-grid';
 import { useDemoData } from "@mui/x-data-grid-generator";
-import { TextField } from '@mui/material';
+import edit from "resources/icons/edit.svg"
+
 
 export default function EditData(props) {
     useEffect(() => {
@@ -82,14 +83,22 @@ export default function EditData(props) {
                 </div>
                 <div className='bg-white row m-2'>
                     <div className='col-9'>
-                        <TextField
-                            id="standard-textarea"
-                            variant="standard"
-                            value={props.fileInformation.name}
-                            onChange={(e) => {
-                                props.setFileInformation({ ...props.fileInformation, name: e.target.value.replace(/[\s\.]/g, "_") })
-                            }}
-                        />
+                        <div className='row'>
+                            <div className='col-3'>
+                                <Form.Control size="sm" type="text" value={props.fileInformation.name} onChange={(e) => {
+                                    props.setFileInformation({ ...props.fileInformation, name: e.target.value.replace(/[\s\.]/g, "_") })
+                                }}
+                                    className="border-0 "
+                                    style={{
+                                        fontSize: "28px",
+                                        color: "#0089ED"
+                                    }}
+                                />
+                            </div>
+                            <div className='col-9 mt-2'>
+                                <img src={edit} height="25px" width="25px" />
+                            </div>
+                        </div>
                         <DataGrid
                             loading={loading}
                             components={{
@@ -105,9 +114,9 @@ export default function EditData(props) {
                         />
                     </div>
                     <div className='col-3'>
-                        <div className='mt-4 mb-4 customFontBold size32 PrimaryFontColor'>Properties</div>
-                        <h6>{props.fileInformation.name}</h6>
-                        <ul className="list-group bd-none">
+                        <div className='mt-4 ps-3  mb-4 customFontBold size32 PrimaryFontColor'>Properties</div>
+                        {/* <div className='SecondFontColor size30'>{props.fileInformation.name}</div> */}
+                        <ul className="list-group bd-none ps-3">
                             {
                                 Object.keys(props.dataFile[0]).map((field, index) => {
                                     return (
