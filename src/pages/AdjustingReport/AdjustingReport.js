@@ -23,7 +23,7 @@ import { shapeBackgroundColors, shapeBorderColors } from 'utils/color';
 import * as htmlToImage from 'html-to-image';
 import { loadingContext } from 'App'
 import { updateAvatar } from 'api/Account'
-import {dataURLtoFile} from 'utils/utils'
+import { dataURLtoFile } from 'utils/utils'
 
 
 // declare some chart type of this app 
@@ -200,14 +200,15 @@ export default function AdjustingReport(props) {
         setIsLoading(true)
         try {
             let screenShoot = await takeScreenShot()
-            let file = dataURLtoFile(screenShoot, 'image.png');
-            let result = await updateAvatar(file)
-            let imageLink = result.data.length > 0 ? result.data[0].url : null
+            // let file = dataURLtoFile(screenShoot, 'image.png');
+            // let result = await updateAvatar(file)
+            // let imageLink = result.data.length > 0 ? result.data[0].url : null
             await updateReportInformation(currentProject, RId, {
                 "Hastag": reportInformation.Hastag,
                 "Description": "",
                 "Name": reportInformation.Name,
-                "Image": imageLink ? imageLink : reportInformation.Image
+                "Image": screenShoot
+                // "Image": imageLink ? imageLink : reportInformation.Image
             })
             saveAllShapeComponents()
             Store.addNotification(content("Success", "Saved", "success"))
