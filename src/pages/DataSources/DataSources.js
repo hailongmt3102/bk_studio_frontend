@@ -12,7 +12,7 @@ import DataSourceBox from './component/DataSourceBox'
 export default function DataSources() {
     const location = useLocation()
     const isModel = location.state ? location.state.isModel : false
-    
+
     const [datasourceslist, setDatasourceslist] = useState([])
     const [sampleList, setSampleList] = useState([])
 
@@ -73,7 +73,7 @@ export default function DataSources() {
                     <div className='row mt-4 m-0 p-0'>
                         <ScrollMenu>
                             {datasourceslist.map((ele, index) => (
-                                <div className='ms-4 mb-5'>
+                                <div className='ms-4 mb-5' style={{ "minWidth": "350px" }}>
                                     <DataSourceBox
                                         isModel={isModel}
                                         option_list={option_list}

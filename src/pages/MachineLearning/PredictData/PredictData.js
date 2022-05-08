@@ -9,14 +9,14 @@ import { Store } from 'react-notifications-component';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { content } from 'utils/notification';
 import { loadingContext } from 'App'
-
+import back from "resources/icons/back_round_deep_blue.svg";
 export default function PredictData() {
     const setIsLoading = useContext(loadingContext)
     const nav = useNavigate()
     const location = useLocation()
     const [columns, setColumns] = useState([])
     const [rows, setRows] = useState([])
-
+    const [MName, setMName] = useState("")
     // const { loading } = useDemoData({
     //     // dataSet: 'Commodity',
     //     rowLength: 4,
@@ -27,6 +27,7 @@ export default function PredictData() {
         if (location.state) {
             setColumns(location.state.columns)
             setRows(location.state.rows)
+            setMName(location.state.MName)
         } else {
             nav("/machinelearning")
         }
@@ -81,8 +82,19 @@ export default function PredictData() {
     return (
         <div>
             <div className='row m-2 mt-4 mb-4'>
-                <div class="col  mt-1 customFontBold PrimaryFontColor size40" >
-                    Sample Model
+                <div className="row ms-2 m-0 p-0" >
+                    <div className="col-5">
+                        <div className="row">
+                            <div className="col-1 m-0 p-0 mt-1">
+                                <button type="button" class="btn btn-sm" onClick={() => { nav(-1) }}>
+                                    <img src={back} />
+                                </button>
+                            </div>
+                            <div className="col-10 m-0 p-0" >
+                                <div className="ms-1 PrimaryFontColor customFontBold size32">{MName}</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div className='col text-end'>
                     <button className='btn-lg btn-success text-center border-0' style={{ backgroundColor: "#3B97C6" }}

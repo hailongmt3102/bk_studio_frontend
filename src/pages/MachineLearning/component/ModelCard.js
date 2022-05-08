@@ -9,16 +9,20 @@ export default function ModelCard(props) {
                     <img src={ML} onClick={() => {
                         nav("/machinelearning/modelDetail/" + props.info.Id, {
                             state: {
-                                "DId": props.info.TestId
+                                "DId": props.info.TestId,
+                                input: props.info.Input,
+                                output: props.info.Output,
+                                MName: props.info.Name
+
                             }
                         })
                     }} height="100%" width="100%" />
                 </div>
                 <div className='col-10 m-auto'>
                     <div className='ms-4 SecondFontColor customFontBold size40'>{props.info.Name}</div>
-                    <div className='ms-4 mt-3 size18'><span>Test data source: </span> {props.info.TestName}</div>
+                    <div className=' mt-3 ms-4 size18'><span>Created By: </span> {props.info.Author}</div>
                     <div className='ms-4 size18'><span>Modified Date: </span> {props.info.LastModified}</div>
-                    <div className='ms-4 size18'><span>Created By: </span> {props.info.Author}</div>
+
                 </div>
             </div>
         </div>

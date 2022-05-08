@@ -128,7 +128,7 @@ export default function DataSourceBox(props) {
                         })
                     return
                 }
-                
+
 
                 // navigate to view datasource page
                 if (res.data === "View") {
@@ -214,17 +214,11 @@ export default function DataSourceBox(props) {
                     }
                 </div>
                 <div class=" ms-4  m-0 p-0 mt-3 me-4" >
-                    <div><span style={{ "color": "#868585" }}>date created: </span>{props.ele.CreateTime}</div>
+                    <div><span style={{ "color": "#868585" }}>date created: </span>{props.ele.CreateTime.slice(0, 10)}</div>
                 </div>
-                {
-                    pressRename == false ?
-                        <div class="ms-4 m-0 p-0 mt-1 pb-4 me-4" >
-                            <p><span style={{ "color": "#868585" }}>last modified: </span>{props.ele.LastModified}</p>
-                        </div> :
-                        <div class="ms-4 m-0 p-0 mt-1 me-4" >
-                            <p><span style={{ "color": "#868585" }}>last modified: </span>{props.ele.LastModified}</p>
-                        </div>
-                }
+                <div class="ms-4 m-0 p-0 mt-1 pb-4 me-4" >
+                    <p><span style={{ "color": "#868585" }}>last modified: </span>{props.ele.LastModified.slice(0, 10)}</p>
+                </div>
                 {/* <div class="ms-4 m-0 p-0 mt-1 pb-2 me-4" >
                     <p><span style={{ "color": "#868585" }}>last modified: </span>{props.ele.LastModified}</p>
                 </div> */}

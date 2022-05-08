@@ -25,13 +25,14 @@ export default function TestModel() {
     const [showDialog, setShowDialog] = useState(false)
     const [rows, setRows] = useState([])
     const [columns, setColumns] = useState([])
-
+    const [MName, setMName] = useState("")
     useEffect(() => {
         if (location.state) {
             setRows(location.state.rows)
             console.log(location.state.rows)
             setColumns(location.state.columns)
             console.log(location.state.columns)
+            setMName(location.state.MName)
         } else {
             nav("/machinelearning")
         }
@@ -78,7 +79,7 @@ export default function TestModel() {
                             </button>
                         </div>
                         <div className="col-10 m-0 p-0" >
-                            <div className="ms-1 PrimaryFontColor customFontBold size32"> Sample Model</div>
+                            <div className="ms-1 PrimaryFontColor customFontBold size32"> {MName}</div>
                         </div>
                     </div>
                 </div>
@@ -101,6 +102,28 @@ export default function TestModel() {
                     </div>
 
                 </div>
+                <div className='col text-end'>
+                    <button className='btn-lg btn-success text-center border-0' style={{ backgroundColor: "#3B97C6" }}
+                        onClick={
+                            () => {
+                                console.log("conchonam")
+                                nav("/machinelearning/predict", {
+                                    state: {
+                                        rows: rows,
+                                        columns: columns,
+                                        MName: MName
+                                    }
+                                })
+                            }
+                        }
+                    >
+                        <div className='row p-2 text-center'>
+                            <div className='col-9  text-center'>
+                                <div className='col-2'>Predict</div>
+                            </div>
+                        </div>
+                    </button>
+                </div>
                 <div style={{ height: 400, width: '100%' }}>
                     <DataGrid
                         loading={loading}
@@ -117,7 +140,7 @@ export default function TestModel() {
                     // onCellEditStop={handleRowEditStop}
                     />
                 </div>
-                <div className='row'>
+                {/* <div className='row'>
                     <div className='col ms-4 mt-1 customFontBold SecondFontColor size40'>
                         Output:
                     </div>
@@ -128,7 +151,7 @@ export default function TestModel() {
                             <div>Save as datasource</div>
                         </button>
                     </div>
-                </div>
+                </div> */}
             </div>
         </div >
     )

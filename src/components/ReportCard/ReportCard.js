@@ -215,11 +215,11 @@ export default function ReportCard(props) {
                 <p className='m-0 p-0'> <span style={{ "color": "#868585" }}>Created by:</span> {props.data.Author.slice(0, 20)}... </p>
             </div>
             <div className='row mt-2'>
-                <p className='m-0 p-0'> <span style={{ "color": "#868585" }}> Created Date: </span>  {props.data.CreateTime} </p>
+                <p className='m-0 p-0'> <span style={{ "color": "#868585" }}> Created Date: </span>  {props.data.CreateTime.slice(0, 10)} </p>
             </div>
             {
                 props.type === "Report" ? <div className='row mt-2'>
-                    <p className='m-0 p-0'> <span style={{ "color": "#868585" }}>  Modified Date:  </span>    {props.data.LastModified} </p>
+                    <p className='m-0 p-0'> <span style={{ "color": "#868585" }}>  Modified Date:  </span>    {props.data.LastModified.slice(0, 10)} </p>
                 </div> : null
             }
             {
