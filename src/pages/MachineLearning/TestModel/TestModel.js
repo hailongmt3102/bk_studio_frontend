@@ -1,10 +1,41 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useLocation, useNavigate } from 'react-router-dom'
+import {
+    DataGrid, GridToolbarContainer,
+    GridToolbarExport
+} from '@mui/x-data-grid'
+import { useDemoData } from "@mui/x-data-grid-generator";
 import back from "resources/icons/back_round_deep_blue.svg";
 import Selection from "../component/Selection";
 export default function TestModel() {
+    function CustomToolbar() {
+        return (
+            <GridToolbarContainer>
+                <GridToolbarExport />
+            </GridToolbarContainer>
+        );
+    }
+    const { loading } = useDemoData({
+        // dataSet: 'Commodity',
+        rowLength: 4,
+        maxColumns: 6
+    });
+    const location = useLocation()
     const nav = useNavigate()
     const [showDialog, setShowDialog] = useState(false)
+    const [rows, setRows] = useState([])
+    const [columns, setColumns] = useState([])
+
+    useEffect(() => {
+        if (location.state) {
+            setRows(location.state.rows)
+            console.log(location.state.rows)
+            setColumns(location.state.columns)
+            console.log(location.state.columns)
+        } else {
+            nav("/machinelearning")
+        }
+    }, [])
     const handleOpen = () => {
         setShowDialog(true)
     }
@@ -16,7 +47,7 @@ export default function TestModel() {
     const selectDataSource = () => {
         // navigate to datasource page
         nav("/datasources", {
-            state : {
+            state: {
                 isModel: true,
             }
         })
@@ -68,6 +99,23 @@ export default function TestModel() {
                             </div>
                         </button>
                     </div>
+
+                </div>
+                <div style={{ height: 400, width: '100%' }}>
+                    <DataGrid
+                        loading={loading}
+                        components={{
+                            Toolbar: CustomToolbar
+                        }}
+                        rows={rows}
+                        columns={columns}
+                        columnVisibilityModel={{
+                            id: false,
+                        }}
+                        experimentalFeatures={{ newEditingApi: true }}
+                    // editMode="cell"
+                    // onCellEditStop={handleRowEditStop}
+                    />
                 </div>
                 <div className='row'>
                     <div className='col ms-4 mt-1 customFontBold SecondFontColor size40'>

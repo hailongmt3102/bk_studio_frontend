@@ -60,7 +60,7 @@ function App() {
         <localizationContext.Provider value={translations}>
             <loadingContext.Provider value={setIsLoading}>
                 <Router>
-                    { isLoading && <Loading />}
+                    {isLoading && <Loading />}
                     <ReactNotifications />
                     <Drawer state={drawerState} setDrawerState={setDrawerState} />
                     <div className="bg-light">
@@ -99,7 +99,7 @@ function App() {
                             <Route path="/templates" element={<Templates />} />
                             <Route path="/machinelearning" element={<ML />} />
                             <Route path="/machinelearning/createModel" element={<CreateANewModel />} />
-                            <Route path="/machinelearning/modelDetail" element={<ModelDetail />} />
+                            <Route path="/machinelearning/modelDetail/:id" element={<ModelDetail />} />
                             <Route path="/machinelearning/testModel" element={<TestModel />} />
                             <Route path="/machinelearning/predict" element={<PredictData />} />
                             <Route

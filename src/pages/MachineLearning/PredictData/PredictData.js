@@ -42,8 +42,9 @@ export default function PredictData() {
             return ele
         }))
             .then(response => {
-                // console.log(JSON.parse(response))
                 var rowData = JSON.parse(response)
+                console.log(JSON.stringify(rowData))
+
                 if (rowData.length == 0) return
                 const keys = Object.keys(rowData[0])
                 let Rows = rowData.map((row, index) => {

@@ -1,9 +1,26 @@
+import { getAllModel } from 'api/ML_API'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-
+import { Store } from 'react-notifications-component'
+import { content } from "utils/notification"
 import BlankReportIcon from 'resources/icons/blankReport.svg'
 import ModelCard from './component/ModelCard'
 export default function ML() {
     const nav = useNavigate()
+    const [modelList, setModelList] = useState([])
+    useEffect(
+        () => {
+            getAllModel()
+                .then(res => {
+                    setModelList(res.data)
+                    console.log(res.data)
+                })
+                .catch(err => {
+                    Store.addNotification(content("Fail", err.response.data, "danger"))
+                    return
+                })
+        }, []
+    )
     return (
         <div>
             <div className='m-2 mt-4 mb-4'>
@@ -32,27 +49,15 @@ export default function ML() {
 
                 </div>
                 <div className='row m-0 p-0 justify-content-center'>
-                    {/* {reports.map(ele =>
+                    {modelList.map(ele =>
                         <div className='col m-0 p-0' style={{ "minWidth": "600px", "maxWidth": "600px" }} >
-                            <div className='ms-4 mt-5 pe-4'>
-                                <ReportCard data={ele} type="Template" />
+                            <div className='ms-4 mt-5'>
+                                <ModelCard info={ele} />
                             </div>
                         </div>
-                    )} */}
-                    <div className='col m-0 p-0' onClick={() => {
-                        nav("/machinelearning/modelDetail")
-                    }}>
-                        <ModelCard minwidth="200px" minheight="400px" />
-                    </div>
-                    <div className='col m-0 p-0'>
-                        <ModelCard width="200px" height="200px" />
-                    </div>
-                    <div className='col m-0 p-0'>
-                        <ModelCard width="200px" height="200px" />
-                    </div>
-                    <div className='col m-0 p-0'>
-                        <ModelCard width="200px" height="200px" />
-                    </div>
+                    )}
+
+
                 </div>
             </div></div>
     )

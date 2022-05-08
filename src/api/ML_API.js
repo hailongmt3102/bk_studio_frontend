@@ -1,3 +1,4 @@
+import axiosClient from './axios'
 const bayesModelAPI = (testdata) => {
     return new Promise((resolve, reject) => {
         fetch("http://ec2-13-215-176-116.ap-southeast-1.compute.amazonaws.com:8000/bayes", {
@@ -23,6 +24,16 @@ const bayesModelAPI = (testdata) => {
             })
     })
 }
+
+const getAllModel = () => {
+    return axiosClient.get('/machinelearning')
+}
+
+const getAModelByID = (id) => {
+    return axiosClient.get('/machinelearning/' + id)
+}
 export {
-    bayesModelAPI
+    bayesModelAPI,
+    getAllModel,
+    getAModelByID
 }
