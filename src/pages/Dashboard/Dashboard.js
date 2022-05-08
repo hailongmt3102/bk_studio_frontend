@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react'
-
+import { loadingContext } from 'App'
 import { getListPeople } from 'api/People'
 import { getListProject } from 'api/Project'
 import { getAllTemplate } from "api/Templates"
@@ -9,8 +9,11 @@ import { ScrollMenu } from 'react-horizontal-scrolling-menu'
 import { localizationContext } from '../../App'
 import ProjectCard from '../../components/ProjectCard/ProjectCard'
 import { deep_blue_primary } from "../../utils/color"
+import { Store } from 'react-notifications-component'
+import { content } from "utils/notification"
 export default function Dashboard() {
-    // use localization
+    // use localization.
+    const setIsLoading = useContext(loadingContext)
     const localization = useContext(localizationContext)
     const [projectList, setProjectList] = useState([])
     const [peopleList, setPeopleList] = useState([])
@@ -22,6 +25,7 @@ export default function Dashboard() {
 
     const getData = async () => {
         try {
+            setIsLoading(true)
             let projectList = await getListProject()
             let peopleList = await getListPeople()
             let templateList = await getAllTemplate()
@@ -29,8 +33,11 @@ export default function Dashboard() {
             setProjectList(projectList.data)
             setPeopleList(peopleList.data)
             setReports(templateList.data)
+            setIsLoading(false)
         } catch (error) {
-
+            setIsLoading(false)
+            Store.addNotification(content("Fail", error.response.data, "danger"))
+            return
         }
     }
 

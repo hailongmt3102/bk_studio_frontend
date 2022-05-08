@@ -1,17 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { getListProject } from 'api/Project'
 import ProjectBox from '../../components/ProjectCard/ProjectCard'
 import NewProjectModel from './components/NewProjectModel'
-
+import { loadingContext } from 'App'
 import { deep_blue_primary } from "../../utils/color"
 import add_round from "resources/icons/add_round.svg"
 import { useNavigate } from 'react-router-dom'
+import { Store } from 'react-notifications-component'
+import { content } from "utils/notification"
 const orangeStyle = {
     color: "#FF7F0D",
 }
 
 export default function ProjectList() {
-
+    const setIsLoading = useContext(loadingContext)
     const [showPModel, setShowPModel] = useState(false)
 
     const [projectList, setProjectList] = useState([])
@@ -22,6 +24,7 @@ export default function ProjectList() {
 
     const navigate = useNavigate()
     useEffect(() => {
+        setIsLoading(true)
         // get all project
         getListProject()
             .then(response => {
@@ -29,10 +32,14 @@ export default function ProjectList() {
                 setProjectList(response.data)
                 //console.log(response.data.length)
                 setLastProjectId(response.data.length !== 0 ? response.data.length : 0)
+                setIsLoading(false)
                 //console.log(lastProjectId)
             })
             .catch(
                 error => {
+                    setIsLoading(false)
+                    Store.addNotification(content("Fail", error.response.data, "danger"))
+                    return
                 }
             )
     }, [appendProject])

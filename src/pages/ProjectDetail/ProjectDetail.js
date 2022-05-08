@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
 import { Form } from 'react-bootstrap'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { getListPeopleByProjectID } from '../../api/People'
@@ -25,8 +25,10 @@ import ShareDataSourcesPopUp from "../DataSources/component/ShareDataSourcesPopU
 import PeoplePopup from './components/PeoplePopup'
 import RolePopUp from './components/RolePopUp'
 
+import { loadingContext } from 'App'
 
 export default function ProjectDetail() {
+    const setIsLoading = useContext(loadingContext)
     let getEmail = localStorage.getItem("email") ?? ""
     var location = useLocation()
 
@@ -60,6 +62,7 @@ export default function ProjectDetail() {
 
     const [peopleCanEditRoleList, setPeopleCanEditRoleList] = useState(false)
     useEffect(() => {
+        setIsLoading(true)
         getInformationByPId(project_id)
             .then(response => {
                 //console.log(response.data)
@@ -75,6 +78,8 @@ export default function ProjectDetail() {
             })
             .catch(err => {
                 setPeopleCanEditRoleList(false)
+                Store.addNotification(content("Fail", err.response.data, "danger"))
+                return
             })
         GetDataSourcesListInformationInProject({ PId: project_id })
             .then(res => {
@@ -84,14 +89,21 @@ export default function ProjectDetail() {
             })
             .catch(err => {
                 console.log(err)
+                Store.addNotification(content("Fail", err.response.data, "danger"))
+                return
             })
         getListPeopleByProjectID(project_id)
             .then(response => {
                 //console.log(response.data)
                 setPeopleListInProject(response.data)
+                setIsLoading(false)
             })
             .catch(
                 error => {
+                    setIsLoading(false)
+                    Store.addNotification(content("Fail", error.response.data, "danger"))
+                    return
+
                 }
             )
     }, [project_id])
