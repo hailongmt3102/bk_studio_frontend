@@ -34,8 +34,10 @@ import CreateANewModel from "pages/MachineLearning/CreateANewModel/CreateANewMod
 import ModelDetail from "pages/MachineLearning/ModelDetail/ModelDetail";
 import PredictData from "pages/MachineLearning/PredictData/PredictData";
 import TestModel from "pages/MachineLearning/TestModel/TestModel";
+import Loading from "components/Loading/Loading";
 const translations = new LocalizedStrings(data);
 const localizationContext = React.createContext(translations);
+const loadingContext = React.createContext();
 
 function App() {
     const [drawerState, setDrawerState] = useState("workspace");
@@ -52,76 +54,81 @@ function App() {
         }
     }
 
+    const [isLoading, setIsLoading] = useState(false)
+
     return (
         <localizationContext.Provider value={translations}>
-            <Router>
-                <ReactNotifications />
-                <Drawer state={drawerState} setDrawerState={setDrawerState} />
-                <div className="bg-light">
-                    <Header />
-                    <Routes>
-                        <Route path="/" exact element={<Dashboard />} >
-                        </Route>
-                        <Route path="/pList" element={<ProjectList />} />
-                        <Route path="/pDetail/:id" element={<ProjectDetail />} />
+            <loadingContext.Provider value={setIsLoading}>
+                <Router>
+                    { isLoading && <Loading />}
+                    <ReactNotifications />
+                    <Drawer state={drawerState} setDrawerState={setDrawerState} />
+                    <div className="bg-light">
+                        <Header />
+                        <Routes>
+                            <Route path="/" exact element={<Dashboard />} >
+                            </Route>
+                            <Route path="/pList" element={<ProjectList />} />
+                            <Route path="/pDetail/:id" element={<ProjectDetail />} />
 
-                        <Route path="/datasources"
-                            element={<DataSources />} />
-                        <Route
-                            path="/datasources/:id"
-                            element={<DataSourceContent />}
-                        />
+                            <Route path="/datasources"
+                                element={<DataSources />} />
+                            <Route
+                                path="/datasources/:id"
+                                element={<DataSourceContent />}
+                            />
 
-                        <Route path="/people" element={<People />} />
-                        <Route path="/account/login" element={<Login />} />
+                            <Route path="/people" element={<People />} />
+                            <Route path="/account/login" element={<Login />} />
 
-                        <Route path="/account/forgetPassword" element={<ForgetPassword />} />
-                        <Route path="/account/register" element={<Register />} />
-                        <Route path="/account/changePassword" element={<ChangePassword />} />
-                        <Route path="/account/updatePassword" element={<UpdatePassword />} />
+                            <Route path="/account/forgetPassword" element={<ForgetPassword />} />
+                            <Route path="/account/register" element={<Register />} />
+                            <Route path="/account/changePassword" element={<ChangePassword />} />
+                            <Route path="/account/updatePassword" element={<UpdatePassword />} />
 
-                        <Route
-                            path="/project/create"
-                            element={<CreateReport />}
-                        />
-                        <Route path="/project/import" element={<ImportData />} />
-                        <Route
-                            path="/project/gallery"
-                            exact
-                            element={<Gallery />}
-                        />
-                        <Route path="/templates" element={<Templates />} />
-                        <Route path="/machinelearning" element={<ML />} />
-                        <Route path="/machinelearning/createModel" element={<CreateANewModel />} />
-                        <Route path="/machinelearning/modelDetail" element={<ModelDetail />} />
-                        <Route path="/machinelearning/testModel" element={<TestModel />} />
-                        <Route path="/machinelearning/predict" element={<PredictData />} />
-                        <Route
-                            path="/project/gallery/:id/edit"
-                            exact
-                            element={<AdjustingReport />}
-                        />
-                        <Route
-                            path="/project/gallery/:id/view"
-                            exact
-                            element={<AdjustingReport />}
-                        />
+                            <Route
+                                path="/project/create"
+                                element={<CreateReport />}
+                            />
+                            <Route path="/project/import" element={<ImportData />} />
+                            <Route
+                                path="/project/gallery"
+                                exact
+                                element={<Gallery />}
+                            />
+                            <Route path="/templates" element={<Templates />} />
+                            <Route path="/machinelearning" element={<ML />} />
+                            <Route path="/machinelearning/createModel" element={<CreateANewModel />} />
+                            <Route path="/machinelearning/modelDetail" element={<ModelDetail />} />
+                            <Route path="/machinelearning/testModel" element={<TestModel />} />
+                            <Route path="/machinelearning/predict" element={<PredictData />} />
+                            <Route
+                                path="/project/gallery/:id/edit"
+                                exact
+                                element={<AdjustingReport />}
+                            />
+                            <Route
+                                path="/project/gallery/:id/view"
+                                exact
+                                element={<AdjustingReport />}
+                            />
 
-                        <Route path="/personal/profile" element={<Profile />} />
-                        <Route path="/personal/setting" element={<Setting setLanguage={languageHandler} />} />
+                            <Route path="/personal/profile" element={<Profile />} />
+                            <Route path="/personal/setting" element={<Setting setLanguage={languageHandler} />} />
 
-                        <Route
-                            path="*"
-                            element={
-                                <div className="m-4">
-                                    <h1>404 not found</h1>
-                                    <p>Please check the correct link when browsing</p>
-                                </div>
-                            }
-                        />
-                    </Routes>
-                </div>
-            </Router>
+                            <Route
+                                path="*"
+                                element={
+                                    <div className="m-4">
+                                        <h1>404 not found</h1>
+                                        <p>Please check the correct link when browsing</p>
+                                    </div>
+                                }
+                            />
+                        </Routes>
+                    </div>
+                </Router>
+            </loadingContext.Provider>
         </localizationContext.Provider>
     );
 }
@@ -129,6 +136,7 @@ function App() {
 export default App;
 
 export {
-    localizationContext
+    localizationContext,
+    loadingContext
 };
 

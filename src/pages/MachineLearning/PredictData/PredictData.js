@@ -4,21 +4,24 @@ import {
 } from '@mui/x-data-grid';
 import { useDemoData } from "@mui/x-data-grid-generator";
 import { bayesModelAPI } from "api/ML_API";
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Store } from 'react-notifications-component';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { content } from 'utils/notification';
+import { loadingContext } from 'App'
+
 export default function PredictData() {
+    const setIsLoading = useContext(loadingContext)
     const nav = useNavigate()
     const location = useLocation()
     const [columns, setColumns] = useState([])
     const [rows, setRows] = useState([])
 
-    const { loading } = useDemoData({
-        // dataSet: 'Commodity',
-        rowLength: 4,
-        maxColumns: 6
-    });
+    // const { loading } = useDemoData({
+    //     // dataSet: 'Commodity',
+    //     rowLength: 4,
+    //     maxColumns: 6
+    // });
 
     useEffect(() => {
         if (location.state) {
@@ -33,6 +36,7 @@ export default function PredictData() {
     const [OutputColumns, setOutputColumns] = useState([])
 
     const predictHandle = () => {
+        setIsLoading(true)
         bayesModelAPI(rows.map(ele => {
             delete ele.id
             return ele
@@ -55,9 +59,11 @@ export default function PredictData() {
                 })
                 setOutputColumns(Columns)
                 // setlistCompany(response.data)
+                setIsLoading(false)
             })
             .catch(
                 err => {
+                    setIsLoading(false)
                     Store.addNotification(content("Fail", err.response.data, "danger"))
                     return
                 }
@@ -97,7 +103,7 @@ export default function PredictData() {
                     Test data:
                     <div style={{ height: 400, width: '100%' }}>
                         <DataGrid
-                            loading={loading}
+                            // loading={loading}
                             rows={rows}
                             columns={columns}
                             columnVisibilityModel={{
@@ -112,7 +118,7 @@ export default function PredictData() {
                     Output:
                     <div style={{ height: 400, width: '100%' }}>
                         <DataGrid
-                            loading={loading}
+                            // loading={loading}
                             components={{
                                 Toolbar: CustomToolbar
                             }}
