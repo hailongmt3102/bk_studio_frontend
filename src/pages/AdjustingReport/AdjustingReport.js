@@ -22,8 +22,8 @@ import SqlPopUp from "./components/PopUp/SqlPopUp";
 import { shapeBackgroundColors, shapeBorderColors } from 'utils/color';
 import * as htmlToImage from 'html-to-image';
 import { loadingContext } from 'App'
-import { updateAvatar } from 'api/Account'
-import { dataURLtoFile } from 'utils/utils'
+// import { updateAvatar } from 'api/Account'
+// import { dataURLtoFile } from 'utils/utils'
 
 
 // declare some chart type of this app 
@@ -855,7 +855,7 @@ export default function AdjustingReport(props) {
     const takeScreenShot = async () => {
         var node = document.getElementById('bkstudiocontent')
         try {
-            let dataUrl = await htmlToImage.toPng(node)
+            let dataUrl = await htmlToImage.toPng(node, { height: 1300, width: 1900 })
             return dataUrl
         } catch (error) {
             console.error('oops, something went wrong!', error);
