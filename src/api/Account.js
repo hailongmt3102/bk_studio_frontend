@@ -30,8 +30,8 @@ const updateInformation = (data) => {
 
 const updateAvatar = (data) => {
     let form = new FormData()
-    form.append("file", data);
-    return axiosClient.post("/upload/avt", form)
+    form.append("image", data);
+    return axiosClient.post("/upload/upload-images", form)
 }
 
 export {

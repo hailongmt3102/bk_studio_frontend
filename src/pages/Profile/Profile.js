@@ -1,28 +1,21 @@
-import React, { useState, useEffect } from 'react'
-
-import { Form, Col, Row } from 'react-bootstrap'
-
-import { GetInformationApi, updateInformation, updateAvatar } from "api/Account"
-import { useNavigate } from 'react-router-dom'
-
-import { deep_blue_primary } from "../../utils/color"
-import "@fontsource/poppins";
-
-import moment from 'moment';
+import "@fontsource/poppins"
+import Badge from '@mui/material/Badge'
+import { GetInformationApi, updateAvatar, updateInformation } from "api/Account"
+import { loadingContext } from 'App'
+import moment from 'moment'
+import { useContext, useEffect, useRef, useState } from 'react'
+import { Col, Form, Row } from 'react-bootstrap'
 import { Store } from 'react-notifications-component'
+import { useNavigate } from 'react-router-dom'
+import edit_grey from "resources/icons/edit_grey.svg"
+import { deep_blue_primary } from "../../utils/color"
 import { content } from "../../utils/notification"
-import people_default from "resources/icons/people_default.svg"
-import edit_grey from "resources/icons/edit_grey.svg";
-import Badge from '@mui/material/Badge';
-
 
 export default function Profile() {
-
-
+    const setIsLoading = useContext(loadingContext)
+    const avatarInputRef = useRef()
     const navigate = useNavigate()
     useEffect(() => {
-        // get 
-        console.log('Chay ham get info ne')
         GetInformationApi()
             .then(response => {
                 console.log(response.data)
@@ -34,8 +27,7 @@ export default function Profile() {
                 }
             )
     }, [])
-    const [isVisible, setisVisible] = useState(false)
-    const [date, setDate] = useState(new Date());
+
     const [information, setinformation] = useState({
         Email: "",
         LastLoginTime: null,
@@ -53,18 +45,6 @@ export default function Profile() {
     })
 
     const submitUpdate = () => {
-        console.log("chạy hàm update")
-        // console.log(
-        //     {
-        //         "UserName": information.UserName,
-        //         "RankAccount": information.RankAccount,
-        //         "Avatar": "",
-        //         "OverView": information.OverView,
-        //         "Company": information.Company,
-        //         "Gender": information.Gender,
-        //         "Address": information.Address,
-        //         "Birthday": "2000-12-04"
-        //     })
         updateInformation(
             {
                 "UserName": information.UserName,
@@ -78,7 +58,6 @@ export default function Profile() {
             }
         )
             .then((res) => {
-                console.log(res.data)
                 localStorage.setItem("username", information.UserName)
                 Store.addNotification(content("Success", "Updated information", "success"))
                 setTimeout(() => window.location.reload(), 1000);
@@ -88,30 +67,24 @@ export default function Profile() {
                 Store.addNotification(content("Fail", e.response.data, "danger"))
                 return
             })
-
     }
 
 
     const onChange = (e) => {
-
-        console.log(e.target.files[0])
+        setIsLoading(true)
         let files = e.target.files;
-        let reader = new FileReader();
-        reader.readAsDataURL(files[0]);
         updateAvatar(e.target.files[0])
             .then((res) => {
-                setinformation({ ...information, Avatar: res.data.fileUrl })
+                if (res.data.length > 0)
+                    setinformation({ ...information, Avatar: res.data[0].url })
+                setIsLoading(false)
             })
             .catch((e) => {
+                setIsLoading(false)
                 Store.addNotification(content("Warning", e.response.data, "danger"))
                 return
-                //alert(e.response.data);
             })
     }
-
-    const [pressEdit, setPressEdit] = useState(false)
-
-    //}
     return (
         <div>
             <h3 class="mt-3 mb-3 ms-5" style={{ color: deep_blue_primary, "fontWeight": "bold", fontSize: "40px" }}> Profile:</h3>
@@ -119,14 +92,16 @@ export default function Profile() {
                 <div class="col-2 me-5 ms-4 justify-content-center ">
 
                     <div class="mb-4 ms-5 mt-3" >
-                        {/* <img src={information.Avatar}  style={{ "border-radius": "50%" }} alt={avt} /> */}
                         <Badge
                             overlap="circular"
                             anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
                             badgeContent={
                                 <img className='rounded-circle p-2' height="50px" width="50px"
                                     style={{ "backgroundColor": "#E5E5E5" }}
-                                    onClick={() => { setPressEdit(true) }} src={edit_grey}
+                                    onClick={() => {
+                                        if (avatarInputRef.current) avatarInputRef.current.click()
+                                    }}
+                                    src={edit_grey}
                                 />
                             }
                         >
@@ -134,22 +109,12 @@ export default function Profile() {
                         </Badge>
 
                     </div>
-                    {pressEdit === true ?
-                        <div>
-                            <Form.Group controlId="formFile" className="ms-3" onChange={(e) => onChange(e)}>
-                                {/* <Form.Label>Default file input example</Form.Label> */}
-                                <Form.Control type="file" />
-                            </Form.Group>
-                            {/* <input type="file" name="file"  /> */}
-
-                        </div>
-                        : < div class="mt-2 ms-5 ">
-                            <button class=" btn sm mt-2 ms-4 p-3" type="button" style={{ color: "white", backgroundColor: "#FF7F0D", borderRadius: "30px ", fontSize: 14 }} onClick={() => navigate("/account/changePassword")}>
-                                Change Password
-                            </button>
-                        </div>
-                    }
-
+                    < div class="mt-2 ms-5 ">
+                        <input type={"file"} ref={avatarInputRef} style={{ display: "none" }} onChange={(e) => { onChange(e) }} />
+                        <button class=" btn sm mt-2 ms-4 p-3" type="button" style={{ color: "white", backgroundColor: "#FF7F0D", borderRadius: "30px ", fontSize: 14 }} onClick={() => navigate("/account/changePassword")}>
+                            Change Password
+                        </button>
+                    </div>
                 </div>
                 <div class="ms-5 col-8">
                     <div class=" justify-content-start align-items-center py-2">

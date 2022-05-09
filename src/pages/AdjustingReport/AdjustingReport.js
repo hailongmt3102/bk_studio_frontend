@@ -22,6 +22,8 @@ import SqlPopUp from "./components/PopUp/SqlPopUp";
 import { shapeBackgroundColors, shapeBorderColors } from 'utils/color';
 import * as htmlToImage from 'html-to-image';
 import { loadingContext } from 'App'
+// import { updateAvatar } from 'api/Account'
+// import { dataURLtoFile } from 'utils/utils'
 
 
 // declare some chart type of this app 
@@ -29,7 +31,6 @@ const shapeTypes = ["Table", "Pie Chart", "Doughnut Chart", "Line Chart", "Bar C
 
 export default function AdjustingReport(props) {
     const setIsLoading = useContext(loadingContext)
-
     const location = useLocation()
 
     // some hiddenInfo of this report
@@ -42,6 +43,9 @@ export default function AdjustingReport(props) {
     const nav = useNavigate()
     const contentWrappingBox = useRef(null)
     const contentRef = useRef()
+    const openImageRef = useRef()
+    const [cursor, setCursor] = useState("default")
+
 
     // list data sources of the report
     const [dataSource, setDataSource] = useState({})
@@ -89,7 +93,6 @@ export default function AdjustingReport(props) {
 
     const [followingIndexComponent, setFollowingIndexComponent] = useState(-1)
     const [copyIndexComponent, setCopyIndexComponent] = useState(-1)
-    const [reportImage, setReportImage] = useState("")
 
     const EditStyle = (newStyle) => {
         setTabData({ ...tabData, style: newStyle })
@@ -199,11 +202,15 @@ export default function AdjustingReport(props) {
         setIsLoading(true)
         try {
             let screenShoot = await takeScreenShot()
+            // let file = dataURLtoFile(screenShoot, 'image.png');
+            // let result = await updateAvatar(file)
+            // let imageLink = result.data.length > 0 ? result.data[0].url : null
             await updateReportInformation(currentProject, RId, {
                 "Hastag": reportInformation.Hastag,
                 "Description": "",
                 "Name": reportInformation.Name,
                 "Image": screenShoot
+                // "Image": imageLink ? imageLink : reportInformation.Image
             })
             saveAllShapeComponents()
             Store.addNotification(content("Success", "Saved", "success"))
@@ -671,6 +678,10 @@ export default function AdjustingReport(props) {
             case "text":
                 createTextComponent(pos)
                 break
+            case "image":
+                if (openImageRef) openImageRef.current.click()
+
+                break
             default:
                 break
         }
@@ -793,6 +804,21 @@ export default function AdjustingReport(props) {
         onChangeFocusShape(followingIndexComponent);
     }, [followingIndexComponent])
 
+    useEffect(() => {
+        switch (addShapeType) {
+            case "text" :
+                setCursor("crosshair")
+                break
+            case "image" :
+                setCursor("grabbing")
+                break
+            default:
+                setCursor("default")
+                break
+        }
+    }, [addShapeType])
+
+
 
 
     const [reportInformation, setReportInformation] = useState(
@@ -850,7 +876,7 @@ export default function AdjustingReport(props) {
     const takeScreenShot = async () => {
         var node = document.getElementById('bkstudiocontent')
         try {
-            let dataUrl = await htmlToImage.toPng(node)
+            let dataUrl = await htmlToImage.toPng(node, { height: 1300, width: 1900 })
             return dataUrl
         } catch (error) {
             console.error('oops, something went wrong!', error);
@@ -859,7 +885,8 @@ export default function AdjustingReport(props) {
     }
 
     const EditUI = () => {
-        return <div>
+        return <div style={{cursor : cursor}}>
+            <input ref={openImageRef} type={"file"} style={{ display: "none" }} accept="image/*" />
             <div>
                 {/* some popup */}
 
