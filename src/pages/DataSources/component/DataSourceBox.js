@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
 import { Form } from 'react-bootstrap'
 
 import excel_icon from "resources/icons/excel_icon.svg"
 
 import ThreeDotButton from 'components/ThreeDotButton'
 import three_dot from "resources/icons/three-dot.svg"
-
+import { localizationContext } from '../../../App'
 import { checkPermissionWithDatasource, deleteDatasource, Rename, SendToWorkspace, showDataSourceContent } from 'api/DataSources'
 
 import { Store } from 'react-notifications-component'
@@ -13,7 +13,7 @@ import { useNavigate } from 'react-router-dom'
 import { content } from "utils/notification"
 
 export default function DataSourceBox(props) {
-
+    const localization = useContext(localizationContext)
     const navigate = useNavigate()
 
     var myEmail = localStorage.getItem("email")
@@ -215,9 +215,9 @@ export default function DataSourceBox(props) {
                 </div>
 
                 <div className="ms-4 m-0 p-0 mt-4 pb-4 me-4" >
-                    <div className='mt-1'><span style={{ "color": "#868585" }}>Date created: </span>{props.ele.CreateTime.slice(0, 10)}</div>
-                    <div className='mt-1'><span style={{ "color": "#868585" }}>Last modified: </span>{props.ele.LastModified.slice(0, 10)}</div>
-                    <div className='mt-1 mb-3'> <span style={{ "color": "#868585" }}>Created by: </span>{props.ele.Email.slice(0, 15)}...</div>
+                    <div className='mt-1'><span style={{ "color": "#868585" }}>{localization.dataCreate} </span>{props.ele.CreateTime.slice(0, 10)}</div>
+                    <div className='mt-1'><span style={{ "color": "#868585" }}>{localization.lastModi}</span>{props.ele.LastModified.slice(0, 10)}</div>
+                    <div className='mt-1 mb-3'> <span style={{ "color": "#868585" }}>{localization.createBy}</span>{props.ele.Email.slice(0, 15)}...</div>
                 </div>
 
                 {/* <div class="ms-4 m-0 p-0 mt-1 pb-2 me-4" >

@@ -4,7 +4,10 @@ import edit from 'resources/icons/edit.svg'
 import delete_icon from 'resources/icons/delete.svg'
 import three_dot from "resources/icons/three-dot.svg"
 import ThreeDotButton from "../../../components/ThreeDotButton"
+import React, { useContext } from 'react'
+import { localizationContext } from 'App'
 export default function ModelCard(props) {
+    const localization = useContext(localizationContext)
     const nav = useNavigate()
     const option_list = ["Rename", "Delete"]
     const icons_list = [edit, delete_icon]
@@ -38,8 +41,8 @@ export default function ModelCard(props) {
                 </div>
                 <div className='col-9 m-auto'>
                     <div className='ms-5 SecondFontColor customFontBold size30'>{props.info.Name}</div>
-                    <div className=' mt-3 ms-5 size18'><span>Created By: </span> {props.info.Author.slice(0, 18)}...</div>
-                    <div className='ms-5 size18 pb-4'><span>Modified Date: </span> {props.info.LastModified && props.info.LastModified.substring(0, 10)}</div>
+                    <div className=' mt-3 ms-5 size18'><span>{localization.createBy} </span> {props.info.Author.slice(0, 18)}...</div>
+                    <div className='ms-5 size18 pb-4'><span>{localization.lastModi}  </span> {props.info.LastModified && props.info.LastModified.substring(0, 10)}</div>
 
                 </div>
             </div>

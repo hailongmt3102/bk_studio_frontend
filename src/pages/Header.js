@@ -11,7 +11,7 @@ export default function Header() {
     var url = useLocation().pathname
     const [visible, setVisible] = useState(true)
     var nav = useNavigate()
-    const option_list = ['Dashboard', 'Datasources', 'People', "Your Projects", "Create a report", "Gallery", "Import Data", "Templates", "Profile", "Setting"];
+    const option_list = ['Dashboard', 'Datasources', 'People', "Templates", "Machine Learning", "Your Projects", "Create a report", "Gallery", "Import Data", "Profile", "Setting"];
     useEffect(() => {
         let accountExp = /account\/[a-zA-Z]/
         if (accountExp.test(url)) {
@@ -68,6 +68,9 @@ export default function Header() {
                             }
                             else if (val === "Gallery") {
                                 nav("/project/gallery")
+                            }
+                            else if (val === "Machine Learning") {
+                                nav("/machinelearning")
                             }
                             else if (val === "Import Data") {
                                 nav("/project/import")

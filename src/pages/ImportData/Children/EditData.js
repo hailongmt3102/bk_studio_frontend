@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { Form } from 'react-bootstrap';
 import edit from "resources/icons/edit.svg"
+import { localizationContext } from '../../../App'
 import {
     DataGrid, GridToolbarContainer,
     GridToolbarExport
@@ -10,6 +11,7 @@ import { useDemoData } from "@mui/x-data-grid-generator";
 
 
 export default function EditData(props) {
+    const localization = useContext(localizationContext)
     useEffect(() => {
         setColumnProperties({
             data: Object.keys(props.dataFile[0]),

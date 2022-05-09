@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react'
-
+import { useEffect, useState, useContext } from 'react'
+import { localizationContext } from '../../App'
 import { ScrollMenu } from 'react-horizontal-scrolling-menu'
 import { useLocation } from "react-router-dom"
 import delete_icon from "resources/icons/delete.svg"
@@ -10,6 +10,7 @@ import { GetDataSourcesListInformationInWorkSpace, GetSampleDataSource } from '.
 import ShareDataSourcesPopUp from "../DataSources/component/ShareDataSourcesPopUp"
 import DataSourceBox from './component/DataSourceBox'
 export default function DataSources() {
+    const localization = useContext(localizationContext)
     const location = useLocation()
     const isModel = location.state ? location.state.isModel : false
 
@@ -66,10 +67,10 @@ export default function DataSources() {
                 DId={DId}
             />
 
-            <h2 class="ms-5 PrimaryFontColor size40 customFontBold" > Datasources:</h2>
+            <h2 class="ms-5 PrimaryFontColor size40 customFontBold" >{localization.DataSource}:</h2>
             <div className='bg-white'>
                 <div className='row'>
-                    <h1 className='ps-5 ms-3 mt-4 customFontBold SecondFontColor' >User Sources</h1>
+                    <h1 className='ps-5 ms-3 mt-4 customFontBold SecondFontColor' >{localization.userSource}</h1>
                     <div className='row mt-4 m-0 p-0'>
                         <ScrollMenu>
                             {datasourceslist.map((ele, index) => (
@@ -90,7 +91,7 @@ export default function DataSources() {
                     </div>
                 </div>
                 <div className='row mt-3 '>
-                    <h1 className='ps-5 ms-3 customFontBold SecondFontColor' >Samples</h1>
+                    <h1 className='ps-5 ms-3 customFontBold SecondFontColor' >{localization.sampleSource}</h1>
                     <div className='row mt-4 m-0 p-0' >
                         <ScrollMenu>
                             {sampleList.map((ele, index) => (

@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { Form } from 'react-bootstrap'
-
+import { localizationContext } from '../../App'
 import default_report_img from "../../resources/icons/default_report_img.svg"
 
 import heart_img from "../../resources/icons/heart.svg"
@@ -24,6 +24,7 @@ import ConfirmDialog from "components/ConfirmDialog";
 
 
 export default function ReportCard(props) {
+    const localization = useContext(localizationContext)
     const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: '', subTitle: '' })
     const handleCloseYes = () => {
         deleteHandle()
@@ -212,14 +213,14 @@ export default function ReportCard(props) {
                 <p className='m-0 p-0'> <span style={{ "color": "#868585" }}>Id:</span> {props.data.Id} </p>
             </div>
             <div className='row mt-2'>
-                <p className='m-0 p-0'> <span style={{ "color": "#868585" }}>Created by:</span> {props.data.Author.slice(0, 20)}... </p>
+                <p className='m-0 p-0'> <span style={{ "color": "#868585" }}>{localization.createBy}</span> {props.data.Author.slice(0, 20)}... </p>
             </div>
             <div className='row mt-2'>
-                <p className='m-0 p-0'> <span style={{ "color": "#868585" }}> Created Date: </span>  {props.data.CreateTime.slice(0, 10)} </p>
+                <p className='m-0 p-0'> <span style={{ "color": "#868585" }}> {localization.createDate} </span>  {props.data.CreateTime.slice(0, 10)} </p>
             </div>
             {
                 props.type === "Report" ? <div className='row mt-2'>
-                    <p className='m-0 p-0'> <span style={{ "color": "#868585" }}>  Modified Date:  </span>    {props.data.LastModified.slice(0, 10)} </p>
+                    <p className='m-0 p-0'> <span style={{ "color": "#868585" }}>  {localization.lastModi}  </span>    {props.data.LastModified.slice(0, 10)} </p>
                 </div> : null
             }
             {
