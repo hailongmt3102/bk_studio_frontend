@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom'
 import edit_grey from "resources/icons/edit_grey.svg"
 import { deep_blue_primary } from "../../utils/color"
 import { content } from "../../utils/notification"
+import avatarDefault from "resources/images/avatar_default.png"
 
 export default function Profile() {
     const setIsLoading = useContext(loadingContext)
@@ -105,7 +106,11 @@ export default function Profile() {
                                 />
                             }
                         >
-                            <img className='rounded-circle' height="200px" width="200px" src={information.Avatar} />
+                            <img
+                                className='rounded-circle' height="200px" width="200px"
+                                src={information.Avatar}
+                                onError={(e) => { e.target.onerror = null; e.target.src = avatarDefault }}
+                            />
                         </Badge>
 
                     </div>

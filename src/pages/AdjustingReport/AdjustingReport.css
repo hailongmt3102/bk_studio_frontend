@@ -26,3 +26,12 @@ p.m-0.p-0 {
 #bkstudiocontent {
     height: 1000px !important;
 }
+
+.customimagecontainer {
+    overflow: hidden;
+}
+
+.customimageshape{
+    height: 100%;
+    width: auto;
+}

@@ -670,17 +670,19 @@ export default function AdjustingReport(props) {
         }
     }
 
+    const [clickPosition, setClickPosition] = useState({ x: 0, y: 0 })
+
     // ** check menu status and create relative information
     const executeWhenClickOutside = (event) => {
         let rect = event.target.getBoundingClientRect();
         let pos = { x: event.clientX - rect.left, y: event.clientY - rect.top }
+        setClickPosition(pos)
         switch (addShapeType) {
             case "text":
                 createTextComponent(pos)
                 break
             case "image":
                 if (openImageRef) openImageRef.current.click()
-
                 break
             default:
                 break
@@ -708,16 +710,39 @@ export default function AdjustingReport(props) {
         }
     }
 
-    const onMouseDownHandler = (e) => {
-
+    // ** create image component
+    const createImageComponent = async (position, base64data) => {
+        try {
+            let newImageShape = {
+                Title: "Title",
+                Type: "Image",
+                QueryCommand: base64data,
+                Height: 100,
+                Width: 300,
+                Position: JSON.stringify(position),
+                TitleTheme: "",
+                TextTheme: JSON.stringify(textStyleDefault),
+                FrameTheme: JSON.stringify(frameStyleDefault)
+            }
+            await createNewComponent(newImageShape)
+        }
+        catch (err) {
+            console.log(err)
+        }
     }
 
-    const onMouseMoveHandler = (e) => {
 
-    }
-
-    const onMouseUpHandler = (e) => {
-
+    // ** trigger when select image complete when adding image component
+    const onSelectImage = (event) => {
+        let file = event.target.files[0]
+        if (file) {
+            var reader = new FileReader();
+            reader.onloadend = function () {
+                createImageComponent(clickPosition, reader.result)
+            }
+            reader.readAsDataURL(file);
+            openImageRef.current.value = null
+        }
     }
 
 
@@ -891,7 +916,9 @@ export default function AdjustingReport(props) {
 
     const EditUI = () => {
         return <div style={{ cursor: cursor }}>
-            <input ref={openImageRef} type={"file"} style={{ display: "none" }} accept="image/*" />
+            <input ref={openImageRef} type={"file"} style={{ display: "none" }} accept="image/*" onChange={(e) => {
+                onSelectImage(e)
+            }} />
             <div>
                 {/* some popup */}
 
@@ -1046,9 +1073,6 @@ export default function AdjustingReport(props) {
                         <div className="content"
                             id="bkstudiocontent"
                             onClick={(e) => triggerClickContentBackground(e)}
-                            onMouseDown={onMouseDownHandler}
-                            onMouseMove={onMouseMoveHandler}
-                            onMouseUp={onMouseUpHandler}
                             ref={contentWrappingBox}
                         >
                             <Content
@@ -1133,9 +1157,6 @@ export default function AdjustingReport(props) {
                         <div className=" col-10 ">
                             <div className="content"
                                 onClick={(e) => triggerClickContentBackground(e)}
-                                onMouseDown={onMouseDownHandler}
-                                onMouseMove={onMouseMoveHandler}
-                                onMouseUp={onMouseUpHandler}
                             >
                                 <Content
                                     isEdit={isEdit}

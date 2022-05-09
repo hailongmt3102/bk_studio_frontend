@@ -6,6 +6,7 @@ import TableComponent from './table/TableComponent';
 import ErrorShape from './ErrorShape/ErrorShape';
 import { TextField } from '@mui/material';
 import { Form } from 'react-bootstrap'
+import warning from "resources/icons/warning.svg"
 ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -169,7 +170,6 @@ const Content = React.forwardRef((props, ref) => {
                         <Pie data={shape.pieData} />
                     </Rnd>)
             case "Text":
-                console.log(shape)
                 return (
                     <Rnd
                         disableDragging={!props.isEdit}
@@ -190,7 +190,6 @@ const Content = React.forwardRef((props, ref) => {
                         }}
                         className={props.followingIndexComponent === index ? "border border-5 customBorder" : "border border-5"}
                     >
-                        {/* <h4>{shape.Title}</h4> */}
                         <TextField
                             sx={{
                                 "& .MuiOutlinedInput-root": {
@@ -208,20 +207,29 @@ const Content = React.forwardRef((props, ref) => {
                             }}
 
                         />
-                        {/* <Form.Group className="mb-5" controlId="exampleForm.ControlTextarea1" >
-
-                            <Form.Control as="textarea" rows={3} style={{ "overflow": "auto", "resize": "none" }} value={shape.QueryCommand} onChange={(e) => {
-                                props.updateShapeComponent(index, { ...shape, QueryCommand: e.target.value })
-                            }} />
-                        </Form.Group> */}
-                        {/* <TextField
-                            variant="standard"
-                            placeholder="text"
-                            value={shape.QueryCommand}
-                            onChange={(e) => {
-                                props.updateShapeComponent(index, { ...shape, QueryCommand: e.target.value })
-                            }}
-                        /> */}
+                    </Rnd>
+                )
+            case "Image":
+                return (
+                    <Rnd
+                        disableDragging={!props.isEdit}
+                        enableResizing={props.isEdit}
+                        size={{ width: shape.Width, height: shape.Height }}
+                        position={{ x: shape.Position.x, y: shape.Position.y }}
+                        onDragStop={(e, d) => {
+                            props.updateShapeComponent(index, {
+                                ...shape, Position: {
+                                    x: d.x,
+                                    y: d.y
+                                }
+                            })
+                        }}
+                        onResizeStop={(e, direction, ref, delta, position) => {
+                            props.updateShapeComponent(index, { ...shape, Width: ref.style.width, Height: ref.style.height })
+                        }}
+                        className={props.followingIndexComponent === index ? "border border-5 customBorder customimagecontainer" : "border border-5 customimagecontainer"}
+                    >
+                        <img src={shape.QueryCommand} alt="loading" onError={(e) => { e.target.onerror = null; e.target.src = warning }} className="customimageshape" />
                     </Rnd>
                 )
             default:
