@@ -95,21 +95,22 @@ export default function PredictData() {
                             </div>
                         </div>
                     </div>
-                </div>
-                <div className='col text-end'>
-                    <button className='btn-lg btn-success text-center border-0' style={{ backgroundColor: "#3B97C6" }}
-                        onClick={() => {
-                            predictHandle()
-                            // nav("/machinelearning/testModel") 
-                        }}
-                    >
-                        <div className='row p-2 text-center'>
-                            <div className='col-9  text-center'>
-                                <div className='col-2'>Predict</div>
+                    <div className='col text-end'>
+                        <button className='btn-lg btn-success text-center border-0 me-4'
+                            onClick={() => {
+                                predictHandle()
+                                // nav("/machinelearning/testModel") 
+                            }}
+                        >
+                            <div className='row p-1 text-center'>
+                                <div className='col-9  text-center'>
+                                    <div className='col-2'>Predict</div>
+                                </div>
                             </div>
-                        </div>
-                    </button>
+                        </button>
+                    </div>
                 </div>
+
             </div>
             <div className='bg-white p-3'>
                 <div className='col ms-4 mt-1 customFontBold SecondFontColor size40'>

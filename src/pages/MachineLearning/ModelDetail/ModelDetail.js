@@ -110,7 +110,7 @@ export default function ModelDetail() {
                 </div>
 
                 <div className='col text-end'>
-                    <button className='btn-lg btn-success text-center border-0' style={{ backgroundColor: "#3B97C6" }}
+                    <button className='btn-lg btn-success text-center border-0'
                         onClick={
                             () => {
                                 console.log("conchonam")
@@ -124,7 +124,7 @@ export default function ModelDetail() {
                             }
                         }
                     >
-                        <div className='row p-2 text-center'>
+                        <div className='row  p-1 text-center'>
                             <div className='col-9  text-center'>
                                 <div className='col-2'>Apply</div>
                             </div>

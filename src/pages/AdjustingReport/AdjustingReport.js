@@ -763,6 +763,7 @@ export default function AdjustingReport(props) {
     }
 
     useEffect(() => {
+        setIsLoading(true)
         getReportInfo()
         getDataFields()
         getReportContent()
@@ -770,9 +771,11 @@ export default function AdjustingReport(props) {
             getAllDatasourceNameInReport(currentProject, RId)
                 .then(res => {
                     setListDataSourcesName(res.data)
+                    setIsLoading(false)
                     // console.log("listdata", res.data)
                 })
                 .catch(err => {
+                    setIsLoading(false)
                     Store.addNotification(content("Fail", err.response.data, "danger"))
                     return
                 })
@@ -781,9 +784,11 @@ export default function AdjustingReport(props) {
             getAllDatasourceNameInTemplate(RId)
                 .then(res => {
                     setListDataSourcesName(res.data)
+                    setIsLoading(false)
                     // console.log("listdata", res.data)
                 })
                 .catch(err => {
+                    setIsLoading(false)
                     Store.addNotification(content("Fail", err.response.data, "danger"))
                     return
                 })
@@ -806,10 +811,10 @@ export default function AdjustingReport(props) {
 
     useEffect(() => {
         switch (addShapeType) {
-            case "text" :
+            case "text":
                 setCursor("crosshair")
                 break
-            case "image" :
+            case "image":
                 setCursor("grabbing")
                 break
             default:
@@ -885,7 +890,7 @@ export default function AdjustingReport(props) {
     }
 
     const EditUI = () => {
-        return <div style={{cursor : cursor}}>
+        return <div style={{ cursor: cursor }}>
             <input ref={openImageRef} type={"file"} style={{ display: "none" }} accept="image/*" />
             <div>
                 {/* some popup */}

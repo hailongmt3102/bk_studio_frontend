@@ -89,41 +89,42 @@ export default function TestModel() {
                     <div className='col ms-4 mt-1 customFontBold SecondFontColor size40'>
                         Test data:
                     </div>
-                    <div className='col'>
+                    <div className='col-1 m-0 p-0 text-end'>
                         <button className=' btn-lg btn-success text-center border-0' style={{ backgroundColor: "#3B97C6" }}
                             onClick={() => { setShowDialog(true) }}
                         >
-                            <div className='row p-2 text-center'>
+                            <div className='row p-1 text-center'>
                                 <div className='col-9  text-center'>
                                     <div className='col-2'>Change</div>
                                 </div>
                             </div>
                         </button>
                     </div>
+                    <div className='col-1 m-0 p-0 text-start'>
+                        <button className='ms-2 btn-lg btn-success text-center border-0'
+                            onClick={
+                                () => {
+                                    console.log("conchonam")
+                                    nav("/machinelearning/predict", {
+                                        state: {
+                                            rows: rows,
+                                            columns: columns,
+                                            MName: MName
+                                        }
+                                    })
+                                }
+                            }
+                        >
+                            <div className='row p-1 text-center'>
+                                <div className='col-9  text-center'>
+                                    <div className='col-2'>Predict</div>
+                                </div>
+                            </div>
+                        </button>
+                    </div>
 
                 </div>
-                <div className='col text-end'>
-                    <button className='btn-lg btn-success text-center border-0' style={{ backgroundColor: "#3B97C6" }}
-                        onClick={
-                            () => {
-                                console.log("conchonam")
-                                nav("/machinelearning/predict", {
-                                    state: {
-                                        rows: rows,
-                                        columns: columns,
-                                        MName: MName
-                                    }
-                                })
-                            }
-                        }
-                    >
-                        <div className='row p-2 text-center'>
-                            <div className='col-9  text-center'>
-                                <div className='col-2'>Predict</div>
-                            </div>
-                        </div>
-                    </button>
-                </div>
+
                 <div style={{ height: 400, width: '100%' }}>
                     <DataGrid
                         loading={loading}
