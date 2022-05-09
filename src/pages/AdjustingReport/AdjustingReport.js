@@ -94,6 +94,9 @@ export default function AdjustingReport(props) {
     const [followingIndexComponent, setFollowingIndexComponent] = useState(-1)
     const [copyIndexComponent, setCopyIndexComponent] = useState(-1)
 
+    const [keydown, setKeydown] = useState({ previous: "", current: "" })
+
+
     const EditStyle = (newStyle) => {
         setTabData({ ...tabData, style: newStyle })
     }
@@ -787,6 +790,22 @@ export default function AdjustingReport(props) {
         }
     }
 
+    const _handleKeyDown = (key) => {
+        setKeydown(prev => { return { previous: prev.current, current: key.key } })
+    }
+
+
+    useEffect(() => {
+        if (keydown.current == "Delete") {
+            deleteShape()
+        }else if (keydown.previous == "Control" && (keydown.current == "C" || keydown.current == "c")){
+            copyShape()
+        }
+        else if (keydown.previous == "Control" && (keydown.current == "V" || keydown.current == "v")){
+            pasteShape()
+        }
+    }, [keydown])
+
     useEffect(() => {
         setIsLoading(true)
         getReportInfo()
@@ -819,9 +838,10 @@ export default function AdjustingReport(props) {
                 })
         }
 
-
-        // register mouse event
-        // adjustedMouseEvent()
+        var keydown = document.addEventListener("keydown", _handleKeyDown);
+        return () => {
+            document.removeEventListener("keydown", keydown)
+        }
     }, [])
 
     // trigger on change of tabData
