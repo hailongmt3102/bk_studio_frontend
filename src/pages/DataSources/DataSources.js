@@ -73,7 +73,7 @@ export default function DataSources() {
                     <div className='row mt-4 m-0 p-0'>
                         <ScrollMenu>
                             {datasourceslist.map((ele, index) => (
-                                <div className='ms-4 mb-5' style={{ "minWidth": "350px" }}>
+                                <div className='ms-4 mb-5' style={{ "minWidth": "400px" }}>
                                     <DataSourceBox
                                         isModel={isModel}
                                         option_list={option_list}
@@ -91,10 +91,10 @@ export default function DataSources() {
                 </div>
                 <div className='row mt-3 '>
                     <h1 className='ps-5 ms-3 customFontBold SecondFontColor' >Samples</h1>
-                    <div className='row mt-4 m-0 p-0'>
+                    <div className='row mt-4 m-0 p-0' >
                         <ScrollMenu>
                             {sampleList.map((ele, index) => (
-                                <div className='ms-4 mb-5'>
+                                <div className='ms-4 mb-5' style={{ "minWidth": "400px" }}>
                                     <DataSourceBox
                                         isModel={isModel}
                                         option_list={sample_option_list}

@@ -213,12 +213,13 @@ export default function DataSourceBox(props) {
                             </Form.Group>
                     }
                 </div>
-                <div class=" ms-4  m-0 p-0 mt-3 me-4" >
-                    <div><span style={{ "color": "#868585" }}>date created: </span>{props.ele.CreateTime.slice(0, 10)}</div>
+
+                <div className="ms-4 m-0 p-0 mt-4 pb-4 me-4" >
+                    <div className='mt-1'><span style={{ "color": "#868585" }}>Date created: </span>{props.ele.CreateTime.slice(0, 10)}</div>
+                    <div className='mt-1'><span style={{ "color": "#868585" }}>Last modified: </span>{props.ele.LastModified.slice(0, 10)}</div>
+                    <div className='mt-1 mb-3'> <span style={{ "color": "#868585" }}>Created by: </span>{props.ele.Email.slice(0, 15)}...</div>
                 </div>
-                <div class="ms-4 m-0 p-0 mt-1 pb-4 me-4" >
-                    <p><span style={{ "color": "#868585" }}>last modified: </span>{props.ele.LastModified.slice(0, 10)}</p>
-                </div>
+
                 {/* <div class="ms-4 m-0 p-0 mt-1 pb-2 me-4" >
                     <p><span style={{ "color": "#868585" }}>last modified: </span>{props.ele.LastModified}</p>
                 </div> */}
