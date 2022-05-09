@@ -11,6 +11,9 @@ import { useDemoData } from "@mui/x-data-grid-generator";
 import { getDataSourcesInformationByDId, showDataSourceContent } from "api/DataSources"
 import { loadingContext } from 'App'
 import Selection from "../component/Selection";
+import { Form } from 'react-bootstrap';
+import edit from "resources/icons/edit.svg"
+import back from "resources/icons/back_round_deep_blue.svg";
 export default function EditModel() {
 
     function CustomToolbar() {
@@ -149,11 +152,36 @@ export default function EditModel() {
     return (
         <div>
             <Selection showDialog={showDialog} handleClose={handleClose} selectDataSource={selectDataSource} openFile={openFile} />
-            <div className='row m-2 mt-4 mb-4'>
-                <div class="col  mt-1 customFontBold PrimaryFontColor size40" >
-                    {MName}
-                </div>
 
+            <div className='row ms-2 me-4'>
+                <div className="col-4 m-0 p-0 mt-1">
+                    <div className='row'>
+                        <div className='col-1 m-auto '>
+                            <button type="button" class="btn btn-sm " onClick={() => { nav(-1) }}>
+                                <img src={back} />
+                            </button>
+                        </div>
+                        <div className='col-8'>
+                            <Form.Control size="sm" type="text" value={MName} onChange={(e) => {
+                                setMName(e.target.value)
+                            }}
+                                className="border-0 ms-2 "
+                                style={{
+                                    fontWeight: "bold",
+                                    fontSize: "40px",
+                                    color: "#034078",
+                                    background: "#F8F9FA"
+                                }}
+                            />
+                        </div>
+                        <div className='col-3 mt-3'>
+                            <img src={edit} height="40px" width="40px" />
+                        </div>
+
+                    </div>
+                </div>
+                <div className='col-7 '>
+                </div>
                 <div className='col-1 '>
                     <button className='btn-lg btn-success text-center border-0'
                     // 
@@ -169,7 +197,8 @@ export default function EditModel() {
                     </button>
                 </div>
             </div>
-            <div className='bg-white p-3'>
+
+            <div className='bg-white p-3 mt-3'>
                 <div className='row'>
                     <div className='col-2 ms-4 mt-1 customFontBold SecondFontColor size40'>
                         Test data:

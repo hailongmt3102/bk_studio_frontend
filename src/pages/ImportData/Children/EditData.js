@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
 import { Form } from 'react-bootstrap';
+import edit from "resources/icons/edit.svg"
 import {
     DataGrid, GridToolbarContainer,
     GridToolbarExport
 } from '@mui/x-data-grid';
 import { useDemoData } from "@mui/x-data-grid-generator";
-import edit from "resources/icons/edit.svg"
+
 
 
 export default function EditData(props) {
