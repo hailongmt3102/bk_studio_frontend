@@ -190,7 +190,7 @@ export default function DataSourceBox(props) {
     return (
         <div className='ms-4 row mb-3' style={{ "border-radius": "20px", "backgroundColor": "#F7F7F7" }}>
             <div className="col-3 m-auto text-center m-0 p-0  customFontRoboto" onClick={() => { ClickHandle(props.ele.Id) }}  >
-                <div className='ms-4 me-2'><img src={excel_icon} /></div>
+                <div className='ms-4 me-3'><img src={excel_icon} height="90px" width="90px" /></div>
             </div>
             <div className="col-9 m-0 p-0" >
                 {threeDotComponent()}
