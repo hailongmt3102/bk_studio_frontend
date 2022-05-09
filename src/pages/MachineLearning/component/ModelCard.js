@@ -38,7 +38,7 @@ export default function ModelCard(props) {
                 </div>
                 <div className='col-9 m-auto'>
                     <div className='ms-5 SecondFontColor customFontBold size30'>{props.info.Name}</div>
-                    <div className=' mt-3 ms-5 size18'><span>Created By: </span> {props.info.Author.slice(0, 25)}...</div>
+                    <div className=' mt-3 ms-5 size18'><span>Created By: </span> {props.info.Author.slice(0, 15)}...</div>
                     <div className='ms-5 size18 pb-4'><span>Modified Date: </span> {props.info.LastModified}</div>
 
                 </div>

@@ -140,7 +140,7 @@ export default function EditModel() {
                 }
             }
         >
-            <div className='row  p-1 pe-2 ps-2 text-center'>
+            <div className='row  pe-2 ps-2 text-center'>
                 <div className='col-9  text-center'>
                     <div className='col-2'>Change</div>
                 </div>
@@ -198,7 +198,7 @@ export default function EditModel() {
                 </div>
             </div>
 
-            <div className='bg-white p-3 mt-3'>
+            <div className='bg-white p-2 mt-3'>
                 <div className='row'>
                     <div className='col-2 ms-4 mt-1 customFontBold SecondFontColor size40'>
                         Test data:
