@@ -31,23 +31,29 @@ export default function EditModel() {
     const [columns, setColumns] = useState([])
     const [rowsOut, setRowsOut] = useState([])
     const [columnsOut, setColumnsOut] = useState([])
+    const [isEditInput, setIsEditInput] = useState(true)
 
     const selectDataSource = () => {
-        // navigate to datasource page
-        // nav("/datasources", {
-        //     state: {
-        //         isModel: true,
-        //     }
-        // })
+        nav("/datasources", {
+            state: {
+                ...location.state,
+                isModel: true,
+                isEditModel: true,
+                isEditInput : isEditInput
+            }
+        })
     }
 
     const openFile = () => {
         // open file
-        // nav("/project/import", {
-        //     state: {
-        //         isModel: true,
-        //     }
-        // })
+        nav("/project/import", {
+            state: {
+                ...location.state,
+                isModel: true,
+                isEditModel: true,
+                isEditInput : isEditInput
+            }
+        })
     }
 
     const [showDialog, setShowDialog] = useState(false)
@@ -113,8 +119,12 @@ export default function EditModel() {
     useEffect(() => {
         if (location.state) {
             setMName(location.state.MName)
-            fetchInput()
-            fetchOutput()
+            try {
+                fetchInput()
+                fetchOutput()
+            } catch (error) {
+            }
+
         } else {
             nav("/machinelearning")
             return
@@ -124,10 +134,12 @@ export default function EditModel() {
 
     const ChangeInputHandle = () => {
         setShowDialog(true)
+        setIsEditInput(true)
     }
 
     const ChangeOutHandle = () => {
         setShowDialog(true)
+        setIsEditInput(false)
     }
 
 

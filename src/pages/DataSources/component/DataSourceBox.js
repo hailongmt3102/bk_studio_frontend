@@ -114,13 +114,25 @@ export default function DataSourceBox(props) {
                                 delete row.DataSource_Id
                                 return row
                             })
+                            if (props.modelState.isEditModel) {
+                                // navigate to edit model page
+                                let edited = props.modelState.isEditInput ? {input : JSON.stringify(rows.slice(0,50))} : {output : JSON.stringify(rows.slice(0,50))}
+                                navigate("/machinelearning/modelDetail/" + props.modelState.MId + "/edit", {
+                                    state: {
+                                        ...props.modelState,
+                                        ...edited
+                                    }
+                                })
+                            }else {
+                                navigate("/machinelearning/predict", {
+                                    state: {
+                                        rows: rows,
+                                        columns: columns
+                                    }
+                                })
+                            }
 
-                            navigate("/machinelearning/predict", {
-                                state: {
-                                    rows: rows,
-                                    columns: columns
-                                }
-                            })
+                     
 
                         })
                         .catch(err => {

@@ -8,6 +8,8 @@ import { useEffect, useState, useContext } from 'react'
 import { Store } from 'react-notifications-component'
 import { useDemoData } from "@mui/x-data-grid-generator";
 import { getDataSourcesInformationByDId, showDataSourceContent } from "api/DataSources"
+import {modifyModel, canModifyModel } from "api/ML_API"
+
 import { loadingContext } from 'App'
 export default function ModelDetail() {
 
@@ -23,6 +25,7 @@ export default function ModelDetail() {
     const nav = useNavigate()
     const [rows, setRows] = useState([])
     const [columns, setColumns] = useState([])
+
     const [rowsOut, setRowsOut] = useState([])
     const [columnsOut, setColumnsOut] = useState([])
     const [MId, setMId] = useState(-1)
@@ -33,7 +36,7 @@ export default function ModelDetail() {
         maxColumns: 6
     });
     const setIsLoading = useContext(loadingContext)
-    const fetchInput = () => {
+    const parseInputModel = () => {
         let jsonData = JSON.parse(location.state.input)
         console.log(JSON.parse(location.state.input))
 
@@ -57,7 +60,7 @@ export default function ModelDetail() {
         setRows(rows)
 
     }
-    const fetchOutput = () => {
+    const parseOutputModel = () => {
         let jsonData = JSON.parse(location.state.output)
         console.log(JSON.parse(location.state.output))
 
@@ -81,27 +84,41 @@ export default function ModelDetail() {
         setRowsOut(rows)
 
     }
+
+    const switchToEditMode = async () => {
+        setIsLoading(true)
+
+        try {
+            await canModifyModel(MId)
+            nav("/machinelearning/modelDetail/" + MId + "/edit", {
+                state: {
+                    MId: MId,
+                    input: location.state.input,
+                    output: location.state.output,
+                    MName: MName,
+                }
+            })
+        } catch (error) {
+            Store.addNotification(content("Warning", error.response.data, "danger"))
+            
+        }
+        setIsLoading(false)
+    }
+
     useEffect(() => {
         if (location.state) {
             setMName(location.state.MName)
             setMId(location.state.MId)
-            fetchInput()
-            fetchOutput()
+            try {
+                parseInputModel()
+                parseOutputModel()
+            } catch (error) {
+            }
+
         } else {
             nav("/machinelearning")
             return
         }
-
-
-
-        // getDataSourcesInformationByDId(DId)
-        //     .then(res => {
-
-        //     })
-        //     .catch(err => {
-        //         console.log(err)
-        //     })
-
     }, [])
 
 
@@ -110,14 +127,7 @@ export default function ModelDetail() {
             style={{ background: "#3B97C6" }}
             onClick={
                 () => {
-                    nav("/machinelearning/modelDetail/" + MId + "/edit", {
-                        state: {
-                            MId: MId,
-                            input: location.state.input,
-                            output: location.state.output,
-                            MName: MName
-                        }
-                    })
+                    switchToEditMode()
                 }
             }
         >
@@ -144,7 +154,6 @@ export default function ModelDetail() {
                     <button className='btn-lg btn-success text-center border-0'
                         onClick={
                             () => {
-                                console.log("conchonam")
                                 nav("/machinelearning/testModel", {
                                     state: {
                                         rows: rows,

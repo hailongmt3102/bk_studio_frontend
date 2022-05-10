@@ -32,8 +32,25 @@ const getAllModel = () => {
 const getAModelByID = (id) => {
     return axiosClient.get('/machinelearning/' + id)
 }
+
+const canModifyModel = (id ) => {
+    return axiosClient.get(`/machinelearning/${id}/canModify`)
+}
+
+const modifyModel  = (id, data) => {
+    return axiosClient.post(`/machinelearning/${id}/modify`, data)
+}
+
+const createModel  = (data) => {
+    return axiosClient.post(`/machinelearning/new`, data)
+}
+
+
 export {
     bayesModelAPI,
     getAllModel,
-    getAModelByID
+    getAModelByID,
+    canModifyModel,
+    modifyModel,
+    createModel
 }

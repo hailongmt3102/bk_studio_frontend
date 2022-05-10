@@ -26,29 +26,44 @@ export default function ImportData() {
     }
 
     useEffect(() => {
-        if (isModel) {
-            if (dataFile.length != 0) {
-                const keys = Object.keys(dataFile[0])
+        try {
+            if (isModel) {
+                if (dataFile.length != 0) {
+                    const keys = Object.keys(dataFile[0])
 
-                let rows = dataFile.map((row, index) => {
-                    return { ...row, id: index }
-                })
+                    let rows = dataFile.map((row, index) => {
+                        return { ...row, id: index }
+                    })
 
-                let columns = keys.map((key) => {
-                    return {
-                        field: key,
-                        headerName: key,
-                        editable: false,
+                    let columns = keys.map((key) => {
+                        return {
+                            field: key,
+                            headerName: key,
+                            editable: false,
+                        }
+                    })
+
+                    if (location.state.isEditModel) {
+                        // navigate to edit model page
+                        let edited = location.state.isEditInput ? { input: JSON.stringify(rows.slice(0,50)) } : { output: JSON.stringify(rows.slice(0,50)) }
+                        navigate("/machinelearning/modelDetail/" + location.state.MId + "/edit", {
+                            state: {
+                                ...location.state,
+                                ...edited
+                            }
+                        })
+                    } else {
+                        navigate("/machinelearning/predict", {
+                            state: {
+                                rows: rows,
+                                columns: columns
+                            }
+                        })
                     }
-                })
-
-                navigate("/machinelearning/predict", {
-                    state: {
-                        rows: rows,
-                        columns: columns
-                    }
-                })
+                }
             }
+        } catch (error) {
+
         }
     }, [dataFile])
 

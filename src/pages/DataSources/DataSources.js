@@ -76,6 +76,7 @@ export default function DataSources() {
                                 <div className='ms-4 mb-5' style={{ "minWidth": "400px" }}>
                                     <DataSourceBox
                                         isModel={isModel}
+                                        modelState={location.state}
                                         option_list={option_list}
                                         icon_list={icon_list}
                                         setDatasourceslist={setDatasourceslist}
