@@ -1,13 +1,14 @@
-import { useRef, useState } from 'react'
+import { useRef, useState, useContext } from 'react'
 import db from "resources/icons/db.svg"
 import json_file from 'resources/icons/json_file.svg'
 import ImportFileImage from 'resources/images/importFile.png'
 import * as XLSX from "xlsx"
 import ImportButton from '../Components/ImportButton'
-
+import { localizationContext } from '../../../App'
 import { Store } from 'react-notifications-component'
 import { content } from "utils/notification"
 export default function SelectData(props) {
+    const localization = useContext(localizationContext)
     const executeStringResult = (result) => {
         if (!result) {
             Store.addNotification(content("Warning", "Some thing went wrong from your data source\nPlease check carefully", "danger"))
@@ -113,7 +114,7 @@ export default function SelectData(props) {
             <div>
                 <div>
                     <h2 class="ms-4 mt-2 PrimaryFontColor size40 customFontBold" >
-                        Import data:
+                        {localization.importData}
                     </h2>
                 </div>
                 <div className='row p-4 ms-4 p-4 m-0 p-0 bg-white'>
@@ -126,7 +127,7 @@ export default function SelectData(props) {
                             onChange={handleOnChange}
                             style={{ display: "none" }}
                         />
-                        <ImportButton text="Import csv file" image={ImportFileImage} onClick={() => {
+                        <ImportButton text={localization.importCSV} image={ImportFileImage} onClick={() => {
                             inputFile.current.click()
                         }} />
                     </div>
@@ -142,7 +143,7 @@ export default function SelectData(props) {
                             }}
                             style={{ display: "none" }}
                         />
-                        <ImportButton text="Import xlsx file" image={ImportFileImage} onClick={() => {
+                        <ImportButton text={localization.importXLSX} image={ImportFileImage} onClick={() => {
                             inputXLSXFile.current.click()
                         }} />
                     </div>
@@ -155,7 +156,7 @@ export default function SelectData(props) {
                             onChange={JsonHandleOnChange}
                             style={{ display: "none" }}
                         />
-                        <ImportButton text="Import json file" image={json_file} onClick={() => {
+                        <ImportButton text={localization.importJSOM} image={json_file} onClick={() => {
                             inputJsonFile.current.click()
                         }} />
                     </div>
@@ -167,7 +168,7 @@ export default function SelectData(props) {
                             //onChange={handleOnChange}
                             style={{ display: "none" }}
                         />
-                        <ImportButton text="Connect to database" image={db} onClick={() => {
+                        <ImportButton text={localization.connectToDB} image={db} onClick={() => {
                             // openFile()
                         }} />
                     </div>

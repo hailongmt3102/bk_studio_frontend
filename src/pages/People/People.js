@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-
+import React, { useEffect, useState, useContext } from 'react'
+import { localizationContext } from '../../App'
 import { blue_cloud } from "../../utils/color"
 import { deep_blue_primary } from "../../utils/color"
 import avt_people from "resources/icons/avt_people.svg"
@@ -12,7 +12,7 @@ import { getListPeople } from '../../api/People'
 
 
 export default function People() {
-
+    const localization = useContext(localizationContext)
     let getEmail = localStorage.getItem("email") ?? ""
     //console.log(getEmail)
     const [people, setPeople] = useState([])
@@ -31,12 +31,12 @@ export default function People() {
     }, [])
     return (
         <div>
-            <h2 class="ms-4" style={{ color: deep_blue_primary, "fontWeight": "bold", fontSize: "40px" }}> People:</h2>
+            <h2 class="ms-4" style={{ color: deep_blue_primary, "fontWeight": "bold", fontSize: "40px" }}> {localization.People}</h2>
             <div className='rounded-5 bg-white'>
                 <div className='row m-0 p-0 bg-light'>
                     <div className='col-4 m-0 p-0 '>
                         <div className='m-3 p-4 bg-white' style={{ height: "100%" }} >
-                            <h1 className='row  m-0 p-0 customFontBold SecondFontColor ' >Manager</h1>
+                            <h1 className='row  m-0 p-0 customFontBold SecondFontColor ' >{localization.manager}</h1>
                             {
                                 people.map((ele) => {
                                     if (ele.Email === getEmail) {
@@ -79,7 +79,7 @@ export default function People() {
                     </div>
                     <div className='col-8  m-0 p-0' >
                         <div className='m-3 m-0 p-0 p-4 bg-white' style={{ height: "100%" }}>
-                            <h1 className=' m-0 p-0 customFontBold SecondFontColor '>Member</h1>
+                            <h1 className=' m-0 p-0 customFontBold SecondFontColor '>{localization.member}</h1>
                             <div className='row m-0 p-0'>
                                 {
                                     people.map((ele) => {

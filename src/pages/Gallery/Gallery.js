@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { getAllReport as getAllReportApi } from 'api/Report'
 import ReportCard from "components/ReportCard/ReportCard"
 import ReportImg from 'resources/images/report.png'
-
+import { localizationContext } from '../../App'
 import { deep_blue_primary } from "../../utils/color"
 import { Store } from 'react-notifications-component'
 import { content } from "../../utils/notification"
@@ -13,7 +13,7 @@ export default function Gallery(props) {
 
     const [reports, setReports] = useState([])
     const setIsLoading = useContext(loadingContext)
-
+    const localization = useContext(localizationContext)
 
     useEffect(() => {
         setIsLoading(true)
@@ -38,7 +38,7 @@ export default function Gallery(props) {
     return (
         <div>
             <h2 class="ms-4 mt-2" style={{ color: deep_blue_primary, "fontWeight": "bold", fontSize: "40px" }}>
-                Gallery:
+                {localization.gallery}:
             </h2>
 
             <div className='bg-white'>
