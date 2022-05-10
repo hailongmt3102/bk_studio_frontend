@@ -43,8 +43,8 @@ export default function DataSources() {
             })
 
     }, [])
-    const option_list = ["Share", "Rename", "Download", "Delete"]
-    const icon_list = [share_blue, edit, download_blue, delete_icon]
+    const option_list = ["Share", "Rename", "Delete"]
+    const icon_list = [share_blue, edit, delete_icon]
     const sample_option_list = ["Download"]
     const sample_icon_list = [download_blue]
 
