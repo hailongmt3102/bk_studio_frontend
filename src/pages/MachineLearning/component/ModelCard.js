@@ -33,8 +33,8 @@ export default function ModelCard(props) {
                                 MId: props.info.Id,
                                 input: props.info.Input,
                                 output: props.info.Output,
-                                MName: props.info.Name
-
+                                MName: props.info.Name,
+                                Api: props.info.Api,
                             }
                         })
                     }} height="120px" width="120px" />

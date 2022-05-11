@@ -26,6 +26,8 @@ export default function EditModel() {
     const location = useLocation()
 
     const [MName, setMName] = useState("")
+    const [Api, setApi] = useState("")
+
     const nav = useNavigate()
     const [rows, setRows] = useState([])
     const [columns, setColumns] = useState([])
@@ -39,7 +41,7 @@ export default function EditModel() {
                 ...location.state,
                 isModel: true,
                 isEditModel: true,
-                isEditInput : isEditInput
+                isEditInput: isEditInput
             }
         })
     }
@@ -51,7 +53,7 @@ export default function EditModel() {
                 ...location.state,
                 isModel: true,
                 isEditModel: true,
-                isEditInput : isEditInput
+                isEditInput: isEditInput
             }
         })
     }
@@ -119,6 +121,7 @@ export default function EditModel() {
     useEffect(() => {
         if (location.state) {
             setMName(location.state.MName)
+            setApi(location.state.Api)
             try {
                 fetchInput()
                 fetchOutput()
@@ -217,6 +220,25 @@ export default function EditModel() {
                     </div>
                     <div className='col'>
                         {changeButton(ChangeInputHandle)}
+                    </div>
+                </div>
+
+                <div className='row'>
+                    <div className='col-2 ms-4 mt-1 customFontBold SecondFontColor size40'>
+                        Api:
+                    </div>
+                    <div className='col text-center'>
+                        <Form.Control size="sm" type="text" value={Api} onChange={(e) => {
+                            // setMName(e.target.value)
+                        }}
+                            className="border-0 ms-2 "
+                            style={{
+                                fontWeight: "bold",
+                                fontSize: "18px",
+                                color: "#034078",
+                                background: "#F8F9FA"
+                            }}
+                        />
                     </div>
                 </div>
                 <div style={{ height: 300, width: '100%' }}>

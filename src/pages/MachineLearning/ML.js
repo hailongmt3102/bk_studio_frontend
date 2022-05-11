@@ -39,7 +39,15 @@ export default function ML() {
                         style={{ height: "120px", width: "120px" }}
                         className=' ms-4 btn btn-lg btn-default m-2  shadow p-3 mb-5 bg-body rounded'
                         onClick={() => {
-                            nav("/machinelearning/createmodel")
+                            nav("/machinelearning/modelDetail/" + 5 + "/edit", {
+                                state: {
+                                    MId: 5,
+                                    input: "",
+                                    output: "",
+                                    MName: "New model",
+                                    Api: ""
+                                }
+                            })
                         }}>
                         <img src={BlankReportIcon} width="180px" height="180px" />
                     </button>

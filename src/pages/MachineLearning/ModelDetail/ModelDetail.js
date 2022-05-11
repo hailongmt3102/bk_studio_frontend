@@ -96,6 +96,7 @@ export default function ModelDetail() {
                     input: location.state.input,
                     output: location.state.output,
                     MName: MName,
+                    Api: location.state.Api
                 }
             })
         } catch (error) {
