@@ -18,7 +18,7 @@ export default function TableComponent(props) {
 
     const [columnList, setColumnList] = useState([])
     useEffect(() => {
-        let selectArray = (selectReg.exec(props.data.QueryCommand) ?? [""])[0].replace("select ", "").split(",").map(ele => ele.trim())
+        let selectArray = (selectReg.exec(props.data.QueryCommand) || [""])[0].replace("select ", "").split(",").map(ele => ele.trim())
         setColumnList(selectArray)
 
         const keys = Object.keys(props.data.data[0])
