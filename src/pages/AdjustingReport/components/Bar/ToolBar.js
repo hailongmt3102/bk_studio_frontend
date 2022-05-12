@@ -40,7 +40,7 @@ export default function ToolBar(props) {
                     }}
                 >
                     <img src={dataBoard} width="20px" height="20px" />
-                    <p className="p-0 m-0 text-center">add databoard</p>
+                    <p className="p-0 m-0 text-center">add chart</p>
                 </button>
                 <button
                     className={props.addShapeType == "image" ? "col m-0 p-0 btn btn-sm customshine" : "col m-0 p-0 btn btn-sm"}
@@ -64,7 +64,7 @@ export default function ToolBar(props) {
                     <img src={addText} width="20px" height="20px" />
                     <p className="p-0 m-0">add text</p>
                 </button>
-                <button
+                {/* <button
                     className="col m-0 p-0 btn btn-sm"
                     style={{ "minWidth": "80px", "minHeight": "50px" }}
                     onClick={() => {
@@ -72,8 +72,8 @@ export default function ToolBar(props) {
                             props.setAddShapeType("none")
                     }}
                 >
-                    aaa
-                </button>
+
+                </button> */}
                 {/* <button className="col m-0 p-0 btn btn-sm" style={{ "minWidth": "80px", "minHeight": "50px" }}>
                     <img src={undo} width="20px" height="20px" />
                     <p className="p-0 m-0">undo</p>
