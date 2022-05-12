@@ -54,6 +54,7 @@ function App() {
             localStorage.setItem('language', value)
         }
     }
+    console.log("hi")
 
     const [isLoading, setIsLoading] = useState(false)
 
