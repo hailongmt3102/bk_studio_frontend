@@ -14,7 +14,7 @@ export default function Setting(props) {
         <div>
             <h2 class="mt-3 mb-3 ms-4" style={{ color: deep_blue_primary, "fontWeight": "bold", fontSize: "40px" }}>{localization.Setting} </h2>
             <div style={{ backgroundColor: "white", paddingBottom: "25px", height: "700px" }}>
-                <Form.Group as={Row} className="mb-3 mt-3 ms-4 align-items-center" controlId="formPlaintextPassword">
+                {/* <Form.Group as={Row} className="mb-3 mt-3 ms-4 align-items-center" controlId="formPlaintextPassword">
                     <Form.Label column sm="2">
                         <h5 className='mt-4' style={{ "fontWeight": "bold", fontSize: 16 }}>{localization.DarkMode}  </h5>
                     </Form.Label>
@@ -25,7 +25,7 @@ export default function Setting(props) {
 
                         />
                     </Col>
-                </Form.Group>
+                </Form.Group> */}
                 <Form.Group as={Row} className="mb-7 ms-4 ms-2 align-items-center" controlId="formPlaintextPassword">
                     <Form.Label column sm="2" >
                         <h5 style={{ "fontWeight": "bold", fontSize: 16 }}>{localization.Language} </h5>

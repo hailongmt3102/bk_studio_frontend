@@ -193,7 +193,7 @@ export default function ReportCard(props) {
                     </div> :
                     <div>
                         <div className='row mt-2' style={{ "color": deep_blue_primary, "fontSize": "28px", "fontWeight": "bold" }}>
-                            {props.data.Name.slice(0, 20)}
+                            {props.data.Name.slice(0, 15)}
                         </div>
 
 
