@@ -43,7 +43,7 @@ const loadingContext = React.createContext();
 function App() {
     const [drawerState, setDrawerState] = useState("workspace");
 
-    const languageSaved = localStorage.getItem('language') ?? 'English'
+    const languageSaved = localStorage.getItem('language') || 'English'
     const [language, setLanguage] = useState(languageSaved)
     translations.setLanguage(language);
 
