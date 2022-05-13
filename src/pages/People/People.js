@@ -13,7 +13,7 @@ import { getListPeople } from '../../api/People'
 
 export default function People() {
     const localization = useContext(localizationContext)
-    let getEmail = localStorage.getItem("email") ?? ""
+    let getEmail = localStorage.getItem("email") || ""
     //console.log(getEmail)
     const [people, setPeople] = useState([])
     useEffect(() => {

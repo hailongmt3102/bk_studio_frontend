@@ -226,7 +226,7 @@ export default function SqlPopUp(props) {
                                     />
                                 }
                                 onChange={(e, value) => {
-                                    updateFunctionClause(index, { ...clause, op: value ?? "" })
+                                    updateFunctionClause(index, { ...clause, op: value || "" })
                                 }}
                             />
                         </div>
@@ -243,7 +243,7 @@ export default function SqlPopUp(props) {
                                     />
                                 }
                                 onChange={(e, value) => {
-                                    updateFunctionClause(index, { ...clause, field: value ?? "" })
+                                    updateFunctionClause(index, { ...clause, field: value || "" })
                                 }}
                             />
                         </div>
@@ -253,7 +253,7 @@ export default function SqlPopUp(props) {
                                 placeholder="Name"
                                 variant="standard"
                                 onChange={e => {
-                                    updateFunctionClause(index, { ...clause, as: e.target.value ?? "" })
+                                    updateFunctionClause(index, { ...clause, as: e.target.value || "" })
                                 }}
                             />
                         </div>
@@ -367,7 +367,7 @@ export default function SqlPopUp(props) {
                                             />
                                         }
                                         onChange={(e, value) => {
-                                            updateFunctionClause(index, { ...clause, op: value ?? "" })
+                                            updateFunctionClause(index, { ...clause, op: value || "" })
                                         }}
                                     />
                                 </div>
@@ -385,7 +385,7 @@ export default function SqlPopUp(props) {
                                         />
                                     }
                                     onChange={(e, value) => {
-                                        updateFunctionClause(index, { ...clause, field: value ?? "" })
+                                        updateFunctionClause(index, { ...clause, field: value || "" })
                                     }}
                                 />
                             </div>
@@ -435,7 +435,7 @@ export default function SqlPopUp(props) {
                                     />
                                 }
                                 onChange={(e, value) => {
-                                    updateWhereClause(index, { ...clause, field: value ?? "" })
+                                    updateWhereClause(index, { ...clause, field: value || "" })
                                 }}
                             />
 
@@ -453,7 +453,7 @@ export default function SqlPopUp(props) {
                                     />
                                 }
                                 onChange={(e, value) => {
-                                    updateWhereClause(index, { ...clause, op: value ?? "" })
+                                    updateWhereClause(index, { ...clause, op: value || "" })
                                 }}
                             />
                         </div>
@@ -464,7 +464,7 @@ export default function SqlPopUp(props) {
                                 multiline
                                 variant="standard"
                                 onChange={(e) => {
-                                    updateWhereClause(index, { ...clause, value: e.target.value ?? "" })
+                                    updateWhereClause(index, { ...clause, value: e.target.value || "" })
                                 }}
                             />
                         </div>
@@ -634,7 +634,7 @@ export default function SqlPopUp(props) {
                                             />
                                         )}
                                         onChange={(e, value) => {
-                                            updateOrderClause(index, { ...clause, fx: value ?? "" })
+                                            updateOrderClause(index, { ...clause, fx: value || "" })
                                         }}
                                     />
                                 </div>
@@ -653,7 +653,7 @@ export default function SqlPopUp(props) {
                                         />
                                     )}
                                     onChange={(e, value) => {
-                                        updateOrderClause(index, { ...clause, field: value ?? "" })
+                                        updateOrderClause(index, { ...clause, field: value || "" })
                                     }}
                                 />
                             </div>

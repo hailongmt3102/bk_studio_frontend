@@ -29,7 +29,7 @@ import { loadingContext } from 'App'
 
 export default function ProjectDetail() {
     const setIsLoading = useContext(loadingContext)
-    let getEmail = localStorage.getItem("email") ?? ""
+    let getEmail = localStorage.getItem("email") || ""
     var location = useLocation()
 
     const currentProject = localStorage.getItem("currentProject")

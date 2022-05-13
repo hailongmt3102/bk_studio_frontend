@@ -515,7 +515,7 @@ export default function MappingPopUp(props) {
                                     />
                                 }
                                 onChange={(e, value) => {
-                                    updateWhereClause(index, { ...clause, field: value ?? "" })
+                                    updateWhereClause(index, { ...clause, field: value || "" })
                                 }}
                             />
 
@@ -533,7 +533,7 @@ export default function MappingPopUp(props) {
                                     />
                                 }
                                 onChange={(e, value) => {
-                                    updateWhereClause(index, { ...clause, op: value ?? "" })
+                                    updateWhereClause(index, { ...clause, op: value || "" })
                                 }}
                             />
                         </div>
@@ -544,7 +544,7 @@ export default function MappingPopUp(props) {
                                 multiline
                                 variant="standard"
                                 onChange={(e) => {
-                                    updateWhereClause(index, { ...clause, value: e.target.value ?? "" })
+                                    updateWhereClause(index, { ...clause, value: e.target.value || "" })
                                 }}
                             />
                         </div>
@@ -685,7 +685,7 @@ export default function MappingPopUp(props) {
                                             />
                                         )}
                                         onChange={(e, value) => {
-                                            updateOrderClause(index, { ...clause, fx: value ?? "" })
+                                            updateOrderClause(index, { ...clause, fx: value || "" })
                                         }}
                                     />
                                 </div>
@@ -704,7 +704,7 @@ export default function MappingPopUp(props) {
                                         />
                                     )}
                                     onChange={(e, value) => {
-                                        updateOrderClause(index, { ...clause, field: value ?? "" })
+                                        updateOrderClause(index, { ...clause, field: value || "" })
                                     }}
                                 />
                             </div>

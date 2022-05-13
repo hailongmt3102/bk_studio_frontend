@@ -71,9 +71,9 @@ export default function Login() {
     }
 
     useEffect(() => {
-        let getusername = localStorage.getItem("email") ?? ""
-        let getpassword = localStorage.getItem("password") ?? ""
-        let getremember = localStorage.getItem("remember") ?? false
+        let getusername = localStorage.getItem("email") || ""
+        let getpassword = localStorage.getItem("password") || ""
+        let getremember = localStorage.getItem("remember") || false
         setinformation({ ...information, Email: "getusername" })
         setinformation({ Email: getusername, Password: getpassword })
         setRemember(getremember)

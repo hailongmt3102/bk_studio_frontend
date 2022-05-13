@@ -43,7 +43,7 @@ const loadingContext = React.createContext();
 function App() {
     const [drawerState, setDrawerState] = useState("workspace");
 
-    const languageSaved = localStorage.getItem('language') ?? 'English'
+    const languageSaved = localStorage.getItem('language') || 'English'
     const [language, setLanguage] = useState(languageSaved)
     translations.setLanguage(language);
 
@@ -54,6 +54,7 @@ function App() {
             localStorage.setItem('language', value)
         }
     }
+    console.log("hi")
 
     const [isLoading, setIsLoading] = useState(false)
 

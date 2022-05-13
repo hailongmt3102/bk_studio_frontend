@@ -8,7 +8,7 @@ import { deep_blue_primary } from "../../utils/color"
 import Drop from 'pages/AdjustingReport/components/Drop';
 export default function Setting(props) {
     const localization = useContext(localizationContext)
-    const languageSaved = localStorage.getItem('language') ?? 'English'
+    const languageSaved = localStorage.getItem('language') || 'English'
     const [language, setlanguage] = useState(languageSaved)
     return (
         <div>

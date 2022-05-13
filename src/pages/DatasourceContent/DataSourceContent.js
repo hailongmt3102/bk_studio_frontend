@@ -16,7 +16,7 @@ export default function DataSourceContent(props) {
     var location = useLocation()
     const [datasource, setDatasource] = useState([])
     var DId = location.state.Did
-    const role = location.state.isEdit ?? false
+    const role = location.state.isEdit || false
 
     const [updateContent, setUpdateContent] = useState({})
     const [rows, setRows] = useState([])

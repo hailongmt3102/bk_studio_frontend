@@ -42,12 +42,12 @@ export default function TabComponent(props) {
 				// parse this command
 				// get select data 
 				command += "\n"
-				let selectArray = (selectReg.exec(command) ?? [""])[0].replace("select ", "").split(",").map(ele => ele.trim())
-				let from = (fromReg.exec(command) ?? [""])[0].replace("from ", "")
-				let where = (whereReg.exec(command) ?? [""])[0].replace("where ", "").split("and").map(ele => ele.trim())
-				let groupby = (groupbyReg.exec(command) ?? [""])[0].replace("group by ", "").split(",").map(ele => ele.trim())
-				let having = (havingReg.exec(command) ?? [""])[0].replace("having ", "").split("and").map(ele => ele.trim())
-				let orderby = (orderbyReg.exec(command) ?? [""])[0].replace("order by ", "").split(",").map(ele => ele.trim())
+				let selectArray = (selectReg.exec(command) || [""])[0].replace("select ", "").split(",").map(ele => ele.trim())
+				let from = (fromReg.exec(command) || [""])[0].replace("from ", "")
+				let where = (whereReg.exec(command) || [""])[0].replace("where ", "").split("and").map(ele => ele.trim())
+				let groupby = (groupbyReg.exec(command) || [""])[0].replace("group by ", "").split(",").map(ele => ele.trim())
+				let having = (havingReg.exec(command) || [""])[0].replace("having ", "").split("and").map(ele => ele.trim())
+				let orderby = (orderbyReg.exec(command) || [""])[0].replace("order by ", "").split(",").map(ele => ele.trim())
 
 				setCommandData({
 					command: command,
