@@ -1,7 +1,7 @@
 import axiosClient from './axios'
 const bayesModelAPI = (testdata) => {
     return new Promise((resolve, reject) => {
-        fetch("http://ec2-18-138-249-226.ap-southeast-1.compute.amazonaws.com:3000/bayes", {
+        fetch("http://ec2-18-138-249-226.ap-southeast-1.compute.amazonaws.com:8000/bayes", {
 
             // Adding method type
             method: "POST",

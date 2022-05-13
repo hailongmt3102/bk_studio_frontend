@@ -132,6 +132,8 @@ export default function ReportCard(props) {
             updateReportInformation(currentProject, RId, dataToUpdate)
                 .then(res => {
                     Store.addNotification(content("Success", "Updated Report Information", "success"))
+                    setShowName(dataToUpdate.Name)
+                    setShowHastag(dataToUpdate.Hastag)
                     setPressEdit(false)
                     // setTimeout(() => window.location.reload(), 1000);
                 })
@@ -158,6 +160,8 @@ export default function ReportCard(props) {
 
     }
 
+    const [showName, setShowName] = useState(props.data.Name)
+    const [showHastag, setShowHastag] = useState(props.data.Hastag)
 
     const ContentComponent = () => {
         return <div>
@@ -167,6 +171,7 @@ export default function ReportCard(props) {
                         <div className='row pe-4' style={{ maxHeight: "50px" }}>
                             <Form.Control size="sm" type="text" value={dataToUpdate.Name} onChange={(event) => {
                                 setDataToUpdate({ ...dataToUpdate, Name: event.target.value })
+
                             }}
                                 className="border-0"
                                 style={{
@@ -180,6 +185,7 @@ export default function ReportCard(props) {
                         <div className='row mt-1 pe-4' >
                             <Form.Control size="sm" type="text" value={dataToUpdate.Hastag} onChange={(event) => {
                                 setDataToUpdate({ ...dataToUpdate, Hastag: event.target.value })
+
                             }}
                                 placeholder="#hastag"
                                 className="border-0"
@@ -193,15 +199,15 @@ export default function ReportCard(props) {
                     </div> :
                     <div>
                         <div className='row mt-2' style={{ "color": deep_blue_primary, "fontSize": "28px", "fontWeight": "bold" }}>
-                            {props.data.Name.slice(0, 15)}
+                            {showName.slice(0, 15)}
                         </div>
 
 
                         {
-                            props.data.Hastag === "" ?
+                            showHastag === "" ?
                                 <div className='row C4FontColor customFontBold size22'>#Hastag</div>
                                 :
-                                <div className='row SecondFontColor customFontBold  size22'>{props.data.Hastag}</div>
+                                <div className='row SecondFontColor customFontBold  size22'>{showHastag}</div>
                         }
 
                         {/* <div className='row mb-2' style={{ "color": blue_cloud, "fontSize": "23px", "fontWeight": "bold" }}>
