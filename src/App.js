@@ -59,7 +59,8 @@ function App() {
     const [isLoading, setIsLoading] = useState(false)
     // localStorage.setItem('lightTheme', false)
     // const themeSaved = localStorage.getItem('lightTheme') || true
-    const [lightMode, setLightMode] = useState(localStorage.getItem('lightTheme'))
+    const [lightMode, setLightMode] = useState(localStorage.getItem('lightTheme') === "true" ? true : false)
+
     // const [lightMode, setLightMode] =  useState(false)
 
 
@@ -124,7 +125,7 @@ function App() {
                                     />
 
                                     <Route path="/personal/profile" element={<Profile />} />
-                                    <Route path="/personal/setting" element={<Setting setLanguage={languageHandler} setLightMode={setLightMode} lightMode={lightMode}/>} />
+                                    <Route path="/personal/setting" element={<Setting setLanguage={languageHandler} setLightMode={setLightMode} lightMode={lightMode} />} />
 
                                     <Route
                                         path="*"
