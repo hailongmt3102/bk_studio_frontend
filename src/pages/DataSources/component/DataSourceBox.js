@@ -1,12 +1,12 @@
-import { useEffect, useState, useContext } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { Form } from 'react-bootstrap'
 
 import excel_icon from "resources/icons/excel_icon.svg"
 
+import { checkPermissionWithDatasource, deleteDatasource, Rename, SendToWorkspace, showDataSourceContent } from 'api/DataSources'
 import ThreeDotButton from 'components/ThreeDotButton'
 import three_dot from "resources/icons/three-dot.svg"
 import { localizationContext } from '../../../App'
-import { checkPermissionWithDatasource, deleteDatasource, Rename, SendToWorkspace, showDataSourceContent } from 'api/DataSources'
 
 import { Store } from 'react-notifications-component'
 import { useNavigate } from 'react-router-dom'
@@ -200,7 +200,7 @@ export default function DataSourceBox(props) {
     }
 
     return (
-        <div className='ms-4 row mb-3' style={{ "border-radius": "20px", "backgroundColor": "#F7F7F7" }}>
+        <div className='ms-4 row mb-3 level1' style={{ "border-radius": "20px"}}>
             <div className="col-3 m-auto text-center m-0 p-0  customFontRoboto" onClick={() => { ClickHandle(props.ele.Id) }}  >
                 <div className='ms-4 me-3'><img src={excel_icon} height="90px" width="90px" /></div>
             </div>

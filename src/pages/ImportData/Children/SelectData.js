@@ -1,12 +1,12 @@
-import { useRef, useState, useContext } from 'react'
+import { useContext, useRef, useState } from 'react'
+import { Store } from 'react-notifications-component'
 import db from "resources/icons/db.svg"
 import json_file from 'resources/icons/json_file.svg'
 import ImportFileImage from 'resources/images/importFile.png'
-import * as XLSX from "xlsx"
-import ImportButton from '../Components/ImportButton'
-import { localizationContext } from '../../../App'
-import { Store } from 'react-notifications-component'
 import { content } from "utils/notification"
+import * as XLSX from "xlsx"
+import { localizationContext } from '../../../App'
+import ImportButton from '../Components/ImportButton'
 export default function SelectData(props) {
     const localization = useContext(localizationContext)
     const executeStringResult = (result) => {
@@ -117,7 +117,7 @@ export default function SelectData(props) {
                         {localization.importData}
                     </h2>
                 </div>
-                <div className='row p-4 ms-4 p-4 m-0 p-0 bg-white'>
+                <div className='row p-4 ms-4 p-4 m-0 p-0 customforeground'>
                     <div className='col-4 m-0 p-0' style={{ maxWidth: "240px" }}>
                         <input
                             ref={inputFile}

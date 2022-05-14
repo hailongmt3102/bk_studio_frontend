@@ -1,12 +1,12 @@
-import { useEffect, useState, useContext } from 'react';
-import { Form } from 'react-bootstrap';
-import edit from "resources/icons/edit.svg"
-import { localizationContext } from '../../../App'
 import {
     DataGrid, GridToolbarContainer,
     GridToolbarExport
 } from '@mui/x-data-grid';
 import { useDemoData } from "@mui/x-data-grid-generator";
+import { useContext, useEffect, useState } from 'react';
+import { Form } from 'react-bootstrap';
+import edit from "resources/icons/edit.svg";
+import { localizationContext } from '../../../App';
 
 
 
@@ -87,7 +87,7 @@ export default function EditData(props) {
                     </div>
 
                 </div>
-                <div className='bg-white row m-2'>
+                <div className='customforeground row m-2'>
                     <div className='col-9'>
                         <div className='row'>
                             <div className='col-3'>

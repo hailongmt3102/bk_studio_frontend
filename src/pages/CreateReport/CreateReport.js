@@ -1,13 +1,11 @@
-import React, { useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import BlankReportIcon from 'resources/icons/blankReport.svg'
-import { getListProject } from 'api/Project'
-import { Store } from 'react-notifications-component'
-import ReportCard from "components/ReportCard/ReportCard"
-import { content } from "utils/notification"
-import { deep_blue_primary, blue_cloud } from "../../utils/color"
 import { createNewReport as CreateReportApi } from 'api/Report'
 import { getAllTemplate } from "api/Templates"
+import ReportCard from "components/ReportCard/ReportCard"
+import { useEffect, useState } from 'react'
+import { Store } from 'react-notifications-component'
+import { useNavigate } from 'react-router-dom'
+import BlankReportIcon from 'resources/icons/blankReport.svg'
+import { content } from "utils/notification"
 export default function CreateReport() {
     const nav = useNavigate()
     const [reports, setReports] = useState([])
@@ -59,12 +57,12 @@ export default function CreateReport() {
                     Create a report
                 </h2>
             </div>
-            <div className='bg-white p-3'>
+            <div className='customforeground p-3'>
                 <div>
                     <h3 class="ms-4 mt-1 customFontBold SecondFontColor size40" >
                         From a blank
                     </h3>
-                    <button style={{ height: "120px", width: "120px" }} className=' ms-4 btn btn-lg btn-default m-2  shadow p-3 mb-5 bg-body rounded' onClick={() => {
+                    <button style={{ height: "120px", width: "120px" }} className=' ms-4 btn btn-lg btn-default m-2  shadow p-3 mb-5 level2 rounded' onClick={() => {
                         newReport()
                     }}>
                         <img src={BlankReportIcon} width="180px" height="180px" />

@@ -12,7 +12,7 @@ export default function ModelCard(props) {
     const option_list = ["Rename", "Delete"]
     const icons_list = [edit, delete_icon]
     return (
-        <div className='m-2  p-3 shadow border border-light ' style={{ "borderRadius": "20px" }}>
+        <div className='m-2  p-3 shadow border border-light level1 ' style={{ "borderRadius": "20px" }}>
             <div className="row text-end">
                 <ThreeDotButton
                     title={'adđ'}

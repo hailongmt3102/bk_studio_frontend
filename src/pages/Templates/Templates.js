@@ -1,14 +1,11 @@
-import React, { useEffect, useState, useContext } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import { getAllReport as getAllReportApi } from 'api/Report'
-import ReportCard from "components/ReportCard/ReportCard"
-import ReportImg from 'resources/images/report.png'
-import { loadingContext } from 'App'
-import { deep_blue_primary } from "../../utils/color"
-import { Store } from 'react-notifications-component'
-import { content } from "../../utils/notification"
 import { getAllTemplate } from "api/Templates"
+import { loadingContext } from 'App'
+import ReportCard from "components/ReportCard/ReportCard"
+import { useContext, useEffect, useState } from 'react'
+import { Store } from 'react-notifications-component'
 import { localizationContext } from '../../App'
+import { deep_blue_primary } from "../../utils/color"
+import { content } from "../../utils/notification"
 export default function Template(props) {
     const localization = useContext(localizationContext)
     const [reports, setReports] = useState([])
@@ -30,11 +27,11 @@ export default function Template(props) {
 
     return (
         <div>
-            <h2 class="ms-4 mt-2" style={{ color: deep_blue_primary, "fontWeight": "bold", fontSize: "40px" }}>
+            <h2 class="ms-4 mt-2 PrimaryFontColor" style={{ "fontWeight": "bold", fontSize: "40px" }}>
                 {localization.templates}
             </h2>
 
-            <div className='bg-white'>
+            <div className='customforeground'>
                 <div className='row m-0 p-0 justify-content-center'>
                     {reports.map(ele =>
                         <div className='col m-0 p-0' style={{ "minWidth": "600px", "maxWidth": "600px" }} >

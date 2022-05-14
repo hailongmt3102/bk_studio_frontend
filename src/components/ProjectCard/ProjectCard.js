@@ -123,178 +123,176 @@ export default function ProjectCard(props) {
                 handleCloseYes={() => handleCloseYes()}
                 handleCloseNo={() => handleCloseNo()}
             />
-            <div className='shadow mb-3 bg-body' style={{ width: "430px", borderRadius: "20px" }}>
-                <div className='mt-1 p-2'  >
-                    <div className='d-flex justify-content-between'>
-                        <ThreeDotButton items={option_list} icons_list={icons_list} icon={three_dot} onClick={(val) => {
-                            if (val === "Edit Project") {
-                                setpressEdit(true)
-                            }
-                            else {
-                                handleOpen()
-                            }
+            <div className='shadow mb-3 level1' style={{ width: "430px", borderRadius: "20px" }}>
+                <div className='d-flex justify-content-between'>
+                    <ThreeDotButton items={option_list} icons_list={icons_list} icon={three_dot} onClick={(val) => {
+                        if (val === "Edit Project") {
+                            setpressEdit(true)
+                        }
+                        else {
+                            handleOpen()
+                        }
+                    }} />
+                    <DropdownWithIndex0 title={props.data.Status} items={status_list} icons_list={staus_icon_list}
+                        onClick={(val) => {
+
+                            ChangeStatatusSubmit(val);
                         }} />
-                        <DropdownWithIndex0 title={props.data.Status} items={status_list} icons_list={staus_icon_list}
-                            onClick={(val) => {
-
-                                ChangeStatatusSubmit(val);
-                            }} />
-                    </div>
-                    {
-                        pressEdit === false ?
-                            <div onClick={() => { navigate("/pDetail/" + props.data.Id) }}>
-                                <h2 className='d-flex  justify-content-center customFontBold SecondFontColor '>
-                                    {props.data.Name}
-                                </h2>
-                                <div className='m-3 m-0 p-0'>
-                                    <div class=" row text-center m-0 p-0">
-                                        <div className='col-1  m-0 p-0'>
-                                            <img src={ClockSvg} height="25px" />
-                                        </div>
-                                        <div className='col-7 m-0 p-0' style={{ "text-align": "left" }} >
-                                            <div className='ms-2'>
-                                                <div style={orangeStyle}>{localization.CreateAt}</div>
-                                            </div>
-                                        </div>
-                                        <div className='col-4  m-0 p-0' >
-                                            <div>{timeCaster(props.data.CreateTime).substring(0, 10)}</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className='m-3 m-0 p-0'>
-                                    <div class=" row text-center m-0 p-0">
-                                        <div className='col-1  m-0 p-0'>
-                                            <img src={ClockSvg} height="25px" />
-                                        </div>
-                                        <div className='col-7 m-0 p-0' style={{ "text-align": "left" }} >
-                                            <div className='ms-2'>
-                                                <div style={orangeStyle}>{localization.Starttime}</div>
-                                            </div>
-                                        </div>
-                                        <div className='col-4  m-0 p-0' >
-                                            <div>{timeCaster(props.data.StartTime).substring(0, 10)}</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className='m-3 m-0 p-0'>
-                                    <div class=" row text-center m-0 p-0">
-                                        <div className='col-1  m-0 p-0'>
-                                            <img src={ClockSvg} height="25px" />
-                                        </div>
-                                        {
-                                            props.data.Status === "Close" ?
-                                                <div className='col-7 m-0 p-0' style={{ "text-align": "left" }} >
-                                                    <div className='ms-2'>
-                                                        <div style={orangeStyle}>{localization.ETime}</div>
-                                                    </div>
-                                                </div> :
-                                                <div className='col-7 m-0 p-0' style={{ "text-align": "left" }} >
-                                                    <div className='ms-2'>
-                                                        <div style={orangeStyle}>{localization.EsTime}</div>
-                                                    </div>
-                                                </div>
-                                        }
-                                        {
-                                            props.data.Status === "Close" ?
-                                                <div className='col-4  m-0 p-0' >
-                                                    <div>{timeCaster(props.data.PredictEndtime).substring(0, 10)}</div>
-                                                </div> :
-                                                <div className='col-4  m-0 p-0' >
-                                                    <div>{timeCaster(props.data.PredictEndtime).substring(0, 10)}</div>
-                                                </div>
-                                        }
-
-                                    </div>
-                                </div>
-
-                                <div className='m-3 m-0 p-0'>
-                                    <div class=" row text-center m-0 p-0">
-                                        <div className='col-1  m-0 p-0'>
-                                            <img src={MemberSvg} height="24px" width="22px" />
-                                        </div>
-                                        <div className='col-7 m-0 p-0' style={{ "text-align": "left" }} >
-                                            <div className='ms-2'>
-                                                <div style={orangeStyle}>{localization.JoinMember}</div>
-                                            </div>
-                                        </div>
-                                        <div className='col-4  m-0 p-0 mb-4' >
-                                            <div>{props.data.NumOfMember}</div>
-                                        </div>
-                                    </div>
-
-                                </div>
-
-                            </div>
-                            : <div>
-                                <Form.Control type="text" value={projectInformation.Name} onChange={(event) => {
-                                    setprojectInformation({ ...projectInformation, Name: event.target.value })
-                                }}
-                                    className="text-primary border-0 mb-2"
-                                    style={{
-                                        fontSize: "30px",
-                                    }}
-                                />
-                                <div className='m-3 m-0 p-0'>
-                                    <div class=" row text-center m-0 p-0">
-                                        <div className='col-1  m-0 p-0'>
-                                            <img src={ClockSvg} height="25px" />
-                                        </div>
-                                        <div className='col-6 m-0 p-0' style={{ "text-align": "left" }} >
-                                            <div className='ms-2'>
-                                                <div style={orangeStyle}>{localization.Starttime}</div>
-                                            </div>
-                                        </div>
-                                        <div className='col-5  m-0 p-0' >
-                                            <Form.Group controlId="duedate">
-                                                <Form.Control
-                                                    type="date"
-                                                    name="duedate"
-                                                    placeholder=""
-                                                    value={moment(projectInformation.StartTime).format("YYYY-MM-DD")}
-                                                    onChange={(e) => {
-                                                        setprojectInformation({ ...projectInformation, StartTime: e.target.value.substring(0, 10) })
-                                                    }}
-                                                />
-                                            </Form.Group>
-                                        </div>
-                                    </div>
-                                </div>
-                                {
-                                    props.data.Status === "Close" ?
-                                        null :
-                                        <div className='m-3 m-0 p-0'>
-                                            <div class=" row text-center m-0 p-0">
-                                                <div className='col-1  m-0 p-0'>
-                                                    <img src={ClockSvg} height="25px" />
-                                                </div>
-                                                <div className='col-6 m-0 p-0' style={{ "text-align": "left" }} >
-                                                    <div className='ms-2'>
-                                                        <div style={orangeStyle}>Estimated end time:</div>
-                                                    </div>
-                                                </div>
-                                                <div className='col-5  m-0 p-0' >
-                                                    <Form.Group controlId="duedate">
-                                                        <Form.Control
-                                                            type="date"
-                                                            name="duedate"
-                                                            placeholder=""
-                                                            value={moment(projectInformation.PredictEndtime).format("YYYY-MM-DD")}
-                                                            onChange={(e) => {
-                                                                setprojectInformation({ ...projectInformation, PredictEndtime: e.target.value.substring(0, 10) })
-                                                            }}
-                                                        />
-                                                    </Form.Group>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                }
-
-                                <div className='d-flex justify-content-center'><button onClick={() => { EditProjectSubmit() }} type="button" class="btn btn-primary btn-lg">Save</button></div>
-                            </div>
-
-                    }
                 </div>
+                {
+                    pressEdit === false ?
+                        <div onClick={() => { navigate("/pDetail/" + props.data.Id) }}>
+                            <h2 className='d-flex  justify-content-center customFontBold SecondFontColor '>
+                                {props.data.Name}
+                            </h2>
+                            <div className='m-3 m-0 p-0'>
+                                <div class=" row text-center m-0 p-0">
+                                    <div className='col-1  m-0 p-0'>
+                                        <img src={ClockSvg} height="25px" />
+                                    </div>
+                                    <div className='col-7 m-0 p-0' style={{ "text-align": "left" }} >
+                                        <div className='ms-2'>
+                                            <div style={orangeStyle}>{localization.CreateAt}</div>
+                                        </div>
+                                    </div>
+                                    <div className='col-4  m-0 p-0' >
+                                        <div>{timeCaster(props.data.CreateTime).substring(0, 10)}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className='m-3 m-0 p-0'>
+                                <div class=" row text-center m-0 p-0">
+                                    <div className='col-1  m-0 p-0'>
+                                        <img src={ClockSvg} height="25px" />
+                                    </div>
+                                    <div className='col-7 m-0 p-0' style={{ "text-align": "left" }} >
+                                        <div className='ms-2'>
+                                            <div style={orangeStyle}>{localization.Starttime}</div>
+                                        </div>
+                                    </div>
+                                    <div className='col-4  m-0 p-0' >
+                                        <div>{timeCaster(props.data.StartTime).substring(0, 10)}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className='m-3 m-0 p-0'>
+                                <div class=" row text-center m-0 p-0">
+                                    <div className='col-1  m-0 p-0'>
+                                        <img src={ClockSvg} height="25px" />
+                                    </div>
+                                    {
+                                        props.data.Status === "Close" ?
+                                            <div className='col-7 m-0 p-0' style={{ "text-align": "left" }} >
+                                                <div className='ms-2'>
+                                                    <div style={orangeStyle}>{localization.ETime}</div>
+                                                </div>
+                                            </div> :
+                                            <div className='col-7 m-0 p-0' style={{ "text-align": "left" }} >
+                                                <div className='ms-2'>
+                                                    <div style={orangeStyle}>{localization.EsTime}</div>
+                                                </div>
+                                            </div>
+                                    }
+                                    {
+                                        props.data.Status === "Close" ?
+                                            <div className='col-4  m-0 p-0' >
+                                                <div>{timeCaster(props.data.PredictEndtime).substring(0, 10)}</div>
+                                            </div> :
+                                            <div className='col-4  m-0 p-0' >
+                                                <div>{timeCaster(props.data.PredictEndtime).substring(0, 10)}</div>
+                                            </div>
+                                    }
+
+                                </div>
+                            </div>
+
+                            <div className='m-3 m-0 p-0'>
+                                <div class=" row text-center m-0 p-0">
+                                    <div className='col-1  m-0 p-0'>
+                                        <img src={MemberSvg} height="24px" width="22px" />
+                                    </div>
+                                    <div className='col-7 m-0 p-0' style={{ "text-align": "left" }} >
+                                        <div className='ms-2'>
+                                            <div style={orangeStyle}>{localization.JoinMember}</div>
+                                        </div>
+                                    </div>
+                                    <div className='col-4  m-0 p-0 mb-4' >
+                                        <div>{props.data.NumOfMember}</div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        : <div>
+                            <Form.Control type="text" value={projectInformation.Name} onChange={(event) => {
+                                setprojectInformation({ ...projectInformation, Name: event.target.value })
+                            }}
+                                className="text-primary border-0 mb-2"
+                                style={{
+                                    fontSize: "30px",
+                                }}
+                            />
+                            <div className='m-3 m-0 p-0'>
+                                <div class=" row text-center m-0 p-0">
+                                    <div className='col-1  m-0 p-0'>
+                                        <img src={ClockSvg} height="25px" />
+                                    </div>
+                                    <div className='col-6 m-0 p-0' style={{ "text-align": "left" }} >
+                                        <div className='ms-2'>
+                                            <div style={orangeStyle}>{localization.Starttime}</div>
+                                        </div>
+                                    </div>
+                                    <div className='col-5  m-0 p-0' >
+                                        <Form.Group controlId="duedate">
+                                            <Form.Control
+                                                type="date"
+                                                name="duedate"
+                                                placeholder=""
+                                                value={moment(projectInformation.StartTime).format("YYYY-MM-DD")}
+                                                onChange={(e) => {
+                                                    setprojectInformation({ ...projectInformation, StartTime: e.target.value.substring(0, 10) })
+                                                }}
+                                            />
+                                        </Form.Group>
+                                    </div>
+                                </div>
+                            </div>
+                            {
+                                props.data.Status === "Close" ?
+                                    null :
+                                    <div className='m-3 m-0 p-0'>
+                                        <div class=" row text-center m-0 p-0">
+                                            <div className='col-1  m-0 p-0'>
+                                                <img src={ClockSvg} height="25px" />
+                                            </div>
+                                            <div className='col-6 m-0 p-0' style={{ "text-align": "left" }} >
+                                                <div className='ms-2'>
+                                                    <div style={orangeStyle}>Estimated end time:</div>
+                                                </div>
+                                            </div>
+                                            <div className='col-5  m-0 p-0' >
+                                                <Form.Group controlId="duedate">
+                                                    <Form.Control
+                                                        type="date"
+                                                        name="duedate"
+                                                        placeholder=""
+                                                        value={moment(projectInformation.PredictEndtime).format("YYYY-MM-DD")}
+                                                        onChange={(e) => {
+                                                            setprojectInformation({ ...projectInformation, PredictEndtime: e.target.value.substring(0, 10) })
+                                                        }}
+                                                    />
+                                                </Form.Group>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                            }
+
+                            <div className='d-flex justify-content-center'><button onClick={() => { EditProjectSubmit() }} type="button" class="btn btn-primary btn-lg">Save</button></div>
+                        </div>
+
+                }
             </div>
         </div>
     );

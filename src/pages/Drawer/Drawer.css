@@ -19,6 +19,23 @@
     left:5px;
 }
 
+.drawer-button:hover {
+    animation: 1s rotatefresh;
+}
+
+
+@keyframes rotatefresh {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+        transition-duration: 1s;
+        transition: 1s;
+    }
+}
+
 @keyframes SlideLeft {
     0% {
         margin-left: 0;
@@ -31,7 +48,7 @@
 
 @keyframes SlideRight {
     0% {
-        margin-left: -100%;
+        margin-left: -50%;
     }
 
     100% {
