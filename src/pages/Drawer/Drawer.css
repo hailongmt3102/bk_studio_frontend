@@ -11,12 +11,11 @@
 }
 
 .drawer-button {
-    background-color: white;
     width: 40px;
-    box-shadow: 0 0 5px #5a5757;
     position: absolute;
     z-index: 10;
     left:5px;
+    border: none;
 }
 
 .drawer-button:hover {

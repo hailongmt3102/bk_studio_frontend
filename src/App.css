@@ -99,9 +99,9 @@ html, body {
 }
 
 
-.customforeground .level1{
-    border-radius: 5px;
-}
+/* .level1{
+    background-color: rgb(241, 241, 241);
+} */
 
 
 .darkmode .custombackground {
@@ -124,6 +124,15 @@ html, body {
 
 .darkmode .level2{
     background-color: rgb(117, 117, 117);
+}
+
+.shine{
+    box-shadow: 0 0 5px #5a5757;
+}
+
+.darkmode .shine{
+    background-color: rgb(117, 117, 117);
+    box-shadow: 0 0 5px 3px #e6e6e6;
 }
 
 .darkmode .customforeground input{

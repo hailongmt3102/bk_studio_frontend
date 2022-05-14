@@ -111,7 +111,7 @@ export default function Drawer(props) {
 
 	return props.state !== "" ? (
 		<div>
-			<button className="m-2  text-center drawer-button" style={{ width: "40px", height: "40px" }} 
+			<button className="m-2  text-center drawer-button shine" style={{ width: "40px", height: "40px" }} 
 			onClick={() => {
 				setToggle(!toggle)
 			}}>
