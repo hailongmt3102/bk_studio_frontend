@@ -2,6 +2,7 @@ import React from 'react'
 
 import plus from "resources/icons/plus.svg";
 import dataBoard from "resources/icons/dataBoard.svg";
+import move from "resources/icons/mouse.svg";
 import addImage from "resources/icons/addImage.svg";
 import addText from "resources/icons/addText.svg";
 import addShape from "resources/icons/addShape.svg";
@@ -20,7 +21,7 @@ export default function ToolBar(props) {
     return (
         <div>
             <div className="m-auto row toolbar-container" style={{ zIndex: 10 }}>
-                <button
+                {/* <button
                     className="col m-0 p-0 btn"
                     style={{ "minHeight": "50px" }}
                     onClick={() => {
@@ -30,7 +31,7 @@ export default function ToolBar(props) {
                 >
                     <img src={plus} width="20px" height="20px" />
                     <p className="p-0 m-0 text-center">add data</p>
-                </button>
+                </button> */}
                 <button
                     className="col m-0 p-0 btn btn-sm"
                     style={{ "minWidth": "80px", "minHeight": "50px" }}
@@ -39,8 +40,8 @@ export default function ToolBar(props) {
                             props.setAddShapeType("none")
                     }}
                 >
-                    <img src={dataBoard} width="20px" height="20px" />
-                    <p className="p-0 m-0 text-center">add chart</p>
+                    <img src={move} width="20px" height="20px" />
+                    <p className="p-0 m-0 text-center">move</p>
                 </button>
                 <button
                     className={props.addShapeType == "image" ? "col m-0 p-0 btn btn-sm customshine" : "col m-0 p-0 btn btn-sm"}
@@ -106,7 +107,7 @@ export default function ToolBar(props) {
                     <img src={copy} width="20px" height="20px" />
                     <p className="p-0 m-0">create a copy</p>
                 </button>
-                <button
+                {/* <button
                     className="col m-0 p-0 btn btn-sm"
                     style={{ "minWidth": "80px", "minHeight": "50px" }}
                     onClick={() => {
@@ -115,8 +116,8 @@ export default function ToolBar(props) {
                     }}
                 >
                     <img src={save} width="20px" height="20px" />
-                    <p className="p-0 m-0">save</p>
-                </button>
+                    <p className="p-0 m-0">download</p>
+                </button> */}
                 <button
                     className="col m-0 p-0 btn btn-sm"
                     style={{ "minWidth": "80px", "minHeight": "50px" }}
