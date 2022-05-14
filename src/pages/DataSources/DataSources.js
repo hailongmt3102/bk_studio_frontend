@@ -68,7 +68,7 @@ export default function DataSources() {
             />
 
             <h2 class="ms-5 PrimaryFontColor size40 customFontBold" >{localization.DataSource}:</h2>
-            <div className='bg-white'>
+            <div className='customforeground'>
                 <div className='row'>
                     <h1 className='ps-5 ms-3 mt-4 customFontBold SecondFontColor' >{localization.userSource}</h1>
                     <div className='row mt-4 m-0 p-0'>

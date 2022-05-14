@@ -1,5 +1,5 @@
 .import_button{
-    box-shadow: 2px 2px 2px 2px #c7c7c7;
+    box-shadow: 0px 0px 4px 2px #c7c7c7;
 }
 .import_button:active {
     border: none;

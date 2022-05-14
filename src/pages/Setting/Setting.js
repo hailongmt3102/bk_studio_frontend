@@ -1,9 +1,8 @@
-import React, { useContext, useState } from 'react'
+import { useContext, useState } from 'react';
 
-import { Form, Col, Row, Button } from 'react-bootstrap'
-import tick from "resources/icons/tick.svg"
-import { localizationContext } from '../../App'
-import { deep_blue_primary } from "../../utils/color"
+import { Button, Col, Form, Row } from 'react-bootstrap';
+import tick from "resources/icons/tick.svg";
+import { localizationContext } from '../../App';
 
 import Drop from 'pages/AdjustingReport/components/Drop';
 export default function Setting(props) {
@@ -12,9 +11,9 @@ export default function Setting(props) {
     const [language, setlanguage] = useState(languageSaved)
     return (
         <div>
-            <h2 class="mt-3 mb-3 ms-4" style={{ color: deep_blue_primary, "fontWeight": "bold", fontSize: "40px" }}>{localization.Setting} </h2>
-            <div style={{ backgroundColor: "white", paddingBottom: "25px", height: "700px" }}>
-                {/* <Form.Group as={Row} className="mb-3 mt-3 ms-4 align-items-center" controlId="formPlaintextPassword">
+            <h2 class="mt-3 mb-3 ms-4 PrimaryFontColor" style={{ "fontWeight": "bold", fontSize: "40px" }}>{localization.Setting} </h2>
+            <div className='customforeground' style={{ paddingBottom: "25px", height: "800px" }}>
+                <Form.Group as={Row} className="mb-3 mt-3 ms-4 align-items-center" controlId="formPlaintextPassword">
                     <Form.Label column sm="2">
                         <h5 className='mt-4' style={{ "fontWeight": "bold", fontSize: 16 }}>{localization.DarkMode}  </h5>
                     </Form.Label>
@@ -22,10 +21,14 @@ export default function Setting(props) {
                         <Form.Check
                             type="switch"
                             id="custom-switch"
-
+                            onChange={(event) => {
+                                props.setLightMode(!event.target.checked)
+                                localStorage.setItem('lightTheme', !event.target.checked)
+                            }}
+                            checked={!props.lightMode}
                         />
                     </Col>
-                </Form.Group> */}
+                </Form.Group>
                 <Form.Group as={Row} className="mb-7 ms-4 ms-2 align-items-center" controlId="formPlaintextPassword">
                     <Form.Label column sm="2" >
                         <h5 style={{ "fontWeight": "bold", fontSize: 16 }}>{localization.Language} </h5>
@@ -37,10 +40,11 @@ export default function Setting(props) {
                             window.location.reload()
                         }} />
                     </Col>
+
                 </Form.Group>
 
                 <Row>
-                    <Col className="mt-4 ms-5" md={3} style={{ backgroundColor: "#F7F7F7", borderRadius: "20px", marginRight: "40px" }}>
+                    <Col className="mt-4 ms-5 level1" md={3} style={{ borderRadius: "20px", marginRight: "40px" }}>
                         <Col className=" text-center me-2 align-items-end "> <h3 class="customFontBold SecondFontColor align-self-center mt-3 mb-3" > {localization.Free}</h3></Col>
                         <div className='customFontRoboto' style={{ paddingLeft: "100px" }}>
                             <div className="row  ">
@@ -109,7 +113,7 @@ export default function Setting(props) {
                         </div>
 
                     </Col>
-                    <Col className="mt-4 ms-5" md={3} style={{ backgroundColor: "#F7F7F7", borderRadius: "15px", marginRight: "40px" }}>
+                    <Col className="mt-4 ms-5 level1" md={3} style={{ borderRadius: "15px", marginRight: "40px" }}>
                         <Col className=" text-center align-items-end "> <h3 class=" align-self-center mt-3 mb-3 SecondFontColor customFontBold"> {localization.VIP}</h3></Col>
                         <div style={{ paddingLeft: "100px", fontFamily: "Roboto" }}>
                             <div className="row  ">

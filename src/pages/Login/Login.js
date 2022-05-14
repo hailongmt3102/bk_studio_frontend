@@ -112,7 +112,7 @@ export default function Login() {
                                     </div>
                                     <div class="col-md-10 col-lg-6 col-xl-5 order-1 order-lg-2 mt-5 ">
 
-                                        <h1 class=" mb-2 mx-1 mx-md-4 mt-5 customFontBold " style={{ color: deep_blue_primary }}>{localization.signIn}</h1>
+                                        <h1 class=" mb-2 mx-1 mx-md-4 mt-5 customFontBold PrimaryFontColor " >{localization.signIn}</h1>
 
 
                                         <div class="form-check mb-4">
@@ -120,14 +120,14 @@ export default function Login() {
                                                 {localization.signInIf}
                                             </div>
                                             <label class="form-check-label"  >
-                                                {localization.youCan} <Link to="/account/register" class="border-0 " style={{ color: deep_blue_primary, "font-weight": "bold" }}>{localization.registerHere}
+                                                {localization.youCan} <Link to="/account/register" class="border-0 PrimaryFontColor" style={{  "font-weight": "bold" }}>{localization.registerHere}
                                                 </Link>
                                             </label>
 
 
                                         </div>
 
-                                        <form class="mx-1 mx-md-4" style={{ color: deep_blue_primary }}>
+                                        <form class="mx-1 mx-md-4 PrimaryFontColor">
 
                                             <Form.Group as={Col} md="12" controlId="validationCustomUsername">
                                                 <Form.Label>Email</Form.Label>
@@ -182,7 +182,7 @@ export default function Login() {
 
 
                                             <div class="col-4 text-end">
-                                                <Link to="/account/forgetPassword" class="border-0" style={{ color: deep_blue_primary, "font-weight": "bold" }}> {localization.ForgotPass}</Link>
+                                                <Link to="/account/forgetPassword" class="border-0 PrimaryFontColor" style={{ "font-weight": "bold" }}> {localization.ForgotPass}</Link>
                                             </div>
 
 

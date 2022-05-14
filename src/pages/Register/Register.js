@@ -106,7 +106,7 @@ export default function Register() {
                                         <img src={login_image} style={{ borderTopLeftRadius: "25px", borderBottomLeftRadius: "25px" }} class="img-fluid" alt="Sample image" />
                                     </div>
                                     <div class="col-md-10 col-lg-6 col-xl-5 order-1 order-lg-2 mt-4 ">
-                                        <p class="h1 fw-bold  mx-1 mx-md-4" style={{ color: deep_blue_primary }}>
+                                        <p class="h1 fw-bold  mx-1 mx-md-4 PrimaryFontColor">
                                             Sign up
                                         </p>
                                         <div class="form-check mb-2">

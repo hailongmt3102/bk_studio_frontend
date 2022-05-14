@@ -72,3 +72,91 @@ p {
 .size20 {
     font-size: 22px;
 }
+
+.darkmode .header input, .darkmode .header p{
+    color: white;
+}
+
+.darkmode .h2{
+    color: white;
+}
+
+.darkmode .background{
+    background-color: black;
+}
+
+html, body {
+    min-height: 100vh;
+}
+
+.custombackground {
+    background-color: rgb(185, 184, 184);
+}
+
+.customforeground {
+    background-color: white;
+    border-radius: 5px;
+}
+
+
+.customforeground .level1{
+    border-radius: 5px;
+}
+
+
+.darkmode .custombackground {
+    background-color: rgb(33, 33, 33);
+}
+
+.darkmode .customforeground {
+    background-color: rgb(66, 66, 66);
+    border-radius: 5px;
+}
+
+.darkmode .customforeground .level1{
+    background-color: rgb(97, 97, 97);
+    border-radius: 5px;
+}
+
+.darkmode .customforeground .level1 .level2{
+    background-color: rgb(117, 117, 117);
+}
+
+.darkmode .level2{
+    background-color: rgb(117, 117, 117);
+}
+
+.darkmode .customforeground input{
+    background-color: rgb(117, 117, 117);
+}
+
+.darkmode .level1 input, .darkmode .level1 textarea{
+    background-color: rgb(117, 117, 117);
+}
+
+.darkmode h1,
+.darkmode h2,
+.darkmode h3,
+.darkmode h4,
+.darkmode h5,
+.darkmode p,
+.darkmode label,
+.darkmode input {
+    color: white;
+}
+
+.darkmode .customtext {
+    color: white;
+}
+
+.overflow {
+    overflow-x: hidden;
+}
+
+.darkmode .PrimaryFontColor{
+    color: rgb(162, 198, 233);
+}
+
+.darkmode .SecondFontColor{
+    color: #7cc8ff;
+}

@@ -111,11 +111,12 @@ export default function Drawer(props) {
 
 	return props.state !== "" ? (
 		<div>
-			<div className="m-2  text-center drawer-button" style={{ width: "40px", height: "40px" }} onClick={() => {
+			<button className="m-2  text-center drawer-button" style={{ width: "40px", height: "40px" }} 
+			onClick={() => {
 				setToggle(!toggle)
 			}}>
 				<div className="mt-1 m-auto"><img src={threeLine} width="28px" height="28px" /></div>
-			</div>
+			</button>
 			<div className={`drawer ${toggle ? "enter" : "exit"}`}>
 				<ul className="list-group">
 					<a className="list-group-item border-0 p-0" onClick={() => {

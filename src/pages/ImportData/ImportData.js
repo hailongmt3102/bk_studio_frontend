@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
-import SelectData from './Children/SelectData'
-import EditData from './Children/EditData'
 import { ImportDataApi } from 'api/DataSources'
-import { useNavigate, useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
+import EditData from './Children/EditData'
+import SelectData from './Children/SelectData'
 
 import { Store } from 'react-notifications-component'
 import { content } from "../../utils/notification"

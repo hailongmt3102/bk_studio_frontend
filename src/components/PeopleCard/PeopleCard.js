@@ -1,17 +1,16 @@
-import React, { useState, useEffect } from 'react'
+import { useState } from 'react'
 import './peopleCard.css'
 
-import { useLocation, useNavigate } from 'react-router-dom'
-import people_default from "resources/icons/people_default.svg"
-import three_dot from "resources/icons/three-dot.svg"
+import { deleteMemberInAProject } from "api/Project"
 import ThreeDotButton from 'components/ThreeDotButton'
 import delete_icon from 'resources/icons/delete.svg'
 import edit from 'resources/icons/edit.svg'
-import { deleteMemberInAProject } from "api/Project"
+import people_default from "resources/icons/people_default.svg"
+import three_dot from "resources/icons/three-dot.svg"
 
 import { Store } from 'react-notifications-component'
 import { content } from "../../utils/notification"
-import ConfirmDialog from "../ConfirmDialog";
+import ConfirmDialog from "../ConfirmDialog"
 
 
 

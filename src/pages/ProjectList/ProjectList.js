@@ -1,13 +1,13 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { getListProject } from 'api/Project'
-import ProjectBox from '../../components/ProjectCard/ProjectCard'
-import NewProjectModel from './components/NewProjectModel'
-import { loadingContext } from 'App'
-import { deep_blue_primary } from "../../utils/color"
-import add_round from "resources/icons/add_round.svg"
-import { useNavigate } from 'react-router-dom'
-import { Store } from 'react-notifications-component'
-import { content } from "utils/notification"
+import { getListProject } from 'api/Project';
+import { loadingContext } from 'App';
+import { useContext, useEffect, useState } from 'react';
+import { Store } from 'react-notifications-component';
+import { useNavigate } from 'react-router-dom';
+import add_round from "resources/icons/add_round.svg";
+import { content } from "utils/notification";
+import ProjectBox from '../../components/ProjectCard/ProjectCard';
+import { deep_blue_primary } from "../../utils/color";
+import NewProjectModel from './components/NewProjectModel';
 const orangeStyle = {
     color: "#FF7F0D",
 }
@@ -75,7 +75,7 @@ export default function ProjectList() {
 
             </div>
 
-            <div className='p-4 m-4 rounded-5 bg-white'>
+            <div className='p-4 m-4 rounded-5 customforeground'>
 
                 <div className='row'  >
                     {

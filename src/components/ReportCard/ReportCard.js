@@ -1,26 +1,26 @@
-import React, { useState, useEffect, useContext } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { Form } from 'react-bootstrap'
 import { localizationContext } from '../../App'
 import default_report_img from "../../resources/icons/default_report_img.svg"
 
-import heart_img from "../../resources/icons/heart.svg"
-import hearted from "../../resources/icons/hearted.svg"
+import { deleteReport, getPermission, like, unlike, updateReportInformation } from 'api/Report'
+import { Store } from 'react-notifications-component'
 import { useNavigate } from 'react-router-dom'
-import ThreeDotButton from "../ThreeDotButton"
 import delete_icon from 'resources/icons/delete.svg'
 import download_blue from "resources/icons/download_blue.svg"
-import share_blue from "resources/icons/share_blue.svg"
 import edit from 'resources/icons/edit.svg'
+import share_blue from "resources/icons/share_blue.svg"
 import three_dot from "resources/icons/three-dot.svg"
 import { blue_cloud, deep_blue_primary } from "utils/color"
-import { Store } from 'react-notifications-component'
+import heart_img from "../../resources/icons/heart.svg"
+import hearted from "../../resources/icons/hearted.svg"
 import { content } from "../../utils/notification"
-import { like, unlike, deleteReport, updateReportInformation, getPermission } from 'api/Report'
+import ThreeDotButton from "../ThreeDotButton"
 
-import { likeTemplate, unlikeTemplate, deleteTemplate, updateTemplateInformation } from 'api/Templates'
+import { deleteTemplate, likeTemplate, unlikeTemplate, updateTemplateInformation } from 'api/Templates'
 import ShareWithPopUp from "pages/AdjustingReport/components/PopUp/ShareWithPopUp"
 
-import ConfirmDialog from "components/ConfirmDialog";
+import ConfirmDialog from "components/ConfirmDialog"
 
 
 export default function ReportCard(props) {
@@ -299,7 +299,7 @@ export default function ReportCard(props) {
                 handleCloseYes={() => handleCloseYes()}
                 handleCloseNo={() => handleCloseNo()}
             />
-            <div className="row m-0 p-0  shadow border border-light" style={{ "borderRadius": "20px" }}>
+            <div className="row m-0 p-0  shadow border border-light level1" style={{ "borderRadius": "20px" }}>
                 <div className='col-5 m-0 p-0 m-auto text-center ' onClick={() => {
                     props.type === "Template" ? viewReportNav(props.data.Id) : NavigationHandle(props.data.Id)
                 }}>
