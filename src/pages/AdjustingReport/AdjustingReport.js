@@ -1223,7 +1223,7 @@ export default function AdjustingReport(props) {
     }
 
     return (
-        <div>
+        <div className="bg-light">
             {
                 isEdit === true ? EditUI() : ViewPageUI()
             }
