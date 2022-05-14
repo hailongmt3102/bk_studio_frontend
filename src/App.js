@@ -69,7 +69,7 @@ function App() {
             <loadingContext.Provider value={setIsLoading}>
                 <themeContext.Provider value={lightMode}>
                     <Router>
-                        <div className={lightMode ? "" : "darkmode"}>
+                        <div className={lightMode ? "full-height" : "full-height darkmode"}>
                             {isLoading && <Loading />}
                             <ReactNotifications />
                             <Drawer state={drawerState} setDrawerState={setDrawerState} />
