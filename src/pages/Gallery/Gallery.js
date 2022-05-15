@@ -37,20 +37,18 @@ export default function Gallery(props) {
 
     return (
         <div>
-            <h2 class="ms-4 mt-2" style={{ color: deep_blue_primary, "fontWeight": "bold", fontSize: "40px" }}>
+            <h2 class="ms-4 mt-2 PrimaryFontColor" style={{ "fontWeight": "bold", fontSize: "40px" }}>
                 {localization.gallery}:
             </h2>
 
-            <div className='bg-white'>
-                <div className='row m-0 p-0 justify-content-center'>
-                    {reports.map(ele =>
-                        <div className='col m-0 p-0' style={{ "minWidth": "600px", "maxWidth": "600px" }} >
-                            <div className='ms-4 mt-5 pe-4'>
-                                <ReportCard data={ele} type="Report" />
-                            </div>
+            <div className='row m-0 p-0 justify-content-center customforeground'>
+                {reports.map(ele =>
+                    <div className='col m-0 p-0' style={{ "minWidth": "600px", "maxWidth": "600px" }} >
+                        <div className='ms-4 mt-5 pe-4'>
+                            <ReportCard data={ele} type="Report" />
                         </div>
-                    )}
-                </div>
+                    </div>
+                )}
             </div>
         </div>
     )

@@ -11,12 +11,28 @@
 }
 
 .drawer-button {
-    background-color: white;
     width: 40px;
-    box-shadow: 0 0 5px #5a5757;
     position: absolute;
     z-index: 10;
     left:5px;
+    border: none;
+}
+
+.drawer-button:hover {
+    animation: 1s rotatefresh;
+}
+
+
+@keyframes rotatefresh {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+        transition-duration: 1s;
+        transition: 1s;
+    }
 }
 
 @keyframes SlideLeft {
@@ -31,7 +47,7 @@
 
 @keyframes SlideRight {
     0% {
-        margin-left: -100%;
+        margin-left: -50%;
     }
 
     100% {

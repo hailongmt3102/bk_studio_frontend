@@ -1,29 +1,21 @@
-import React, { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { Form } from 'react-bootstrap'
-
 import default_report_img from "../../resources/icons/default_report_img.svg"
-
-import heart_img from "../../resources/icons/heart.svg"
-import hearted from "../../resources/icons/hearted.svg"
+import { updateReportInformation } from 'api/Report'
+import { deleteTemplate, likeTemplate, unlikeTemplate } from 'api/Templates'
+import ShareWithPopUp from "pages/AdjustingReport/components/PopUp/ShareWithPopUp"
+import { Store } from 'react-notifications-component'
 import { useNavigate } from 'react-router-dom'
-import ThreeDotButton from "../ThreeDotButton"
 import delete_icon from 'resources/icons/delete.svg'
 import download_blue from "resources/icons/download_blue.svg"
-import share_blue from "resources/icons/share_blue.svg"
-import edit from 'resources/icons/edit.svg'
 import three_dot from "resources/icons/three-dot.svg"
-import { blue_cloud, deep_blue_primary } from "utils/color"
-import { Store } from 'react-notifications-component'
+import { deep_blue_primary } from "utils/color"
+import heart_img from "../../resources/icons/heart.svg"
+import hearted from "../../resources/icons/hearted.svg"
 import { content } from "../../utils/notification"
-import { like, unlike, deleteReport, updateReportInformation } from 'api/Report'
-import ShareWithPopUp from "pages/AdjustingReport/components/PopUp/ShareWithPopUp"
-import { likeTemplate, unlikeTemplate, deleteTemplate } from 'api/Templates'
-import ConfirmDialog from "components/ConfirmDialog";
+import ThreeDotButton from "../ThreeDotButton"
 
 export default function TemplateMiniCard(props) {
-
-
-
     const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: '', subTitle: '' })
 
     const option_list = ["Download", "Delete"]
@@ -144,9 +136,8 @@ export default function TemplateMiniCard(props) {
                     </div> :
 
                     <h5 className='text-center mt-3' style={{ "color": deep_blue_primary, "fontSize": "28px", "fontWeight": "bold" }}>
-                        {props.data.Name.slice(0, 15)}
+                        {props.data.Name.slice(0, 12) + "..."}
                     </h5>
-
             }
         </div>
 
@@ -168,7 +159,7 @@ export default function TemplateMiniCard(props) {
                 }}
 
             />
-            <div className="text-center m-0 p-0 ms-4 shadow border border-light" style={{ "borderRadius": "20px" }}>
+            <div className="text-center m-0 p-0 ms-4 shadow level1" style={{ "borderRadius": "20px" }}>
                 {headComponent()}
                 <div className='text-center m-0 p-0' onClick={() => { viewReportNav(props.data.Id) }}>
                     <img src={default_report_img} height="200" width="200" />

@@ -131,15 +131,15 @@ export default function ProjectDetail() {
             />
             {
                 datasourceslist.length === 0 ?
-                    <div className='row m-0 p-0 mt-3' >
-                        <div className=' col-10' style={{ color: deep_blue_primary, "fontWeight": "bold", fontSize: "40px" }}>Data Sources:</div>
-                        <div className='bg-white' style={{ height: "300px" }}>
+                    <div className='row m-0 p-0 mt-4 customforeground' >
+                        <div className=' col-10 PrimaryFontColor' style={{"fontWeight": "bold", fontSize: "40px" }}>Data Sources:</div>
+                        <div className='' style={{ height: "300px" }}>
                         </div>
                     </div>
                     :
-                    <div className='row m-0 p-0 mt-3' >
-                        <div className=' col-10' style={{ color: deep_blue_primary, "fontWeight": "bold", fontSize: "40px" }}>Data Sources:</div>
-                        <div className='bg-white' style={{ minheight: "300px" }}>
+                    <div className='row m-0 p-0 mt-3 customforeground' >
+                        <div className=' col-10 PrimaryFontColor' style={{  "fontWeight": "bold", fontSize: "40px" }}>Data Sources:</div>
+                        <div className='' style={{ minheight: "300px" }}>
                             <ScrollMenu>
                                 {datasourceslist.map((ele, index) => (
                                     <div className='ms-4 mt-5 mb-5' style={{ minWidth: "400px" }}>
@@ -159,24 +159,32 @@ export default function ProjectDetail() {
                             </ScrollMenu>
                         </div>
                     </div>
-
             }
-
-
-
-
-
-
-
         </div >
     }
 
     const peopleComponent = () => {
         return <div>
-            <div className='rounded-5 bg-white'>
-                <div className='row m-0 p-0 bg-light'>
-                    <div className='col-4 m-0 p-0 '>
-                        <div className='m-2 p-2 bg-white' style={{ height: "100%" }}>
+            <div className='rounded-5 m-2 mt-4'>
+                <div className='row'>
+                    <h2 class="col-10  m-0 p-0 PrimaryFontColor" style={{"fontWeight": "bold", fontSize: "40px" }}>
+                        <div className='ms-4'>My team:</div>
+                    </h2>
+                    <div className='col-2 ml-auto m-0 p-0 text-right align-self-end'>
+                        <button class=" btn p-3 ms-5 " type="button" style={{ color: "white", backgroundColor: deep_blue_primary, borderRadius: "30px ", fontSize: 16 }} onClick={() => {
+                            setshowPeoplePopUp(true)
+                            //inviteMemberSubmit()
+                        }}><div className='d-flex'>
+                                <div className='d-flex justify-content-center me-2' style={{ color: "white", fontSize: 17 }}>Invite People</div>
+                                <div className='d-flex justify-content-center'><img src={add_people} height="20px" width="20px" /></div>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+
+                <div className='row m-0 p-0 customforeground'>
+                    <div className='col-4 m-0 p-0 overflow'>
+                        <div className='m-2 p-2' style={{ height: "100%" }}>
                             <h1 className='row customFontBold SecondFontColor m-0 p-2'>Manager</h1>
                             <div class="p-2 col-1"> {
                                 peopleInProject.map((ele, index) => {
@@ -227,7 +235,7 @@ export default function ProjectDetail() {
                         </div>
                     </div>
                     <div className='col-8 m-0 p-0' >
-                        <div className='m-2 p-2 bg-white' style={{ height: "100%" }}>
+                        <div className='m-2 p-2 overflow' style={{ height: "100%" }}>
                             <h1 className=' m-0 p-2 customFontBold SecondFontColor'>Member</h1>
                             <div className='row m-0 p-0'>{
                                 peopleInProject.map((ele) => {
@@ -315,118 +323,117 @@ export default function ProjectDetail() {
 
     }
     const aboutComponent = () => {
-        return <div>
-            <div className='row m-0 p-0 mt-3' >
-                <div className=' col-10' style={{ color: deep_blue_primary, "fontWeight": "bold", fontSize: "40px" }}>About:</div>
-                <div className='col-2 m-0 p-0 m-auto text-right align-self-end'>
-                    <div className='ms-3'>
-                        <button class="btn btn-primary btn-lg ms-5 p-3 "
-                            onClick={() => { EditProjectSubmit() }}
-                            type="button"
-                            style={{ backgroundColor: deep_blue_primary, borderRadius: "30px" }}
-                        >
-                            Save change
-                        </button>
-                    </div>
+        return <div className='m-2 row mt-4'>
+            <div className=' col-10 PrimaryFontColor' style={{ "fontWeight": "bold", fontSize: "40px" }}>About:</div>
+            <div className='col-2 m-0 p-0 m-auto text-right align-self-end'>
+                <div className='ms-3'>
+                    <button class="btn btn-primary btn-lg ms-5 p-3 "
+                        onClick={() => { EditProjectSubmit() }}
+                        type="button"
+                        style={{ backgroundColor: deep_blue_primary, borderRadius: "30px" }}
+                    >
+                        Save change
+                    </button>
                 </div>
             </div>
-            <div className='m-3 p-4  bg-white' style={{ height: "250px" }}>
-                <div className='row m-0 p-0'>
-                    <div className='col-6'>
-                        <div className='m-3 m-0 p-0'>
-                            <div class=" row text-center m-0 p-0">
-                                <div className='col-1 m-auto  m-0 p-0'>
-                                    <img src={ClockSvg} height="25px" />
-                                </div>
-                                <div className='col-3 m-auto m-0 p-0' style={{ "text-align": "left" }} >
-                                    <div className='ms-2'>
-                                        <div style={orangeStyle}>Start time:</div>
+            <div className='customforeground'>
+                <div className='level1' style={{ height: "250px" }}>
+                    <div className='row m-0 p-0'>
+                        <div className='col-6'>
+                            <div className='m-3 m-0 p-0'>
+                                <div class=" row text-center m-0 p-0">
+                                    <div className='col-1 m-auto  m-0 p-0'>
+                                        <img src={ClockSvg} height="25px" />
                                     </div>
-                                </div>
-                                <div className='col-7 m-auto  m-0 p-0' >
-                                    <Form.Group controlId="duedate">
-                                        <Form.Control
-                                            type="date"
-                                            name="duedate"
-                                            placeholder=""
-                                            value={moment(projectInformation.StartTime).format("YYYY-MM-DD")}
-                                            onChange={(e) => {
-                                                setprojectInformation({ ...projectInformation, StartTime: e.target.value.substring(0, 10) })
-                                            }}
-                                        />
-                                    </Form.Group>
+                                    <div className='col-3 m-auto m-0 p-0' style={{ "text-align": "left" }} >
+                                        <div className='ms-2'>
+                                            <div style={orangeStyle}>Start time:</div>
+                                        </div>
+                                    </div>
+                                    <div className='col-7 m-auto  m-0 p-0' >
+                                        <Form.Group controlId="duedate">
+                                            <Form.Control
+                                                type="date"
+                                                name="duedate"
+                                                placeholder=""
+                                                value={moment(projectInformation.StartTime).format("YYYY-MM-DD")}
+                                                onChange={(e) => {
+                                                    setprojectInformation({ ...projectInformation, StartTime: e.target.value.substring(0, 10) })
+                                                }}
+                                            />
+                                        </Form.Group>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div className='m-3 m-0 p-0'>
-                            <div class=" row text-center m-0 p-0">
-                                <div className='col-1 m-auto  m-0 p-0'>
-                                    <img src={ClockSvg} height="25px" />
-                                </div>
-                                <div className='col-3 m-auto m-0 p-0' style={{ "text-align": "left" }} >
-                                    <div className='ms-2'>
-                                        <div style={orangeStyle}>Estimated end time:</div>
+                            <div className='m-3 m-0 p-0'>
+                                <div class=" row text-center m-0 p-0">
+                                    <div className='col-1 m-auto  m-0 p-0'>
+                                        <img src={ClockSvg} height="25px" />
                                     </div>
-                                </div>
-                                <div className='col-7 m-auto  m-0 p-0' >
-                                    <Form.Group controlId="duedate">
-                                        <Form.Control
-                                            type="date"
-                                            name="duedate"
-                                            placeholder=""
-                                            value={moment(projectInformation.PredictEndtime).format("YYYY-MM-DD")}
-                                            onChange={(e) => {
-                                                setprojectInformation({ ...projectInformation, PredictEndtime: e.target.value.substring(0, 10) })
-                                            }}
-                                        />
-                                    </Form.Group>
-                                </div>
+                                    <div className='col-3 m-auto m-0 p-0' style={{ "text-align": "left" }} >
+                                        <div className='ms-2'>
+                                            <div style={orangeStyle}>Estimated end time:</div>
+                                        </div>
+                                    </div>
+                                    <div className='col-7 m-auto  m-0 p-0' >
+                                        <Form.Group controlId="duedate">
+                                            <Form.Control
+                                                type="date"
+                                                name="duedate"
+                                                placeholder=""
+                                                value={moment(projectInformation.PredictEndtime).format("YYYY-MM-DD")}
+                                                onChange={(e) => {
+                                                    setprojectInformation({ ...projectInformation, PredictEndtime: e.target.value.substring(0, 10) })
+                                                }}
+                                            />
+                                        </Form.Group>
+                                    </div>
 
+                                </div>
                             </div>
-                        </div>
-                        <div className='m-3 m-0 p-0'>
-                            <div class=" row text-center m-0 p-0">
-                                <div className='col-1 m-auto  m-0 p-0'>
-                                    <img src={MemberSvg} height="25px" />
-                                </div>
-                                <div className='col-3 m-auto m-0 p-0' style={{ "text-align": "left" }} >
-                                    <div className='ms-2'>
-                                        <div style={orangeStyle}>Joined member :</div>
+                            <div className='m-3 m-0 p-0'>
+                                <div class=" row text-center m-0 p-0">
+                                    <div className='col-1 m-auto  m-0 p-0'>
+                                        <img src={MemberSvg} height="25px" />
                                     </div>
-                                </div>
-                                <div className='col-7 m-auto  m-0 p-0 text-start'  >
-                                    <div>{projectInformation.NumOfMember}</div>
-                                </div>
+                                    <div className='col-3 m-auto m-0 p-0' style={{ "text-align": "left" }} >
+                                        <div className='ms-2'>
+                                            <div style={orangeStyle}>Joined member :</div>
+                                        </div>
+                                    </div>
+                                    <div className='col-7 m-auto  m-0 p-0 text-start'  >
+                                        <div>{projectInformation.NumOfMember}</div>
+                                    </div>
 
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div className='col-6'>
-                        <div className='m-3 m-0 p-0'>
-                            <div class=" row text-center m-0 p-0">
-                                <div className='col-1  m-0 p-0'>
-                                    <img src={file_orange} height="24px" width="22px" />
-                                </div>
-                                <div className='col-2 m-0 p-0' style={{ "text-align": "left" }} >
-                                    <div className='ms-2'>
-                                        <div style={orangeStyle}>Description :</div>
+                        <div className='col-6'>
+                            <div className='m-3 m-0 p-0'>
+                                <div class=" row text-center m-0 p-0">
+                                    <div className='col-1  m-0 p-0'>
+                                        <img src={file_orange} height="24px" width="22px" />
+                                    </div>
+                                    <div className='col-2 m-0 p-0' style={{ "text-align": "left" }} >
+                                        <div className='ms-2'>
+                                            <div style={orangeStyle}>Description :</div>
+                                        </div>
+                                    </div>
+                                    <div className='col-8  m-0 p-0' >
+                                        <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1" >
+                                            <Form.Control as="textarea" rows={6} style={{ "overflow": "auto", "resize": "none" }} value={projectInformation.Description} onChange={(event) => {
+                                                setprojectInformation({ ...projectInformation, Description: event.target.value })
+                                            }} />
+                                        </Form.Group>
                                     </div>
                                 </div>
-                                <div className='col-8  m-0 p-0' >
-                                    <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1" >
-                                        <Form.Control as="textarea" rows={6} style={{ "overflow": "auto", "resize": "none" }} value={projectInformation.Description} onChange={(event) => {
-                                            setprojectInformation({ ...projectInformation, Description: event.target.value })
-                                        }} />
-                                    </Form.Group>
-                                </div>
                             </div>
                         </div>
+
                     </div>
 
                 </div>
-
             </div>
-
 
 
         </div>
@@ -453,22 +460,10 @@ export default function ProjectDetail() {
             <div className='row mt-2 m-0 p-0'>
                 {dataSourcesComponent()}
                 {aboutComponent()}
-                <h2 class="col-10  m-0 p-0" style={{ color: deep_blue_primary, "fontWeight": "bold", fontSize: "40px" }}>
-                    <div className='ms-4'>My team:</div>
-                </h2>
-                <div className='col-2 ml-auto m-0 p-0 text-right align-self-end'>
-                    <button class=" btn p-3 ms-5 " type="button" style={{ color: "white", backgroundColor: deep_blue_primary, borderRadius: "30px ", fontSize: 16 }} onClick={() => {
-                        setshowPeoplePopUp(true)
-                        //inviteMemberSubmit()
-                    }}><div className='d-flex'>
-                            <div className='d-flex justify-content-center me-2' style={{ color: "white", fontSize: 17 }}>Invite People</div>
-                            <div className='d-flex justify-content-center'><img src={add_people} height="20px" width="20px" /></div>
-                        </div>
-                    </button>
-                </div>
+                {peopleComponent()}
+
 
             </div>
-            {peopleComponent()}
 
         </div>
 

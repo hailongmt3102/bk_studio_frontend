@@ -7,7 +7,7 @@ import Header from "pages/Header";
 import ML from "pages/MachineLearning/ML";
 import People from "pages/People/People";
 import UpdatePassword from "pages/UpdatePassword/UpdatePassword";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import LocalizedStrings from 'react-localization';
 import { ReactNotifications } from 'react-notifications-component';
 import 'react-notifications-component/dist/theme.css';
@@ -39,6 +39,7 @@ import EditModel from "pages/MachineLearning/EditModel/EditModel";
 const translations = new LocalizedStrings(data);
 const localizationContext = React.createContext(translations);
 const loadingContext = React.createContext();
+const themeContext = React.createContext(false);
 
 function App() {
     const [drawerState, setDrawerState] = useState("workspace");
@@ -56,80 +57,90 @@ function App() {
     }
 
     const [isLoading, setIsLoading] = useState(false)
+    // localStorage.setItem('lightTheme', false)
+    // const themeSaved = localStorage.getItem('lightTheme') || true
+    const [lightMode, setLightMode] = useState(localStorage.getItem('lightTheme') === "true" ? true : false)
+
+    // const [lightMode, setLightMode] =  useState(false)
+
 
     return (
         <localizationContext.Provider value={translations}>
             <loadingContext.Provider value={setIsLoading}>
-                <Router>
-                    {isLoading && <Loading />}
-                    <ReactNotifications />
-                    <Drawer state={drawerState} setDrawerState={setDrawerState} />
-                    <div className="bg-light">
-                        <Header />
-                        <Routes>
-                            <Route path="/" exact element={<Dashboard />} >
-                            </Route>
-                            <Route path="/pList" element={<ProjectList />} />
-                            <Route path="/pDetail/:id" element={<ProjectDetail />} />
+                <themeContext.Provider value={lightMode}>
+                    <Router>
+                        <div className={lightMode ? "full-height" : "full-height darkmode"}>
+                            {isLoading && <Loading />}
+                            <ReactNotifications />
+                            <Drawer state={drawerState} setDrawerState={setDrawerState} />
+                            <div className="custombackground">
+                                <Header />
+                                <Routes>
+                                    <Route path="/" exact element={<Dashboard />} >
+                                    </Route>
+                                    <Route path="/pList" element={<ProjectList />} />
+                                    <Route path="/pDetail/:id" element={<ProjectDetail />} />
 
-                            <Route path="/datasources"
-                                element={<DataSources />} />
-                            <Route
-                                path="/datasources/:id"
-                                element={<DataSourceContent />}
-                            />
+                                    <Route path="/datasources"
+                                        element={<DataSources />} />
+                                    <Route
+                                        path="/datasources/:id"
+                                        element={<DataSourceContent />}
+                                    />
 
-                            <Route path="/people" element={<People />} />
-                            <Route path="/account/login" element={<Login />} />
+                                    <Route path="/people" element={<People />} />
+                                    <Route path="/account/login" element={<Login />} />
 
-                            <Route path="/account/forgetPassword" element={<ForgetPassword />} />
-                            <Route path="/account/register" element={<Register />} />
-                            <Route path="/account/changePassword" element={<ChangePassword />} />
-                            <Route path="/account/updatePassword" element={<UpdatePassword />} />
+                                    <Route path="/account/forgetPassword" element={<ForgetPassword />} />
+                                    <Route path="/account/register" element={<Register />} />
+                                    <Route path="/account/changePassword" element={<ChangePassword />} />
+                                    <Route path="/account/updatePassword" element={<UpdatePassword />} />
 
-                            <Route
-                                path="/project/create"
-                                element={<CreateReport />}
-                            />
-                            <Route path="/project/import" element={<ImportData />} />
-                            <Route
-                                path="/project/gallery"
-                                exact
-                                element={<Gallery />}
-                            />
-                            <Route path="/templates" element={<Templates />} />
-                            <Route path="/machinelearning" element={<ML />} />
-                            <Route path="/machinelearning/createModel" element={<CreateANewModel />} />
-                            <Route path="/machinelearning/modelDetail/:id" element={<ModelDetail />} />
-                            <Route path="/machinelearning/modelDetail/:id/edit" element={<EditModel />} />
-                            <Route path="/machinelearning/testModel" element={<TestModel />} />
-                            <Route path="/machinelearning/predict" element={<PredictData />} />
-                            <Route
-                                path="/project/gallery/:id/edit"
-                                exact
-                                element={<AdjustingReport />}
-                            />
-                            <Route
-                                path="/project/gallery/:id/view"
-                                exact
-                                element={<AdjustingReport />}
-                            />
+                                    <Route
+                                        path="/project/create"
+                                        element={<CreateReport />}
+                                    />
+                                    <Route path="/project/import" element={<ImportData />} />
+                                    <Route
+                                        path="/project/gallery"
+                                        exact
+                                        element={<Gallery />}
+                                    />
+                                    <Route path="/templates" element={<Templates />} />
+                                    <Route path="/machinelearning" element={<ML />} />
+                                    <Route path="/machinelearning/createModel" element={<CreateANewModel />} />
+                                    <Route path="/machinelearning/modelDetail/:id" element={<ModelDetail />} />
+                                    <Route path="/machinelearning/modelDetail/:id/edit" element={<EditModel />} />
+                                    <Route path="/machinelearning/testModel" element={<TestModel />} />
+                                    <Route path="/machinelearning/predict" element={<PredictData />} />
+                                    <Route
+                                        path="/project/gallery/:id/edit"
+                                        exact
+                                        element={<AdjustingReport />}
+                                    />
+                                    <Route
+                                        path="/project/gallery/:id/view"
+                                        exact
+                                        element={<AdjustingReport />}
+                                    />
 
-                            <Route path="/personal/profile" element={<Profile />} />
-                            <Route path="/personal/setting" element={<Setting setLanguage={languageHandler} />} />
+                                    <Route path="/personal/profile" element={<Profile />} />
+                                    <Route path="/personal/setting" element={<Setting setLanguage={languageHandler} setLightMode={setLightMode} lightMode={lightMode} />} />
 
-                            <Route
-                                path="*"
-                                element={
-                                    <div className="m-4">
-                                        <h1>404 not found</h1>
-                                        <p>Please check the correct link when browsing</p>
-                                    </div>
-                                }
-                            />
-                        </Routes>
-                    </div>
-                </Router>
+                                    <Route
+                                        path="*"
+                                        element={
+                                            <div className="m-4">
+                                                <h1>404 not found</h1>
+                                                <p>Please check the correct link when browsing</p>
+                                            </div>
+                                        }
+                                    />
+                                </Routes>
+                            </div>
+                        </div>
+                    </Router>
+                </themeContext.Provider>
             </loadingContext.Provider>
         </localizationContext.Provider>
     );

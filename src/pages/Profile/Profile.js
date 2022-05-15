@@ -8,9 +8,9 @@ import { Col, Form, Row } from 'react-bootstrap'
 import { Store } from 'react-notifications-component'
 import { useNavigate } from 'react-router-dom'
 import edit_grey from "resources/icons/edit_grey.svg"
+import avatarDefault from "resources/images/avatar_default.png"
 import { deep_blue_primary } from "../../utils/color"
 import { content } from "../../utils/notification"
-import avatarDefault from "resources/images/avatar_default.png"
 
 export default function Profile() {
     const setIsLoading = useContext(loadingContext)
@@ -88,10 +88,9 @@ export default function Profile() {
     }
     return (
         <div>
-            <h3 class="mt-3 mb-3 ms-5" style={{ color: deep_blue_primary, "fontWeight": "bold", fontSize: "40px" }}> Profile:</h3>
-            <div class="row rounded bg-white p-4 m-4" style={{ height: 750 }}>
-                <div class="col-2 me-5 ms-4 justify-content-center ">
-
+            <h3 class="mt-3 mb-3 ms-5 PrimaryFontColor" style={{ "fontWeight": "bold", fontSize: "40px" }}> Profile:</h3>
+            <div class="row rounded customforeground p-4 m-4" style={{ height: 750 }}>
+                <div class="col-5 m-0 p-0 justify-content-center ">
                     <div class="mb-4 ms-5 mt-3" >
                         <Badge
                             overlap="circular"
@@ -121,7 +120,7 @@ export default function Profile() {
                         </button>
                     </div>
                 </div>
-                <div class="ms-5 col-8">
+                <div class="col-7 m-0 p-0">
                     <div class=" justify-content-start align-items-center py-2">
                         <Form.Group as={Row} controlId="formPlaintextPassword">
                             <Form.Label style={{ fontSize: 14 }} >User name</Form.Label>
@@ -147,7 +146,7 @@ export default function Profile() {
                         </Form.Group>
                     </div>
                     <div class="d-md-flex justify-content-start align-items-center py-2 mt-1 mb-1">
-                        <div class="mb-0 me-4" style={{ fontSize: 14 }}>Gender: </div>
+                        <div class="mb-0 me-4 customtext" style={{ fontSize: 14 }}>Gender: </div>
 
                         <Form.Check
                             onClick={(e) => {
@@ -231,7 +230,7 @@ export default function Profile() {
                             <Form.Label column sm="1" style={{ fontSize: 14 }}>
                                 Position:
                             </Form.Label>
-                            <Col className='mt-2' sm="5" >
+                            <Col className='mt-2 ms-4' sm="5" >
                                 <h5 style={{ fontSize: "15px" }}>{information.Position}</h5>
                             </Col>
                         </Form.Group>

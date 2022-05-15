@@ -1,12 +1,13 @@
-import { useEffect, useState, useContext } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { Form } from 'react-bootstrap'
 
 import excel_icon from "resources/icons/excel_icon.svg"
 
+import { checkPermissionWithDatasource, deleteDatasource, Rename, SendToWorkspace, showDataSourceContent } from 'api/DataSources'
 import ThreeDotButton from 'components/ThreeDotButton'
 import three_dot from "resources/icons/three-dot.svg"
-import { localizationContext } from '../../../App'
-import { checkPermissionWithDatasource, deleteDatasource, Rename, SendToWorkspace, showDataSourceContent } from 'api/DataSources'
+import { localizationContext } from 'App'
+import ConfirmDialog from "components/ConfirmDialog";
 
 import { Store } from 'react-notifications-component'
 import { useNavigate } from 'react-router-dom'
@@ -15,6 +16,18 @@ import { content } from "utils/notification"
 export default function DataSourceBox(props) {
     const localization = useContext(localizationContext)
     const navigate = useNavigate()
+    const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: '', subTitle: '' })
+    const handleCloseYes = (id) => {
+        deleteHandle(props.ele.Id)
+        console.log("close ne")
+    }
+    const handleCloseNo = () => {
+        setConfirmDialog({ ...ConfirmDialog, isOpen: false })
+    }
+    const handleOpen = () => {
+
+        setConfirmDialog({ ...ConfirmDialog, isOpen: true })
+    }
 
     var myEmail = localStorage.getItem("email")
 
@@ -116,14 +129,14 @@ export default function DataSourceBox(props) {
                             })
                             if (props.modelState.isEditModel) {
                                 // navigate to edit model page
-                                let edited = props.modelState.isEditInput ? {input : JSON.stringify(rows.slice(0,50))} : {output : JSON.stringify(rows.slice(0,50))}
+                                let edited = props.modelState.isEditInput ? { input: JSON.stringify(rows.slice(0, 50)) } : { output: JSON.stringify(rows.slice(0, 50)) }
                                 navigate("/machinelearning/modelDetail/" + props.modelState.MId + "/edit", {
                                     state: {
                                         ...props.modelState,
                                         ...edited
                                     }
                                 })
-                            }else {
+                            } else {
                                 navigate("/machinelearning/predict", {
                                     state: {
                                         rows: rows,
@@ -132,7 +145,7 @@ export default function DataSourceBox(props) {
                                 })
                             }
 
-                     
+
 
                         })
                         .catch(err => {
@@ -171,13 +184,21 @@ export default function DataSourceBox(props) {
     }
     const threeDotComponent = () => {
         return <div className="row" style={{ "textAlign": "end" }}>
+            <ConfirmDialog
+                confirmDialog={confirmDialog}
+                title="Are you sure you want to delete this data source?"
+                handleCloseYes={() => handleCloseYes()}
+                handleCloseNo={() => handleCloseNo()}
+
+            />
             <ThreeDotButton title={'adđ'}
                 items={props.option_list}
                 icon={three_dot}
                 icons_list={props.icon_list}
                 onClick={(val) => {
                     if (val == "Delete") {
-                        deleteHandle(props.ele.Id)
+                        handleOpen()
+
                     }
                     else if (val === "Rename") {
                         setPressRename(true)
@@ -200,7 +221,7 @@ export default function DataSourceBox(props) {
     }
 
     return (
-        <div className='ms-4 row mb-3' style={{ "border-radius": "20px", "backgroundColor": "#F7F7F7" }}>
+        <div className='ms-4 row mb-3 level1 shadow' style={{ "border-radius": "20px" }}>
             <div className="col-3 m-auto text-center m-0 p-0  customFontRoboto" onClick={() => { ClickHandle(props.ele.Id) }}  >
                 <div className='ms-4 me-3'><img src={excel_icon} height="90px" width="90px" /></div>
             </div>

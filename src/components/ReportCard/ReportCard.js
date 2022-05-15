@@ -1,26 +1,26 @@
-import React, { useState, useEffect, useContext } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { Form } from 'react-bootstrap'
 import { localizationContext } from '../../App'
 import default_report_img from "../../resources/icons/default_report_img.svg"
 
-import heart_img from "../../resources/icons/heart.svg"
-import hearted from "../../resources/icons/hearted.svg"
+import { deleteReport, getPermission, like, unlike, updateReportInformation } from 'api/Report'
+import { Store } from 'react-notifications-component'
 import { useNavigate } from 'react-router-dom'
-import ThreeDotButton from "../ThreeDotButton"
 import delete_icon from 'resources/icons/delete.svg'
 import download_blue from "resources/icons/download_blue.svg"
-import share_blue from "resources/icons/share_blue.svg"
 import edit from 'resources/icons/edit.svg'
+import share_blue from "resources/icons/share_blue.svg"
 import three_dot from "resources/icons/three-dot.svg"
 import { blue_cloud, deep_blue_primary } from "utils/color"
-import { Store } from 'react-notifications-component'
+import heart_img from "../../resources/icons/heart.svg"
+import hearted from "../../resources/icons/hearted.svg"
 import { content } from "../../utils/notification"
-import { like, unlike, deleteReport, updateReportInformation, getPermission } from 'api/Report'
+import ThreeDotButton from "../ThreeDotButton"
 
-import { likeTemplate, unlikeTemplate, deleteTemplate, updateTemplateInformation } from 'api/Templates'
+import { deleteTemplate, likeTemplate, unlikeTemplate, updateTemplateInformation } from 'api/Templates'
 import ShareWithPopUp from "pages/AdjustingReport/components/PopUp/ShareWithPopUp"
 
-import ConfirmDialog from "components/ConfirmDialog";
+import ConfirmDialog from "components/ConfirmDialog"
 
 
 export default function ReportCard(props) {
@@ -132,6 +132,8 @@ export default function ReportCard(props) {
             updateReportInformation(currentProject, RId, dataToUpdate)
                 .then(res => {
                     Store.addNotification(content("Success", "Updated Report Information", "success"))
+                    setShowName(dataToUpdate.Name)
+                    setShowHastag(dataToUpdate.Hastag)
                     setPressEdit(false)
                     // setTimeout(() => window.location.reload(), 1000);
                 })
@@ -158,6 +160,8 @@ export default function ReportCard(props) {
 
     }
 
+    const [showName, setShowName] = useState(props.data.Name)
+    const [showHastag, setShowHastag] = useState(props.data.Hastag)
 
     const ContentComponent = () => {
         return <div>
@@ -167,6 +171,7 @@ export default function ReportCard(props) {
                         <div className='row pe-4' style={{ maxHeight: "50px" }}>
                             <Form.Control size="sm" type="text" value={dataToUpdate.Name} onChange={(event) => {
                                 setDataToUpdate({ ...dataToUpdate, Name: event.target.value })
+
                             }}
                                 className="border-0"
                                 style={{
@@ -180,6 +185,7 @@ export default function ReportCard(props) {
                         <div className='row mt-1 pe-4' >
                             <Form.Control size="sm" type="text" value={dataToUpdate.Hastag} onChange={(event) => {
                                 setDataToUpdate({ ...dataToUpdate, Hastag: event.target.value })
+
                             }}
                                 placeholder="#hastag"
                                 className="border-0"
@@ -193,15 +199,15 @@ export default function ReportCard(props) {
                     </div> :
                     <div>
                         <div className='row mt-2' style={{ "color": deep_blue_primary, "fontSize": "28px", "fontWeight": "bold" }}>
-                            {props.data.Name.slice(0, 15)}
+                            {showName.slice(0, 15)}
                         </div>
 
 
                         {
-                            props.data.Hastag === "" ?
+                            showHastag === "" ?
                                 <div className='row C4FontColor customFontBold size22'>#Hastag</div>
                                 :
-                                <div className='row SecondFontColor customFontBold  size22'>{props.data.Hastag}</div>
+                                <div className='row SecondFontColor customFontBold  size22'>{showHastag}</div>
                         }
 
                         {/* <div className='row mb-2' style={{ "color": blue_cloud, "fontSize": "23px", "fontWeight": "bold" }}>
@@ -293,7 +299,7 @@ export default function ReportCard(props) {
                 handleCloseYes={() => handleCloseYes()}
                 handleCloseNo={() => handleCloseNo()}
             />
-            <div className="row m-0 p-0  shadow border border-light" style={{ "borderRadius": "20px" }}>
+            <div className="row m-0 p-0  shadow border border-light level1" style={{ "borderRadius": "20px" }}>
                 <div className='col-5 m-0 p-0 m-auto text-center ' onClick={() => {
                     props.type === "Template" ? viewReportNav(props.data.Id) : NavigationHandle(props.data.Id)
                 }}>

@@ -68,7 +68,6 @@ export default function TabComponent(props) {
 
 
 	useEffect(() => {
-		console.log(props.data)
 		parseSqlCommand(props.data.data.script)
 	}, [props.data])
 
@@ -108,7 +107,7 @@ export default function TabComponent(props) {
 					<div className='PrimaryFontColor customFontBold size16'>Field:</div>
 					{/* <div>{commandData.data.select.join('\n ')}</div> */}
 					{
-						commandData.data.select.map((e) => <div>{e}</div>)
+						commandData.data.select.map((e, index) => <div key={index}>{e}</div>)
 					}
 				</div>
 				<div> <button className='btn-lg btn-success text-center border-0 mt-4'

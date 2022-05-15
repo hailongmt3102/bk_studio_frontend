@@ -102,7 +102,7 @@ export default function AdjustingReport(props) {
     }
 
     useEffect(() => {
-        console.log(tabData)
+        console.log("tab data changed ",tabData)
     }, [tabData])
 
 
@@ -270,11 +270,11 @@ export default function AdjustingReport(props) {
             let componentResult = (await getAllComponent(currentProject, RId, isTemplate)).data
             let queryResult, parseResult
             for (let i = 0; i < componentResult.length; i++) {
+                componentResult[i].Position = JSON.parse(componentResult[i].Position)
+                componentResult[i].TextTheme = JSON.parse(componentResult[i].TextTheme)
+                componentResult[i].FrameTheme = JSON.parse(componentResult[i].FrameTheme)
                 // don't need to fetch data from query command
                 if (!checkNeedToQueryData(componentResult[i].Type)) {
-                    componentResult[i].Position = JSON.parse(componentResult[i].Position)
-                    componentResult[i].TextTheme = JSON.parse(componentResult[i].TextTheme)
-                    componentResult[i].FrameTheme = JSON.parse(componentResult[i].FrameTheme)
                     continue
                 }
                 // fetch data
@@ -282,14 +282,10 @@ export default function AdjustingReport(props) {
                 if (queryResult == null) {
                     // error to query data of this shape
                     componentResult[i].TypeParsed = "Error"
-                    componentResult[i].Position = JSON.parse(componentResult[i].Position)
                 } else {
                     try {
                         parseResult = parseDataQueried(componentResult[i].Type, queryResult)
                         // parse them json data from server
-                        componentResult[i].Position = JSON.parse(componentResult[i].Position)
-                        componentResult[i].TextTheme = JSON.parse(componentResult[i].TextTheme)
-                        componentResult[i].FrameTheme = JSON.parse(componentResult[i].FrameTheme)
                         componentResult[i] = { ...componentResult[i], ...parseResult }
                     }
                     catch (err) {
@@ -559,10 +555,10 @@ export default function AdjustingReport(props) {
                 QueryCommand: componentData.QueryCommand,
                 Height: parseInt(componentData.Height),
                 Width: parseInt(componentData.Width),
-                Position: JSON.stringify(componentData.Position),
+                Position: typeof(componentData.Position) == typeof("") ? componentData.Position : JSON.stringify(componentData.Position),
                 TitleTheme: componentData.TitleTheme,
-                TextTheme: JSON.stringify(componentData.TextTheme),
-                FrameTheme: JSON.stringify(componentData.FrameTheme)
+                TextTheme: typeof(componentData.TextTheme) == typeof("") ? componentData.TextTheme : JSON.stringify(componentData.TextTheme),
+                FrameTheme: typeof(componentData.FrameTheme) == typeof("") ? componentData.FrameTheme :JSON.stringify(componentData.FrameTheme)
             })
         } catch (error) {
             console.log("Save shape error :", componentData.Id, " \n Error: ", error)
@@ -754,7 +750,7 @@ export default function AdjustingReport(props) {
     const onChangeFocusShape = (index) => {
         if (index < shapeComponents.length && index >= 0) {
             let shapeData = shapeComponents[index]
-            setTabData({
+            let tab = {
                 active: true,
                 data: {
                     title: shapeData.Title,
@@ -769,7 +765,8 @@ export default function AdjustingReport(props) {
                     fill: shapeData.FrameTheme.color,
                     stroke: ""
                 }
-            })
+            }
+            setTabData(tab)
         } else {
             setTabData({
                 active: false,
@@ -1224,7 +1221,7 @@ export default function AdjustingReport(props) {
     }
 
     return (
-        <div>
+        <div className="bg-light">
             {
                 isEdit === true ? EditUI() : ViewPageUI()
             }

@@ -3,7 +3,7 @@ import './ImportButton.css'
 
 export default function ImportButton(props) {
     return (
-        <button className='btn import_button' style={{"minWidth":"240px", minHeight:"100px"}} onClick={()=>{props.onClick()}}>
+        <button className='btn import_button level1 m-2' style={{"minWidth":"240px", minHeight:"100px"}} onClick={()=>{props.onClick()}}>
             <div className='row'>
                 <div className='col-4'>
                     <img src={props.image}/>
