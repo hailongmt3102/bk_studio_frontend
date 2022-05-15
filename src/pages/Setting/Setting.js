@@ -124,7 +124,7 @@ export default function Setting(props) {
                 </Form.Group>
 
                 <Row>
-                    <Col className="mt-4 ms-5 level1 shadow" md={3} style={{ borderRadius: "20px", marginRight: "40px" }}>
+                    <Col className="mt-4 ms-5 level1 brownColor" md={3} style={{ borderRadius: "20px", marginRight: "40px" }}>
                         <Col className=" text-center me-2 align-items-end "> <h3 class="customFontBold SecondFontColor align-self-center mt-3 mb-3" > {localization.Free}</h3></Col>
                         <div className='customFontRoboto' style={{ paddingLeft: "100px" }}>
                             <div className="row  ">
@@ -197,7 +197,7 @@ export default function Setting(props) {
                         </div>
 
                     </Col>
-                    <Col className="mt-4 ms-5 level1 shadow" md={3} style={{ borderRadius: "15px", marginRight: "40px" }}>
+                    <Col className="mt-4 ms-5 level1 brownColor" md={3} style={{ borderRadius: "15px", marginRight: "40px" }}>
                         <Col className=" text-center align-items-end ">
                             <h3 class=" align-self-center mt-3 mb-3 SecondFontColor customFontBold">
                                 {localization.VIP}

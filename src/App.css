@@ -82,6 +82,9 @@ p {
 .size20 {
     font-size: 22px;
 }
+.brownColor {
+    background-color: #f7f7f7;
+}
 
 .darkmode .header input, .darkmode .header p{
     color: white;
@@ -184,3 +187,4 @@ html, body {
 .darkmode .SecondFontColor{
     color: #7cc8ff;
 }
+
