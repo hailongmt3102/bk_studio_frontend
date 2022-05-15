@@ -31,11 +31,11 @@ export default function People() {
     }, [])
     return (
         <div>
-            <h2 class="ms-4 PrimaryFontColor" style={{"fontWeight": "bold", fontSize: "40px" }}> {localization.People}</h2>
+            <h2 class="ms-4 PrimaryFontColor" style={{ "fontWeight": "bold", fontSize: "40px" }}> {localization.People}</h2>
             <div className='rounded-5'>
-                <div className='row m-0 p-0 customforeground'>
-                    <div className='col-4 m-0 p-0 '>
-                        <div className='m-3 p-4 overflow' style={{ height: "100%" }} >
+                <div className='row m-0 p-0 '>
+                    <div className='col-4 m-0 p-0  '>
+                        <div className='m-3 p-4 customforeground overflow' style={{ height: "100%" }} >
                             <h1 className='row  m-0 p-0 customFontBold SecondFontColor ' >{localization.manager}</h1>
                             {
                                 people.map((ele) => {
@@ -77,8 +77,8 @@ export default function People() {
                         </div>
 
                     </div>
-                    <div className='col-8  m-0 p-0' >
-                        <div className='m-3 m-0 p-0 p-4 overflow' style={{ height: "100%" }}>
+                    <div className='col-8  m-0 p-0 ' >
+                        <div className='m-3 m-0 p-0 p-4 customforeground overflow' style={{ height: "100%" }}>
                             <h1 className=' m-0 p-0 customFontBold SecondFontColor '>{localization.member}</h1>
                             <div className='row m-0 p-0'>
                                 {
