@@ -216,17 +216,17 @@ export default function ReportCard(props) {
                     </div>
             }
             <div className='row mt-4'>
-                <p className='m-0 p-0'> <span style={{ "color": "#868585" }}>Id:</span> {props.data.Id} </p>
+                <p className='m-0 p-0'> <span className="customhinttext">Id:</span> {props.data.Id} </p>
             </div>
             <div className='row mt-2'>
-                <p className='m-0 p-0'> <span style={{ "color": "#868585" }}>{localization.createBy}</span> {props.data.Author.slice(0, 20)}... </p>
+                <p className='m-0 p-0'> <span className="customhinttext">{localization.createBy}</span> {props.data.Author.slice(0, 20)}... </p>
             </div>
             <div className='row mt-2'>
-                <p className='m-0 p-0'> <span style={{ "color": "#868585" }}> {localization.createDate} </span>  {props.data.CreateTime.slice(0, 10)} </p>
+                <p className='m-0 p-0'> <span className="customhinttext"> {localization.createDate} </span>  {props.data.CreateTime.slice(0, 10)} </p>
             </div>
             {
                 props.type === "Report" ? <div className='row mt-2'>
-                    <p className='m-0 p-0'> <span style={{ "color": "#868585" }}>  {localization.lastModi}  </span>    {props.data.LastModified.slice(0, 10)} </p>
+                    <p className='m-0 p-0'> <span className="customhinttext">  {localization.lastModi}  </span>    {props.data.LastModified.slice(0, 10)} </p>
                 </div> : null
             }
             {

@@ -128,10 +128,10 @@ export default function Setting(props) {
                         <Col className=" text-center me-2 align-items-end "> <h3 class="customFontBold SecondFontColor align-self-center mt-3 mb-3" > {localization.Free}</h3></Col>
                         <div className='customFontRoboto' style={{ paddingLeft: "100px" }}>
                             <div className="row  ">
-                                <div class=" justify-content-center  col-1">
-                                    <img src={tick} style={{ height: 10, width: 10 }} />
+                                <div class=" justify-content-center col-1">
+                                    <img src={tick} className="customhidden" style={{ height: 10, width: 10 }} />
                                 </div>
-                                <div class="col-7 customFontRoboto">
+                                <div class="col-7 customFontRoboto customwhitetext">
                                     {localization.usetool}
                                 </div>
                             </div>
@@ -139,19 +139,19 @@ export default function Setting(props) {
                         <div className='customFontRoboto' style={{ paddingLeft: "100px" }}>
                             <div className="row  ">
                                 <div class=" justify-content-center  col-1">
-                                    <img src={tick} style={{ height: 10, width: 10 }} />
+                                    <img src={tick} className="customhidden" style={{ height: 10, width: 10 }} />
                                 </div>
-                                <div class="col-7 customFontRoboto">
+                                <div class="col-7 customFontRoboto customwhitetext">
                                     {localization.createreports}
                                 </div>
                             </div>
                         </div>
-                        <div className='customFontRoboto' style={{ paddingLeft: "100px", color: "grey" }}>
+                        <div className='customFontRoboto' style={{ paddingLeft: "100px"}}>
                             <div className="row  ">
                                 <div class=" justify-content-center  col-1">
-                                    <img src={tick} style={{ height: 10, width: 10 }} />
+                                    <img src={tick} className="customhidden" style={{ height: 10, width: 10 }} />
                                 </div>
-                                <div class="col-7 customFontRoboto">
+                                <div class="col-7 customFontRoboto customhinttext">
                                     {localization.addData}
                                 </div>
                             </div>
@@ -159,9 +159,9 @@ export default function Setting(props) {
                         <div className='customFontRoboto' style={{ paddingLeft: "100px" }}>
                             <div className="row  ">
                                 <div class=" justify-content-center  col-1">
-                                    <img src={tick} style={{ height: 10, width: 10 }} />
+                                    <img src={tick} className="customhidden" style={{ height: 10, width: 10 }} />
                                 </div>
-                                <div class="col-7 customFontRoboto" style={{ color: "grey" }}>
+                                <div class="col-7 customFontRoboto customhinttext" >
                                     {localization.limitPro}
                                 </div>
                             </div>
@@ -169,9 +169,9 @@ export default function Setting(props) {
                         <div className='customFontRoboto' style={{ paddingLeft: "100px" }}>
                             <div className="row  ">
                                 <div class=" justify-content-center  col-1">
-                                    <img src={tick} style={{ height: 10, width: 10 }} />
+                                    <img src={tick} className="customhidden" style={{ height: 10, width: 10 }} />
                                 </div>
-                                <div class="col-7" style={{ fontFamily: "Roboto", color: "grey" }}>
+                                <div class="col-7 customFontRoboto customhinttext">
                                     {localization.invite}
                                 </div>
                             </div>
@@ -179,9 +179,9 @@ export default function Setting(props) {
                         <div className='customFontRoboto' style={{ paddingLeft: "100px" }}>
                             <div className="row  ">
                                 <div class=" justify-content-center  col-1">
-                                    <img src={tick} style={{ height: 10, width: 10 }} />
+                                    <img src={tick} className="customhidden" style={{ height: 10, width: 10 }} />
                                 </div>
-                                <div class="col-7 customFontRoboto" style={{ color: "grey" }}>
+                                <div class="col-7 customFontRoboto customhinttext">
                                     {localization.nolimitreports}
                                 </div>
                             </div>
@@ -206,9 +206,9 @@ export default function Setting(props) {
                         <div style={{ paddingLeft: "100px", fontFamily: "Roboto" }}>
                             <div className="row  ">
                                 <div class=" justify-content-center  col-1">
-                                    <img src={tick} style={{ height: 10, width: 10 }} />
+                                    <img src={tick} className="customhidden" style={{ height: 10, width: 10 }} />
                                 </div>
-                                <div class="col-7 customFontRoboto" >
+                                <div class="col-7 customFontRoboto customwhitetext" >
                                     {localization.usetool}
                                 </div>
                             </div>
@@ -216,9 +216,9 @@ export default function Setting(props) {
                         <div style={{ paddingLeft: "100px", fontFamily: "Roboto" }}>
                             <div className="row  ">
                                 <div class=" justify-content-center  col-1">
-                                    <img src={tick} style={{ height: 10, width: 10 }} />
+                                    <img src={tick} className="customhidden" style={{ height: 10, width: 10 }} />
                                 </div>
-                                <div class="col-7 customFontRoboto" >
+                                <div class="col-7 customFontRoboto customwhitetext" >
                                     {localization.createreports}
                                 </div>
                             </div>
@@ -226,9 +226,9 @@ export default function Setting(props) {
                         <div style={{ paddingLeft: "100px", fontFamily: "Roboto" }}>
                             <div className="row  ">
                                 <div class=" justify-content-center  col-1">
-                                    <img src={tick} style={{ height: 10, width: 10 }} />
+                                    <img src={tick} className="customhidden" style={{ height: 10, width: 10 }} />
                                 </div>
-                                <div class="col-7 customFontRoboto" >
+                                <div class="col-7 customFontRoboto customwhitetext" >
                                     {localization.addData}
                                 </div>
                             </div>
@@ -236,9 +236,9 @@ export default function Setting(props) {
                         <div style={{ paddingLeft: "100px", fontFamily: "Roboto" }}>
                             <div className="row  ">
                                 <div class=" justify-content-center  col-1">
-                                    <img src={tick} style={{ height: 10, width: 10 }} />
+                                    <img src={tick} className="customhidden" style={{ height: 10, width: 10 }} />
                                 </div>
-                                <div class="col-7 customFontRoboto" >
+                                <div class="col-7 customFontRoboto customwhitetext" >
                                     {localization.limitPro}
                                 </div>
                             </div>
@@ -246,9 +246,9 @@ export default function Setting(props) {
                         <div style={{ paddingLeft: "100px", fontFamily: "Roboto" }}>
                             <div className="row  ">
                                 <div class=" justify-content-center  col-1">
-                                    <img src={tick} style={{ height: 10, width: 10 }} />
+                                    <img src={tick} className="customhidden" style={{ height: 10, width: 10 }} />
                                 </div>
-                                <div class="col-7 customFontRoboto" >
+                                <div class="col-7 customFontRoboto customwhitetext" >
                                     {localization.invite}
                                 </div>
                             </div>
@@ -256,9 +256,9 @@ export default function Setting(props) {
                         <div style={{ paddingLeft: "100px", fontFamily: "Roboto" }}>
                             <div className="row  ">
                                 <div class=" justify-content-center  col-1">
-                                    <img src={tick} style={{ height: 10, width: 10 }} />
+                                    <img src={tick} className="customhidden" style={{ height: 10, width: 10 }} />
                                 </div>
-                                <div class="col-7 customFontRoboto">
+                                <div class="col-7 customFontRoboto customwhitetext">
                                     {localization.nolimitreports}
                                 </div>
                             </div>
