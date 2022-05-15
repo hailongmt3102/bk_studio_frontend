@@ -102,7 +102,7 @@ export default function AdjustingReport(props) {
     }
 
     useEffect(() => {
-        console.log(tabData)
+        console.log("tab data changed ",tabData)
     }, [tabData])
 
 
@@ -766,9 +766,7 @@ export default function AdjustingReport(props) {
                     stroke: ""
                 }
             }
-            console.log(shapeComponents)
-            console.log(shapeData)
-            console.log(tab)
+            setTabData(tab)
         } else {
             setTabData({
                 active: false,
