@@ -2,7 +2,7 @@ import { getColumnsOfTable, GetDataSourcesListInformationInProject, QueryData as
 import { createNewComponent as createNewComponentApi, createNewReport, deleteReport, deleteShape as deleteShapeApi, getAllComponent, getAllDatasourceNameInReport, getReportInformation, saveAsCopy, saveAsTemplate, updateAComponent, updateReportInformation } from 'api/Report';
 import { createAReportByTemplate, deleteTemplate, getAllDatasourceNameInTemplate } from "api/Templates";
 import TabComponent from "pages/AdjustingReport/components/tabComponent/TabComponent";
-import { useEffect, useRef, useState, useContext } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { Form } from 'react-bootstrap';
 import { Store } from 'react-notifications-component';
 import { useLocation, useNavigate } from "react-router-dom";
@@ -19,9 +19,9 @@ import ShareWithPopUp from "./components/PopUp/ShareWithPopUp";
 import './AdjustingReport.css';
 import SqlPopUp from "./components/PopUp/SqlPopUp";
 
-import { shapeBackgroundColors, shapeBorderColors } from 'utils/color';
+import { loadingContext } from 'App';
 import * as htmlToImage from 'html-to-image';
-import { loadingContext } from 'App'
+import { shapeBackgroundColors, shapeBorderColors } from 'utils/color';
 // import { updateAvatar } from 'api/Account'
 // import { dataURLtoFile } from 'utils/utils'
 
@@ -96,13 +96,12 @@ export default function AdjustingReport(props) {
 
     const [keydown, setKeydown] = useState({ previous: "", current: "" })
 
-
     const EditStyle = (newStyle) => {
         setTabData({ ...tabData, style: newStyle })
     }
 
     useEffect(() => {
-        console.log("tab data changed ",tabData)
+        console.log("tab data changed ", tabData)
     }, [tabData])
 
 
@@ -265,10 +264,11 @@ export default function AdjustingReport(props) {
 
     // ** get all shape from server
     const fetchAllShapesFromServer = async () => {
+        let colorIndex = 0;
         if (currentProject == null) return
         try {
             let componentResult = (await getAllComponent(currentProject, RId, isTemplate)).data
-            let queryResult, parseResult
+            let queryResult
             for (let i = 0; i < componentResult.length; i++) {
                 componentResult[i].Position = JSON.parse(componentResult[i].Position)
                 componentResult[i].TextTheme = JSON.parse(componentResult[i].TextTheme)
@@ -284,7 +284,9 @@ export default function AdjustingReport(props) {
                     componentResult[i].TypeParsed = "Error"
                 } else {
                     try {
-                        parseResult = parseDataQueried(componentResult[i].Type, queryResult)
+                        let { parseResult, _colorIndex } = parseDataQueried(componentResult[i].Type, queryResult, colorIndex)
+
+                        colorIndex = _colorIndex
                         // parse them json data from server
                         componentResult[i] = { ...componentResult[i], ...parseResult }
                     }
@@ -313,8 +315,11 @@ export default function AdjustingReport(props) {
         }
     }
 
+
+
     // ** parse data after query complete 
-    const parseDataQueried = (type, queryResult) => {
+    const parseDataQueried = (type, queryResult, currentIndexOfShapeColor) => {
+        console.log(currentIndexOfShapeColor)
         let keys, result = {}, arrayData
         switch (type) {
             case "Table":
@@ -338,13 +343,14 @@ export default function AdjustingReport(props) {
                         {
                             label: result.title,
                             data: arrayData[keys[1]],
-                            backgroundColor: arrayData[keys[0]].map((_, index) => shapeBackgroundColors[index % shapeBackgroundColors.length]),
-                            borderColor: arrayData[keys[0]].map((_, index) => shapeBorderColors[index % shapeBorderColors.length]),
+                            backgroundColor: arrayData[keys[0]].map((_, index) => shapeBackgroundColors[(index + currentIndexOfShapeColor) % shapeBackgroundColors.length]),
+                            borderColor: arrayData[keys[0]].map((_, index) => shapeBorderColors[(index + currentIndexOfShapeColor) % shapeBorderColors.length]),
                             borderWidth: 1,
                         }
                     ]
                 }
                 result.pieData = pieData
+                currentIndexOfShapeColor += arrayData[keys[0]].length
                 break
             case "Doughnut Chart":
                 keys = Object.keys(queryResult.data[0])
@@ -364,12 +370,13 @@ export default function AdjustingReport(props) {
                         {
                             label: result.title,
                             data: arrayData[keys[1]],
-                            backgroundColor: arrayData[keys[0]].map((_, index) => shapeBackgroundColors[index % shapeBackgroundColors.length]),
-                            borderColor: arrayData[keys[0]].map((_, index) => shapeBorderColors[index % shapeBorderColors.length]),
+                            backgroundColor: arrayData[keys[0]].map((_, index) => shapeBackgroundColors[(index + currentIndexOfShapeColor) % shapeBackgroundColors.length]),
+                            borderColor: arrayData[keys[0]].map((_, index) => shapeBorderColors[(index + currentIndexOfShapeColor) % shapeBorderColors.length]),
                             borderWidth: 1,
                         }
                     ]
                 }
+                currentIndexOfShapeColor += arrayData[keys[0]].length
                 result.doughnutData = doughnutData
                 break
             case "Line Chart":
@@ -392,11 +399,12 @@ export default function AdjustingReport(props) {
                             label: key,
                             data: arrayData[key],
                             fill: true,
-                            backgroundColor: shapeBackgroundColors[index % shapeBackgroundColors.length],
-                            borderColor: shapeBorderColors[index % shapeBorderColors.length]
+                            backgroundColor: shapeBackgroundColors[(index + currentIndexOfShapeColor) % shapeBackgroundColors.length],
+                            borderColor: shapeBorderColors[(index + currentIndexOfShapeColor) % shapeBorderColors.length]
                         }
                     })
                 }
+                currentIndexOfShapeColor += keys.length + 1
                 break;
             case "Bar Chart":
                 if (queryResult.data.length == 0) return
@@ -417,18 +425,18 @@ export default function AdjustingReport(props) {
                             label: key,
                             data: arrayData[key],
                             fill: true,
-                            backgroundColor: shapeBackgroundColors[index % shapeBackgroundColors.length],
-                            borderColor: shapeBorderColors[index % shapeBorderColors.length]
+                            backgroundColor: shapeBackgroundColors[(index + currentIndexOfShapeColor) % shapeBackgroundColors.length],
+                            borderColor: shapeBorderColors[(index + currentIndexOfShapeColor) % shapeBorderColors.length]
                         }
                     })
                 }
-
+                currentIndexOfShapeColor += keys.length + 1
                 break;
             default:
                 console.log("Unresolve shape type : ", props.data.Type)
                 break
         }
-        return result
+        return { parseResult : result, _colorIndex : currentIndexOfShapeColor}
     }
 
     // ** combine all function relative to getting content of report
@@ -453,11 +461,10 @@ export default function AdjustingReport(props) {
     // ** push new component 
     const pushNewComponentToUI = async (component) => {
         try {
-            let parseResult = {}
             if (checkNeedToQueryData(component.Type)) {
                 // fetch data
                 let queryResult = await queryDataOfAShape(component.QueryCommand)
-                parseResult = parseDataQueried(component.Type, queryResult)
+               let  {parseResult} = parseDataQueried(component.Type, queryResult, 0)
                 if (queryResult == null) {
                     // error to query data of this shape
                     component.TypeParsed = "Error"
@@ -484,11 +491,10 @@ export default function AdjustingReport(props) {
         if (followingIndexComponent == -1 || followingIndexComponent > shapeComponents.length - 1) return
         let index = followingIndexComponent
         try {
-            let parseResult = {}
             if (checkNeedToQueryData(shapeComponents[index].Type)) {
                 // fetch data
                 let queryResult = await queryDataOfAShape(query)
-                parseResult = parseDataQueried(shapeComponents[index].Type, queryResult)
+                let {parseResult} = parseDataQueried(shapeComponents[index].Type, queryResult, 0)
                 if (queryResult == null) {
                     // error to query data of this shape
                     parseResult.TypeParsed = "Error"
@@ -555,10 +561,10 @@ export default function AdjustingReport(props) {
                 QueryCommand: componentData.QueryCommand,
                 Height: parseInt(componentData.Height),
                 Width: parseInt(componentData.Width),
-                Position: typeof(componentData.Position) == typeof("") ? componentData.Position : JSON.stringify(componentData.Position),
+                Position: typeof (componentData.Position) == typeof ("") ? componentData.Position : JSON.stringify(componentData.Position),
                 TitleTheme: componentData.TitleTheme,
-                TextTheme: typeof(componentData.TextTheme) == typeof("") ? componentData.TextTheme : JSON.stringify(componentData.TextTheme),
-                FrameTheme: typeof(componentData.FrameTheme) == typeof("") ? componentData.FrameTheme :JSON.stringify(componentData.FrameTheme)
+                TextTheme: typeof (componentData.TextTheme) == typeof ("") ? componentData.TextTheme : JSON.stringify(componentData.TextTheme),
+                FrameTheme: typeof (componentData.FrameTheme) == typeof ("") ? componentData.FrameTheme : JSON.stringify(componentData.FrameTheme)
             })
         } catch (error) {
             console.log("Save shape error :", componentData.Id, " \n Error: ", error)
@@ -795,19 +801,20 @@ export default function AdjustingReport(props) {
     useEffect(() => {
         if (keydown.current == "Delete") {
             deleteShape()
-        }else if (keydown.previous == "Control" && (keydown.current == "C" || keydown.current == "c")){
+        } else if (keydown.previous == "Control" && (keydown.current == "C" || keydown.current == "c")) {
             copyShape()
         }
-        else if (keydown.previous == "Control" && (keydown.current == "V" || keydown.current == "v")){
+        else if (keydown.previous == "Control" && (keydown.current == "V" || keydown.current == "v")) {
             pasteShape()
         }
     }, [keydown])
 
-    useEffect(() => {
+
+    const getAllData = async() => {
         setIsLoading(true)
         getReportInfo()
         getDataFields()
-        getReportContent()
+        await getReportContent()
         if (!isTemplate) {
             getAllDatasourceNameInReport(currentProject, RId)
                 .then(res => {
@@ -835,6 +842,9 @@ export default function AdjustingReport(props) {
                 })
         }
 
+    }
+    useEffect(() => {
+        getAllData()
         var keydown = document.addEventListener("keydown", _handleKeyDown);
         return () => {
             document.removeEventListener("keydown", keydown)
