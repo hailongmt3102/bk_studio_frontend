@@ -204,7 +204,7 @@ export default function ReportCard(props) {
 
 
                         {
-                            showHastag === "" ?
+                            (showHastag === "" || !showHastag) ?
                                 <div className='row C4FontColor customFontBold size22'>#Hastag</div>
                                 :
                                 <div className='row SecondFontColor customFontBold  size22'>{showHastag}</div>
