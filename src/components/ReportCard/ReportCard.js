@@ -222,11 +222,11 @@ export default function ReportCard(props) {
                 <p className='m-0 p-0'> <span className="customhinttext">{localization.createBy}</span> {props.data.Author.slice(0, 20)}... </p>
             </div>
             <div className='row mt-2'>
-                <p className='m-0 p-0'> <span className="customhinttext"> {localization.createDate} </span>  {props.data.CreateTime.slice(0, 10)} </p>
+                <p className='m-0 p-0'> <span className="customhinttext"> {localization.createDate} </span>  {props.data.CreateTime ? props.data.CreateTime.slice(0, 10) : ""} </p>
             </div>
             {
                 props.type === "Report" ? <div className='row mt-2'>
-                    <p className='m-0 p-0'> <span className="customhinttext">  {localization.lastModi}  </span>    {props.data.LastModified.slice(0, 10)} </p>
+                    <p className='m-0 p-0'> <span className="customhinttext">  {localization.lastModi}  </span>    { props.data.LastModified ? props.data.LastModified.slice(0, 10) : ""} </p>
                 </div> : null
             }
             {
