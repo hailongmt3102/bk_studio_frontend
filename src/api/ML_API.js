@@ -71,6 +71,10 @@ const createModel = (data) => {
     return axiosClient.post(`/machinelearning/new`, data)
 }
 
+const deleteModel = (id) => {
+    return axiosClient.get(`/machinelearning/${id}/delete`)
+}
+
 
 export {
     bayesModelAPI,
@@ -79,5 +83,6 @@ export {
     canModifyModel,
     modifyModel,
     createModel,
-    fetchAPI
+    fetchAPI,
+    deleteModel
 }

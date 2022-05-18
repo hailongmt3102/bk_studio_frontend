@@ -20,9 +20,9 @@ export default function ModelCard(props) {
                     icons_list={icons_list}
                     icon={three_dot}
                     onClick={(val) => {
-                        // if (val === 'Delete')
-                        //     // handleOpen()
-
+                        if (val === 'Delete'){
+                            props.deleteModel(props.info.Id)
+                        }
                     }} />
             </div>
             <div className="row p-4">

@@ -7,6 +7,9 @@ import BlankReportIcon from 'resources/icons/blankReport.svg'
 import { content } from "utils/notification"
 import { loadingContext } from 'App'
 import ModelCard from './component/ModelCard'
+import { createModel as createModelApi, deleteModel  as deleteModelApi} from "api/ML_API"
+
+
 export default function ML() {
     const setIsLoading = useContext(loadingContext)
     const nav = useNavigate()
@@ -28,6 +31,40 @@ export default function ML() {
                 })
         }, []
     )
+
+    const createNewModel = () => {
+        setIsLoading(true)
+        createModelApi({ Name: "new Model" })
+            .then(res => {
+                setIsLoading(false)
+                nav("/machinelearning/modelDetail/" + res.data + "/edit", {
+                    state: {
+                        MId: res.data,
+                        input: "",
+                        output: "",
+                        MName: "New model",
+                        Api: "",
+                    }
+                })
+            }).catch(err => {
+                setIsLoading(false)
+                Store.addNotification(content("Fail", "An error occurred, please create later", "danger"))
+            })
+    }
+
+    const deleteModel = (id) => {
+        setIsLoading(true)
+        deleteModelApi(id)
+        .then(res => {
+            setIsLoading(false)
+            Store.addNotification(content("Success", "Delete successful", "success"))
+            setModelList(modelList.filter(ele => ele.Id != id))
+        })
+        .catch(err => {
+            setIsLoading(false)
+            Store.addNotification(content("Fail", err.response.data, "danger"))
+        })
+    }
     return (
         <div>
             <div className='m-2 mt-4 mb-4'>
@@ -44,15 +81,7 @@ export default function ML() {
                         style={{ height: "120px", width: "120px" }}
                         className=' ms-4 btn btn-lg btn-default m-2  shadow p-3 mb-5 level2 rounded'
                         onClick={() => {
-                            nav("/machinelearning/modelDetail/" + 5 + "/edit", {
-                                state: {
-                                    MId: 5,
-                                    input: "",
-                                    output: "",
-                                    MName: "New model",
-                                    Api: ""
-                                }
-                            })
+                            createNewModel()
                         }}>
                         <img src={BlankReportIcon} width="180px" height="180px" />
                     </button>
@@ -67,7 +96,7 @@ export default function ML() {
                     {modelList.map(ele =>
                         <div className='col m-0 p-0' style={{ "minWidth": "600px", "maxWidth": "600px" }} >
                             <div className='ms-4 mt-4'>
-                                <ModelCard info={ele} />
+                                <ModelCard info={ele} deleteModel={deleteModel}/>
                             </div>
                         </div>
                     )}

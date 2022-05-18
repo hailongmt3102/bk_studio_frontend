@@ -9,6 +9,8 @@ import { useEffect, useState, useContext } from 'react'
 import { Store } from 'react-notifications-component'
 import { useDemoData } from "@mui/x-data-grid-generator";
 import { getDataSourcesInformationByDId, showDataSourceContent } from "api/DataSources"
+import { modifyModel } from "api/ML_API";
+
 import { loadingContext } from 'App'
 import Selection from "../component/Selection";
 import { Form } from 'react-bootstrap';
@@ -63,7 +65,6 @@ export default function EditModel() {
         setShowDialog(false)
     }
 
-    console.log(location.state)
     const { loading } = useDemoData({
         // dataSet: 'Commodity',
         rowLength: 4,
@@ -146,6 +147,26 @@ export default function EditModel() {
     }
 
 
+    const saveModel = () => {
+        const Id = location.state.MId
+        const input = JSON.stringify(rows)
+        const output = JSON.stringify(rowsOut)
+
+        modifyModel(Id, {
+            Name: MName,
+            Api: Api,
+            Input: input,
+            output: output
+        })
+            .then(res => {
+                Store.addNotification(content("Success", "Edited", "success"))
+            })
+            .catch(err => {
+                Store.addNotification(content("Fail", err.response.data, "danger"))
+            })
+    }
+
+
     const changeButton = (f) => {
         return <button className='btn-lg btn-success text-center border-0'
             style={{ background: "#3B97C6" }}
@@ -199,7 +220,9 @@ export default function EditModel() {
                 </div>
                 <div className='col-1 '>
                     <button className='btn-lg btn-success text-center border-0'
-                    // 
+                        onClick={() => {
+                            saveModel()
+                        }}
                     >
                         <div className='row  p-1 text-center'>
                             <div className='col-2 text-center me-1'>
@@ -229,7 +252,7 @@ export default function EditModel() {
                     </div>
                     <div className='col text-center'>
                         <Form.Control size="sm" type="text" value={Api} onChange={(e) => {
-                            // setMName(e.target.value)
+                            setApi(e.target.value)
                         }}
                             className="border-0 ms-2 "
                             style={{
