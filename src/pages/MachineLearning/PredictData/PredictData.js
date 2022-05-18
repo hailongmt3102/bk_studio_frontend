@@ -3,7 +3,7 @@ import {
     GridToolbarExport
 } from '@mui/x-data-grid';
 import { useDemoData } from "@mui/x-data-grid-generator";
-import { bayesModelAPI } from "api/ML_API";
+import { bayesModelAPI , fetchAPI} from "api/ML_API";
 import { useContext, useEffect, useState } from 'react';
 import { Store } from 'react-notifications-component';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -38,10 +38,10 @@ export default function PredictData() {
 
     const predictHandle = () => {
         setIsLoading(true)
-        bayesModelAPI(rows.map(ele => {
+        fetchAPI(rows.map(ele => {
             delete ele.id
             return ele
-        }))
+        }), location.state.Api)
             .then(response => {
                 var rowData = JSON.parse(response)
                 console.log(JSON.stringify(rowData))
@@ -66,7 +66,7 @@ export default function PredictData() {
             .catch(
                 err => {
                     setIsLoading(false)
-                    Store.addNotification(content("Fail", err.response.data, "danger"))
+                    Store.addNotification(content("Fail", "Predict fail, please check this model carefully", "danger"))
                     return
                 }
             )

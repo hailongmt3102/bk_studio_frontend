@@ -159,7 +159,8 @@ export default function ModelDetail() {
                                     state: {
                                         rows: rows,
                                         columns: columns,
-                                        MName: MName
+                                        MName: MName,
+                                        Api : location.state.Api
                                     }
                                 })
                             }

@@ -5,19 +5,24 @@ import { Store } from 'react-notifications-component'
 import { useNavigate } from 'react-router-dom'
 import BlankReportIcon from 'resources/icons/blankReport.svg'
 import { content } from "utils/notification"
+import { loadingContext } from 'App'
 import ModelCard from './component/ModelCard'
 export default function ML() {
+    const setIsLoading = useContext(loadingContext)
     const nav = useNavigate()
     const [modelList, setModelList] = useState([])
     const localization = useContext(localizationContext)
     useEffect(
         () => {
+            setIsLoading(true)
             getAllModel()
                 .then(res => {
+                    setIsLoading(false)
                     setModelList(res.data)
                     console.log(res.data)
                 })
                 .catch(err => {
+                    setIsLoading(false)
                     Store.addNotification(content("Fail", err.response.data, "danger"))
                     return
                 })
