@@ -221,19 +221,30 @@ export default function TabComponent(props) {
 				</div>
 				<div>Alignment</div>
 				<div className="row m-3">
-					<div className="col">
+					<div className={props.data.style.alignment == "left" ? "col p-2 customshine  text-center" : "text-center col p-2"}
+						onClick={() => {
+							props.EditStyle({ ...props.data.style, alignment: "left" })
+						}}>
 						<img src={align_left} height="20px" width="20px" />
 					</div>
-					<div className="col">
+					<div className={props.data.style.alignment == "right" ? "col p-2 customshine  text-center" : "  text-center col p-2"}
+						onClick={() => {
+							props.EditStyle({ ...props.data.style, alignment: "right" })
+						}}>
 						<img src={align_right} height="20px" width="20px" />
 					</div>
-					<div className="col">
+					<div className={props.data.style.alignment == "center" ? "col p-2   text-center customshine " : " text-center col p-2"}
+						onClick={() => {
+							props.EditStyle({ ...props.data.style, alignment: "center" })
+						}}>
 						<img src={align_center} height="20px" width="20px" />
 					</div>
-					<div className="col">
+					<div className={props.data.style.alignment == "justify" ? "col p-2  text-center customshine " : " text-center col p-2"}
+						onClick={() => {
+							props.EditStyle({ ...props.data.style, alignment: "justify" })
+						}}>
 						<img src={align_justify} height="20px" width="20px" />
 					</div>
-
 				</div>
 				<div>Fill</div>
 				<Form.Control
@@ -241,6 +252,7 @@ export default function TabComponent(props) {
 					id="exampleColorInput"
 					defaultValue="#563d7c"
 					title="Choose your color"
+					onChange={(e) => props.EditStyle({ ...props.data.style, fill: e.target.value })}
 				/>
 
 				<div>Stroke</div>
@@ -249,6 +261,7 @@ export default function TabComponent(props) {
 					id="exampleColorInput"
 					defaultValue="#563d7c"
 					title="Choose your color"
+					onChange={(e) => props.EditStyle({ ...props.data.style, stroke: e.target.value })}
 				/>
 			</Tab>
 		</Tabs>

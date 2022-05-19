@@ -38,7 +38,7 @@ export default function AdjustingReport(props) {
 
     const reportLink = window.location.href
 
-    console.log("path", reportLink)
+    // console.log("path", reportLink)
 
     const RId = location.state.RId
     const currentProject = location.state.PId
@@ -106,7 +106,7 @@ export default function AdjustingReport(props) {
     }
 
     useEffect(() => {
-        // console.log("tab data changed ", tabData)
+        console.log("tab data changed ", tabData)
     }, [tabData])
 
 
