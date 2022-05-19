@@ -7,6 +7,10 @@ import logoapp from "resources/images/hcmut.png"
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import Avatar from '@mui/material/Avatar';
+import { GetInformationApi } from "api/Account"
+import { Store } from 'react-notifications-component'
+import { content } from "utils/notification"
+
 export default function Header() {
     var url = useLocation().pathname
     const [visible, setVisible] = useState(true)
@@ -27,6 +31,34 @@ export default function Header() {
         nav('account/login')
     }
     const [searchContent, setSearchContent] = useState("")
+
+    useEffect(() => {
+        GetInformationApi()
+            .then(response => {
+                console.log(response.data)
+                setinformation(response.data)
+            })
+            .catch(
+                error => {
+                    Store.addNotification(content("Success", error, "danger"))
+                    console.log(error)
+                }
+            )
+    }, [])
+    const [information, setinformation] = useState({
+        Email: "",
+        LastLoginTime: null,
+        UserName: "",
+        Verification: 1,
+        RankAccount: "",
+        Avatar: "",
+        OverView: "",
+        Company: "",
+        Gender: "M",
+        Address: "",
+        Birthday: "",
+        Position: ""
+    })
 
     return (
         visible ?
@@ -98,7 +130,9 @@ export default function Header() {
                         }}
                         title={
                             <div className='d-flex align-items-center'>
-                                <Avatar sx={{ bgcolor: "#0089ED" }}>{localStorage.getItem("username") !== null ? localStorage.getItem("username")[0].toUpperCase() : ""}</Avatar>
+                                <Avatar sx={{ bgcolor: "#0089ED" }}>
+                                    <img src={information.Avatar} />
+                                </Avatar>
                                 {/* <div className='bg-primary text-white p-1' style={{ height: "45px", width: "45px", borderRadius: "45px", "fontSize": "26px" }}>
                                     <div className=''>
 
