@@ -51,18 +51,20 @@ export default function ShareLinkPopUp(props) {
     const [role, setRole] = useState("View")
     const [selectPeople, setSelectPeople] = useState([])
     const shareSubmit = () => {
-        shareReport(props.currentProject, props.RId, {
-            Email: selectPeople,
-            Permission: role
-        })
-            .then(response => {
-                Store.addNotification(content("Success", "Editted role", "success"))
-                props.handleClose()
-            })
-            .catch(error => {
-                Store.addNotification(content("Fail", error.data, "danger"))
-                props.handleClose()
-            })
+        Store.addNotification(content("Success", "Copied", "success"))
+        props.handleClose()
+        // shareReport(props.currentProject, props.RId, {
+        //     Email: selectPeople,
+        //     Permission: role
+        // })
+        //     .then(response => {
+        //         Store.addNotification(content("Success", "Editted role", "success"))
+        //         props.handleClose()
+        //     })
+        //     .catch(error => {
+        //         Store.addNotification(content("Fail", error.data, "danger"))
+        //         props.handleClose()
+        //     })
     }
 
 
@@ -109,11 +111,8 @@ export default function ShareLinkPopUp(props) {
     const body = () => {
         return (
 
-            <div>
-                {/* {selectMailComponent()}
-
-
-                {listSharedPeopleComponent()} */}
+            <div className='text-center size24'>
+                <a className='text-decoration-none' style={{}}>{props.reportLink}</a>
             </div>
 
         )
@@ -132,10 +131,15 @@ export default function ShareLinkPopUp(props) {
                 <Modal.Title>
                     <div
                         className='d-flex m-auto align-items-center'
-                        style={{ color: deep_blue_primary, "fontWeight": "bold", fontSize: "30px" }}
+                        style={{
+                            color: deep_blue_primary,
+                            "fontWeight": "bold",
+                            fontSize: "30px"
+                        }}
                     >
                         <div className='m-auto me-2'><img src={link} width="42px" height="42px" /></div>
                         <div className='m-auto ms-2'>Share by link</div>
+
                     </div>
                 </Modal.Title>
             </Modal.Header>
@@ -149,7 +153,7 @@ export default function ShareLinkPopUp(props) {
                 <Button onClick={() => {
                     shareSubmit()
                 }}>
-                    Share
+                    Copy
                 </Button>
             </Modal.Footer>
         </Modal>

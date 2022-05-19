@@ -36,9 +36,9 @@ export default function AdjustingReport(props) {
 
     // some hiddenInfo of this report
 
-    const ReportLink = location.pathname
+    const reportLink = window.location.href
 
-    console.log("path", ReportLink)
+    console.log("path", reportLink)
 
     const RId = location.state.RId
     const currentProject = location.state.PId
@@ -1009,8 +1009,7 @@ export default function AdjustingReport(props) {
                     }}
                 />
                 <ShareLinkPopUp
-                    currentProject={currentProject}
-                    RId={RId}
+                    reportLink={reportLink}
                     show={showShareLinkPopUp}
                     handleOpen={() => {
                         setShowShareLinkPopUp(true)
