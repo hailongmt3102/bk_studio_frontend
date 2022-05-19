@@ -40,8 +40,6 @@ export default function Header() {
             })
             .catch(
                 error => {
-                    Store.addNotification(content("Success", error, "danger"))
-                    console.log(error)
                 }
             )
     }, [])
