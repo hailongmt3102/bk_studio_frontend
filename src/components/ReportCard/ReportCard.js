@@ -226,7 +226,7 @@ export default function ReportCard(props) {
             </div>
             {
                 props.type === "Report" ? <div className='row mt-2'>
-                    <p className='m-0 p-0'> <span className="customhinttext">  {localization.lastModi}  </span>    { props.data.LastModified ? props.data.LastModified.slice(0, 10) : ""} </p>
+                    <p className='m-0 p-0'> <span className="customhinttext">  {localization.lastModi}  </span>    {props.data.LastModified ? props.data.LastModified.slice(0, 10) : ""} </p>
                 </div> : null
             }
             {

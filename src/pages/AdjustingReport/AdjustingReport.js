@@ -15,13 +15,14 @@ import ToolBar from "./components/Bar/ToolBar";
 import Content from "./components/Content";
 import ShareLinkPopUp from "./components/PopUp/ShareLinkPopUp";
 import ShareWithPopUp from "./components/PopUp/ShareWithPopUp";
-
+import ConfirmDialog from "components/ConfirmDialog";
 import './AdjustingReport.css';
 import SqlPopUp from "./components/PopUp/SqlPopUp";
 
 import { loadingContext } from 'App';
 import * as htmlToImage from 'html-to-image';
 import { shapeBackgroundColors, shapeBorderColors } from 'utils/color';
+import { ConstructionOutlined } from "@mui/icons-material";
 // import { updateAvatar } from 'api/Account'
 // import { dataURLtoFile } from 'utils/utils'
 
@@ -34,6 +35,10 @@ export default function AdjustingReport(props) {
     const location = useLocation()
 
     // some hiddenInfo of this report
+
+    const ReportLink = location.pathname
+
+    console.log("path", ReportLink)
 
     const RId = location.state.RId
     const currentProject = location.state.PId
@@ -101,7 +106,7 @@ export default function AdjustingReport(props) {
     }
 
     useEffect(() => {
-        console.log("tab data changed ", tabData)
+        // console.log("tab data changed ", tabData)
     }, [tabData])
 
 
@@ -113,7 +118,8 @@ export default function AdjustingReport(props) {
             let res = await getReportInformation(currentProject, RId, isTemplate)
             setReportInformation(res.data)
         } catch (error) {
-            console.log("Get report info fail, error", error)
+            Store.addNotification(content("Fail", error, "danger"))
+            // console.log("Get report info fail, error", error)
         }
     }
 
@@ -130,8 +136,9 @@ export default function AdjustingReport(props) {
                 result[dataSourceList.data[i].Information] = columns.data.Columns.filter(ele => ele != "DataSource_Id")
             }
             setDataSource(result)
-        } catch (err) {
-            console.log("list datasource", err)
+        } catch (error) {
+            Store.addNotification(content("Fail", error, "danger"))
+            // console.log("list datasource", err)
         }
     }
     // ** ---------------------------------------------------------------------------------------------
@@ -150,7 +157,7 @@ export default function AdjustingReport(props) {
                 Name: "New Report"
             })
             .then(res => {
-                console.log("ketqua", res.data)
+                // console.log("ketqua", res.data)
                 nav('/project/gallery/' + res.data.Id + '/edit', {
                     state: {
                         PId: currentProject,
@@ -162,7 +169,8 @@ export default function AdjustingReport(props) {
                 window.location.reload()
             })
             .catch(err => {
-                alert(err.response.data)
+                Store.addNotification(content("Fail", err.response.data, "danger"))
+                // alert(err.response.data)
             })
     }
 
@@ -220,7 +228,7 @@ export default function AdjustingReport(props) {
         }
         catch (err) {
             Store.addNotification(content("Fail", "Fail update", "danger"))
-            console.log(err.response.data)
+            // console.log(err.response.data)
             setIsLoading(false)
         }
     }
@@ -299,6 +307,7 @@ export default function AdjustingReport(props) {
             return componentResult
         }
         catch (err) {
+            Store.addNotification(content("Fail", "Fetch component fail:  " + err, "danger"))
             console.log("Fetch component fail:  ", err)
             return []
         }
@@ -310,6 +319,7 @@ export default function AdjustingReport(props) {
             return await QueryDataApi(query, isTemplate)
         }
         catch (err) {
+            Store.addNotification(content("Fail", "Query data fail.error: " + err, "danger"))
             console.log("Query data fail. error: ", err, " \n Query Command :  ", query)
             return null
         }
@@ -436,14 +446,14 @@ export default function AdjustingReport(props) {
                 console.log("Unresolve shape type : ", props.data.Type)
                 break
         }
-        return { parseResult : result, _colorIndex : currentIndexOfShapeColor}
+        return { parseResult: result, _colorIndex: currentIndexOfShapeColor }
     }
 
     // ** combine all function relative to getting content of report
     const getReportContent = async () => {
         let res = await fetchAllShapesFromServer()
         setShapeComponent(res)
-        console.log(res)
+        // console.log(res)
     }
     // ** ---------------------------------------------------------------------------------------------
 
@@ -464,7 +474,7 @@ export default function AdjustingReport(props) {
             if (checkNeedToQueryData(component.Type)) {
                 // fetch data
                 let queryResult = await queryDataOfAShape(component.QueryCommand)
-               let  {parseResult} = parseDataQueried(component.Type, queryResult, 0)
+                let { parseResult } = parseDataQueried(component.Type, queryResult, 0)
                 if (queryResult == null) {
                     // error to query data of this shape
                     component.TypeParsed = "Error"
@@ -483,6 +493,7 @@ export default function AdjustingReport(props) {
             }
             setShapeComponent([...shapeComponents, component])
         } catch (err) {
+            Store.addNotification(content("Fail", "Adding new component error :" + err, "danger"))
             console.log("adding new component error : ", err)
         }
     }
@@ -494,7 +505,7 @@ export default function AdjustingReport(props) {
             if (checkNeedToQueryData(shapeComponents[index].Type)) {
                 // fetch data
                 let queryResult = await queryDataOfAShape(query)
-                let {parseResult} = parseDataQueried(shapeComponents[index].Type, queryResult, 0)
+                let { parseResult } = parseDataQueried(shapeComponents[index].Type, queryResult, 0)
                 if (queryResult == null) {
                     // error to query data of this shape
                     parseResult.TypeParsed = "Error"
@@ -510,7 +521,8 @@ export default function AdjustingReport(props) {
             }
 
         } catch (err) {
-            console.log("update a component error : ", err)
+            Store.addNotification(content("Fail", "Update a component error : " + err, "danger"))
+            // console.log("update a component error : ", err)
         }
     }
 
@@ -525,6 +537,7 @@ export default function AdjustingReport(props) {
             // parse this response from server and build shape 
             await pushNewComponentToUI(res.data)
         } catch (error) {
+            Store.addNotification(content("Fail", "Create new shape error : " + error, "danger"))
             console.log("Create new shape error : ", error)
         }
     }
@@ -547,6 +560,7 @@ export default function AdjustingReport(props) {
                     FrameTheme: JSON.stringify(componentData.FrameTheme)
                 })
             } catch (error) {
+                Store.addNotification(content("Fail", "Save shape error :" + error, "danger"))
                 console.log("Save shape error :", componentData.Id, " \n Error: ", error)
             }
         }
@@ -567,6 +581,7 @@ export default function AdjustingReport(props) {
                 FrameTheme: typeof (componentData.FrameTheme) == typeof ("") ? componentData.FrameTheme : JSON.stringify(componentData.FrameTheme)
             })
         } catch (error) {
+            Store.addNotification(content("Fail", "Save shape error :" + error, "danger"))
             console.log("Save shape error :", componentData.Id, " \n Error: ", error)
         }
     }
@@ -593,6 +608,7 @@ export default function AdjustingReport(props) {
             }
             createNewComponent(newShape)
         } catch (err) {
+            Store.addNotification(content("Fail", "Paste error" + err, "danger"))
             console.log(err)
         }
     }
@@ -605,6 +621,7 @@ export default function AdjustingReport(props) {
             if (followingIndexComponent == copyIndexComponent) setCopyIndexComponent(-1)
             setFollowingIndexComponent(-1)
         } catch (error) {
+            Store.addNotification(content("Fail", "Delete shape error : " + error, "danger"))
             console.log("Delete shape error : ", error)
         }
     }
@@ -711,6 +728,7 @@ export default function AdjustingReport(props) {
             await createNewComponent(newTextShape)
         }
         catch (err) {
+            Store.addNotification(content("Fail", "Create Text Error" + err, "danger"))
             console.log(err)
         }
     }
@@ -732,6 +750,7 @@ export default function AdjustingReport(props) {
             await createNewComponent(newImageShape)
         }
         catch (err) {
+            Store.addNotification(content("Fail", "Create Image Error" + err, "danger"))
             console.log(err)
         }
     }
@@ -810,7 +829,7 @@ export default function AdjustingReport(props) {
     }, [keydown])
 
 
-    const getAllData = async() => {
+    const getAllData = async () => {
         setIsLoading(true)
         getReportInfo()
         getDataFields()
@@ -936,9 +955,23 @@ export default function AdjustingReport(props) {
             let dataUrl = await htmlToImage.toPng(node, { height: 1300, width: 1900 })
             return dataUrl
         } catch (error) {
+            Store.addNotification(content("Fail", 'Oops, something went wrong!', "danger"))
             console.error('oops, something went wrong!', error);
             return ""
         }
+    }
+
+
+    const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: '', subTitle: '' })
+    const handleCloseYes = () => {
+        saveATemplateHandle()
+        // console.log("close ne")
+    }
+    const handleCloseNo = () => {
+        setConfirmDialog({ ...ConfirmDialog, isOpen: false })
+    }
+    const handleOpen = () => {
+        setConfirmDialog({ ...ConfirmDialog, isOpen: true })
     }
 
     const EditUI = () => {
@@ -948,7 +981,12 @@ export default function AdjustingReport(props) {
             }} />
             <div>
                 {/* some popup */}
-
+                <ConfirmDialog
+                    confirmDialog={confirmDialog}
+                    title="Are you sure you want to save this report as template ?"
+                    handleCloseYes={() => handleCloseYes()}
+                    handleCloseNo={() => handleCloseNo()}
+                />
                 <SqlPopUp
                     type={popUpType}
                     show={showSqlPopUp}
@@ -1094,7 +1132,7 @@ export default function AdjustingReport(props) {
                             setAddShapeType={setAddShapeType}
                             isEdit={isEdit}
                             saveACopyHandle={() => saveACopyHandle()}
-                            saveATemplateHandle={() => saveATemplateHandle()}
+                            saveATemplateHandle={() => handleOpen()}
                         />
 
                         <div className="content"
@@ -1132,7 +1170,7 @@ export default function AdjustingReport(props) {
                         Permission: "Edit"
                     }
                 })
-                console.log("thanhcong", res.data)
+                // console.log("thanhcong", res.data)
             })
             .catch(err => {
                 Store.addNotification(content("Fail", err.response.data, "danger"))
