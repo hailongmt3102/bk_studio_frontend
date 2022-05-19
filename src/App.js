@@ -68,18 +68,27 @@ function App() {
     // init socket client
     const [socket, setSocket] = useState(null)
 
+    // online status
+    const [onlineStatus, setOnlineStatus] = useState({})
+
     useEffect(() => {
         const socket = socketIOClient.connect(process.env.REACT_APP_BASE_URL || "http://localhost:3000")
         setSocket(socket)
-
-
     }, [])
 
     useEffect(() => {
         if (socket) {
             socket.emit("verify", localStorage.getItem("email"))
             socket.on("status", (data) => {
+                setOnlineStatus({ ...onlineStatus, [data.Email]: { Status: data.Status, Time: data.Time } })
                 console.log(data)
+            })
+            socket.on("statusAll", (users) => {
+                let newUsers = {}
+                for (let i = 0; i < users.length; i++) {
+                    newUsers[users[i].Email] = {Status : users[i].Status, Time:  users[i].Time}
+                }
+                setOnlineStatus({...onlineStatus, ...newUsers})
             })
         }
     }, [localStorage.getItem("email"), socket])
@@ -88,7 +97,7 @@ function App() {
         <localizationContext.Provider value={translations}>
             <loadingContext.Provider value={setIsLoading}>
                 <themeContext.Provider value={lightMode}>
-                    <socketContext.Provider value={socket}>
+                    <socketContext.Provider value={{ socket: socket, onlineStatus: onlineStatus }}>
                         <Router>
                             <div className={lightMode ? "full-height" : "full-height darkmode"}>
                                 {isLoading && <Loading />}

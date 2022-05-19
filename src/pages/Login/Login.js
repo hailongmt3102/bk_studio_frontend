@@ -15,13 +15,12 @@ import GoogleLogin from 'react-google-login';
 
 import { Store } from 'react-notifications-component'
 import { content } from "../../utils/notification"
-import { localizationContext , socketContext} from '../../App'
+import { localizationContext } from '../../App'
 
 
 export default function Login() {
     // use localization
     const localization = useContext(localizationContext)
-    const socket = useContext(socketContext)
 
     const [isVisible, setisVisible] = useState(false)
     const [information, setinformation] = useState({
@@ -61,13 +60,10 @@ export default function Login() {
                     localStorage.removeItem("password")
                     localStorage.removeItem("remember")
                 }
-                if (socket) {
-                    socket.emit("verify", information.Email)
-                }
-
                 navigate("/")
             })
             .catch((e) => {
+                console.log(e)
                 Store.addNotification(content("Warning", e.response.data, "danger"))
                 return
                 //alert(e.response.data);

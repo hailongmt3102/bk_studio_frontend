@@ -83,6 +83,8 @@ export default function PeopleCard(props) {
             }
         </div >
     }
+
+
     const ContentComponent = () => {
         return <div className='ms-4 mb-4'>
             <h2 className='ms-2 customFontRoboto size30 customFontBold' >
@@ -95,7 +97,7 @@ export default function PeopleCard(props) {
                 Rank: {props.rank}
             </div>
             <div className='ms-2 customFontRoboto' >
-                Online: 6 hour later
+                Status: {props.Status}
             </div>
         </div>
     }
