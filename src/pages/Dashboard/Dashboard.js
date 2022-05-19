@@ -6,12 +6,13 @@ import { getAllTemplate } from "api/Templates"
 import PeopleCardMini from "components/PeopleCardMini/PeopleCardMini"
 import TemplateMiniCard from "components/TemplateCard/TemplateMiniCard"
 import { ScrollMenu } from 'react-horizontal-scrolling-menu'
-import { localizationContext } from '../../App'
+import { localizationContext, socketContext } from '../../App'
 import ProjectCard from '../../components/ProjectCard/ProjectCard'
 import { deep_blue_primary } from "../../utils/color"
 import { Store } from 'react-notifications-component'
 import { content } from "utils/notification"
 export default function Dashboard() {
+    const socket = useContext(socketContext)
     // use localization.
     const setIsLoading = useContext(loadingContext)
     const localization = useContext(localizationContext)
@@ -62,7 +63,7 @@ export default function Dashboard() {
                 </ScrollMenu>
             </div>
             <div className='mt-2 mb-2  row' >
-                <div className='col-7 m-0' style={{height: "100%"}} >
+                <div className='col-7 m-0' style={{ height: "100%" }} >
                     <div className='m-2 ms-1 customforeground'>
                         <h1 className='m-0 pt-4 ms-4 p-0 PrimaryFontColor' style={{ "fontWeight": "bold", fontSize: "40px" }}>{localization.Templates}</h1>
                         <p className='m-0 ms-4 p-0'>Variety template for your choice</p>
@@ -81,24 +82,24 @@ export default function Dashboard() {
                 </div >
                 <div className='col-5 m-0 p-0 '>
                     <div className='m-2 ms-1 pt-4 customforeground'>
-                    <h1 className='m-0 ms-4 p-0 PrimaryFontColor' style={{ "fontWeight": "bold", fontSize: "40px" }}>{localization.People}</h1>
-                    <div className='row ms-2'>
-                        <div class="container m-0 p-0">
-                            <div class="row mt-3 ">
-                                {
-                                    peopleList.slice(0).reverse().map((people, index) => {
-                                        return <div id={index} className="col-sm mt-4 ms-4" style={{ "minWidth": "300px", "maxWidth": "300px" }}>
-                                            <PeopleCardMini
-                                                name={people.UserName}
-                                                email={people.Email}
-                                                avatar={people.Avatar}
-                                            />
-                                        </div>
-                                    })
-                                }
+                        <h1 className='m-0 ms-4 p-0 PrimaryFontColor' style={{ "fontWeight": "bold", fontSize: "40px" }}>{localization.People}</h1>
+                        <div className='row ms-2'>
+                            <div class="container m-0 p-0">
+                                <div class="row mt-3 ">
+                                    {
+                                        peopleList.slice(0).reverse().map((people, index) => {
+                                            return <div id={index} className="col-sm mt-4 ms-4" style={{ "minWidth": "300px", "maxWidth": "300px" }}>
+                                                <PeopleCardMini
+                                                    name={people.UserName}
+                                                    email={people.Email}
+                                                    avatar={people.Avatar}
+                                                />
+                                            </div>
+                                        })
+                                    }
+                                </div>
                             </div>
                         </div>
-                    </div>
                     </div>
                 </div>
 
