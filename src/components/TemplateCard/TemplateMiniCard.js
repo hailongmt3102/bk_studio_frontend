@@ -14,7 +14,7 @@ import heart_img from "../../resources/icons/heart.svg"
 import hearted from "../../resources/icons/hearted.svg"
 import { content } from "../../utils/notification"
 import ThreeDotButton from "../ThreeDotButton"
-
+import reportDefault from "resources/images/reportDefault.jpg"
 export default function TemplateMiniCard(props) {
     const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: '', subTitle: '' })
 
@@ -161,8 +161,8 @@ export default function TemplateMiniCard(props) {
             />
             <div className="text-center m-0 p-0 ms-4 shadow level1" style={{ "borderRadius": "20px" }}>
                 {headComponent()}
-                <div className='text-center m-0 p-0' onClick={() => { viewReportNav(props.data.Id) }}>
-                    <img src={default_report_img} height="200" width="200" />
+                <div className='text-center p-3 pb-5 m-0 p-0' onClick={() => { viewReportNav(props.data.Id) }}>
+                    <img src={props.data.Image || reportDefault} alt={reportDefault} height="120" width="200" />
                 </div>
                 {
                     pressEdit ?
