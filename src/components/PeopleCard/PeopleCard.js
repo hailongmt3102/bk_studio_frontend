@@ -12,8 +12,9 @@ import { Store } from 'react-notifications-component'
 import { content } from "../../utils/notification"
 import ConfirmDialog from "../ConfirmDialog"
 
-
-
+import Badge from "@mui/material/Badge";
+import { styled } from '@mui/material/styles';
+import Avatar from '@mui/material/Avatar';
 
 export default function PeopleCard(props) {
     const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: '', subTitle: '' })
@@ -74,16 +75,106 @@ export default function PeopleCard(props) {
         </div>
     }
 
+    const OnlineComp = (img) => {
+        return < Onl
+            overlap="circular"
+            anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+            variant="dot"
+        >
+            <Avatar src={img} style={{ height: "80px", width: "80px" }} />
+        </Onl>
+    }
+
+    const OfflineComp = (img) => {
+        return < Off
+            overlap="circular"
+            anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+            variant="dot"
+        >
+            <Avatar src={img} style={{ height: "80px", width: "80px" }} />
+        </Off>
+    }
+
+    function checkAvatar(avatar) {
+        if (avatar === "") {
+            return people_default
+        }
+        else return props.avatar
+    }
+
     const AvtComponent = () => {
-        return <div className='ms-2'>
+        return <div className='ms-2' >
             {
-                props.avatar === "" ?
-                    <img src={people_default} height="80px" width="80px" />
-                    : <img src={props.avatar} height="80px" width="80px" style={{ "border-radius": "50%" }} />
+                props.Status === "online" ? OnlineComp(checkAvatar(props.avatar)) : OfflineComp(checkAvatar(props.avatar))
             }
+
         </div >
     }
 
+    const Onl = styled(Badge)(({ theme }) => ({
+        '& .MuiBadge-badge': {
+            width: "20px",
+            height: "20px",
+            borderRadius: '50%',
+            backgroundColor: '#44b700',
+            color: '#44b700',
+            boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
+            '&::after': {
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '100%',
+                borderRadius: '50%',
+                animation: 'ripple 1.2s infinite ease-in-out',
+                border: '1px solid currentColor',
+                content: '""',
+            },
+        },
+        '@keyframes ripple': {
+            '0%': {
+                transform: 'scale(.8)',
+                opacity: 1,
+            },
+            '100%': {
+                transform: 'scale(1.8)',
+                opacity: 0,
+            },
+        },
+    }));
+
+
+    const Off = styled(Badge)(({ theme }) => ({
+        '& .MuiBadge-badge': {
+            width: "20px",
+            height: "20px",
+            borderRadius: '50%',
+            backgroundColor: 'red',
+            color: 'red',
+            boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
+            '&::after': {
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '100%',
+                borderRadius: '50%',
+                animation: 'ripple 1.2s infinite ease-in-out',
+                border: '1px solid currentColor',
+                content: '""',
+            },
+        },
+        '@keyframes ripple': {
+            '0%': {
+                transform: 'scale(.8)',
+                opacity: 1,
+            },
+            '100%': {
+                transform: 'scale(1.8)',
+                opacity: 0,
+            },
+        },
+    }));
 
     const ContentComponent = () => {
         return <div className='ms-4 mb-4'>

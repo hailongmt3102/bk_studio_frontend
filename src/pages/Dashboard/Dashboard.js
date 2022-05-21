@@ -33,6 +33,7 @@ export default function Dashboard() {
 
             setProjectList(projectList.data)
             setPeopleList(peopleList.data)
+            console.log(peopleList)
             setReports(templateList.data.reverse())
             setIsLoading(false)
         } catch (error) {
@@ -93,6 +94,7 @@ export default function Dashboard() {
                                                     name={people.UserName}
                                                     email={people.Email}
                                                     avatar={people.Avatar}
+                                                    Status={people.Status}
                                                 />
                                             </div>
                                         })

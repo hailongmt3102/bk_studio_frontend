@@ -3,13 +3,16 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import AdjustedDropdown from '../components/AdjustedDropdown'
 import profile from "resources/icons/profile.svg"
 import logout_icon from "resources/icons/logout_icon.svg"
+import bell from "resources/icons/bell.svg"
+import chaticon from "resources/icons/chaticon.svg"
 import logoapp from "resources/images/hcmut.png"
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import Avatar from '@mui/material/Avatar';
 import { GetInformationApi } from "api/Account"
-import { Store } from 'react-notifications-component'
-import { content } from "utils/notification"
+
+import Badge from "@mui/material/Badge";
+
 
 export default function Header() {
     var url = useLocation().pathname
@@ -58,13 +61,15 @@ export default function Header() {
         Position: ""
     })
 
+
+
     return (
         visible ?
             <div className='text-center row m-0 p-0 header'>
                 <div className='col-2 m-0 p-0' >
                     <img onClick={() => { nav("/") }} className='mt-1 ms-2' src={logoapp} height="50px" width="auto" />
                 </div>
-                <div className='col-8 m-0 p-0 mt-4'  >
+                <div className='col-6 m-0 p-0 mt-4'  >
                     <Autocomplete
                         className='ms-5 me-5'
                         id="tags-standard"
@@ -120,7 +125,7 @@ export default function Header() {
                     />
                 </div>
 
-                <div className='col-2 mt-3' >
+                <div className='col-2 mt-3 text-end' >
                     <AdjustedDropdown className="text-center" style={{ "justify-content": "center", "align-items": "center" }} items={["Profile", "Logout"]} icons_list={[profile, logout_icon]}
                         onClick={(item) => {
                             if (item === "Logout") logout()
@@ -142,6 +147,17 @@ export default function Header() {
                             </div>
                         }
                     />
+                </div>
+                <div className='col-1 mt-3'>
+                    <Badge color="error" overlap="circular" badgeContent=" 12">
+                        <Avatar src={bell} sx={{ width: 35, height: 35 }} />
+                    </Badge>
+                </div>
+                <div className='col-1 mt-3'>
+                    <Badge color="error" overlap="circular" badgeContent=" 12">
+                        <Avatar src={chaticon} sx={{ width: 35, height: 35 }} />
+                    </Badge>
+
                 </div>
             </div>
 
