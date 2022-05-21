@@ -107,7 +107,30 @@ export default function AdjustingReport(props) {
 
     useEffect(() => {
         console.log("tab data changed ", tabData)
+
+        if (followingIndexComponent < 0 || followingIndexComponent >= shapeComponents.length){
+            return
+        }
+        updateShapeComponent(followingIndexComponent, {
+            ...shapeComponents[followingIndexComponent],
+            TextTheme: {
+                ...shapeComponents[followingIndexComponent].TextTheme,
+                alignment : tabData.style.alignment,
+                decoration: tabData.style.decoration,
+                font: tabData.style.font,
+                size : tabData.style.size,
+                color: tabData.style.fill,
+            },
+            FrameTheme: {
+                ...shapeComponents[followingIndexComponent].FrameTheme,
+                color: tabData.style.stroke
+            }
+        })
     }, [tabData])
+
+    useEffect(() => {
+        console.log(shapeComponents)
+    }, [shapeComponents]) 
 
 
     // ** ---------------------------------------------------------------------------------------------
@@ -560,7 +583,7 @@ export default function AdjustingReport(props) {
                     FrameTheme: JSON.stringify(componentData.FrameTheme)
                 })
             } catch (error) {
-                Store.addNotification(content("Fail", "Save shape error :" + error, "danger"))
+                // Store.addNotification(content("Fail", "Save shape error :" + error, "danger"))
                 console.log("Save shape error :", componentData.Id, " \n Error: ", error)
             }
         }

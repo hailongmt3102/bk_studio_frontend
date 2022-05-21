@@ -51,6 +51,29 @@ const fetchAPI = (data, api) => {
     })
 }
 
+const getAPI = (api) => {
+    return new Promise((resolve, reject) => {
+        fetch(api, {
+
+            // Adding method type
+            method: "GET",
+
+            // Adding headers to the request
+            headers: {
+                "Content-type": "application/json; charset=UTF-8",
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept'
+            }
+        })
+
+            // Converting to JSON
+            .then(response => resolve(response.json()))
+            .catch(err => {
+                reject(err)
+            })
+    })
+}
+
 const getAllModel = () => {
     return axiosClient.get('/machinelearning')
 }
@@ -84,5 +107,6 @@ export {
     modifyModel,
     createModel,
     fetchAPI,
-    deleteModel
+    deleteModel,
+    getAPI
 }
