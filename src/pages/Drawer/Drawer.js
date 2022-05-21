@@ -129,12 +129,13 @@ export default function Drawer(props) {
 			</button>
 			<div className={`drawer ${toggle ? "enter" : "exit"}`}>
 				<ul className="list-group">
-					{isAdmin && <a className="list-group-item border-0 p-0" onClick={() => {
+					{isAdmin ? <a className="list-group-item border-0 p-0" onClick={() => {
 						navigate("/admin")
 						// setSelectedIndex(0)
 					}}>
 						<h6 className="p-3 m-0">GO TO ADMIN PAGE</h6>
 					</a>
+						: null
 					}
 					<a className="list-group-item border-0 p-0" onClick={() => {
 						navigate("/")
