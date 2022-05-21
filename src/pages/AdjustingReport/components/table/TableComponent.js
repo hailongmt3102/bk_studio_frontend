@@ -85,7 +85,6 @@ export default function TableComponent(props) {
                 }}
                 className={props.classstyle}
             >
-
                 {
                     props.data.data !== undefined && props.data.data.length == 0 ?
                         <div>

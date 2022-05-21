@@ -89,7 +89,7 @@ export default function Login() {
                     // login successful
                     localStorage.setItem("token", res.data.AccessToken)
                     localStorage.setItem("username", res.data.UserName)
-                    navigate("/")
+                    navigate(-1)
                 })
                 .catch((err) => {
                     // login fail
