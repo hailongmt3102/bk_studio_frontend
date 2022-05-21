@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react'
 import { Form } from 'react-bootstrap'
 import { localizationContext } from '../../App'
-import default_report_img from "../../resources/icons/default_report_img.svg"
+import reportDefault from "../../resources/images/reportDefault.jpg"
 
 import { deleteReport, getPermission, like, unlike, updateReportInformation } from 'api/Report'
 import { Store } from 'react-notifications-component'
@@ -303,7 +303,7 @@ export default function ReportCard(props) {
                 <div className='col-5 m-0 p-0 m-auto text-center ' onClick={() => {
                     props.type === "Template" ? viewReportNav(props.data.Id) : NavigationHandle(props.data.Id)
                 }}>
-                    <img src={props.data.Image || default_report_img} alt={default_report_img} style={{ width: "200px", height: "auto" }} />
+                    <img className="ms-4" src={props.data.Image || reportDefault} alt={reportDefault} style={{ width: "200px", height: "auto" }} />
                 </div>
                 <div className='col-7  m-0 p-0'>
                     <div class="d-flex flex-row-reverse me-3">
