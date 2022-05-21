@@ -28,6 +28,8 @@ import ProjectList from "./pages/ProjectList/ProjectList";
 import Register from "./pages/Register/Register";
 import Setting from "./pages/Setting/Setting";
 import Templates from "./pages/Templates/Templates";
+import Admin from './pages/Admin/Admin'
+
 import { data } from './utils/localizationData';
 
 import CreateANewModel from "pages/MachineLearning/CreateANewModel/CreateANewModel";
@@ -158,6 +160,10 @@ function App() {
                                         <Route path="/personal/setting" element={<Setting setLanguage={languageHandler} setLightMode={setLightMode} lightMode={lightMode} />} />
 
                                         <Route
+                                            path="/admin"
+                                            element={<Admin/>}
+                                        />
+                                        <Route
                                             path="*"
                                             element={
                                                 <div className="m-4">
@@ -166,6 +172,8 @@ function App() {
                                                 </div>
                                             }
                                         />
+
+                                     
                                     </Routes>
                                 </div>
                             </div>
