@@ -7,6 +7,8 @@ import { content } from "utils/notification"
 import * as XLSX from "xlsx"
 import { localizationContext } from '../../../App'
 import ImportButton from '../Components/ImportButton'
+import { getAPI } from 'api/ML_API'
+
 export default function SelectData(props) {
     const localization = useContext(localizationContext)
     const executeStringResult = (result) => {
@@ -109,6 +111,17 @@ export default function SelectData(props) {
     const inputXLSXFile = useRef(null)
     const inputJsonFile = useRef(null)
 
+    const fetchFromAPI = async (api) => {
+        try {
+            let response = await getAPI(api)
+            props.setFileInformation({ name: "data from api" })
+            props.setDataFile(response)
+            props.onloadComplete()
+        } catch (error) {
+            Store.addNotification(content("Warning", "Some thing went wrong from your api link\nPlease check carefully", "danger"))
+        }
+    }
+
     return (
         <div>
             <div>
@@ -170,6 +183,7 @@ export default function SelectData(props) {
                         />
                         <ImportButton text={localization.connectToDB} image={db} onClick={() => {
                             // openFile()
+                            fetchFromAPI('https://6288d18d10e93797c15f5996.mockapi.io/salary')
                         }} />
                     </div>
                 </div>
