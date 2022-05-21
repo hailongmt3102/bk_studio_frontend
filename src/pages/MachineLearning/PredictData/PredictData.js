@@ -167,14 +167,14 @@ export default function PredictData() {
                     <div className='col ms-4  mt-1 customFontBold SecondFontColor size40'>
                         Output:
                     </div>
-                    <div className='col text-end'>
-                        <button className='btn-lg btn-info text-center border-0 me-4'
+                    <div className='col mt-2 p-2 mb-2 text-end'>
+                        <button type="button" className='btn  text-center border-0 me-4' style={{ background: "#0085FF" }}
                             onClick={() => {
                                 setShowNewUserModel(true)
                             }}
                         >
-                            <div className='row p-1 text-center'>
-                                <div className=''>Save as Data source</div>
+                            <div className='row p-2 text-center'>
+                                <div style={{ color: "white" }}>Save to Data sources</div>
                             </div>
                         </button>
                     </div>
