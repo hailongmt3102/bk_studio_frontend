@@ -8,9 +8,11 @@ import ConfirmDialog from 'components/ConfirmDialog';
 import { Store } from 'react-notifications-component'
 import { content } from "../../utils/notification"
 import NewUserPopup from './components/NewUserPopup';
-
+import DropdownWithIndex0 from 'components/DropdownWithIndex0'
 
 export default function Admin() {
+
+
     const [userInfo, setUserInfo] = useState([])
     const navigation = useNavigate()
     const setIsLoading = useContext(loadingContext)
@@ -77,12 +79,30 @@ export default function Admin() {
         }
     }
 
+    const setPosition = async (index, val) => {
+        try {
+            let newVal = val
+            await changePositionAPI(userInfo[index].Email, val)
+            setUserInfo(
+                [
+                    ...userInfo.slice(0, index),
+                    {
+                        ...userInfo[index],
+                        Position: newVal
+                    },
+                    ...userInfo.slice(index + 1)
+                ]
+            )
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     useEffect(() => {
         getData()
     }, [])
     return (
-        <div>
-
+        <div style={{ height: "100vh" }}>
             <NewUserPopup
                 show={shownewUserModel}
                 handleClose={() => {
@@ -96,28 +116,50 @@ export default function Admin() {
                 handleCloseYes={() => handleCloseYes()}
                 handleCloseNo={() => handleCloseNo()}
             />
-            <div>
-                Admin site
+            <div className='row mt-4'>
+                <h2 class=" col ms-4 mt-2 PrimaryFontColor" style={{ "fontWeight": "bold", fontSize: "40px" }}>
+                    Admin site
+                </h2>
+                <div className='col text-end me-5 m-auto'>
+                    <button className='p-3 m-3 ps-3 pe-3 btn btn-primary ' onClick={() => {
+                        setShowNewUserModel(true)
+                    }}>
+                        Add User
+                    </button>
+                </div>
             </div>
-            <button onClick={() => {
-                setShowNewUserModel(true)
-            }}>
-                add user
-            </button>
-            {
-                userInfo.map((user, index) =>
-                    <div className='row'>
-                        <div className='col'>{index}</div>
-                        <div className='col'> {user.Email}</div>
-                        <div className='col'> {user.UserName}</div>
-                        <div className='col'> {user.Position}</div>
-                        <div className='col'>
-                            <button className=' btn btn-default' onClick={() => {
-                                deleteUser(index)
-                            }}>delete </button>
-                        </div>
-                    </div>)
-            }
+            <div className='m-5 '>
+                <table class="table table-bordered text-center ">
+                    <thead>
+                        <tr className='bg-success'>
+                            <th className='col'></th>
+                            <th className='col'> <div style={{ color: "white" }}>Email</div></th>
+                            <th className='col'> <div style={{ color: "white" }}>User</div></th>
+                            <th className='col'> <div style={{ color: "white" }}>Position</div></th>
+                            <th className='col'></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {userInfo.map((user, index) =>
+                            <tr style={{ backgroundColor: "white" }}>
+                                <td className='col-1 '>{index + 1}</td>
+                                <td className='col '> {user.Email}</td>
+                                <td className='col '> {user.UserName}</td>
+                                <td className='col '>
+                                    <DropdownWithIndex0 title={user.Position} items={["Manager", "Member"]} icons_list={["", ""]}
+                                        onClick={(val) => {
+                                            setPosition(index, val)
+                                        }} /></td>
+                                <td className='col '>
+                                    <button className=' btn btn-default' style={{ backgroundColor: "red" }} onClick={() => {
+                                        deleteUser(index)
+                                    }}><div style={{ color: "white" }}>Delete</div> </button>
+                                </td>
+                            </tr>
+                        )}
+                    </tbody>
+                </table>
+            </div>
         </div>
     )
 }
