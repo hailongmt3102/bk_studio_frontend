@@ -40,7 +40,7 @@ export default function ShareWithPopUp(props) {
                 //console.log("list share", res.data.map((e) => e.Email))
             })
             .catch(err => {
-                Store.addNotification(content("Fail", "Can't show list shared people in this project", "danger"))
+                // Store.addNotification(content("Fail", "Can't show list shared people in this project", "danger"))
                 // console.log( err.response.data)
             })
     }, [])
@@ -51,7 +51,7 @@ export default function ShareWithPopUp(props) {
                 //console.log("list show",res.data.map((e)=>e.Email).filter(item => !listSharedName.includes(item)))
             })
             .catch(err => {
-                Store.addNotification(content("Fail", "Can't show list people in this project", "danger"))
+                // Store.addNotification(content("Fail", "Can't show list people in this project", "danger"))
                 //console.log(err.response.data)
             })
     }, [listSharedName])

@@ -15,7 +15,7 @@ export default function Template(props) {
         getAllTemplate()
             .then(res => {
                 console.log(res.data)
-                setReports(res.data)
+                setReports(res.data.reverse())
                 setIsLoading(false)
             })
             .catch(err => {

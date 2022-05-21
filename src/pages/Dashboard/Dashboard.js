@@ -33,7 +33,7 @@ export default function Dashboard() {
 
             setProjectList(projectList.data)
             setPeopleList(peopleList.data)
-            setReports(templateList.data)
+            setReports(templateList.data.reverse())
             setIsLoading(false)
         } catch (error) {
             setIsLoading(false)
@@ -64,7 +64,7 @@ export default function Dashboard() {
             </div>
             <div className='mt-2 mb-2  row' >
                 <div className='col-7 m-0' style={{ height: "100%" }} >
-                    <div className='m-2 ms-1 customforeground'>
+                    <div className='m-2 ms-1 customforeground pb-5'>
                         <h1 className='m-0 pt-4 ms-4 p-0 PrimaryFontColor' style={{ "fontWeight": "bold", fontSize: "40px" }}>{localization.Templates}</h1>
                         <p className='m-0 ms-4 p-0'>Variety template for your choice</p>
 
