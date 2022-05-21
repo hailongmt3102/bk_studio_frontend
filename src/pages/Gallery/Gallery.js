@@ -22,7 +22,7 @@ export default function Gallery(props) {
             getAllReportApi(currentProject)
                 .then(res => {
                     console.log(res.data)
-                    setReports(res.data)
+                    setReports(res.data.reverse())
                     setIsLoading(false)
                 })
                 .catch(err => {
