@@ -80,6 +80,12 @@ function App() {
 
     useEffect(() => {
         if (socket) {
+            // socket.off("chat")
+            // socket.off("verify")
+            // socket.off("status")
+            // socket.off("statusAll")
+            
+
             socket.emit("verify", localStorage.getItem("email"))
             socket.on("status", (data) => {
                 setOnlineStatus({ ...onlineStatus, [data.Email]: { Status: data.Status, Time: data.Time } })
