@@ -1,13 +1,14 @@
 import { getAllModel } from 'api/ML_API'
 import { localizationContext } from 'App'
 import { useContext, useEffect, useState } from 'react'
+
 import { Store } from 'react-notifications-component'
 import { useNavigate } from 'react-router-dom'
 import BlankReportIcon from 'resources/icons/blankReport.svg'
 import { content } from "utils/notification"
 import { loadingContext } from 'App'
 import ModelCard from './component/ModelCard'
-import { createModel as createModelApi, deleteModel  as deleteModelApi} from "api/ML_API"
+import { createModel as createModelApi, deleteModel as deleteModelApi } from "api/ML_API"
 
 
 export default function ML() {
@@ -20,8 +21,9 @@ export default function ML() {
             setIsLoading(true)
             getAllModel()
                 .then(res => {
-                    setIsLoading(false)
                     setModelList(res.data)
+                    setIsLoading(false)
+
                     console.log(res.data)
                 })
                 .catch(err => {
@@ -55,16 +57,20 @@ export default function ML() {
     const deleteModel = (id) => {
         setIsLoading(true)
         deleteModelApi(id)
-        .then(res => {
-            setIsLoading(false)
-            Store.addNotification(content("Success", "Delete successful", "success"))
-            setModelList(modelList.filter(ele => ele.Id != id))
-        })
-        .catch(err => {
-            setIsLoading(false)
-            Store.addNotification(content("Fail", err.response.data, "danger"))
-        })
+            .then(res => {
+                setIsLoading(false)
+                Store.addNotification(content("Success", "Delete successful", "success"))
+                setModelList(modelList.filter(ele => ele.Id != id))
+            })
+            .catch(err => {
+                setIsLoading(false)
+                Store.addNotification(content("Fail", err.response.data, "danger"))
+            })
     }
+    const renameModelHandle = () => {
+
+    }
+
     return (
         <div>
             <div className='m-2 mt-4 mb-4'>
@@ -96,7 +102,11 @@ export default function ML() {
                     {modelList.map(ele =>
                         <div className='col m-0 p-0' style={{ "minWidth": "600px", "maxWidth": "600px" }} >
                             <div className='ms-4 mt-4'>
-                                <ModelCard info={ele} deleteModel={deleteModel}/>
+                                <ModelCard
+                                    info={ele}
+                                    deleteModel={deleteModel}
+                                    renameModelHandle={renameModelHandle}
+                                />
                             </div>
                         </div>
                     )}
