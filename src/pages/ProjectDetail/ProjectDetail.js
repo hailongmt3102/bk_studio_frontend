@@ -132,13 +132,13 @@ export default function ProjectDetail() {
             {
                 datasourceslist.length === 0 ?
                     <div className='row m-0 p-0 mt-4 customforeground' >
-                        <div className=' col-10 PrimaryFontColor' style={{"fontWeight": "bold", fontSize: "40px" }}>Data Sources:</div>
+                        <div className=' col-10 PrimaryFontColor' style={{ "fontWeight": "bold", fontSize: "40px" }}>Data Sources:</div>
                         <div className='' style={{ height: "300px" }}>
                         </div>
                     </div>
                     :
                     <div className='row m-0 p-0 mt-3 customforeground' >
-                        <div className=' col-10 PrimaryFontColor' style={{  "fontWeight": "bold", fontSize: "40px" }}>Data Sources:</div>
+                        <div className=' col-10 PrimaryFontColor' style={{ "fontWeight": "bold", fontSize: "40px" }}>Data Sources:</div>
                         <div className='' style={{ minheight: "300px" }}>
                             <ScrollMenu>
                                 {datasourceslist.map((ele, index) => (
@@ -167,10 +167,10 @@ export default function ProjectDetail() {
         return <div>
             <div className='rounded-5 m-2 mt-4'>
                 <div className='row'>
-                    <h2 class="col-10  m-0 p-0 PrimaryFontColor" style={{"fontWeight": "bold", fontSize: "40px" }}>
+                    <h2 class="col-10  m-0 p-0 PrimaryFontColor" style={{ "fontWeight": "bold", fontSize: "40px" }}>
                         <div className='ms-4'>My team:</div>
                     </h2>
-                    <div className='col-2 ml-auto m-0 p-0 text-right align-self-end'>
+                    <div className='col-2 mb-3 ml-auto m-0 p-0 text-right align-self-end'>
                         <button class=" btn p-3 ms-5 " type="button" style={{ color: "white", backgroundColor: deep_blue_primary, borderRadius: "30px ", fontSize: 16 }} onClick={() => {
                             setshowPeoplePopUp(true)
                             //inviteMemberSubmit()
@@ -326,7 +326,7 @@ export default function ProjectDetail() {
         return <div className='m-2 row mt-4'>
             <div className=' col-10 PrimaryFontColor' style={{ "fontWeight": "bold", fontSize: "40px" }}>About:</div>
             <div className='col-2 m-0 p-0 m-auto text-right align-self-end'>
-                <div className='ms-3'>
+                <div className='ms-3 mb-3'>
                     <button class="btn btn-primary btn-lg ms-5 p-3 "
                         onClick={() => { EditProjectSubmit() }}
                         type="button"
@@ -338,7 +338,7 @@ export default function ProjectDetail() {
             </div>
             <div className='customforeground'>
                 <div className='level1' style={{ height: "250px" }}>
-                    <div className='row m-0 p-0'>
+                    <div className='row m-0 p-4'>
                         <div className='col-6'>
                             <div className='m-3 m-0 p-0'>
                                 <div class=" row text-center m-0 p-0">

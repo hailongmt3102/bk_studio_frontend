@@ -69,96 +69,103 @@ export default function Header() {
                 <div className='col-2 m-0 p-0' >
                     <img onClick={() => { nav("/") }} className='mt-1 ms-2' src={logoapp} height="50px" width="auto" />
                 </div>
-                <div className='col-6 m-0 p-0 mt-4'  >
-                    <Autocomplete
-                        className='ms-5 me-5'
-                        id="tags-standard"
-                        options={option_list}
-                        renderInput={(params) => (
-                            <TextField
-                                {...params}
-                                variant="standard"
-                                placeholder="Go to page..."
-                            />
-                        )}
-                        onChange={(e, val) => {
-                            setSearchContent(val)
-                            if (val === "Dashboard") {
-                                nav("/")
-                            }
-                            else if (val === "Datasources") {
-                                nav("/datasources")
-                            }
-                            else if (val === "People") {
-                                nav("/people")
-                            }
-                            else if (val === "Your Projects") {
-                                nav("/pList")
-                            }
-                            else if (val === "People") {
-                                nav("/people")
-                            }
-                            else if (val === "Create a report") {
-                                nav("/project/create")
-                            }
-                            else if (val === "Gallery") {
-                                nav("/project/gallery")
-                            }
-                            else if (val === "Machine Learning") {
-                                nav("/machinelearning")
-                            }
-                            else if (val === "Import Data") {
-                                nav("/project/import")
-                            }
-                            else if (val === "Templates") {
-                                nav("/templates")
-                            }
-                            else if (val === "Profile") {
-                                nav("/personal/profile")
-                            }
-                            else if (val === "Setting") {
-                                nav("/personal/setting")
-                            }
-                            else nav("/")
-                        }}
-
-                    />
+                <div className='col-8 m-0 p-0 mt-4 text-center'  >
+                    <div className='ms-4 me-5'>
+                        <Autocomplete
+                            className='ms-5 me-5'
+                            id="tags-standard"
+                            options={option_list}
+                            renderInput={(params) => (
+                                <TextField
+                                    {...params}
+                                    variant="standard"
+                                    placeholder="Go to page..."
+                                />
+                            )}
+                            onChange={(e, val) => {
+                                setSearchContent(val)
+                                if (val === "Dashboard") {
+                                    nav("/")
+                                }
+                                else if (val === "Datasources") {
+                                    nav("/datasources")
+                                }
+                                else if (val === "People") {
+                                    nav("/people")
+                                }
+                                else if (val === "Your Projects") {
+                                    nav("/pList")
+                                }
+                                else if (val === "People") {
+                                    nav("/people")
+                                }
+                                else if (val === "Create a report") {
+                                    nav("/project/create")
+                                }
+                                else if (val === "Gallery") {
+                                    nav("/project/gallery")
+                                }
+                                else if (val === "Machine Learning") {
+                                    nav("/machinelearning")
+                                }
+                                else if (val === "Import Data") {
+                                    nav("/project/import")
+                                }
+                                else if (val === "Templates") {
+                                    nav("/templates")
+                                }
+                                else if (val === "Profile") {
+                                    nav("/personal/profile")
+                                }
+                                else if (val === "Setting") {
+                                    nav("/personal/setting")
+                                }
+                                else nav("/")
+                            }}
+                        />
+                    </div>
                 </div>
+                <div className='col-2 mt-3 ' >
+                    <div className='row me-2'>
+                        <div className='col-10'>
+                            <AdjustedDropdown
+                                className="text-center"
+                                style={{ "justify-content": "center", "align-items": "center" }}
+                                items={["Profile", "Logout"]}
+                                icons_list={[profile, logout_icon]}
+                                onClick={(item) => {
+                                    if (item === "Logout") logout()
+                                    else if (item === "Profile") nav("personal/profile")
+                                }}
+                                title={
+                                    <div className='d-flex align-items-center'>
+                                        <Avatar sx={{ bgcolor: "#0089ED" }}>
+                                            <img src={information.Avatar} />
+                                        </Avatar>
 
-                <div className='col-2 mt-3 text-end' >
-                    <AdjustedDropdown className="text-center" style={{ "justify-content": "center", "align-items": "center" }} items={["Profile", "Logout"]} icons_list={[profile, logout_icon]}
-                        onClick={(item) => {
-                            if (item === "Logout") logout()
-                            else if (item === "Profile") nav("personal/profile")
-                        }}
-                        title={
-                            <div className='d-flex align-items-center'>
-                                <Avatar sx={{ bgcolor: "#0089ED" }}>
-                                    <img src={information.Avatar} />
-                                </Avatar>
-                                {/* <div className='bg-primary text-white p-1' style={{ height: "45px", width: "45px", borderRadius: "45px", "fontSize": "26px" }}>
-                                    <div className=''>
-
+                                        <div className='ms-2 me-3'>
+                                            {localStorage.getItem("username") === null ? "" : localStorage.getItem("username").substring(0, 10)}
+                                        </div>
                                     </div>
-                                </div> */}
-                                <div className='ms-2 me-3'>
-                                    {localStorage.getItem("username") === null ? "" : localStorage.getItem("username").substring(0, 10)}
-                                </div>
+                                }
+                            />
+                        </div>
+                        <div className='col-2 m-0 p-0 m-auto'>
+                            <div className='me-5'>
+                                <Badge color="error" overlap="circular" badgeContent=" 12">
+                                    <Avatar src={bell} sx={{ width: 35, height: 35 }} />
+                                </Badge>
                             </div>
-                        }
-                    />
+                        </div>
+                    </div>
                 </div>
-                <div className='col-1 mt-3'>
-                    <Badge color="error" overlap="circular" badgeContent=" 12">
-                        <Avatar src={bell} sx={{ width: 35, height: 35 }} />
-                    </Badge>
-                </div>
-                <div className='col-1 mt-3'>
+
+                {/* <div className='col-1 mt-3'>
                     <Badge color="error" overlap="circular" badgeContent=" 12">
                         <Avatar src={chaticon} sx={{ width: 35, height: 35 }} />
                     </Badge>
 
-                </div>
+                </div> */}
             </div>
 
             : null
