@@ -64,7 +64,7 @@ export default function ModelCard(props) {
                     <div className="text-center">
                         {
                             isEdit === true ?
-                                <button onClick={() => { props.renameModelHandle() }} type="button" class="btn btn-primary btn-lg">Save</button>
+                                <button onClick={() => { props.renameModelHandle(props.info.Id, newName, props.index) }} type="button" class="btn btn-primary btn-lg">Save</button>
                                 : null
                         }
                     </div>

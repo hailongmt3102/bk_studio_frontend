@@ -9,7 +9,7 @@ import { content } from "utils/notification"
 import { loadingContext } from 'App'
 import ModelCard from './component/ModelCard'
 import { createModel as createModelApi, deleteModel as deleteModelApi } from "api/ML_API"
-
+import { modifyModel } from "api/ML_API";
 
 export default function ML() {
     const setIsLoading = useContext(loadingContext)
@@ -67,8 +67,21 @@ export default function ML() {
                 Store.addNotification(content("Fail", err.response.data, "danger"))
             })
     }
-    const renameModelHandle = () => {
+    const renameModelHandle = (id, name, index) => {
 
+        console.log(id)
+
+        modifyModel(id, {
+            Name: name,
+
+        })
+            .then(res => {
+                // setModelList([...modelList.slice(0, index), { ...modelList, Name: name }, ...modelList.slice(index + 1)])
+                Store.addNotification(content("Success", "Edited", "success"))
+            })
+            .catch(err => {
+                Store.addNotification(content("Fail", err.response.data, "danger"))
+            })
     }
 
     return (
@@ -99,11 +112,12 @@ export default function ML() {
 
                 </div>
                 <div className='row m-0 p-0 justify-content-center'>
-                    {modelList.map(ele =>
+                    {modelList.map((ele, index) =>
                         <div className='col m-0 p-0' style={{ "minWidth": "600px", "maxWidth": "600px" }} >
                             <div className='ms-4 mt-4'>
                                 <ModelCard
                                     info={ele}
+                                    index={index}
                                     deleteModel={deleteModel}
                                     renameModelHandle={renameModelHandle}
                                 />
