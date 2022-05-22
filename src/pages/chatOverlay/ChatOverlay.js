@@ -36,7 +36,7 @@ export default function ChatOverlay(props) {
         let email = localStorage.getItem("email")
         if (email) setMyEmail(email)
 
-    }, [socket])
+    }, [socket, localStorage.getItem("email")])
 
     const handleNewUserMessage = (newMessage) => {
         if (socket)
