@@ -67,6 +67,8 @@ export default function ML() {
                 Store.addNotification(content("Fail", err.response.data, "danger"))
             })
     }
+
+    const [isEdit, setIsEdit] = useState(false)
     const renameModelHandle = (id, name, index) => {
 
         console.log(id)
@@ -76,7 +78,8 @@ export default function ML() {
 
         })
             .then(res => {
-                // setModelList([...modelList.slice(0, index), { ...modelList, Name: name }, ...modelList.slice(index + 1)])
+                setModelList([...modelList.slice(0, index), { ...modelList[index], Name: name }, ...modelList.slice(index + 1)])
+                setIsEdit(false)
                 Store.addNotification(content("Success", "Edited", "success"))
             })
             .catch(err => {
@@ -116,6 +119,8 @@ export default function ML() {
                         <div className='col m-0 p-0' style={{ "minWidth": "600px", "maxWidth": "600px" }} >
                             <div className='ms-4 mt-4'>
                                 <ModelCard
+                                    isEdit={isEdit}
+                                    setIsEdit={setIsEdit}
                                     info={ele}
                                     index={index}
                                     deleteModel={deleteModel}

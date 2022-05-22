@@ -12,7 +12,7 @@ export default function ModelCard(props) {
     const nav = useNavigate()
     const option_list = ["Rename", "Delete"]
     const icons_list = [edit, delete_icon]
-    const [isEdit, setIsEdit] = useState(false)
+
     const [newName, setNewName] = useState(props.info.Name)
     return (
         <div className='m-2  p-3 shadow border border-light level1 ' style={{ "borderRadius": "20px" }}>
@@ -27,7 +27,7 @@ export default function ModelCard(props) {
                             props.deleteModel(props.info.Id)
                         }
                         else if (val === "Rename") {
-                            setIsEdit(true)
+                            props.setIsEdit(true)
                         }
                     }} />
             </div>
@@ -47,7 +47,7 @@ export default function ModelCard(props) {
                 </div>
                 <div className='col-9 m-auto'>
                     {
-                        isEdit === true ? <div className="ms-5">
+                        props.isEdit === true ? <div className="ms-5">
                             <Form.Control type="text" value={newName} onChange={(newName) => {
                                 setNewName(newName.target.value)
                             }}
@@ -63,7 +63,7 @@ export default function ModelCard(props) {
                     <div className='ms-5 size18 pb-4'><span>{localization.lastModi}  </span> {props.info.LastModified && props.info.LastModified.substring(0, 10)}</div>
                     <div className="text-center">
                         {
-                            isEdit === true ?
+                            props.isEdit === true ?
                                 <button onClick={() => { props.renameModelHandle(props.info.Id, newName, props.index) }} type="button" class="btn btn-primary btn-lg">Save</button>
                                 : null
                         }
