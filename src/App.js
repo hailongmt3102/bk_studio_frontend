@@ -29,7 +29,7 @@ import Register from "./pages/Register/Register";
 import Setting from "./pages/Setting/Setting";
 import Templates from "./pages/Templates/Templates";
 import Admin from './pages/Admin/Admin'
-
+import ChatOverlay from "pages/chatOverlay/ChatOverlay";
 import { data } from './utils/localizationData';
 
 import CreateANewModel from "pages/MachineLearning/CreateANewModel/CreateANewModel";
@@ -105,6 +105,7 @@ function App() {
                                 {isLoading && <Loading />}
                                 <ReactNotifications />
                                 <Drawer state={drawerState} setDrawerState={setDrawerState} />
+                                <ChatOverlay visibility={true}/>
                                 <div className="custombackground">
                                     <Header />
                                     <Routes>
