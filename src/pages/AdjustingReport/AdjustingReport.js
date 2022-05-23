@@ -108,17 +108,17 @@ export default function AdjustingReport(props) {
     useEffect(() => {
         console.log("tab data changed ", tabData)
 
-        if (followingIndexComponent < 0 || followingIndexComponent >= shapeComponents.length){
+        if (followingIndexComponent < 0 || followingIndexComponent >= shapeComponents.length) {
             return
         }
         updateShapeComponent(followingIndexComponent, {
             ...shapeComponents[followingIndexComponent],
             TextTheme: {
                 ...shapeComponents[followingIndexComponent].TextTheme,
-                alignment : tabData.style.alignment,
+                alignment: tabData.style.alignment,
                 decoration: tabData.style.decoration,
                 font: tabData.style.font,
-                size : tabData.style.size,
+                size: tabData.style.size,
                 color: tabData.style.fill,
             },
             FrameTheme: {
@@ -130,7 +130,7 @@ export default function AdjustingReport(props) {
 
     useEffect(() => {
         console.log(shapeComponents)
-    }, [shapeComponents]) 
+    }, [shapeComponents])
 
 
     // ** ---------------------------------------------------------------------------------------------
@@ -499,21 +499,14 @@ export default function AdjustingReport(props) {
                 let queryResult = await queryDataOfAShape(component.QueryCommand)
                 let { parseResult } = parseDataQueried(component.Type, queryResult, 0)
                 if (queryResult == null) {
-                    // error to query data of this shape
                     component.TypeParsed = "Error"
-                    component.Position = JSON.parse(component.Position)
                 } else {
-                    // parse them json data from server
-                    component.Position = JSON.parse(component.Position)
-                    component.TextTheme = JSON.parse(component.TextTheme)
-                    component.FrameTheme = JSON.parse(component.FrameTheme)
                     component = { ...component, ...parseResult }
                 }
-            } else {
-                component.Position = JSON.parse(component.Position)
-                component.TextTheme = JSON.parse(component.TextTheme)
-                component.FrameTheme = JSON.parse(component.FrameTheme)
             }
+            component.Position = JSON.parse(component.Position)
+            component.TextTheme = JSON.parse(component.TextTheme)
+            component.FrameTheme = JSON.parse(component.FrameTheme)
             setShapeComponent([...shapeComponents, component])
         } catch (err) {
             Store.addNotification(content("Fail", "Adding new component error :" + err, "danger"))
@@ -810,8 +803,8 @@ export default function AdjustingReport(props) {
                     size: shapeData.TextTheme.size,
                     decoration: shapeData.TextTheme.decoration,
                     alignment: shapeData.TextTheme.alignment,
-                    fill: shapeData.FrameTheme.color,
-                    stroke: ""
+                    fill: shapeData.TextTheme.color,
+                    stroke: shapeData.FrameTheme.color
                 }
             }
             setTabData(tab)

@@ -194,6 +194,7 @@ const Content = React.forwardRef((props, ref) => {
                                 onChange={(e) => {
                                     props.updateShapeComponent(index, { ...shape, QueryCommand: e.target.value })
                                 }}
+                                placeholder="Text"
                                 style={{
                                     border: `1px solid ${shape.FrameTheme.color}`,
                                     width: "100%",
