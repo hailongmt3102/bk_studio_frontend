@@ -101,6 +101,8 @@ export default function AdjustingReport(props) {
 
     const [keydown, setKeydown] = useState({ previous: "", current: "" })
 
+    const [currentColorIndex, setCurrentColorIndex] = useState(0)
+
     const EditStyle = (newStyle) => {
         setTabData({ ...tabData, style: newStyle })
     }
@@ -301,7 +303,7 @@ export default function AdjustingReport(props) {
 
     // ** get all shape from server
     const fetchAllShapesFromServer = async () => {
-        let colorIndex = 0;
+        let colorIndex = currentColorIndex;
         if (currentProject == null) return
         try {
             let componentResult = (await getAllComponent(currentProject, RId, isTemplate)).data
@@ -333,6 +335,7 @@ export default function AdjustingReport(props) {
                     }
                 }
             }
+            setCurrentColorIndex(colorIndex)
             return componentResult
         }
         catch (err) {
@@ -503,7 +506,7 @@ export default function AdjustingReport(props) {
             if (checkNeedToQueryData(component.Type)) {
                 // fetch data
                 let queryResult = await queryDataOfAShape(component.QueryCommand)
-                let { parseResult } = parseDataQueried(component.Type, queryResult, 0)
+                let { parseResult } = parseDataQueried(component.Type, queryResult, currentColorIndex)
                 if (queryResult == null) {
                     component.TypeParsed = "Error"
                 } else {
