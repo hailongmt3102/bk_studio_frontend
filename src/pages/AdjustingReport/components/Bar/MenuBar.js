@@ -34,8 +34,8 @@ export default function MenuBar(props) {
     const closeModal = (name) => {
         setModelState({ ...modelState, [name]: false })
     };
-    const file_option = ['New', 'Open', 'Upload', 'Save', 'Download', 'Print', 'Delete']
-    const file_option_icon_list = [new_file, open_file, upload, save_grey, save, print, remove_file]
+    const file_option = ['New', 'Save', 'Download', 'Delete']
+    const file_option_icon_list = [new_file, save_grey, save, remove_file]
     const edit_option_icon_list = [keo, copy, paste, done_round]
     const edit_option = ['Cut', 'Copy', 'Paste', 'Delete']
     const function_option = ['SUM', 'MAX', 'MIN', 'AVERAGE']

@@ -237,15 +237,6 @@ export default function EditModel() {
             </div>
 
             <div className='bg-white p-2 mt-3'>
-                <div className='row'>
-                    <div className='col-2 ms-4 mt-1 customFontBold SecondFontColor size40'>
-                        Test data:
-                    </div>
-                    <div className='col m-auto mt-3'>
-                        {changeButton(ChangeInputHandle)}
-                    </div>
-                </div>
-
                 <div className='row m-0 p-0'>
                     <div className='col-2 ms-4 mt-1 customFontBold SecondFontColor size40'>
                         Api:
@@ -265,6 +256,16 @@ export default function EditModel() {
                     </div>
                     <div className='col-5'></div>
                 </div>
+                <div className='row'>
+                    <div className='col-2 ms-4 mt-1 customFontBold SecondFontColor size40'>
+                        Test data:
+                    </div>
+                    <div className='col m-auto mt-3'>
+                        {changeButton(ChangeInputHandle)}
+                    </div>
+                </div>
+
+
                 <div className="mt-4 ms-3" style={{ height: 300 }}>
                     <DataGrid
                         loading={loading}

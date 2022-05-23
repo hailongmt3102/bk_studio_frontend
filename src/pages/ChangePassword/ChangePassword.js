@@ -30,7 +30,7 @@ export default function ChangePassword() {
             return
         }
         else {
-            SetNewPasswordAPI({...information, Password: "asdf"})
+            SetNewPasswordAPI(information)
                 .then((res) => {
                     Store.addNotification(content("Success", "Changed Password", "success", {
                         duration: 5000

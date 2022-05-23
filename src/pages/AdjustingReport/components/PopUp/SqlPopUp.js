@@ -115,6 +115,47 @@ export default function SqlPopUp(props) {
 
     useEffect(() => {
         setStep(1)
+        // const [groupBy, setGroupBy] = useState([])
+
+        // const [function_clause, setFunction_clause] = useState([])
+
+        // const [where_clause, setWhere_clause] = useState([])
+
+        // const [having_clause, setHaving_clause] = useState([])
+
+        // const [order_clause, setOrder_clause] = useState([])
+
+        // const [fieldList, setFieldList] = useState([])
+
+        // const function_list = [
+        //     'COUNT',
+        //     'SUM',
+        //     'MAX',
+        //     'MIN',
+        //     'AVG',
+        // ];
+
+        // // const [data_source, set_data_source] = useState([]);
+        // const order_by_list = [
+        //     'ASC',
+        //     'DESC',
+        // ];
+
+        // const [selectXAxis, setSelectXAxis] = useState(null)
+
+        // const [selectedField, setSelectedField] = useState([])
+        // const [selectFrom, setSelectFrom] = useState([])
+
+        setGroupBy([])
+        setFunction_clause([])
+        setWhere_clause([])
+        setHaving_clause([])
+        setOrder_clause([])
+        setFieldList([])
+        setSelectFrom([])
+        setSelectXAxis(null)
+        setSelectedField([])
+
     }, [props.show])
 
 

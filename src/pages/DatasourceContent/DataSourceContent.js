@@ -90,6 +90,7 @@ export default function DataSourceContent(props) {
     };
 
     const submit = () => {
+        setIsLoading(true)
         let sendInfo = {
             Table: datasource.Information,
             Data: updateContent
@@ -97,10 +98,12 @@ export default function DataSourceContent(props) {
 
         updateTableContentApi(DId, sendInfo)
             .then(res => {
+                setIsLoading(false)
                 Store.addNotification(content("Success", res.data, "success"))
                 // setTimeout(() => { window.location.reload() }, 1500)
             })
             .catch(err => {
+                setIsLoading(false)
                 console.log(err)
             })
     }

@@ -63,7 +63,7 @@ function App() {
     const [isLoading, setIsLoading] = useState(false)
     // localStorage.setItem('lightTheme', false)
     // const themeSaved = localStorage.getItem('lightTheme') || true
-    const [lightMode, setLightMode] = useState(localStorage.getItem('lightTheme') === "true" ? true : false)
+    const [lightMode, setLightMode] = useState(localStorage.getItem('lightTheme') === "false" ? false : true)
 
     // const [lightMode, setLightMode] =  useState(false)
 
@@ -84,7 +84,7 @@ function App() {
             // socket.off("verify")
             // socket.off("status")
             // socket.off("statusAll")
-            
+
 
             socket.emit("verify", localStorage.getItem("email"))
             socket.on("status", (data) => {
@@ -94,9 +94,9 @@ function App() {
             socket.on("statusAll", (users) => {
                 let newUsers = {}
                 for (let i = 0; i < users.length; i++) {
-                    newUsers[users[i].Email] = {Status : users[i].Status, Time:  users[i].Time}
+                    newUsers[users[i].Email] = { Status: users[i].Status, Time: users[i].Time }
                 }
-                setOnlineStatus({...onlineStatus, ...newUsers})
+                setOnlineStatus({ ...onlineStatus, ...newUsers })
             })
         }
     }, [localStorage.getItem("email"), socket])
@@ -111,7 +111,7 @@ function App() {
                                 {isLoading && <Loading />}
                                 <ReactNotifications />
                                 <Drawer state={drawerState} setDrawerState={setDrawerState} />
-                                <ChatOverlay visibility={true}/>
+                                <ChatOverlay visibility={true} />
                                 <div className="custombackground">
                                     <Header />
                                     <Routes>
@@ -168,7 +168,7 @@ function App() {
 
                                         <Route
                                             path="/admin"
-                                            element={<Admin/>}
+                                            element={<Admin />}
                                         />
                                         <Route
                                             path="*"
@@ -180,7 +180,7 @@ function App() {
                                             }
                                         />
 
-                                     
+
                                     </Routes>
                                 </div>
                             </div>

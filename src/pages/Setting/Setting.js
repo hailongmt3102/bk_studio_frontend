@@ -145,7 +145,7 @@ export default function Setting(props) {
 
                     <div className='row'>
                         <div className='col-2'>
-                            <Form.Label column sm="2">
+                            <Form.Label >
                                 <h5 className='mt-4' style={{ "fontWeight": "bold", fontSize: 16 }}>{localization.DarkMode}  </h5>
                             </Form.Label>
                         </div>
