@@ -8,7 +8,7 @@ import * as XLSX from "xlsx"
 import { localizationContext } from '../../../App'
 import ImportButton from '../Components/ImportButton'
 import { getAPI } from 'api/ML_API'
-
+import AddPopUp from "../Components/AddPopUp";
 export default function SelectData(props) {
     const localization = useContext(localizationContext)
     const executeStringResult = (result) => {
@@ -111,10 +111,10 @@ export default function SelectData(props) {
     const inputXLSXFile = useRef(null)
     const inputJsonFile = useRef(null)
 
-    const fetchFromAPI = async (api) => {
+    const fetchFromAPI = async (name, api) => {
         try {
             let response = await getAPI(api)
-            props.setFileInformation({ name: "data from api" })
+            props.setFileInformation({ name: name })
             props.setDataFile(response)
             props.onloadComplete()
         } catch (error) {
@@ -122,8 +122,22 @@ export default function SelectData(props) {
         }
     }
 
+    const [show, setShow] = useState(false)
+
+    const submitAPIHandle = (name, url) => {
+        setShow(false)
+
+        fetchFromAPI(name, url)
+    }
     return (
         <div>
+            <AddPopUp
+                show={show}
+                handleClose={() => {
+                    setShow(false)
+                }}
+                onComplete={submitAPIHandle}
+            />
             <div>
                 <div>
                     <h2 class="ms-4 mt-2 PrimaryFontColor size40 customFontBold" >
@@ -183,7 +197,8 @@ export default function SelectData(props) {
                         />
                         <ImportButton text={localization.connectToDB} image={db} onClick={() => {
                             // openFile()
-                            fetchFromAPI('https://6288d18d10e93797c15f5996.mockapi.io/salary')
+                            setShow(true)
+
                         }} />
                     </div>
                 </div>
