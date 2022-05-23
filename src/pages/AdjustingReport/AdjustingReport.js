@@ -506,7 +506,8 @@ export default function AdjustingReport(props) {
             if (checkNeedToQueryData(component.Type)) {
                 // fetch data
                 let queryResult = await queryDataOfAShape(component.QueryCommand)
-                let { parseResult } = parseDataQueried(component.Type, queryResult, currentColorIndex)
+                let { parseResult, _colorIndex } = parseDataQueried(component.Type, queryResult, currentColorIndex)
+                setCurrentColorIndex(currentColorIndex + _colorIndex)
                 if (queryResult == null) {
                     component.TypeParsed = "Error"
                 } else {
