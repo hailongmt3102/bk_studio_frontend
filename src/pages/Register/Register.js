@@ -68,7 +68,7 @@ export default function Register() {
     }
 
     const onSubmitHandler = () => {
-        console.log(information);
+        console.log("gui", information);
         if (!ValidateEmail(information.Email)) {
             Store.addNotification(content("Warning", "You have entered an invalid email address!", "warning"))
             return
@@ -85,7 +85,7 @@ export default function Register() {
         RegisterApi(information)
             .then((res) => {
                 Store.addNotification(content("Success", "Registered and Please verify account from us email", "success"))
-                navigate("/account/login")
+                // navigate("/account/login")
             })
             .catch((e) => {
                 Store.addNotification(content("Fail", e.response.data, "danger"))
@@ -328,9 +328,9 @@ export default function Register() {
                                                                     setinformation({
                                                                         ...information, Company: e.target.value
                                                                     })
-                                                                    setinformation({
-                                                                        ...information, Tenant: e.target.value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replaceAll(' ', '')
-                                                                    })
+                                                                    // setinformation({
+                                                                    //     ...information, Tenant: e.target.value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replaceAll(' ', '')
+                                                                    // })
                                                                     //console.log(information);
                                                                 }}
 
@@ -342,7 +342,7 @@ export default function Register() {
 
                                                         </InputGroup>
                                                     </Form.Group>
-                                                    <div className="row mt-1 ">
+                                                    {/* <div className="row mt-1 ">
                                                         <h6 className="col-3 mt-3">Position: </h6>
                                                         <div className='col-8 m-auto'>
                                                             <NoIconDropDownButton title={information.Position === "" ? "Position" : information.Position} items={["Manager", "Member"]} onClick={(val) => {
@@ -353,7 +353,7 @@ export default function Register() {
                                                             }} />
                                                         </div>
 
-                                                    </div>
+                                                    </div> */}
 
                                                 </div>
                                             }
