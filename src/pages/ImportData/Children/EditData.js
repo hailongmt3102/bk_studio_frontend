@@ -12,6 +12,7 @@ import { localizationContext } from '../../../App';
 
 export default function EditData(props) {
     const localization = useContext(localizationContext)
+
     useEffect(() => {
         setColumnProperties({
             data: Object.keys(props.dataFile[0]),
@@ -92,7 +93,7 @@ export default function EditData(props) {
                         <div className='row'>
                             <div className='col-3'>
                                 <Form.Control size="sm" type="text" value={props.fileInformation.name} onChange={(e) => {
-                                    props.setFileInformation({ ...props.fileInformation, name: e.target.value.replace(/[\s\.]/g, "_") })
+                                    props.setFileInformation({ ...props.fileInformation, name: e.target.value.replace(/[\s\.-]/g, "_") })
                                 }}
                                     className="border-0 "
                                     style={{
