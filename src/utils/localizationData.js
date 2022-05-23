@@ -56,7 +56,7 @@ const data = {
         importCSV: "Import csv file",
         importXLSX: "Import XLSX file",
         importJSOM: "Import JON file",
-        connectToDB: "Connect to database",
+        connectToDB: "Connect to API",
         sampleModel: "Sample Model",
         createModel: "Create a new model",
         models: "Models"
@@ -117,7 +117,7 @@ const data = {
         importCSV: "Thêm file .csv",
         importXLSX: "Thêm file .XLSX",
         importJSOM: "Thêm file .JSON",
-        connectToDB: "Kết nối đến cơ sở dữ liệu",
+        connectToDB: "Kết nối API",
         sampleModel: "Mẫu Model",
         createModel: "Tạo một model mới",
         models: "Danh sách các model"
