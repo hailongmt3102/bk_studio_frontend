@@ -112,8 +112,8 @@ export default function ProjectDetail() {
 
     const [datasourceslist, setDatasourceslist] = useState([])
 
-    const option_list = ["Send to Workspace", "Rename", "Share", "Download", "Delete"]
-    const icon_list = [sendTo, edit, share_blue, download_blue, delete_icon]
+    const option_list = ["Send to Workspace", "Rename", "Share", "Delete"]
+    const icon_list = [sendTo, edit, share_blue, delete_icon]
     const dataSourcesComponent = () => {
         return <div>
             <ShareDataSourcesPopUp
