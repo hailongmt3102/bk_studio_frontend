@@ -155,8 +155,14 @@ export default function AdjustingReport(props) {
             // get all field for each table
             let result = {}
             for (let i = 0; i < dataSourceList.data.length; i++) {
-                let columns = await getColumnsOfTable(dataSourceList.data[i].Information)
-                result[dataSourceList.data[i].Information] = columns.data.Columns.filter(ele => ele != "DataSource_Id")
+                try {
+                    let columns = await getColumnsOfTable(dataSourceList.data[i].Information)
+                    result[dataSourceList.data[i].Information] = columns.data.Columns.filter(ele => ele != "DataSource_Id")
+                }
+                catch (e) {
+                    console.log(e)
+                }
+
             }
             setDataSource(result)
         } catch (error) {
@@ -342,7 +348,7 @@ export default function AdjustingReport(props) {
             return await QueryDataApi(query, isTemplate)
         }
         catch (err) {
-            Store.addNotification(content("Fail", "Query data fail.error: " + err, "danger"))
+            // Store.addNotification(content("Fail", "Query data fail.error: " + err, "danger"))
             console.log("Query data fail. error: ", err, " \n Query Command :  ", query)
             return null
         }
