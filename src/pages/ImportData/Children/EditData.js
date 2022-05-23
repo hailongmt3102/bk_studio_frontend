@@ -114,6 +114,12 @@ export default function EditData(props) {
                             columns={columns}
                             columnVisibilityModel={{
                                 id: false,
+                                ...columnProperties.active.reduce((preVal, curVal, index) => {
+                                    return {
+                                        ...preVal,
+                                        [columnProperties.data[index]] : curVal
+                                    }
+                                }, {})
                             }}
                             experimentalFeatures={{ newEditingApi: true }}
                             editMode="cell"

@@ -1,25 +1,18 @@
-import React, { useState, useEffect } from 'react'
-import { Modal, Button } from 'react-bootstrap'
-import { blue_cloud, deep_blue_primary } from "../../../../utils/color"
+import { useState } from 'react'
+import { Button, Modal } from 'react-bootstrap'
+import { deep_blue_primary } from "../../../../utils/color"
 
-import { editPeopleRoleWithProject } from "../../../../api/Project"
-import { getListPeopleByProjectID } from "api/People"
 
-import { shareReport, getSharedListPeople } from "api/Report"
-import link from "resources/icons/link.svg";
 import edit from 'resources/icons/edit.svg'
+import link from "resources/icons/link.svg"
 
 import eye_bluecloud from 'resources/icons/eye_bluecloud.svg'
-import DropdownWithIndex0 from 'components/DropdownWithIndex0'
 
 import { Store } from 'react-notifications-component'
 import { content } from "utils/notification"
 
-import Autocomplete from '@mui/material/Autocomplete';
-import TextField from '@mui/material/TextField';
 export default function ShareLinkPopUp(props) {
 
-    console.log("Link", props.reportLink)
 
     const copyToClipboard = e => {
         navigator.clipboard.writeText(window.location.toString())
