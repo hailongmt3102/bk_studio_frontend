@@ -28,6 +28,8 @@ import ProjectList from "./pages/ProjectList/ProjectList";
 import Register from "./pages/Register/Register";
 import Setting from "./pages/Setting/Setting";
 import Templates from "./pages/Templates/Templates";
+import Admin from './pages/Admin/Admin'
+import ChatOverlay from "pages/chatOverlay/ChatOverlay";
 import { data } from './utils/localizationData';
 
 import CreateANewModel from "pages/MachineLearning/CreateANewModel/CreateANewModel";
@@ -36,10 +38,12 @@ import PredictData from "pages/MachineLearning/PredictData/PredictData";
 import TestModel from "pages/MachineLearning/TestModel/TestModel";
 import Loading from "components/Loading/Loading";
 import EditModel from "pages/MachineLearning/EditModel/EditModel";
+import socketIOClient from "socket.io-client";
 const translations = new LocalizedStrings(data);
 const localizationContext = React.createContext(translations);
 const loadingContext = React.createContext();
 const themeContext = React.createContext(false);
+const socketContext = React.createContext(null);
 
 function App() {
     const [drawerState, setDrawerState] = useState("workspace");
@@ -63,83 +67,125 @@ function App() {
 
     // const [lightMode, setLightMode] =  useState(false)
 
+    // init socket client
+    const [socket, setSocket] = useState(null)
+
+    // online status
+    const [onlineStatus, setOnlineStatus] = useState({})
+
+    useEffect(() => {
+        const socket = socketIOClient.connect(process.env.REACT_APP_BASE_URL || "http://localhost:3000")
+        setSocket(socket)
+    }, [])
+
+    useEffect(() => {
+        if (socket) {
+            // socket.off("chat")
+            // socket.off("verify")
+            // socket.off("status")
+            // socket.off("statusAll")
+            
+
+            socket.emit("verify", localStorage.getItem("email"))
+            socket.on("status", (data) => {
+                setOnlineStatus({ ...onlineStatus, [data.Email]: { Status: data.Status, Time: data.Time } })
+                console.log(data)
+            })
+            socket.on("statusAll", (users) => {
+                let newUsers = {}
+                for (let i = 0; i < users.length; i++) {
+                    newUsers[users[i].Email] = {Status : users[i].Status, Time:  users[i].Time}
+                }
+                setOnlineStatus({...onlineStatus, ...newUsers})
+            })
+        }
+    }, [localStorage.getItem("email"), socket])
 
     return (
         <localizationContext.Provider value={translations}>
             <loadingContext.Provider value={setIsLoading}>
                 <themeContext.Provider value={lightMode}>
-                    <Router>
-                        <div className={lightMode ? "full-height" : "full-height darkmode"}>
-                            {isLoading && <Loading />}
-                            <ReactNotifications />
-                            <Drawer state={drawerState} setDrawerState={setDrawerState} />
-                            <div className="custombackground">
-                                <Header />
-                                <Routes>
-                                    <Route path="/" exact element={<Dashboard />} >
-                                    </Route>
-                                    <Route path="/pList" element={<ProjectList />} />
-                                    <Route path="/pDetail/:id" element={<ProjectDetail />} />
+                    <socketContext.Provider value={{ socket: socket, onlineStatus: onlineStatus }}>
+                        <Router>
+                            <div className={lightMode ? "full-height" : "full-height darkmode"}>
+                                {isLoading && <Loading />}
+                                <ReactNotifications />
+                                <Drawer state={drawerState} setDrawerState={setDrawerState} />
+                                <ChatOverlay visibility={true}/>
+                                <div className="custombackground">
+                                    <Header />
+                                    <Routes>
+                                        <Route path="/" exact element={<Dashboard />} >
+                                        </Route>
+                                        <Route path="/pList" element={<ProjectList />} />
+                                        <Route path="/pDetail/:id" element={<ProjectDetail />} />
 
-                                    <Route path="/datasources"
-                                        element={<DataSources />} />
-                                    <Route
-                                        path="/datasources/:id"
-                                        element={<DataSourceContent />}
-                                    />
+                                        <Route path="/datasources"
+                                            element={<DataSources />} />
+                                        <Route
+                                            path="/datasources/:id"
+                                            element={<DataSourceContent />}
+                                        />
 
-                                    <Route path="/people" element={<People />} />
-                                    <Route path="/account/login" element={<Login />} />
+                                        <Route path="/people" element={<People />} />
+                                        <Route path="/account/login" element={<Login />} />
 
-                                    <Route path="/account/forgetPassword" element={<ForgetPassword />} />
-                                    <Route path="/account/register" element={<Register />} />
-                                    <Route path="/account/changePassword" element={<ChangePassword />} />
-                                    <Route path="/account/updatePassword" element={<UpdatePassword />} />
+                                        <Route path="/account/forgetPassword" element={<ForgetPassword />} />
+                                        <Route path="/account/register" element={<Register />} />
+                                        <Route path="/account/changePassword" element={<ChangePassword />} />
+                                        <Route path="/account/updatePassword" element={<UpdatePassword />} />
 
-                                    <Route
-                                        path="/project/create"
-                                        element={<CreateReport />}
-                                    />
-                                    <Route path="/project/import" element={<ImportData />} />
-                                    <Route
-                                        path="/project/gallery"
-                                        exact
-                                        element={<Gallery />}
-                                    />
-                                    <Route path="/templates" element={<Templates />} />
-                                    <Route path="/machinelearning" element={<ML />} />
-                                    <Route path="/machinelearning/createModel" element={<CreateANewModel />} />
-                                    <Route path="/machinelearning/modelDetail/:id" element={<ModelDetail />} />
-                                    <Route path="/machinelearning/modelDetail/:id/edit" element={<EditModel />} />
-                                    <Route path="/machinelearning/testModel" element={<TestModel />} />
-                                    <Route path="/machinelearning/predict" element={<PredictData />} />
-                                    <Route
-                                        path="/project/gallery/:id/edit"
-                                        exact
-                                        element={<AdjustingReport />}
-                                    />
-                                    <Route
-                                        path="/project/gallery/:id/view"
-                                        exact
-                                        element={<AdjustingReport />}
-                                    />
+                                        <Route
+                                            path="/project/create"
+                                            element={<CreateReport />}
+                                        />
+                                        <Route path="/project/import" element={<ImportData />} />
+                                        <Route
+                                            path="/project/gallery"
+                                            exact
+                                            element={<Gallery />}
+                                        />
+                                        <Route path="/templates" element={<Templates />} />
+                                        <Route path="/machinelearning" element={<ML />} />
+                                        <Route path="/machinelearning/createModel" element={<CreateANewModel />} />
+                                        <Route path="/machinelearning/modelDetail/:id" element={<ModelDetail />} />
+                                        <Route path="/machinelearning/modelDetail/:id/edit" element={<EditModel />} />
+                                        <Route path="/machinelearning/testModel" element={<TestModel />} />
+                                        <Route path="/machinelearning/predict" element={<PredictData />} />
+                                        <Route
+                                            path="/project/gallery/:id/edit"
+                                            exact
+                                            element={<AdjustingReport />}
+                                        />
+                                        <Route
+                                            path="/project/gallery/:id/view"
+                                            exact
+                                            element={<AdjustingReport />}
+                                        />
 
-                                    <Route path="/personal/profile" element={<Profile />} />
-                                    <Route path="/personal/setting" element={<Setting setLanguage={languageHandler} setLightMode={setLightMode} lightMode={lightMode} />} />
+                                        <Route path="/personal/profile" element={<Profile />} />
+                                        <Route path="/personal/setting" element={<Setting setLanguage={languageHandler} setLightMode={setLightMode} lightMode={lightMode} />} />
 
-                                    <Route
-                                        path="*"
-                                        element={
-                                            <div className="m-4">
-                                                <h1>404 not found</h1>
-                                                <p>Please check the correct link when browsing</p>
-                                            </div>
-                                        }
-                                    />
-                                </Routes>
+                                        <Route
+                                            path="/admin"
+                                            element={<Admin/>}
+                                        />
+                                        <Route
+                                            path="*"
+                                            element={
+                                                <div className="m-4">
+                                                    <h1>404 not found</h1>
+                                                    <p>Please check the correct link when browsing</p>
+                                                </div>
+                                            }
+                                        />
+
+                                     
+                                    </Routes>
+                                </div>
                             </div>
-                        </div>
-                    </Router>
+                        </Router>
+                    </socketContext.Provider>
                 </themeContext.Provider>
             </loadingContext.Provider>
         </localizationContext.Provider>
@@ -150,6 +196,7 @@ export default App;
 
 export {
     localizationContext,
-    loadingContext
+    loadingContext,
+    socketContext
 };
 

@@ -31,7 +31,11 @@ p.m-0.p-0 {
     overflow: hidden;
 }
 
-.customimageshape{
+.customimageshape {
     height: 100%;
     width: auto;
+}
+
+input:focus-visible, button:focus-visible {
+    outline: none;
 }

@@ -25,6 +25,55 @@ const bayesModelAPI = (testdata) => {
     })
 }
 
+const fetchAPI = (data, api) => {
+    return new Promise((resolve, reject) => {
+        fetch(api, {
+
+            // Adding method type
+            method: "POST",
+
+            // Adding body or contents to send
+            body: JSON.stringify(data),
+
+            // Adding headers to the request
+            headers: {
+                "Content-type": "application/json; charset=UTF-8",
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept'
+            }
+        })
+
+            // Converting to JSON
+            .then(response => resolve(response.json()))
+            .catch(err => {
+                reject(err)
+            })
+    })
+}
+
+const getAPI = (api) => {
+    return new Promise((resolve, reject) => {
+        fetch(api, {
+
+            // Adding method type
+            method: "GET",
+
+            // Adding headers to the request
+            headers: {
+                "Content-type": "application/json; charset=UTF-8",
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept'
+            }
+        })
+
+            // Converting to JSON
+            .then(response => resolve(response.json()))
+            .catch(err => {
+                reject(err)
+            })
+    })
+}
+
 const getAllModel = () => {
     return axiosClient.get('/machinelearning')
 }
@@ -45,6 +94,10 @@ const createModel = (data) => {
     return axiosClient.post(`/machinelearning/new`, data)
 }
 
+const deleteModel = (id) => {
+    return axiosClient.get(`/machinelearning/${id}/delete`)
+}
+
 
 export {
     bayesModelAPI,
@@ -52,5 +105,8 @@ export {
     getAModelByID,
     canModifyModel,
     modifyModel,
-    createModel
+    createModel,
+    fetchAPI,
+    deleteModel,
+    getAPI
 }

@@ -3,13 +3,16 @@ import {
     GridToolbarExport
 } from '@mui/x-data-grid';
 import { useDemoData } from "@mui/x-data-grid-generator";
-import { bayesModelAPI } from "api/ML_API";
+import { bayesModelAPI, fetchAPI } from "api/ML_API";
 import { useContext, useEffect, useState } from 'react';
 import { Store } from 'react-notifications-component';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { content } from 'utils/notification';
 import { loadingContext } from 'App'
 import back from "resources/icons/back_round_deep_blue.svg";
+import DNameInputPopUp from "./component/DNameInputPopUp"
+import { ImportDataApi } from 'api/DataSources'
+
 export default function PredictData() {
     const setIsLoading = useContext(loadingContext)
     const nav = useNavigate()
@@ -38,10 +41,10 @@ export default function PredictData() {
 
     const predictHandle = () => {
         setIsLoading(true)
-        bayesModelAPI(rows.map(ele => {
+        fetchAPI(rows.map(ele => {
             delete ele.id
             return ele
-        }))
+        }), location.state.Api)
             .then(response => {
                 var rowData = JSON.parse(response)
                 console.log(JSON.stringify(rowData))
@@ -66,7 +69,7 @@ export default function PredictData() {
             .catch(
                 err => {
                     setIsLoading(false)
-                    Store.addNotification(content("Fail", err.response.data, "danger"))
+                    Store.addNotification(content("Fail", "Predict fail, please check this model carefully", "danger"))
                     return
                 }
             )
@@ -79,8 +82,39 @@ export default function PredictData() {
         );
     }
 
+    const saveNewData = (name) => {
+        let currentProjectId = localStorage.getItem("currentProject")
+        if (currentProjectId != null) {
+            // send it to server
+            ImportDataApi(name, OutputRows, currentProjectId)
+                .then(res => {
+                    setShowNewUserModel(false)
+                    Store.addNotification(content("Success", "Imported data", "success"), {
+                        duration: 5000
+                    })
+
+
+                })
+                .catch(err => {
+                    setShowNewUserModel(false)
+                    Store.addNotification(content("Fail", err.response.data, "danger"), {
+                        duration: 10000
+                    })
+                })
+        }
+    }
+
+    const [shownewUserModel, setShowNewUserModel] = useState(false)
+
     return (
         <div>
+            <DNameInputPopUp
+                show={shownewUserModel}
+                handleClose={() => {
+                    setShowNewUserModel(false)
+                }}
+                onComplete={saveNewData}
+            />
             <div className='row m-2 mt-4 mb-4'>
                 <div className="row ms-2 m-0 p-0" >
                     <div className="col-5">
@@ -113,39 +147,53 @@ export default function PredictData() {
 
             </div>
             <div className='bg-white p-3'>
-                <div className='col ms-4 mt-1 customFontBold SecondFontColor size40'>
+                <div className=' ms-4 mt-1 customFontBold SecondFontColor size40'>
                     Test data:
-                    <div style={{ height: 400, width: '100%' }}>
-                        <DataGrid
-                            // loading={loading}
-                            rows={rows}
-                            columns={columns}
-                            columnVisibilityModel={{
-                                id: false,
+
+                </div>
+                <div className=' ms-4 me-4' style={{ height: 400 }}>
+                    <DataGrid
+                        // loading={loading}
+                        rows={rows}
+                        columns={columns}
+                        columnVisibilityModel={{
+                            id: false,
+                        }}
+                        experimentalFeatures={{ newEditingApi: true }}
+                        editMode="cell"
+                    />
+                </div>
+                <div className='row mt-3 m-0 p-0'>
+                    <div className='col ms-4  mt-1 customFontBold SecondFontColor size40'>
+                        Output:
+                    </div>
+                    <div className='col mt-2 p-2 mb-2 text-end'>
+                        <button type="button" className='btn  text-center border-0 me-4' style={{ background: "#0085FF" }}
+                            onClick={() => {
+                                setShowNewUserModel(true)
                             }}
-                            experimentalFeatures={{ newEditingApi: true }}
-                            editMode="cell"
-                        />
+                        >
+                            <div className='row p-2 text-center'>
+                                <div style={{ color: "white" }}>Save to Data sources</div>
+                            </div>
+                        </button>
                     </div>
                 </div>
-                <div className='col ms-4 mt-1 customFontBold SecondFontColor size40'>
-                    Output:
-                    <div style={{ height: 400, width: '100%' }}>
-                        <DataGrid
-                            // loading={loading}
-                            components={{
-                                Toolbar: CustomToolbar
-                            }}
-                            rows={OutputRows}
-                            columns={OutputColumns}
-                            columnVisibilityModel={{
-                                id: false,
-                            }}
-                        // experimentalFeatures={{ newEditingApi: true }}
-                        // editMode="cell"
-                        // onCellEditStop={handleRowEditStop}
-                        />
-                    </div>
+                <div className=' ms-4 me-4' style={{ height: 400 }}>
+                    <DataGrid
+                        // loading={loading}
+                        components={{
+                            Toolbar: CustomToolbar
+                        }}
+                        rows={OutputRows}
+                        columns={OutputColumns}
+                        columnVisibilityModel={{
+                            id: false,
+                        }}
+                    // experimentalFeatures={{ newEditingApi: true }}
+                    // editMode="cell"
+                    // onCellEditStop={handleRowEditStop}
+                    />
                 </div>
 
             </div>

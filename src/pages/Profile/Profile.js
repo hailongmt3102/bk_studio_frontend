@@ -42,7 +42,6 @@ export default function Profile() {
         Address: "",
         Birthday: "",
         Position: ""
-
     })
 
     const submitUpdate = () => {
@@ -146,7 +145,7 @@ export default function Profile() {
                         </Form.Group>
                     </div>
                     <div class="d-md-flex justify-content-start align-items-center py-2 mt-1 mb-1">
-                        <div class="mb-0 me-4 customtext" style={{ fontSize: 14 }}>Gender: </div>
+                        <div class="mb-0 me-4 customwhitetext" style={{ fontSize: 14 }}>Gender: </div>
 
                         <Form.Check
                             onClick={(e) => {

@@ -172,9 +172,21 @@ html, body {
     color: white;
 }
 
-.darkmode .customtext {
+.darkmode .customwhitetext {
     color: white;
 }
+.customhinttext {
+    color: #afafaf;
+}
+
+.darkmode .customhinttext {
+    color: #c5c5c5;
+}
+
+.darkmode .customhidden {
+    visibility: hidden;
+}
+
 
 .overflow {
     overflow-x: hidden;
@@ -186,5 +198,10 @@ html, body {
 
 .darkmode .SecondFontColor{
     color: #7cc8ff;
+}
+
+
+.ignore-style {
+    color: black;
 }
 

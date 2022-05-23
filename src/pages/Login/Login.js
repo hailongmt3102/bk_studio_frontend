@@ -60,10 +60,10 @@ export default function Login() {
                     localStorage.removeItem("password")
                     localStorage.removeItem("remember")
                 }
-
                 navigate("/")
             })
             .catch((e) => {
+                console.log(e)
                 Store.addNotification(content("Warning", e.response.data, "danger"))
                 return
                 //alert(e.response.data);
@@ -89,7 +89,7 @@ export default function Login() {
                     // login successful
                     localStorage.setItem("token", res.data.AccessToken)
                     localStorage.setItem("username", res.data.UserName)
-                    navigate("/")
+                    navigate(-1)
                 })
                 .catch((err) => {
                     // login fail

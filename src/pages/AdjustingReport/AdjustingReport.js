@@ -2,7 +2,7 @@ import { getColumnsOfTable, GetDataSourcesListInformationInProject, QueryData as
 import { createNewComponent as createNewComponentApi, createNewReport, deleteReport, deleteShape as deleteShapeApi, getAllComponent, getAllDatasourceNameInReport, getReportInformation, saveAsCopy, saveAsTemplate, updateAComponent, updateReportInformation } from 'api/Report';
 import { createAReportByTemplate, deleteTemplate, getAllDatasourceNameInTemplate } from "api/Templates";
 import TabComponent from "pages/AdjustingReport/components/tabComponent/TabComponent";
-import { useEffect, useRef, useState, useContext } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { Form } from 'react-bootstrap';
 import { Store } from 'react-notifications-component';
 import { useLocation, useNavigate } from "react-router-dom";
@@ -15,13 +15,14 @@ import ToolBar from "./components/Bar/ToolBar";
 import Content from "./components/Content";
 import ShareLinkPopUp from "./components/PopUp/ShareLinkPopUp";
 import ShareWithPopUp from "./components/PopUp/ShareWithPopUp";
-
+import ConfirmDialog from "components/ConfirmDialog";
 import './AdjustingReport.css';
 import SqlPopUp from "./components/PopUp/SqlPopUp";
 
-import { shapeBackgroundColors, shapeBorderColors } from 'utils/color';
+import { loadingContext } from 'App';
 import * as htmlToImage from 'html-to-image';
-import { loadingContext } from 'App'
+import { shapeBackgroundColors, shapeBorderColors } from 'utils/color';
+import { ConstructionOutlined } from "@mui/icons-material";
 // import { updateAvatar } from 'api/Account'
 // import { dataURLtoFile } from 'utils/utils'
 
@@ -34,6 +35,10 @@ export default function AdjustingReport(props) {
     const location = useLocation()
 
     // some hiddenInfo of this report
+
+    const reportLink = window.location.href
+
+    // console.log("path", reportLink)
 
     const RId = location.state.RId
     const currentProject = location.state.PId
@@ -96,14 +101,36 @@ export default function AdjustingReport(props) {
 
     const [keydown, setKeydown] = useState({ previous: "", current: "" })
 
-
     const EditStyle = (newStyle) => {
         setTabData({ ...tabData, style: newStyle })
     }
 
     useEffect(() => {
-        console.log("tab data changed ",tabData)
+        console.log("tab data changed ", tabData)
+
+        if (followingIndexComponent < 0 || followingIndexComponent >= shapeComponents.length){
+            return
+        }
+        updateShapeComponent(followingIndexComponent, {
+            ...shapeComponents[followingIndexComponent],
+            TextTheme: {
+                ...shapeComponents[followingIndexComponent].TextTheme,
+                alignment : tabData.style.alignment,
+                decoration: tabData.style.decoration,
+                font: tabData.style.font,
+                size : tabData.style.size,
+                color: tabData.style.fill,
+            },
+            FrameTheme: {
+                ...shapeComponents[followingIndexComponent].FrameTheme,
+                color: tabData.style.stroke
+            }
+        })
     }, [tabData])
+
+    useEffect(() => {
+        console.log(shapeComponents)
+    }, [shapeComponents]) 
 
 
     // ** ---------------------------------------------------------------------------------------------
@@ -114,7 +141,8 @@ export default function AdjustingReport(props) {
             let res = await getReportInformation(currentProject, RId, isTemplate)
             setReportInformation(res.data)
         } catch (error) {
-            console.log("Get report info fail, error", error)
+            Store.addNotification(content("Fail", error, "danger"))
+            // console.log("Get report info fail, error", error)
         }
     }
 
@@ -131,8 +159,9 @@ export default function AdjustingReport(props) {
                 result[dataSourceList.data[i].Information] = columns.data.Columns.filter(ele => ele != "DataSource_Id")
             }
             setDataSource(result)
-        } catch (err) {
-            console.log("list datasource", err)
+        } catch (error) {
+            Store.addNotification(content("Fail", error, "danger"))
+            // console.log("list datasource", err)
         }
     }
     // ** ---------------------------------------------------------------------------------------------
@@ -151,7 +180,7 @@ export default function AdjustingReport(props) {
                 Name: "New Report"
             })
             .then(res => {
-                console.log("ketqua", res.data)
+                // console.log("ketqua", res.data)
                 nav('/project/gallery/' + res.data.Id + '/edit', {
                     state: {
                         PId: currentProject,
@@ -163,7 +192,8 @@ export default function AdjustingReport(props) {
                 window.location.reload()
             })
             .catch(err => {
-                alert(err.response.data)
+                Store.addNotification(content("Fail", err.response.data, "danger"))
+                // alert(err.response.data)
             })
     }
 
@@ -221,7 +251,7 @@ export default function AdjustingReport(props) {
         }
         catch (err) {
             Store.addNotification(content("Fail", "Fail update", "danger"))
-            console.log(err.response.data)
+            // console.log(err.response.data)
             setIsLoading(false)
         }
     }
@@ -265,10 +295,11 @@ export default function AdjustingReport(props) {
 
     // ** get all shape from server
     const fetchAllShapesFromServer = async () => {
+        let colorIndex = 0;
         if (currentProject == null) return
         try {
             let componentResult = (await getAllComponent(currentProject, RId, isTemplate)).data
-            let queryResult, parseResult
+            let queryResult
             for (let i = 0; i < componentResult.length; i++) {
                 componentResult[i].Position = JSON.parse(componentResult[i].Position)
                 componentResult[i].TextTheme = JSON.parse(componentResult[i].TextTheme)
@@ -284,7 +315,9 @@ export default function AdjustingReport(props) {
                     componentResult[i].TypeParsed = "Error"
                 } else {
                     try {
-                        parseResult = parseDataQueried(componentResult[i].Type, queryResult)
+                        let { parseResult, _colorIndex } = parseDataQueried(componentResult[i].Type, queryResult, colorIndex)
+
+                        colorIndex = _colorIndex
                         // parse them json data from server
                         componentResult[i] = { ...componentResult[i], ...parseResult }
                     }
@@ -297,6 +330,7 @@ export default function AdjustingReport(props) {
             return componentResult
         }
         catch (err) {
+            Store.addNotification(content("Fail", "Fetch component fail:  " + err, "danger"))
             console.log("Fetch component fail:  ", err)
             return []
         }
@@ -308,13 +342,17 @@ export default function AdjustingReport(props) {
             return await QueryDataApi(query, isTemplate)
         }
         catch (err) {
+            Store.addNotification(content("Fail", "Query data fail.error: " + err, "danger"))
             console.log("Query data fail. error: ", err, " \n Query Command :  ", query)
             return null
         }
     }
 
+
+
     // ** parse data after query complete 
-    const parseDataQueried = (type, queryResult) => {
+    const parseDataQueried = (type, queryResult, currentIndexOfShapeColor) => {
+        console.log(currentIndexOfShapeColor)
         let keys, result = {}, arrayData
         switch (type) {
             case "Table":
@@ -338,13 +376,14 @@ export default function AdjustingReport(props) {
                         {
                             label: result.title,
                             data: arrayData[keys[1]],
-                            backgroundColor: arrayData[keys[0]].map((_, index) => shapeBackgroundColors[index % shapeBackgroundColors.length]),
-                            borderColor: arrayData[keys[0]].map((_, index) => shapeBorderColors[index % shapeBorderColors.length]),
+                            backgroundColor: arrayData[keys[0]].map((_, index) => shapeBackgroundColors[(index + currentIndexOfShapeColor) % shapeBackgroundColors.length]),
+                            borderColor: arrayData[keys[0]].map((_, index) => shapeBorderColors[(index + currentIndexOfShapeColor) % shapeBorderColors.length]),
                             borderWidth: 1,
                         }
                     ]
                 }
                 result.pieData = pieData
+                currentIndexOfShapeColor += arrayData[keys[0]].length
                 break
             case "Doughnut Chart":
                 keys = Object.keys(queryResult.data[0])
@@ -364,12 +403,13 @@ export default function AdjustingReport(props) {
                         {
                             label: result.title,
                             data: arrayData[keys[1]],
-                            backgroundColor: arrayData[keys[0]].map((_, index) => shapeBackgroundColors[index % shapeBackgroundColors.length]),
-                            borderColor: arrayData[keys[0]].map((_, index) => shapeBorderColors[index % shapeBorderColors.length]),
+                            backgroundColor: arrayData[keys[0]].map((_, index) => shapeBackgroundColors[(index + currentIndexOfShapeColor) % shapeBackgroundColors.length]),
+                            borderColor: arrayData[keys[0]].map((_, index) => shapeBorderColors[(index + currentIndexOfShapeColor) % shapeBorderColors.length]),
                             borderWidth: 1,
                         }
                     ]
                 }
+                currentIndexOfShapeColor += arrayData[keys[0]].length
                 result.doughnutData = doughnutData
                 break
             case "Line Chart":
@@ -392,11 +432,12 @@ export default function AdjustingReport(props) {
                             label: key,
                             data: arrayData[key],
                             fill: true,
-                            backgroundColor: shapeBackgroundColors[index % shapeBackgroundColors.length],
-                            borderColor: shapeBorderColors[index % shapeBorderColors.length]
+                            backgroundColor: shapeBackgroundColors[(index + currentIndexOfShapeColor) % shapeBackgroundColors.length],
+                            borderColor: shapeBorderColors[(index + currentIndexOfShapeColor) % shapeBorderColors.length]
                         }
                     })
                 }
+                currentIndexOfShapeColor += keys.length + 1
                 break;
             case "Bar Chart":
                 if (queryResult.data.length == 0) return
@@ -417,25 +458,25 @@ export default function AdjustingReport(props) {
                             label: key,
                             data: arrayData[key],
                             fill: true,
-                            backgroundColor: shapeBackgroundColors[index % shapeBackgroundColors.length],
-                            borderColor: shapeBorderColors[index % shapeBorderColors.length]
+                            backgroundColor: shapeBackgroundColors[(index + currentIndexOfShapeColor) % shapeBackgroundColors.length],
+                            borderColor: shapeBorderColors[(index + currentIndexOfShapeColor) % shapeBorderColors.length]
                         }
                     })
                 }
-
+                currentIndexOfShapeColor += keys.length + 1
                 break;
             default:
                 console.log("Unresolve shape type : ", props.data.Type)
                 break
         }
-        return result
+        return { parseResult: result, _colorIndex: currentIndexOfShapeColor }
     }
 
     // ** combine all function relative to getting content of report
     const getReportContent = async () => {
         let res = await fetchAllShapesFromServer()
         setShapeComponent(res)
-        console.log(res)
+        // console.log(res)
     }
     // ** ---------------------------------------------------------------------------------------------
 
@@ -453,11 +494,10 @@ export default function AdjustingReport(props) {
     // ** push new component 
     const pushNewComponentToUI = async (component) => {
         try {
-            let parseResult = {}
             if (checkNeedToQueryData(component.Type)) {
                 // fetch data
                 let queryResult = await queryDataOfAShape(component.QueryCommand)
-                parseResult = parseDataQueried(component.Type, queryResult)
+                let { parseResult } = parseDataQueried(component.Type, queryResult, 0)
                 if (queryResult == null) {
                     // error to query data of this shape
                     component.TypeParsed = "Error"
@@ -476,6 +516,7 @@ export default function AdjustingReport(props) {
             }
             setShapeComponent([...shapeComponents, component])
         } catch (err) {
+            Store.addNotification(content("Fail", "Adding new component error :" + err, "danger"))
             console.log("adding new component error : ", err)
         }
     }
@@ -484,11 +525,10 @@ export default function AdjustingReport(props) {
         if (followingIndexComponent == -1 || followingIndexComponent > shapeComponents.length - 1) return
         let index = followingIndexComponent
         try {
-            let parseResult = {}
             if (checkNeedToQueryData(shapeComponents[index].Type)) {
                 // fetch data
                 let queryResult = await queryDataOfAShape(query)
-                parseResult = parseDataQueried(shapeComponents[index].Type, queryResult)
+                let { parseResult } = parseDataQueried(shapeComponents[index].Type, queryResult, 0)
                 if (queryResult == null) {
                     // error to query data of this shape
                     parseResult.TypeParsed = "Error"
@@ -504,7 +544,8 @@ export default function AdjustingReport(props) {
             }
 
         } catch (err) {
-            console.log("update a component error : ", err)
+            Store.addNotification(content("Fail", "Update a component error : " + err, "danger"))
+            // console.log("update a component error : ", err)
         }
     }
 
@@ -519,6 +560,7 @@ export default function AdjustingReport(props) {
             // parse this response from server and build shape 
             await pushNewComponentToUI(res.data)
         } catch (error) {
+            Store.addNotification(content("Fail", "Create new shape error : " + error, "danger"))
             console.log("Create new shape error : ", error)
         }
     }
@@ -541,6 +583,7 @@ export default function AdjustingReport(props) {
                     FrameTheme: JSON.stringify(componentData.FrameTheme)
                 })
             } catch (error) {
+                // Store.addNotification(content("Fail", "Save shape error :" + error, "danger"))
                 console.log("Save shape error :", componentData.Id, " \n Error: ", error)
             }
         }
@@ -555,12 +598,13 @@ export default function AdjustingReport(props) {
                 QueryCommand: componentData.QueryCommand,
                 Height: parseInt(componentData.Height),
                 Width: parseInt(componentData.Width),
-                Position: typeof(componentData.Position) == typeof("") ? componentData.Position : JSON.stringify(componentData.Position),
+                Position: typeof (componentData.Position) == typeof ("") ? componentData.Position : JSON.stringify(componentData.Position),
                 TitleTheme: componentData.TitleTheme,
-                TextTheme: typeof(componentData.TextTheme) == typeof("") ? componentData.TextTheme : JSON.stringify(componentData.TextTheme),
-                FrameTheme: typeof(componentData.FrameTheme) == typeof("") ? componentData.FrameTheme :JSON.stringify(componentData.FrameTheme)
+                TextTheme: typeof (componentData.TextTheme) == typeof ("") ? componentData.TextTheme : JSON.stringify(componentData.TextTheme),
+                FrameTheme: typeof (componentData.FrameTheme) == typeof ("") ? componentData.FrameTheme : JSON.stringify(componentData.FrameTheme)
             })
         } catch (error) {
+            Store.addNotification(content("Fail", "Save shape error :" + error, "danger"))
             console.log("Save shape error :", componentData.Id, " \n Error: ", error)
         }
     }
@@ -587,6 +631,7 @@ export default function AdjustingReport(props) {
             }
             createNewComponent(newShape)
         } catch (err) {
+            Store.addNotification(content("Fail", "Paste error" + err, "danger"))
             console.log(err)
         }
     }
@@ -599,6 +644,7 @@ export default function AdjustingReport(props) {
             if (followingIndexComponent == copyIndexComponent) setCopyIndexComponent(-1)
             setFollowingIndexComponent(-1)
         } catch (error) {
+            Store.addNotification(content("Fail", "Delete shape error : " + error, "danger"))
             console.log("Delete shape error : ", error)
         }
     }
@@ -705,6 +751,7 @@ export default function AdjustingReport(props) {
             await createNewComponent(newTextShape)
         }
         catch (err) {
+            Store.addNotification(content("Fail", "Create Text Error" + err, "danger"))
             console.log(err)
         }
     }
@@ -726,6 +773,7 @@ export default function AdjustingReport(props) {
             await createNewComponent(newImageShape)
         }
         catch (err) {
+            Store.addNotification(content("Fail", "Create Image Error" + err, "danger"))
             console.log(err)
         }
     }
@@ -795,19 +843,20 @@ export default function AdjustingReport(props) {
     useEffect(() => {
         if (keydown.current == "Delete") {
             deleteShape()
-        }else if (keydown.previous == "Control" && (keydown.current == "C" || keydown.current == "c")){
+        } else if (keydown.previous == "Control" && (keydown.current == "C" || keydown.current == "c")) {
             copyShape()
         }
-        else if (keydown.previous == "Control" && (keydown.current == "V" || keydown.current == "v")){
+        else if (keydown.previous == "Control" && (keydown.current == "V" || keydown.current == "v")) {
             pasteShape()
         }
     }, [keydown])
 
-    useEffect(() => {
+
+    const getAllData = async () => {
         setIsLoading(true)
         getReportInfo()
         getDataFields()
-        getReportContent()
+        await getReportContent()
         if (!isTemplate) {
             getAllDatasourceNameInReport(currentProject, RId)
                 .then(res => {
@@ -835,6 +884,9 @@ export default function AdjustingReport(props) {
                 })
         }
 
+    }
+    useEffect(() => {
+        getAllData()
         var keydown = document.addEventListener("keydown", _handleKeyDown);
         return () => {
             document.removeEventListener("keydown", keydown)
@@ -926,9 +978,23 @@ export default function AdjustingReport(props) {
             let dataUrl = await htmlToImage.toPng(node, { height: 1300, width: 1900 })
             return dataUrl
         } catch (error) {
+            Store.addNotification(content("Fail", 'Oops, something went wrong!', "danger"))
             console.error('oops, something went wrong!', error);
             return ""
         }
+    }
+
+
+    const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: '', subTitle: '' })
+    const handleCloseYes = () => {
+        saveATemplateHandle()
+        // console.log("close ne")
+    }
+    const handleCloseNo = () => {
+        setConfirmDialog({ ...ConfirmDialog, isOpen: false })
+    }
+    const handleOpen = () => {
+        setConfirmDialog({ ...ConfirmDialog, isOpen: true })
     }
 
     const EditUI = () => {
@@ -938,7 +1004,12 @@ export default function AdjustingReport(props) {
             }} />
             <div>
                 {/* some popup */}
-
+                <ConfirmDialog
+                    confirmDialog={confirmDialog}
+                    title="Are you sure you want to save this report as template ?"
+                    handleCloseYes={() => handleCloseYes()}
+                    handleCloseNo={() => handleCloseNo()}
+                />
                 <SqlPopUp
                     type={popUpType}
                     show={showSqlPopUp}
@@ -961,8 +1032,7 @@ export default function AdjustingReport(props) {
                     }}
                 />
                 <ShareLinkPopUp
-                    currentProject={currentProject}
-                    RId={RId}
+                    reportLink={reportLink}
                     show={showShareLinkPopUp}
                     handleOpen={() => {
                         setShowShareLinkPopUp(true)
@@ -1084,7 +1154,7 @@ export default function AdjustingReport(props) {
                             setAddShapeType={setAddShapeType}
                             isEdit={isEdit}
                             saveACopyHandle={() => saveACopyHandle()}
-                            saveATemplateHandle={() => saveATemplateHandle()}
+                            saveATemplateHandle={() => handleOpen()}
                         />
 
                         <div className="content"
@@ -1122,7 +1192,7 @@ export default function AdjustingReport(props) {
                         Permission: "Edit"
                     }
                 })
-                console.log("thanhcong", res.data)
+                // console.log("thanhcong", res.data)
             })
             .catch(err => {
                 Store.addNotification(content("Fail", err.response.data, "danger"))

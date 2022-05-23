@@ -20,7 +20,6 @@ ChartJS.register(
 );
 
 
-
 const Content = React.forwardRef((props, ref) => {
     const executeShape = (shape, index) => {
         if (shape.TypeParsed == "Error") {
@@ -42,7 +41,7 @@ const Content = React.forwardRef((props, ref) => {
                     onResizeStop={(e, direction, ref, delta, position) => {
                         props.updateShapeComponent(index, { ...shape, Width: ref.style.width, Height: ref.style.height })
                     }}
-                    className={props.followingIndexComponent === index ? "border border-5 customBorder" : "border border-5"}
+                    className={props.followingIndexComponent === index ? "customBorder" : ""}
                 >
                     <ErrorShape />
                 </Rnd>
@@ -52,12 +51,7 @@ const Content = React.forwardRef((props, ref) => {
             case "Table":
                 if (shape.data == null) return null
                 return (
-                    <div style={{
-                        fontSize: shape.TextTheme.size,
-                        fontFamily: shape.TextTheme.font,
-                        textAlign: "center"
-                    }}
-                    >
+                    <div>
                         <TableComponent
                             disableDragging={!props.isEdit}
                             enableResizing={props.isEdit}
@@ -65,7 +59,7 @@ const Content = React.forwardRef((props, ref) => {
                             updateDataTable={(data) => {
                                 props.updateShapeComponent(index, data)
                             }}
-                            classstyle={props.followingIndexComponent === index ? "border border-5 customBorder" : "border border-5"}
+                            classstyle={props.followingIndexComponent === index ? "customBorder" : ""}
                         />
                     </div>
                 )
@@ -88,7 +82,7 @@ const Content = React.forwardRef((props, ref) => {
                         onResizeStop={(e, direction, ref, delta, position) => {
                             props.updateShapeComponent(index, { ...shape, Width: ref.style.width, Height: ref.style.height })
                         }}
-                        className={props.followingIndexComponent === index ? "border border-5 customBorder" : "border border-5"}
+                        className={props.followingIndexComponent === index ? "customBorder" : ""}
                     >
                         {shape.Title}
                         <Doughnut data={shape.doughnutData} />
@@ -112,7 +106,7 @@ const Content = React.forwardRef((props, ref) => {
                         onResizeStop={(e, direction, ref, delta, position) => {
                             props.updateShapeComponent(index, { ...shape, Width: ref.style.width, Height: ref.style.height })
                         }}
-                        className={props.followingIndexComponent === index ? "border border-5 customBorder" : "border border-5"}
+                        className={props.followingIndexComponent === index ? "customBorder" : ""}
                     >
                         {shape.Title}
                         <Line data={shape.lineData} />
@@ -138,7 +132,7 @@ const Content = React.forwardRef((props, ref) => {
                         onResizeStop={(e, direction, ref, delta, position) => {
                             props.updateShapeComponent(index, { ...shape, Width: ref.style.width, Height: ref.style.height })
                         }}
-                        className={props.followingIndexComponent === index ? "border border-5 customBorder" : "border border-5"}
+                        className={props.followingIndexComponent === index ? "customBorder" : ""}
                     >
                         {shape.Title}
                         <Bar data={shape.barData} />
@@ -164,7 +158,7 @@ const Content = React.forwardRef((props, ref) => {
                         onResizeStop={(e, direction, ref, delta, position) => {
                             props.updateShapeComponent(index, { ...shape, Width: ref.style.width, Height: ref.style.height })
                         }}
-                        className={props.followingIndexComponent === index ? "border border-5 customBorder" : "border border-5"}
+                        className={props.followingIndexComponent === index ? "customBorder" : ""}
                     >
                         {shape.Title}
                         <Pie data={shape.pieData} />
@@ -188,25 +182,31 @@ const Content = React.forwardRef((props, ref) => {
                         onResizeStop={(e, direction, ref, delta, position) => {
                             props.updateShapeComponent(index, { ...shape, Width: ref.style.width, Height: ref.style.height })
                         }}
-                        className={props.followingIndexComponent === index ? "border border-5 customBorder" : "border border-5"}
+                        className={props.followingIndexComponent === index ? "customBorder" : ""}
                     >
-                        <TextField
-                            sx={{
-                                "& .MuiOutlinedInput-root": {
-                                    "& > fieldset": {
-                                        border: "none"
-                                    }
-                                }
+                        <div
+                            style={{
+                                width: "100%",
+                                height: "100%",
                             }}
-                            placeholder="text"
-                            multiline
-                            rows={3}
-                            value={shape.QueryCommand}
-                            onChange={(e) => {
-                                props.updateShapeComponent(index, { ...shape, QueryCommand: e.target.value })
-                            }}
+                        >
+                            <input type="text" value={shape.QueryCommand}
+                                onChange={(e) => {
+                                    props.updateShapeComponent(index, { ...shape, QueryCommand: e.target.value })
+                                }}
+                                style={{
+                                    border: `1px solid ${shape.FrameTheme.color}`,
+                                    width: "100%",
+                                    height: "100%",
+                                    textAlign: shape.TextTheme.alignment,
+                                    color: shape.TextTheme.color,
+                                    fontWeight: shape.TextTheme.decoration["font-weight"],
+                                    fontStyle: shape.TextTheme.decoration["font-style"],
+                                    textDecoration: shape.TextTheme.decoration["text-decoration"]
 
-                        />
+                                }}
+                            />
+                        </div>
                     </Rnd>
                 )
             case "Image":
@@ -227,9 +227,16 @@ const Content = React.forwardRef((props, ref) => {
                         onResizeStop={(e, direction, ref, delta, position) => {
                             props.updateShapeComponent(index, { ...shape, Width: ref.style.width, Height: ref.style.height })
                         }}
-                        className={props.followingIndexComponent === index ? "border border-5 customBorder customimagecontainer" : "border border-5 customimagecontainer"}
+                        className={props.followingIndexComponent === index ? "customBorder customimagecontainer" : " customimagecontainer"}
+                        style={{
+                            border: `1px solid ${shape.FrameTheme.color}`,
+                        }}
                     >
-                        <img src={shape.QueryCommand} alt="loading" onError={(e) => { e.target.onerror = null; e.target.src = warning }} className="customimageshape" />
+                        <img
+                            src={shape.QueryCommand} alt="loading"
+                            onError={(e) => { e.target.onerror = null; e.target.src = warning }}
+                            className="customimageshape"
+                        />
                     </Rnd>
                 )
             default:
@@ -242,9 +249,12 @@ const Content = React.forwardRef((props, ref) => {
         <div ref={ref}>
             {
                 props.shapeComponents.map((shape, index) =>
-                    <div key={index} onMouseDown={() => {
-                        props.setFollowingIndexComponent(index)
-                    }}>
+                    <div
+                        key={index} onMouseDown={() => {
+                            props.setFollowingIndexComponent(index)
+                        }}
+
+                    >
                         {
                             executeShape(shape, index)
                         }

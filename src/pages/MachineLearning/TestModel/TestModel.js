@@ -101,7 +101,7 @@ export default function TestModel() {
                         </button>
                     </div>
                     <div className='col-1 m-0 p-0 text-start'>
-                        <button className='ms-2 btn-lg btn-success text-center border-0'
+                        <button className='ms-2 pe-5 btn-lg btn-success text-center border-0'
                             onClick={
                                 () => {
                                     console.log("conchonam")
@@ -109,7 +109,8 @@ export default function TestModel() {
                                         state: {
                                             rows: rows,
                                             columns: columns,
-                                            MName: MName
+                                            MName: MName,
+                                            Api: location.state.Api
                                         }
                                     })
                                 }
@@ -117,7 +118,7 @@ export default function TestModel() {
                         >
                             <div className='row p-1 text-center'>
                                 <div className='col-9  text-center'>
-                                    <div className='col-2'>Predict</div>
+                                    <div className='col-3 ms-4 text-center'>Next</div>
                                 </div>
                             </div>
                         </button>

@@ -8,6 +8,8 @@ import MenuIcon from 'resources/icons/menu.svg'
 import threeLine from "resources/icons/threeLine.svg"
 import './Drawer.css'
 import { currentFollowingDrawer } from "utils/utils";
+import { checkPermission as checkAdminPermissionAPI } from 'api/Admin'
+
 
 
 export default function Drawer(props) {
@@ -24,9 +26,17 @@ export default function Drawer(props) {
 
 	const [currentProject, setCurrentProject] = useState(null)
 
+	const [isAdmin, setIsAdmin] = useState(false)
+
 	useEffect(() => {
 		let cProject = localStorage.getItem("currentProject")
 		if (cProject != null) setCurrentProject(cProject)
+
+		checkAdminPermissionAPI()
+			.then(res => {
+				setIsAdmin(true)
+			})
+			.catch(err => { })
 		// get all project
 		getListProject()
 			.then(res => {
@@ -111,14 +121,22 @@ export default function Drawer(props) {
 
 	return props.state !== "" ? (
 		<div>
-			<button className="m-2  text-center drawer-button shine" style={{ width: "40px", height: "40px" }} 
-			onClick={() => {
-				setToggle(!toggle)
-			}}>
+			<button className="m-2  text-center drawer-button shine" style={{ width: "40px", height: "40px" }}
+				onClick={() => {
+					setToggle(!toggle)
+				}}>
 				<div className="mt-1 m-auto"><img src={threeLine} width="28px" height="28px" /></div>
 			</button>
 			<div className={`drawer ${toggle ? "enter" : "exit"}`}>
 				<ul className="list-group">
+					{isAdmin ? <a className="list-group-item border-0 p-0" onClick={() => {
+						navigate("/admin")
+						// setSelectedIndex(0)
+					}}>
+						<h6 className="p-3 m-0">GO TO ADMIN PAGE</h6>
+					</a>
+						: null
+					}
 					<a className="list-group-item border-0 p-0" onClick={() => {
 						navigate("/")
 						// setSelectedIndex(0)

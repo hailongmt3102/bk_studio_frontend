@@ -13,8 +13,10 @@ import { content } from "../../utils/notification"
 
 export default function ChangePassword() {
     const [isVisible, setisVisible] = useState(false)
+    const [isVisible2, setisVisible2] = useState(false)
     const [information, setinformation] = useState({
-        NewPassword: ""
+        NewPassword: "",
+        Password: ""
     })
     const navigate = useNavigate()
     const onSubmitHandler = () => {
@@ -28,15 +30,15 @@ export default function ChangePassword() {
             return
         }
         else {
-            SetNewPasswordAPI(information)
+            SetNewPasswordAPI({...information, Password: "asdf"})
                 .then((res) => {
                     Store.addNotification(content("Success", "Changed Password", "success", {
                         duration: 5000
                     }))
-                    navigate("/account/login")
+                    navigate("/")
                 })
                 .catch((e) => {
-                    Store.addNotification(content("Warning", "Change password fail", "danger"))
+                    Store.addNotification(content("Warning", e.response.data, "danger"))
                     return
                 })
         }
@@ -72,6 +74,28 @@ export default function ChangePassword() {
                                         </div>
                                         <form class="mx-1 mx-md-4 mt-2 " >
                                             <Form.Group as={Col} md="12" controlId="validationCustomUsername">
+                                                <Form.Label>Old Password</Form.Label>
+                                                <InputGroup hasValidation>
+                                                    <InputGroup.Text id="inputGroupPrepend "><img src={lock}></img></InputGroup.Text>
+                                                    <Form.Control
+                                                        onChange={(e) => {
+                                                            setinformation({
+                                                                ...information, Password: e.target.value
+                                                            })
+                                                            console.log(information);
+                                                        }}
+                                                        type={isVisible2 ? "text" : "password"}
+                                                        placeholder="Enter old password"
+                                                        aria-describedby="inputGroupPrepend"
+                                                        required
+                                                    />
+
+                                                    <a class="btn shadow-none border-top border-bottom border-end" onClick={() => { setisVisible2(!isVisible2) }}><img width="20px" height="20px" src={isVisible2 ? visible : invisible}></img></a>
+                                                    {/* <Button ><img src={eye_black}></img></Button> */}
+                                                </InputGroup>
+                                            </Form.Group>
+
+                                            <Form.Group as={Col} md="12" controlId="validationCustomUsername">
                                                 <Form.Label>New Password</Form.Label>
                                                 <InputGroup hasValidation>
                                                     <InputGroup.Text id="inputGroupPrepend "><img src={lock}></img></InputGroup.Text>
@@ -83,7 +107,7 @@ export default function ChangePassword() {
                                                             console.log(information);
                                                         }}
                                                         type={isVisible ? "text" : "password"}
-                                                        placeholder="Enter your password"
+                                                        placeholder="Enter new password"
                                                         aria-describedby="inputGroupPrepend"
                                                         required
                                                     />
@@ -99,10 +123,6 @@ export default function ChangePassword() {
                                                 <button class="btn btn-primary p-2" type="button" style={{ backgroundColor: "#034078", borderRadius: "25px" }} onClick={onSubmitHandler}>Send</button>
 
                                             </div>
-                                            {/* <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4 m-2">
-                                                <button type="button" class="btn btn-primary btn-lg">Register</button>
-                                            </div> */}
-
 
 
                                         </form>

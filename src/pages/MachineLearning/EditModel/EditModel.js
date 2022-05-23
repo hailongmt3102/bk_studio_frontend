@@ -9,6 +9,8 @@ import { useEffect, useState, useContext } from 'react'
 import { Store } from 'react-notifications-component'
 import { useDemoData } from "@mui/x-data-grid-generator";
 import { getDataSourcesInformationByDId, showDataSourceContent } from "api/DataSources"
+import { modifyModel } from "api/ML_API";
+
 import { loadingContext } from 'App'
 import Selection from "../component/Selection";
 import { Form } from 'react-bootstrap';
@@ -63,7 +65,6 @@ export default function EditModel() {
         setShowDialog(false)
     }
 
-    console.log(location.state)
     const { loading } = useDemoData({
         // dataSet: 'Commodity',
         rowLength: 4,
@@ -146,6 +147,26 @@ export default function EditModel() {
     }
 
 
+    const saveModel = () => {
+        const Id = location.state.MId
+        const input = JSON.stringify(rows)
+        const output = JSON.stringify(rowsOut)
+
+        modifyModel(Id, {
+            Name: MName,
+            Api: Api,
+            Input: input,
+            output: output
+        })
+            .then(res => {
+                Store.addNotification(content("Success", "Edited", "success"))
+            })
+            .catch(err => {
+                Store.addNotification(content("Fail", err.response.data, "danger"))
+            })
+    }
+
+
     const changeButton = (f) => {
         return <button className='btn-lg btn-success text-center border-0'
             style={{ background: "#3B97C6" }}
@@ -197,11 +218,13 @@ export default function EditModel() {
                 </div>
                 <div className='col-7 '>
                 </div>
-                <div className='col-1 '>
+                <div className='col-1 mt-4'>
                     <button className='btn-lg btn-success text-center border-0'
-                    // 
+                        onClick={() => {
+                            saveModel()
+                        }}
                     >
-                        <div className='row  p-1 text-center'>
+                        <div className='row   p-1 text-center'>
                             <div className='col-2 text-center me-1'>
                                 <img src={save_white} width="20px" height="20px" />
                             </div>
@@ -214,24 +237,15 @@ export default function EditModel() {
             </div>
 
             <div className='bg-white p-2 mt-3'>
-                <div className='row'>
-                    <div className='col-2 ms-4 mt-1 customFontBold SecondFontColor size40'>
-                        Test data:
-                    </div>
-                    <div className='col'>
-                        {changeButton(ChangeInputHandle)}
-                    </div>
-                </div>
-
-                <div className='row'>
+                <div className='row m-0 p-0'>
                     <div className='col-2 ms-4 mt-1 customFontBold SecondFontColor size40'>
                         Api:
                     </div>
-                    <div className='col text-center'>
-                        <Form.Control size="sm" type="text" value={Api} onChange={(e) => {
-                            // setMName(e.target.value)
+                    <div className=' m-0 p-0 col-5 mt-3 text-center'>
+                        <Form.Control size="lg" type="text" placeholder='Enter api' value={Api} onChange={(e) => {
+                            setApi(e.target.value)
                         }}
-                            className="border-0 ms-2 "
+                            className="p-3 ms-2 "
                             style={{
                                 fontWeight: "bold",
                                 fontSize: "18px",
@@ -240,8 +254,19 @@ export default function EditModel() {
                             }}
                         />
                     </div>
+                    <div className='col-5'></div>
                 </div>
-                <div style={{ height: 300, width: '100%' }}>
+                <div className='row'>
+                    <div className='col-2 ms-4 mt-1 customFontBold SecondFontColor size40'>
+                        Test data:
+                    </div>
+                    <div className='col m-auto mt-3'>
+                        {changeButton(ChangeInputHandle)}
+                    </div>
+                </div>
+
+
+                <div className="mt-4 ms-3" style={{ height: 300 }}>
                     <DataGrid
                         loading={loading}
                         components={{
@@ -265,7 +290,7 @@ export default function EditModel() {
                         {changeButton(ChangeOutHandle)}
                     </div>
                 </div>
-                <div style={{ height: 300, width: '100%' }}>
+                <div className='mt-4 ms-3' style={{ height: 300 }}>
                     <DataGrid
                         loading={loading}
                         components={{
