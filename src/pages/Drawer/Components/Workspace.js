@@ -32,7 +32,7 @@ export default function Workspace(props) {
 					link="/datasources"
 					active={props.selectedIndex === currentFollowingDrawer.dataSource ? true : false}
 					child={<DataSourceIcon fill={props.selectedIndex === currentFollowingDrawer.dataSource ? colors.drawerActive : colors.drawerToggle} />}
-					title="DataSource"
+					title="Data Sources"
 					onClick={props.swapDrawerVisible}
 				/>
 				<DrawerItem
