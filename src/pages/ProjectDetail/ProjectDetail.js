@@ -152,6 +152,7 @@ export default function ProjectDetail() {
                                                 showSharePopUpHandle={showSharePopUpHandle}
                                                 ele={ele}
                                                 index={index}
+                                                have3Dot={true}
                                             />
                                         </div>
                                     </div>
