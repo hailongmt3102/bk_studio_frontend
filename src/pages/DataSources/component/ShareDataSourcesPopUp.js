@@ -77,7 +77,7 @@ export default function ShareDataSourcesPopUp(props) {
         })
             .then(response => {
                 console.log(response)
-                setTimeout(() => window.location.reload(), 1000);
+                // setTimeout(() => window.location.reload(), 1000);
                 //Store.addNotification(content("Success", "Editted role", "success"))
                 //setTimeout(() => window.location.reload(), 1000);
                 // props.handleClose()
