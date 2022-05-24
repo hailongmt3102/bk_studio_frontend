@@ -84,7 +84,21 @@ const Content = React.forwardRef((props, ref) => {
                         }}
                         className={props.followingIndexComponent === index ? "customBorder" : ""}
                     >
-                        {shape.Title}
+                        <Form.Group controlId="duedate" className='mt-4'>
+                            <Form.Control
+                                type="text"
+                                placeholder="Enter data source name"
+                                value={shape.Title}
+                                onChange={(e) => {
+                                    props.updateShapeComponent(index, {
+                                        ...shape, Title: (e.target.value)
+                                    })
+                                }}
+                                style={{
+                                    border: "0px"
+                                }}
+                            />
+                        </Form.Group>
                         <Doughnut data={shape.doughnutData} />
                     </Rnd>)
             case "Line Chart":
@@ -108,7 +122,21 @@ const Content = React.forwardRef((props, ref) => {
                         }}
                         className={props.followingIndexComponent === index ? "customBorder" : ""}
                     >
-                        {shape.Title}
+                        <Form.Group controlId="duedate" className='mt-4'>
+                            <Form.Control
+                                type="text"
+                                placeholder="Enter data source name"
+                                value={shape.Title}
+                                onChange={(e) => {
+                                    props.updateShapeComponent(index, {
+                                        ...shape, Title: (e.target.value)
+                                    })
+                                }}
+                                style={{
+                                    border: "0px"
+                                }}
+                            />
+                        </Form.Group>
                         <Line data={shape.lineData} />
                     </Rnd>
                 )
@@ -134,7 +162,21 @@ const Content = React.forwardRef((props, ref) => {
                         }}
                         className={props.followingIndexComponent === index ? "customBorder" : ""}
                     >
-                        {shape.Title}
+                        <Form.Group controlId="duedate" className='mt-4'>
+                            <Form.Control
+                                type="text"
+                                placeholder="Enter data source name"
+                                value={shape.Title}
+                                onChange={(e) => {
+                                    props.updateShapeComponent(index, {
+                                        ...shape, Title: (e.target.value)
+                                    })
+                                }}
+                                style={{
+                                    border: "0px"
+                                }}
+                            />
+                        </Form.Group>
                         <Bar data={shape.barData} />
                     </Rnd>
                 )
@@ -160,7 +202,21 @@ const Content = React.forwardRef((props, ref) => {
                         }}
                         className={props.followingIndexComponent === index ? "customBorder" : ""}
                     >
-                        {shape.Title}
+                        <Form.Group controlId="duedate" className='mt-4'>
+                            <Form.Control
+                                type="text"
+                                placeholder="Enter data source name"
+                                value={shape.Title}
+                                onChange={(e) => {
+                                    props.updateShapeComponent(index, {
+                                        ...shape, Title: (e.target.value)
+                                    })
+                                }}
+                                style={{
+                                    border: "0px"
+                                }}
+                            />
+                        </Form.Group>
                         <Pie data={shape.pieData} />
                     </Rnd>)
             case "Text":
@@ -203,8 +259,8 @@ const Content = React.forwardRef((props, ref) => {
                                     color: shape.TextTheme.color,
                                     fontWeight: shape.TextTheme.decoration["font-weight"],
                                     fontStyle: shape.TextTheme.decoration["font-style"],
-                                    textDecoration: shape.TextTheme.decoration["text-decoration"]
-
+                                    textDecoration: shape.TextTheme.decoration["text-decoration"],
+                                    fontSize: shape.TextTheme.size+"px",
                                 }}
                             />
                         </div>
@@ -262,7 +318,7 @@ const Content = React.forwardRef((props, ref) => {
                     </div>
                 )
             }
-            {props.showingMouseDrag && <Rnd size={props.mouseDragValue.size} position={props.mouseDragValue.position} className="border" />}
+            {/* {props.showingMouseDrag && <Rnd size={props.mouseDragValue.size} position={props.mouseDragValue.position} className="border" />} */}
         </div>
 
     )

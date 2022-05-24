@@ -5,6 +5,8 @@ import {
     DataGrid, GridToolbarContainer,
     GridToolbarExport
 } from '@mui/x-data-grid'
+import { Form } from 'react-bootstrap'
+
 import { useDemoData } from "@mui/x-data-grid-generator";
 const selectReg = /select.*(?= from)/
 
@@ -111,7 +113,22 @@ export default function TableComponent(props) {
                                     Export
                                 </button>
                             </div> */}
-                            <h4 className='ms-2'>{props.data.Title}</h4>
+                            <Form.Group controlId="duedate" className='mt-4'>
+                                <Form.Control
+                                    type="text"
+                                    placeholder="Enter data source name"
+                                    value={props.data.Title}
+                                    onChange={(e) => {
+                                        props.updateDataTable(
+                                            {
+                                                ...props.data, Title: e.target.value
+                                            })
+                                    }}
+                                    style={{
+                                        border: "0px"
+                                    }}
+                                />
+                            </Form.Group>
                             <DataGrid
                                 rows={rows}
                                 columns={columns}
