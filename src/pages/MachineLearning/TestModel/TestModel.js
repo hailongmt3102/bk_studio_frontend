@@ -50,6 +50,8 @@ export default function TestModel() {
         nav("/datasources", {
             state: {
                 isModel: true,
+                MName: MName,
+                Api: location.state.Api
             }
         })
     }
@@ -59,6 +61,8 @@ export default function TestModel() {
         nav("/project/import", {
             state: {
                 isModel: true,
+                MName: MName,
+                Api: location.state.Api
             }
         })
     }

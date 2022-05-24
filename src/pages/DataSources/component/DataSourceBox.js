@@ -139,8 +139,9 @@ export default function DataSourceBox(props) {
                             } else {
                                 navigate("/machinelearning/predict", {
                                     state: {
+                                        ...props.modelState,
                                         rows: rows,
-                                        columns: columns
+                                        columns: columns,
                                     }
                                 })
                             }

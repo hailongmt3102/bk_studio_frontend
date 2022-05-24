@@ -55,6 +55,7 @@ export default function ImportData() {
                     } else {
                         navigate("/machinelearning/predict", {
                             state: {
+                                ...location.state,
                                 rows: rows,
                                 columns: columns
                             }
