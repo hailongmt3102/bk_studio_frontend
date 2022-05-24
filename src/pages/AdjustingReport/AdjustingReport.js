@@ -101,6 +101,8 @@ export default function AdjustingReport(props) {
 
     const [keydown, setKeydown] = useState({ previous: "", current: "" })
 
+    const [currentColorIndex, setCurrentColorIndex] = useState(0)
+
     const EditStyle = (newStyle) => {
         setTabData({ ...tabData, style: newStyle })
     }
@@ -108,17 +110,17 @@ export default function AdjustingReport(props) {
     useEffect(() => {
         console.log("tab data changed ", tabData)
 
-        if (followingIndexComponent < 0 || followingIndexComponent >= shapeComponents.length){
+        if (followingIndexComponent < 0 || followingIndexComponent >= shapeComponents.length) {
             return
         }
         updateShapeComponent(followingIndexComponent, {
             ...shapeComponents[followingIndexComponent],
             TextTheme: {
                 ...shapeComponents[followingIndexComponent].TextTheme,
-                alignment : tabData.style.alignment,
+                alignment: tabData.style.alignment,
                 decoration: tabData.style.decoration,
                 font: tabData.style.font,
-                size : tabData.style.size,
+                size: tabData.style.size,
                 color: tabData.style.fill,
             },
             FrameTheme: {
@@ -130,7 +132,7 @@ export default function AdjustingReport(props) {
 
     useEffect(() => {
         console.log(shapeComponents)
-    }, [shapeComponents]) 
+    }, [shapeComponents])
 
 
     // ** ---------------------------------------------------------------------------------------------
@@ -155,8 +157,14 @@ export default function AdjustingReport(props) {
             // get all field for each table
             let result = {}
             for (let i = 0; i < dataSourceList.data.length; i++) {
-                let columns = await getColumnsOfTable(dataSourceList.data[i].Information)
-                result[dataSourceList.data[i].Information] = columns.data.Columns.filter(ele => ele != "DataSource_Id")
+                try {
+                    let columns = await getColumnsOfTable(dataSourceList.data[i].Information)
+                    result[dataSourceList.data[i].Information] = columns.data.Columns.filter(ele => ele != "DataSource_Id")
+                }
+                catch (e) {
+                    console.log(e)
+                }
+
             }
             setDataSource(result)
         } catch (error) {
@@ -295,7 +303,7 @@ export default function AdjustingReport(props) {
 
     // ** get all shape from server
     const fetchAllShapesFromServer = async () => {
-        let colorIndex = 0;
+        let colorIndex = currentColorIndex;
         if (currentProject == null) return
         try {
             let componentResult = (await getAllComponent(currentProject, RId, isTemplate)).data
@@ -327,6 +335,7 @@ export default function AdjustingReport(props) {
                     }
                 }
             }
+            setCurrentColorIndex(colorIndex)
             return componentResult
         }
         catch (err) {
@@ -342,7 +351,7 @@ export default function AdjustingReport(props) {
             return await QueryDataApi(query, isTemplate)
         }
         catch (err) {
-            Store.addNotification(content("Fail", "Query data fail.error: " + err, "danger"))
+            // Store.addNotification(content("Fail", "Query data fail.error: " + err, "danger"))
             console.log("Query data fail. error: ", err, " \n Query Command :  ", query)
             return null
         }
@@ -497,23 +506,17 @@ export default function AdjustingReport(props) {
             if (checkNeedToQueryData(component.Type)) {
                 // fetch data
                 let queryResult = await queryDataOfAShape(component.QueryCommand)
-                let { parseResult } = parseDataQueried(component.Type, queryResult, 0)
+                let { parseResult, _colorIndex } = parseDataQueried(component.Type, queryResult, currentColorIndex)
+                setCurrentColorIndex(currentColorIndex + _colorIndex)
                 if (queryResult == null) {
-                    // error to query data of this shape
                     component.TypeParsed = "Error"
-                    component.Position = JSON.parse(component.Position)
                 } else {
-                    // parse them json data from server
-                    component.Position = JSON.parse(component.Position)
-                    component.TextTheme = JSON.parse(component.TextTheme)
-                    component.FrameTheme = JSON.parse(component.FrameTheme)
                     component = { ...component, ...parseResult }
                 }
-            } else {
-                component.Position = JSON.parse(component.Position)
-                component.TextTheme = JSON.parse(component.TextTheme)
-                component.FrameTheme = JSON.parse(component.FrameTheme)
             }
+            component.Position = JSON.parse(component.Position)
+            component.TextTheme = JSON.parse(component.TextTheme)
+            component.FrameTheme = JSON.parse(component.FrameTheme)
             setShapeComponent([...shapeComponents, component])
         } catch (err) {
             Store.addNotification(content("Fail", "Adding new component error :" + err, "danger"))
@@ -810,8 +813,8 @@ export default function AdjustingReport(props) {
                     size: shapeData.TextTheme.size,
                     decoration: shapeData.TextTheme.decoration,
                     alignment: shapeData.TextTheme.alignment,
-                    fill: shapeData.FrameTheme.color,
-                    stroke: ""
+                    fill: shapeData.TextTheme.color,
+                    stroke: shapeData.FrameTheme.color
                 }
             }
             setTabData(tab)

@@ -7,7 +7,7 @@ const textStyleDefault = {
         "font-style": "normal",
         "text-decoration": "normal"
     },
-    color: "#FFFFFF"
+    color: "#000000"
 }
 
 const frameStyleDefault = {

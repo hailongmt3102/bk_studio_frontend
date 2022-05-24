@@ -101,7 +101,7 @@ export default function TableComponent(props) {
                         </div>
                         :
                         <div style={{ height: '90%', width: '100%' }} >
-                            <div className='text-start'>
+                            {/* <div className='text-start'>
                                 <button
                                     className='btn btn-default'
                                     onClick={() => {
@@ -110,16 +110,17 @@ export default function TableComponent(props) {
                                 >
                                     Export
                                 </button>
-                            </div>
+                            </div> */}
+                            <h4 className='ms-2'>{props.data.Title}</h4>
                             <DataGrid
                                 rows={rows}
                                 columns={columns}
                                 columnVisibilityModel={{
                                     id: visibleId,
                                 }}
-                                components={{
-                                    Toolbar: CustomToolbar,
-                                }}
+                                // components={{
+                                //     Toolbar: CustomToolbar,
+                                // }}
                                 experimentalFeatures={{ newEditingApi: true }}
                                 loading={loading}
                             />

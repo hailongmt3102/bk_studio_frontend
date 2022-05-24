@@ -9,9 +9,9 @@ import edit from "resources/icons/edit.svg";
 import { localizationContext } from '../../../App';
 
 
-
 export default function EditData(props) {
     const localization = useContext(localizationContext)
+
     useEffect(() => {
         setColumnProperties({
             data: Object.keys(props.dataFile[0]),
@@ -70,8 +70,10 @@ export default function EditData(props) {
             </GridToolbarContainer>
         );
     }
+
     return (
         <div>
+
             <div>
                 <div className='row'>
                     <h2 className='m-3 col PrimaryFontColor size40 customFontBold '>
@@ -92,7 +94,7 @@ export default function EditData(props) {
                         <div className='row'>
                             <div className='col-3'>
                                 <Form.Control size="sm" type="text" value={props.fileInformation.name} onChange={(e) => {
-                                    props.setFileInformation({ ...props.fileInformation, name: e.target.value.replace(/[\s\.]/g, "_") })
+                                    props.setFileInformation({ ...props.fileInformation, name: e.target.value.replace(/[\s\.-]/g, "_") })
                                 }}
                                     className="border-0 "
                                     style={{
@@ -114,6 +116,12 @@ export default function EditData(props) {
                             columns={columns}
                             columnVisibilityModel={{
                                 id: false,
+                                ...columnProperties.active.reduce((preVal, curVal, index) => {
+                                    return {
+                                        ...preVal,
+                                        [columnProperties.data[index]]: curVal
+                                    }
+                                }, {})
                             }}
                             experimentalFeatures={{ newEditingApi: true }}
                             editMode="cell"

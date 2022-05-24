@@ -146,12 +146,16 @@ export default function SqlPopUp(props) {
         // const [selectedField, setSelectedField] = useState([])
         // const [selectFrom, setSelectFrom] = useState([])
 
-        // setGroupBy([])
-        // setFunction_clause([])
-        // setWhere_clause([])
-        // setHaving_clause([])
-        // setOrder_clause([])
-        // setFieldList([])
+        setGroupBy([])
+        setFunction_clause([])
+        setWhere_clause([])
+        setHaving_clause([])
+        setOrder_clause([])
+        setFieldList([])
+        setSelectFrom([])
+        setSelectXAxis(null)
+        setSelectedField([])
+
     }, [props.show])
 
 

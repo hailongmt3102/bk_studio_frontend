@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react'
-
+import { useEffect, useState, useContext } from 'react'
+import { loadingContext } from 'App'
 import { ImportDataApi } from 'api/DataSources'
 import { useLocation, useNavigate } from 'react-router-dom'
 import EditData from './Children/EditData'
@@ -24,7 +24,7 @@ export default function ImportData() {
         }
         // navigate to next step, execute data file
     }
-
+    const setIsLoading = useContext(loadingContext)
     useEffect(() => {
         try {
             if (isModel) {
@@ -45,7 +45,7 @@ export default function ImportData() {
 
                     if (location.state.isEditModel) {
                         // navigate to edit model page
-                        let edited = location.state.isEditInput ? { input: JSON.stringify(rows.slice(0,50)) } : { output: JSON.stringify(rows.slice(0,50)) }
+                        let edited = location.state.isEditInput ? { input: JSON.stringify(rows.slice(0, 50)) } : { output: JSON.stringify(rows.slice(0, 50)) }
                         navigate("/machinelearning/modelDetail/" + location.state.MId + "/edit", {
                             state: {
                                 ...location.state,
@@ -80,9 +80,11 @@ export default function ImportData() {
             return row
         })
         if (currentProjectId != null) {
+            setIsLoading(true)
             // send it to server
             ImportDataApi(name, data, currentProjectId)
                 .then(res => {
+                    setIsLoading(false)
                     Store.addNotification(content("Success", "Imported data", "success"), {
                         duration: 5000
                     })
@@ -90,6 +92,7 @@ export default function ImportData() {
                     setStep(1)
                 })
                 .catch(err => {
+                    setIsLoading(false)
                     Store.addNotification(content("Fail", err.response.data, "danger"), {
                         duration: 10000
                     })

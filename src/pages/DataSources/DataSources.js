@@ -85,6 +85,7 @@ export default function DataSources() {
                                         showSharePopUpHandle={showSharePopUpHandle}
                                         ele={ele}
                                         index={index}
+                                        have3Dot={true}
                                     />
                                 </div>
                             ))}
@@ -106,6 +107,7 @@ export default function DataSources() {
                                         showSharePopUpHandle={showSharePopUpHandle}
                                         ele={ele}
                                         index={index}
+                                        have3Dot={false}
                                     />
                                 </div>
                             ))}

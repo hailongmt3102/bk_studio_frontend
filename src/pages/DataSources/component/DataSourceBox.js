@@ -191,32 +191,33 @@ export default function DataSourceBox(props) {
                 handleCloseNo={() => handleCloseNo()}
 
             />
-            <ThreeDotButton title={'adđ'}
-                items={props.option_list}
-                icon={three_dot}
-                icons_list={props.icon_list}
-                onClick={(val) => {
-                    if (val == "Delete") {
-                        handleOpen()
+            {props.have3Dot === true ?
+                <ThreeDotButton title={'adđ'}
+                    items={props.option_list}
+                    icon={three_dot}
+                    icons_list={props.icon_list}
+                    onClick={(val) => {
+                        if (val == "Delete") {
+                            handleOpen()
 
-                    }
-                    else if (val === "Rename") {
-                        setPressRename(true)
-                    }
-                    else if (val == "Share") {
+                        }
+                        else if (val === "Rename") {
+                            setPressRename(true)
+                        }
+                        else if (val == "Share") {
 
-                        if (isHost === true) {
-                            //console.log(isHost)
-                            props.showSharePopUpHandle(props.ele.Id)
+                            if (isHost === true) {
+                                //console.log(isHost)
+                                props.showSharePopUpHandle(props.ele.Id)
+                            }
+                            else {
+                                Store.addNotification(content("Fail", "You can't share this data source", "danger"))
+                            }
                         }
-                        else {
-                            Store.addNotification(content("Fail", "You can't share this data source", "danger"))
+                        else if (val === "Send to Workspace") {
+                            sendToWorkspaceSubmit(props.ele.Id)
                         }
-                    }
-                    else if (val === "Send to Workspace") {
-                        sendToWorkspaceSubmit(props.ele.Id)
-                    }
-                }} />
+                    }} /> : <div className='row mt-4'></div>}
         </div>
     }
 

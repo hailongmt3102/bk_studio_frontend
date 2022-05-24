@@ -24,7 +24,7 @@ import { deep_blue_primary } from "../../utils/color"
 import ShareDataSourcesPopUp from "../DataSources/component/ShareDataSourcesPopUp"
 import PeoplePopup from './components/PeoplePopup'
 import RolePopUp from './components/RolePopUp'
-
+import { socketContext } from "App"
 import { loadingContext } from 'App'
 
 export default function ProjectDetail() {
@@ -112,8 +112,8 @@ export default function ProjectDetail() {
 
     const [datasourceslist, setDatasourceslist] = useState([])
 
-    const option_list = ["Send to Workspace", "Rename", "Share", "Download", "Delete"]
-    const icon_list = [sendTo, edit, share_blue, download_blue, delete_icon]
+    const option_list = ["Send to Workspace", "Rename", "Share", "Delete"]
+    const icon_list = [sendTo, edit, share_blue, delete_icon]
     const dataSourcesComponent = () => {
         return <div>
             <ShareDataSourcesPopUp
@@ -152,6 +152,7 @@ export default function ProjectDetail() {
                                                 showSharePopUpHandle={showSharePopUpHandle}
                                                 ele={ele}
                                                 index={index}
+                                                have3Dot={true}
                                             />
                                         </div>
                                     </div>
@@ -161,6 +162,23 @@ export default function ProjectDetail() {
                     </div>
             }
         </div >
+    }
+
+
+    const { onlineStatus } = useContext(socketContext)
+    const passStatus = (Email) => {
+        if (Object.keys(onlineStatus).includes(Email)) {
+            let status = onlineStatus[Email]
+            if (status.Status === "online") return "online"
+            if (status.Time === "") return "offline"
+
+            // offline some minuted ago
+            let second = Math.floor((Date.now() - status.Time) / 1000)
+            if (second < 60) return `online ${second} second ago`
+            else if (second < 3600) return `online ${Math.floor(second / 60)} minute ago`
+            return `online ${Math.floor(second / 3600)} hour ago`
+        }
+        return "offline"
     }
 
     const peopleComponent = () => {
@@ -192,6 +210,7 @@ export default function ProjectDetail() {
                                         if (ele.Position !== "Manager") return null
                                         else {
                                             return <PeopleCard
+                                                Status={passStatus(ele.Email)}
                                                 position={ele.Position}
                                                 name={ele.UserName}
                                                 email={ele.Email}
@@ -211,6 +230,7 @@ export default function ProjectDetail() {
                                     else {
                                         if (ele.Position !== "Manager") return null
                                         return <div class="col"> <PeopleCard
+                                            Status={passStatus(ele.Email)}
                                             position={ele.Position}
                                             name={ele.UserName}
                                             email={ele.Email}
@@ -243,6 +263,7 @@ export default function ProjectDetail() {
                                     return <div class="col-4 m-0 p-0" >
                                         {ele.Email !== getEmail ?
                                             <PeopleCard
+                                                Status={passStatus(ele.Email)}
                                                 project_id={project_id}
                                                 position={ele.Position}
                                                 name={ele.UserName}
@@ -267,6 +288,7 @@ export default function ProjectDetail() {
                                                     setEmail(ele.Email)
                                                 }}
                                             /> : <PeopleCard
+                                                Status={passStatus(ele.Email)}
                                                 project_id={project_id}
                                                 position={ele.Position}
                                                 name={ele.UserName}
