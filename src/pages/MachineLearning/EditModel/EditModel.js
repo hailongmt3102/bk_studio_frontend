@@ -306,6 +306,14 @@ export default function EditModel() {
                     // onCellEditStop={handleRowEditStop}
                     />
                 </div>
+                <div className='ms-4 mt-1 customFontBold SecondFontColor size40'>
+                    Description:
+                </div>
+                <Form.Group className="mb-3 ms-3" controlId="exampleForm.ControlTextarea1" >
+                    <Form.Control as="textarea" rows={6} style={{ "overflow": "auto", "resize": "none" }} value="" onChange={(event) => {
+                        // setprojectInformation({ ...projectInformation, Description: event.target.value })
+                    }} />
+                </Form.Group>
 
             </div>
         </div >
