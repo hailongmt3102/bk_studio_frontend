@@ -113,7 +113,7 @@ export default function Register() {
             <ConfirmDialog
                 haveOK={true}
                 haveContent={true}
-                content={"To complete the signup proccess, please check your mail and click on the provided activation link"}
+                content={"To complete the signup proccess, please check your mail " + `(${information.Email})` + " and click on the provided activation link"}
                 confirmDialog={confirmDialog}
                 title="Account successfully created ?"
                 // handleCloseYes={() => handleCloseYes()}
