@@ -69,6 +69,10 @@ export default function Register() {
 
     const onSubmitHandler = () => {
         console.log("gui", information);
+        if ([information.Email.length, information.Password.length].includes(0)) {
+            Store.addNotification(content("Warning", "Please fill in email or password", "warning"))
+            return
+        }
         if (!ValidateEmail(information.Email)) {
             Store.addNotification(content("Warning", "You have entered an invalid email address!", "warning"))
             return

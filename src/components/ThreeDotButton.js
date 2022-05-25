@@ -18,12 +18,12 @@ export default function ThreeDotButton(props) {
     ));
 
     return (
-        <Dropdown>
+        <Dropdown className="focus-visible" style={{ "outline": "none" }}>
             <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components-Secondary">
                 <div>
                     {
                         //chon giua title va icon
-                        props.icon !== undefined ? <img src={props.icon} height="20px" width="20px" />  : <p className="p-0 m-auto">{props.title}</p> 
+                        props.icon !== undefined ? <img src={props.icon} height="20px" width="20px" /> : <p className="p-0 m-auto">{props.title}</p>
                     }
                 </div>
             </Dropdown.Toggle>
@@ -32,8 +32,8 @@ export default function ThreeDotButton(props) {
                     props.items.map((item, index) => {
                         return (
                             <Dropdown.Item style={{ "minWidth": "200px" }} key={index} eventKey={index} onClick={() => {
-                                 props.onClick(item, index)
-                                 }}>
+                                props.onClick(item, index)
+                            }}>
                                 <div>
                                     {
                                         props.icons_list !== undefined ?

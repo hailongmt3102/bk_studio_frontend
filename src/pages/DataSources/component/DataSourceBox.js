@@ -232,7 +232,7 @@ export default function DataSourceBox(props) {
                 <div className="ms-4 m-0 p-0 SecondFontColor size32 customFontRoboto " >
                     {
                         pressRename == false ?
-                            <h4 className=''>{props.ele.Information.substring(0, 15)}</h4>
+                            <h4 className=''>{props.ele.Information.length > 15 ? props.ele.Information.substring(0, 18) + "..." : props.ele.Information}</h4>
                             :
                             // <newNameTextField/>
                             <Form.Group className='m-0 p-0  pe-3'>
