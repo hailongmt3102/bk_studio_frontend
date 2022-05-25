@@ -19,18 +19,30 @@ export default function ConfirmDialog(props) {
         <DialogTitle id="alert-dialog-title">
           {props.title}
         </DialogTitle>
-        {/* <DialogContent>
-          <DialogContentText id="alert-dialog-description">
+        {
+          props.haveContent === true ? <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              <div className='text-center'>{props.content}</div>
+            </DialogContentText>
+          </DialogContent> : null
+        }
+        {
+          props.haveOK === true ? <DialogActions>
+            <Button onClick={props.handleCloseNo} autoFocus>
+              OK
+            </Button>
 
-          </DialogContentText>
-        </DialogContent> */}
-        <DialogActions>
-          <Button onClick={props.handleCloseNo} autoFocus>
-            No
-          </Button>
-          <Button onClick={props.handleCloseYes}>Yes</Button>
 
-        </DialogActions>
+          </DialogActions> : <DialogActions>
+            <Button onClick={props.handleCloseNo} autoFocus>
+              No
+            </Button>
+            <Button onClick={props.handleCloseYes}>Yes</Button>
+
+          </DialogActions>
+        }
+
+
       </Dialog>
     </div>
   );
