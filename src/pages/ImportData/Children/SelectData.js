@@ -9,51 +9,52 @@ import { localizationContext } from '../../../App'
 import ImportButton from '../Components/ImportButton'
 import { getAPI } from 'api/ML_API'
 import AddPopUp from "../Components/AddPopUp";
+import Papa from "papaparse";
+
+
+
 export default function SelectData(props) {
     const localization = useContext(localizationContext)
-    const executeStringResult = (result) => {
-        if (!result) {
-            Store.addNotification(content("Warning", "Some thing went wrong from your data source\nPlease check carefully", "danger"))
-            return
-        }
-        let data = []
-        let endline = "\n"
-        if (/\r\n/.test(result)) endline = "\r\n"
-        else if (/\r/.test(result)) endline = "\r"
-        let dataSheet = result.split(endline)
-        if (dataSheet.length === 0) return
-        // find the sign to split string
-        let divider = dataSheet[0].includes(',') ? ',' : ';'
-        let keys = dataSheet[0].split(divider).filter(key => key != "")
-        keys.map((ele, index) => ele.includes('\"') ? keys[index] = ele.substring(1, ele.length - 1) : ele)
-        dataSheet.map((row, index) => {
-            if (row.includes(divider)) {
-                if (index !== 0) {
-                    let rows = {}
-                    row.split(divider).map((ele, index) => {
-                        rows[keys[index]] = ele.includes('\"') ? ele.substring(1, ele.length - 1) : ele
-                    })
-                    data.push(rows)
-                }
-            }
-        })
-        props.setDataFile([...data])
-        props.onloadComplete()
-    }
+
+
+
+    const [csvList, setCsvlist] = useState([])
 
     const handleOnChange = (e) => {
-        let file = e.target.files[0];
-        if (!file.name.includes('.csv')) {
+        let files = e.target.files;
+        if (!e.target.files[0].name.includes('.csv')) {
             alert("invalid format, expected : .csv")
             return
         }
-        props.setFileInformation({ ...file, name: file.name.replaceAll('.', '_') })
-        const fileReader = new FileReader();
-        fileReader.onload = function (event) {
-            const csvOutput = event.target.result;
-            executeStringResult(csvOutput)
-        };
-        fileReader.readAsText(file);
+        // props.setFileInformation({ ...file, name: file.name.replaceAll('.', '_') })
+        // const fileReader = new FileReader();
+        // fileReader.onload = function (event) {
+        //     const csvOutput = event.target.result;
+        //     executeStringResult(csvOutput)
+        // };
+        // fileReader.readAsText(file);
+
+        // const files = e.target.files;
+        // console.log(files);
+        if (files) {
+            // console.log(files[0]);
+            const file = files[0]
+            props.setFileInformation({ ...file, name: file.name.replaceAll('.', '_') })
+            Papa.parse(file, {
+                complete: function (results) {
+                    console.log("Finished:", results.data);
+                    setCsvlist(results.data)
+                    const key = results.data[0]
+                    const data = results.data.slice(1).map(row => row.reduce((pre, cur, index) => { return { ...pre, [key[index]]: cur } }, {}))
+                    console.log(data)
+                    props.setDataFile([...data])
+                    props.onloadComplete()
+                }
+            }
+            )
+
+
+        }
     };
 
     const JsonHandleOnChange = (e) => {
@@ -89,7 +90,9 @@ export default function SelectData(props) {
 
                 const ws = wb.Sheets[wsname];
 
+
                 const data = XLSX.utils.sheet_to_json(ws);
+                // console.log(data)
 
                 props.setDataFile(data)
                 props.onloadComplete()
@@ -129,6 +132,35 @@ export default function SelectData(props) {
 
         fetchFromAPI(name, url)
     }
+    // const executeStringResult = (result) => {
+    //     if (!result) {
+    //         Store.addNotification(content("Warning", "Some thing went wrong from your data source\nPlease check carefully", "danger"))
+    //         return
+    //     }
+    //     let data = []
+    //     let endline = "\n"
+    //     if (/\r\n/.test(result)) endline = "\r\n"
+    //     else if (/\r/.test(result)) endline = "\r"
+    //     let dataSheet = result.split(endline)
+    //     if (dataSheet.length === 0) return
+    //     // find the sign to split string
+    //     let divider = dataSheet[0].includes(',') ? ',' : ';'
+    //     let keys = dataSheet[0].split(divider).filter(key => key != "")
+    //     keys.map((ele, index) => ele.includes('\"') ? keys[index] = ele.substring(1, ele.length - 1) : ele)
+    //     dataSheet.map((row, index) => {
+    //         if (row.includes(divider)) {
+    //             if (index !== 0) {
+    //                 let rows = {}
+    //                 row.split(divider).map((ele, index) => {
+    //                     rows[keys[index]] = ele.includes('\"') ? ele.substring(1, ele.length - 1) : ele
+    //                 })
+    //                 data.push(rows)
+    //             }
+    //         }
+    //     })
+    //     props.setDataFile([...data])
+    //     props.onloadComplete()
+    // }
     return (
         <div>
             <AddPopUp
