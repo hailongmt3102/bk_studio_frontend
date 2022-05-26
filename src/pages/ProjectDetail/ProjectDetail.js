@@ -216,7 +216,7 @@ export default function ProjectDetail() {
                                                 email={ele.Email}
                                                 avatar={ele.Avatar}
                                                 rank={ele.RankAccount}
-                                                birthday={ele.Birthday.substring(0, 10).split('-').reverse().join('-')}
+                                                // birthday={ele.Birthday.substring(0, 10).split('-').reverse().join('-')}
                                                 gender={ele.Gender}
                                                 isManager={true}
                                                 showThreeDotButton={false}
@@ -236,7 +236,7 @@ export default function ProjectDetail() {
                                             email={ele.Email}
                                             avatar={ele.Avatar}
                                             rank={ele.RankAccount}
-                                            birthday={ele.Birthday.substring(0, 10).split('-').reverse().join('-')}
+                                            // birthday={ele.Birthday.substring(0, 10).split('-').reverse().join('-')}
                                             gender={ele.Gender}
                                             isManager={true}
                                             showThreeDotButton={false}
@@ -270,7 +270,7 @@ export default function ProjectDetail() {
                                                 email={ele.Email}
                                                 avatar={ele.Avatar}
                                                 rank={ele.RankAccount}
-                                                birthday={ele.Birthday.substring(0, 10).split('-').reverse().join('-')}
+                                                // birthday={ele.Birthday.substring(0, 10).split('-').reverse().join('-')}
                                                 gender={ele.Gender}
                                                 isManager={false}
                                                 showThreeDotButton={true}
@@ -295,7 +295,7 @@ export default function ProjectDetail() {
                                                 email={ele.Email}
                                                 avatar={ele.Avatar}
                                                 rank={ele.RankAccount}
-                                                birthday={ele.Birthday.substring(0, 10).split('-').reverse().join('-')}
+                                                // birthday={ele.Birthday.substring(0, 10).split('-').reverse().join('-')}
                                                 gender={ele.Gender}
                                                 isManager={false}
                                                 showThreeDotButton={true}

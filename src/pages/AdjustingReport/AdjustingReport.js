@@ -18,7 +18,7 @@ import ShareWithPopUp from "./components/PopUp/ShareWithPopUp";
 import ConfirmDialog from "components/ConfirmDialog";
 import './AdjustingReport.css';
 import SqlPopUp from "./components/PopUp/SqlPopUp";
-
+import { getInformationByPId } from "api/Project"
 import { loadingContext } from 'App';
 import * as htmlToImage from 'html-to-image';
 import { shapeBackgroundColors, shapeBorderColors } from 'utils/color';
@@ -854,12 +854,22 @@ export default function AdjustingReport(props) {
         }
     }, [keydown])
 
-
+    const [PName, setPName] = useState("")
     const getAllData = async () => {
         setIsLoading(true)
         getReportInfo()
         getDataFields()
         await getReportContent()
+        getInformationByPId(currentProject)
+            .then(res => {
+                setPName(res.data.Name)
+                console.log("PName", res.data.Name)
+            })
+            .catch(err => {
+                // setIsLoading(false)
+                // Store.addNotification(content("Fail", err.response.data, "danger"))
+                return
+            })
         if (!isTemplate) {
             getAllDatasourceNameInReport(currentProject, RId)
                 .then(res => {
@@ -888,8 +898,11 @@ export default function AdjustingReport(props) {
         }
 
     }
+
+
     useEffect(() => {
         getAllData()
+
         var keydown = document.addEventListener("keydown", _handleKeyDown);
         return () => {
             document.removeEventListener("keydown", keydown)
@@ -944,7 +957,8 @@ export default function AdjustingReport(props) {
                 PId: location.state.PId,
                 Type: location.state.Type,
                 RId: location.state.RID,
-                Permission: "View"
+                Permission: "View",
+                PName: PName
             }
         })
     }
@@ -1046,7 +1060,13 @@ export default function AdjustingReport(props) {
 
                 />
             </div>
+            <div className=" row m-0 p-0">
+                <div className="col-2 m-0 p-0"></div>
+                <div className="col-2 rightColumn customFontBold size22">{PName}</div>
+                <div className="col-8 "></div>
+            </div>
             <div className="row">
+
                 <TabComponent
                     EditStyle={EditStyle}
                     data={tabData}
@@ -1054,7 +1074,7 @@ export default function AdjustingReport(props) {
                     updateQueryOfAComponent={updateQueryOfAComponent}
                 />
                 <div className="col-10 h-200">
-                    <div className="rightColumn p-3">
+                    <div className="rightColumn p-2">
                         <div className="row m-0 p-0">
                             <div className="col-7 m-0 p-0">
                                 <div className="row m-0 p-0" >
@@ -1179,8 +1199,10 @@ export default function AdjustingReport(props) {
                     </div>
                 </div>
             </div>
-        </div>
+        </div >
     }
+
+
 
     const createAReportByTemplateHandle = () => {
         createAReportByTemplate(RId, {
@@ -1204,92 +1226,87 @@ export default function AdjustingReport(props) {
     }
 
     const ViewPageUI = () => {
-        return <div className="row">
-
-            <div className="leftColumn p-3">
-                <div className="row m-0 p-0">
-                    <div className="col-8 m-0 p-0">
-                        <div className="row m-0 p-0" >
-                            <div className="col-1 m-0 p-0 mt-1">
-                                <button type="button" class="btn btn-sm" onClick={() => { nav(-1) }}>
-                                    <img src={back} />
-                                </button>
-                            </div>
-                            <div className="col-8 m-0 p-0" >
-                                <div className="ms-1 PrimaryFontColor customFontBold size32"> {reportInformation.Name} </div>
-                            </div>
-
-                        </div>
-                        <div className="row m-0 p-0">
-                            <div className="col-1">
-
-                            </div>
-                            <div className=" col-8 SecondFontColor customFontBold size24">
-                                {reportInformation.Hastag}
-                            </div>
-
-                        </div>
-                    </div>
-                    <div className="col-2 mt-5 m-0 p-0 mb-2 text-end pe-5">
-                        {
-                            isTemplate === true ? <div> <button className='btn-lg btn-success text-center border-0'
-                                onClick={() => { createAReportByTemplateHandle() }}>
-                                <div>Apply</div>
-                            </button></div> : null
-                        }
-                    </div>
-                    <div className="col-2 mt-5 m-0 p-0">
-
-                    </div>
-
-
-                    <div className="row mt-2">
-                        <div className=" col-10 ">
-                            <div className="content"
-                                onClick={(e) => triggerClickContentBackground(e)}
-                            >
-                                <Content
-                                    isEdit={isEdit}
-                                    ref={contentRef}
-                                    shapeComponents={shapeComponents}
-                                    updateShapeComponent={updateShapeComponent}
-                                    followingIndexComponent={-1}
-                                    setFollowingIndexComponent={setFollowingIndexComponent}
-                                // showingMouseDrag={addShapeType != null}
-                                // mouseDragValue={dragAreaLocation}
-                                />
-                            </div>
-                        </div>
-                        <div className="col-2 content p-4 ">
-
-                            <h3 className="PrimaryFontColor size32 customFontBold" >
-                                Detail:
-                            </h3>
-                            <div className="row mt-5 ">
-                                <div className="col PrimaryFontColor size16 customFontBold">Id</div>
-                                <div className="col">{reportInformation.Id} </div>
-                            </div>
-
-                            <div className="mt-4 PrimaryFontColor size16 customFontBold">Data sources:</div>
-                            <div className="mt-2">
-                                {
-                                    listDataSourcesName.map((ele) => ele)
-                                }
-                            </div>
-                            <div className="row mt-4">
-                                <div className="col PrimaryFontColor size16 customFontBold">Created by: </div>
-                                <div className="col mt-2">{reportInformation.Author} </div>
-                            </div>
-                            <div className="row mt-4">
-                                <div className="col PrimaryFontColor size16 customFontBold">Last Modified:</div>
-                                <div className="col">{reportInformation.LastModified} </div>
-                            </div>
-                        </div>
-                    </div>
+        return <div>
+            <div className="row">
+                <div className=" row ">
+                    <div className="col-2 rightColumn customFontBold size22 "><div className="ms-3">{location.state.PName}</div></div>
+                    <div className="col-10 "></div>
                 </div>
-
-
-            </div >
+                <div className="leftColumn p-3">
+                    <div className="row m-0 p-0">
+                        <div className="col-8 m-0 p-0">
+                            <div className="row m-0 p-0" >
+                                <div className="col-1 m-0 p-0 mt-1">
+                                    <button type="button" class="btn btn-sm" onClick={() => { nav(-1) }}>
+                                        <img src={back} />
+                                    </button>
+                                </div>
+                                <div className="col-8 m-0 p-0" >
+                                    <div className="ms-1 PrimaryFontColor customFontBold size32"> {reportInformation.Name} </div>
+                                </div>
+                            </div>
+                            <div className="row m-0 p-0">
+                                <div className="col-1">
+                                </div>
+                                <div className=" col-8 SecondFontColor customFontBold size24">
+                                    {reportInformation.Hastag}
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col-2 mt-5 m-0 p-0 mb-2 text-end pe-5">
+                            {
+                                isTemplate === true ? <div> <button className='btn-lg btn-success text-center border-0'
+                                    onClick={() => { createAReportByTemplateHandle() }}>
+                                    <div>Apply</div>
+                                </button></div> : null
+                            }
+                        </div>
+                        <div className="col-2 mt-5 m-0 p-0">
+                        </div>
+                        <div className="row mt-2">
+                            <div className=" col-10 ">
+                                <div className="content"
+                                    onClick={(e) => triggerClickContentBackground(e)}
+                                >
+                                    <Content
+                                        isEdit={isEdit}
+                                        ref={contentRef}
+                                        shapeComponents={shapeComponents}
+                                        updateShapeComponent={updateShapeComponent}
+                                        followingIndexComponent={-1}
+                                        setFollowingIndexComponent={setFollowingIndexComponent}
+                                    // showingMouseDrag={addShapeType != null}
+                                    // mouseDragValue={dragAreaLocation}
+                                    />
+                                </div>
+                            </div>
+                            <div className="col-2 content p-4 ">
+                                <h3 className="PrimaryFontColor size32 customFontBold" >
+                                    Detail:
+                                </h3>
+                                <div className="row mt-5 ">
+                                    <div className="col PrimaryFontColor size16 customFontBold">Id</div>
+                                    <div className="col">{reportInformation.Id} </div>
+                                </div>
+                                <div className="mt-4 PrimaryFontColor size16 customFontBold">Data sources:</div>
+                                <div className="mt-2">
+                                    {
+                                        listDataSourcesName.map((ele) => ele)
+                                    }
+                                </div>
+                                <div className="row mt-4">
+                                    <div className="col PrimaryFontColor size16 customFontBold">Created by: </div>
+                                    <div className="col mt-2">{reportInformation.Author} </div>
+                                </div>
+                                <div className="row mt-4">
+                                    <div className="col PrimaryFontColor size16 customFontBold">Last Modified:</div>
+                                    <div className="col">{reportInformation.LastModified.substring(0, 10)} </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div >
+            </div>
         </div>
     }
 

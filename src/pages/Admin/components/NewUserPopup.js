@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Modal, Button, Form } from 'react-bootstrap'
+import { Modal, Button, Form, InputGroup } from 'react-bootstrap'
 import ClockSvg from 'resources/icons/clock.svg'
 import MemberSvg from 'resources/icons/two_people.svg'
 import { getListProject } from 'api/Project'
@@ -7,8 +7,11 @@ import { getListProject } from 'api/Project'
 import { createNewProject } from 'api/Project'
 import { Store } from 'react-notifications-component'
 import { content } from "utils/notification"
+import visible from "resources/icons/visible.svg"
+import invisible from "resources/icons/invisible.svg"
 
-
+import lock from "resources/icons/lock.svg";
+import DropdownWithIndex0 from 'components/DropdownWithIndex0'
 
 const orangeStyle = {
     color: "black",
@@ -20,15 +23,17 @@ export default function NewUserPopup(props) {
         Email: "",
         Password: "",
         UserName: "",
-        Position: ""
+        Position: "Member"
     })
-
+    const [isVisible, setisVisible] = useState(false)
     // useEffect(() => {
     //     setProjectInfo({ ...projectInfo, Name: `Project ${props.newProjectId}` })
     // }, [props.newProjectId])
     const onsubmit = () => {
         props.onComplete(newUserInfo)
     }
+
+
     const body = () => {
         return (
             <div>
@@ -40,29 +45,13 @@ export default function NewUserPopup(props) {
                         <Form.Control
                             type="text"
                             name="duedate"
-                            placeholder="Type new user email"
+                            placeholder="Enter Email"
                             value={newUserInfo.Email}
                             onChange={(e) => {
                                 setNewUserInfo({ ...newUserInfo, Email: e.target.value })
                             }}
                         />
                     </Form.Group>
-
-                    <Form.Group controlId="duedate" className='mt-4'>
-                        <Form.Label>
-                            Password
-                        </Form.Label>
-                        <Form.Control
-                            type="text"
-                            name="duedate"
-                            placeholder="Type new user Password"
-                            value={newUserInfo.Password}
-                            onChange={(e) => {
-                                setNewUserInfo({ ...newUserInfo, Password: e.target.value })
-                            }}
-                        />
-                    </Form.Group>
-
                     <Form.Group controlId="duedate" className='mt-4'>
                         <Form.Label>
                             UserName
@@ -70,28 +59,48 @@ export default function NewUserPopup(props) {
                         <Form.Control
                             type="text"
                             name="duedate"
-                            placeholder="Type new user UserName"
-                            value={newUserInfo.UserName}
                             onChange={(e) => {
                                 setNewUserInfo({ ...newUserInfo, UserName: e.target.value })
                             }}
+                            value={newUserInfo.UserName}
+                            placeholder="Enter Username"
                         />
                     </Form.Group>
-
                     <Form.Group controlId="duedate" className='mt-4'>
                         <Form.Label>
-                            Position
+                            Password
                         </Form.Label>
-                        <Form.Control
+                        <InputGroup>
+                            <Form.Control
+                                placeholder="Enter Password"
+                                value={newUserInfo.Password}
+                                onChange={(e) => {
+                                    setNewUserInfo({ ...newUserInfo, Password: e.target.value })
+                                }}
+                                type={isVisible ? "text" : "password"}
+                            />
+                            <a class="btn shadow-none border-top border-bottom border-end" onClick={() => { setisVisible(!isVisible) }}><img width="20px" height="20px" src={isVisible ? visible : invisible}></img></a>
+                        </InputGroup>
+
+                        {/* <Form.Control
                             type="text"
                             name="duedate"
-                            placeholder="Type new user Postion"
-                            value={newUserInfo.Position}
-                            onChange={(e) => {
-                                setNewUserInfo({ ...newUserInfo, Position: e.target.value })
-                            }}
-                        />
+
+                        /> */}
                     </Form.Group>
+
+
+
+                    <div className='row mt-4'>
+                        <div className='col-2'>Position</div>
+                        <div className='col'>
+                            <DropdownWithIndex0 title={newUserInfo.Position} items={["Manager", "Member"]} icons_list={["", ""]}
+                                onClick={(val) => {
+                                    setNewUserInfo({ ...newUserInfo, Position: val })
+                                }} />
+                        </div>
+                    </div>
+
                 </Form>
             </div>
         )
@@ -104,7 +113,7 @@ export default function NewUserPopup(props) {
             size="lg"
         >
             <Modal.Header closeButton>
-                {/* <Modal.Title>Data processing</Modal.Title> */}
+                <Modal.Title><div className='size24 customFontBold PrimaryFontColor'> Add a new user</div></Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 {

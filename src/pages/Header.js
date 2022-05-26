@@ -154,13 +154,13 @@ export default function Header(props) {
                                 }
                             />
                         </div>
-                        <div className='col-2 m-0 p-0 m-auto'>
+                        {/* <div className='col-2 m-0 p-0 m-auto'>
                             <div className='me-5'>
                                 <Badge color="error" overlap="circular" badgeContent=" 12">
                                     <Avatar src={bell} sx={{ width: 35, height: 35 }} />
                                 </Badge>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
 

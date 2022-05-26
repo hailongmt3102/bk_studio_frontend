@@ -91,7 +91,7 @@ export default function TemplateMiniCard(props) {
     const headComponent = () => {
         return <div className='row text-center m-0 p-0'>
             <div class="d-flex flex-row-reverse me-3">
-                <button type="button" class="btn btn-sm" onClick={() => {
+                <button type="button" style={{ "box-shadow": "none", "outline": "none" }} className="btn btn-sm" onClick={() => {
                     if (heart == false) {
                         likeSubmit()
                     }
