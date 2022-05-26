@@ -73,6 +73,11 @@ function App() {
     // online status
     const [onlineStatus, setOnlineStatus] = useState({})
 
+    const [currentUser, setCurrentUser] = useState({
+        Email: "",
+        UserName: ""
+    })
+
     useEffect(() => {
         const socket = socketIOClient.connect(process.env.REACT_APP_BASE_URL || "http://localhost:3000")
         setSocket(socket)
@@ -110,10 +115,10 @@ function App() {
                             <div className={lightMode ? "full-height" : "full-height darkmode"}>
                                 {isLoading && <Loading />}
                                 <ReactNotifications />
-                                <Drawer state={drawerState} setDrawerState={setDrawerState} />
+                                <Drawer state={drawerState} setDrawerState={setDrawerState} currentUser={currentUser} />
                                 <ChatOverlay visibility={true} />
                                 <div className="custombackground">
-                                    <Header />
+                                    <Header currentUser={currentUser} setCurrentUser={setCurrentUser}/>
                                     <Routes>
                                         <Route path="/" exact element={<Dashboard />} >
                                         </Route>

@@ -58,9 +58,9 @@ export default function Login() {
                 }
                 else {
                     localStorage.removeItem("password")
-                    localStorage.removeItem("remember")
+                    localStorage.removeItem("remember") 
                 }
-                navigate("/")
+                navigate(-1)
             })
             .catch((e) => {
                 console.log(e)
@@ -74,7 +74,6 @@ export default function Login() {
         let getusername = localStorage.getItem("email") || ""
         let getpassword = localStorage.getItem("password") || ""
         let getremember = localStorage.getItem("remember") || false
-        setinformation({ ...information, Email: "getusername" })
         setinformation({ Email: getusername, Password: getpassword })
         setRemember(getremember)
     }, [])
