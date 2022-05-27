@@ -433,9 +433,12 @@ export default function AdjustingReport(props) {
                 queryResult.data.map(row => {
                     keys.map((key, index) => index == 0 ? arrayData[key].push(row[key]) : arrayData[key].push(parseInt(row[key])))
                 })
-
                 result.lineData = {
                     labels: arrayData[keys[0]],
+                    xAxisName: keys.length > 0 ? keys[0] : "",
+                    yAxisName: keys.slice(1),
+                    maxIndex: arrayData[keys[1]].indexOf(Math.max(...arrayData[keys[1]])),
+                    minIndex: arrayData[keys[1]].indexOf(Math.min(...arrayData[keys[1]])),
                     datasets: keys.slice(1).map((key, index) => {
                         return {
                             label: key,
@@ -461,6 +464,12 @@ export default function AdjustingReport(props) {
                 })
 
                 result.barData = {
+                    xAxisName: keys.length > 0 ? keys[0] : "",
+                    yAxisName: keys.slice(1),
+                    maxIndex: arrayData[keys[1]].indexOf(Math.max(...arrayData[keys[1]])),
+                    minIndex: arrayData[keys[1]].indexOf(Math.min(...arrayData[keys[1]])),
+                    max: Math.max(...arrayData[keys[1]]),
+                    max: Math.min(...arrayData[keys[1]]),
                     labels: arrayData[keys[0]],
                     datasets: keys.slice(1).map((key, index) => {
                         return {
