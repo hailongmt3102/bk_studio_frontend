@@ -36,7 +36,9 @@ export default function Drawer(props) {
 			.then(res => {
 				setIsAdmin(true)
 			})
-			.catch(err => { })
+			.catch(err => {
+				setIsAdmin(false)
+			 })
 		// get all project
 		getListProject()
 			.then(res => {
@@ -49,7 +51,7 @@ export default function Drawer(props) {
 			})
 			.catch(err => {
 			})
-	}, [localStorage.getItem("username")])
+	}, [props.currentUser])
 
 	useEffect(() => {
 		// this function call when the url changed

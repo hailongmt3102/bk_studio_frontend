@@ -207,7 +207,7 @@ export default function ProjectDetail() {
                             <div class="p-2 col-1"> {
                                 peopleInProject.map((ele, index) => {
                                     if (ele.Email === getEmail) {
-                                        if (ele.Position !== "Manager") return null
+                                        if (ele.Position !== "Manager" && ele.Position !== "Admin") return null
                                         else {
                                             return <PeopleCard
                                                 Status={passStatus(ele.Email)}
@@ -228,7 +228,7 @@ export default function ProjectDetail() {
                                         }
                                     }
                                     else {
-                                        if (ele.Position !== "Manager") return null
+                                        if (ele.Position !== "Manager" && ele.Position !== "Admin") return null
                                         return <div class="col"> <PeopleCard
                                             Status={passStatus(ele.Email)}
                                             position={ele.Position}

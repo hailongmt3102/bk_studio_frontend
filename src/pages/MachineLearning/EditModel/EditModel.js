@@ -36,6 +36,8 @@ export default function EditModel() {
     const [rowsOut, setRowsOut] = useState([])
     const [columnsOut, setColumnsOut] = useState([])
     const [isEditInput, setIsEditInput] = useState(true)
+    const [MDescription, setMDescription] = useState("")
+
 
     const selectDataSource = () => {
         nav("/datasources", {
@@ -43,7 +45,10 @@ export default function EditModel() {
                 ...location.state,
                 isModel: true,
                 isEditModel: true,
-                isEditInput: isEditInput
+                isEditInput: isEditInput,
+                MName: MName,
+                Api: Api,
+                MDescription: MDescription,
             }
         })
     }
@@ -55,7 +60,10 @@ export default function EditModel() {
                 ...location.state,
                 isModel: true,
                 isEditModel: true,
-                isEditInput: isEditInput
+                isEditInput: isEditInput,
+                MName: MName,
+                Api: Api,
+                MDescription: MDescription,
             }
         })
     }
@@ -121,8 +129,9 @@ export default function EditModel() {
     }
     useEffect(() => {
         if (location.state) {
-            setMName(location.state.MName)
-            setApi(location.state.Api)
+            setMName(location.state.MName ? location.state.MName : "")
+            setApi(location.state.Api ? location.state.Api : "")
+            setMDescription(location.state.MDescription ? location.state.MDescription : "")
             try {
                 fetchInput()
                 fetchOutput()
@@ -155,8 +164,9 @@ export default function EditModel() {
         modifyModel(Id, {
             Name: MName,
             Api: Api,
+            Token: MDescription,
             Input: input,
-            output: output
+            Output: output
         })
             .then(res => {
                 Store.addNotification(content("Success", "Edited", "success"))
@@ -256,6 +266,12 @@ export default function EditModel() {
                     </div>
                     <div className='col-5'></div>
                 </div>
+                <Form.Group className="m-0" controlId="exampleForm.ControlTextarea1" >
+                    <Form.Label className='col-2 ms-4 mt-1 customFontBold SecondFontColor size40'>Description</Form.Label>
+                    <Form.Control as="textarea" rows={6} style={{ "overflow": "auto", "resize": "none" }} value={MDescription} onChange={(event) => {
+                        setMDescription(event.target.value)
+                    }} />
+                </Form.Group>
                 <div className='row'>
                     <div className='col-2 ms-4 mt-1 customFontBold SecondFontColor size40'>
                         Test data:
@@ -306,14 +322,14 @@ export default function EditModel() {
                     // onCellEditStop={handleRowEditStop}
                     />
                 </div>
-                <div className='ms-4 mt-1 customFontBold SecondFontColor size40'>
+                {/* <div className='ms-4 mt-1 customFontBold SecondFontColor size40'>
                     Description:
-                </div>
-                <Form.Group className="mb-3 ms-3" controlId="exampleForm.ControlTextarea1" >
+                </div> */}
+                {/* <Form.Group className="mb-3 ms-3" controlId="exampleForm.ControlTextarea1" >
                     <Form.Control as="textarea" rows={6} style={{ "overflow": "auto", "resize": "none" }} value="" onChange={(event) => {
                         // setprojectInformation({ ...projectInformation, Description: event.target.value })
                     }} />
-                </Form.Group>
+                </Form.Group> */}
 
             </div>
         </div >

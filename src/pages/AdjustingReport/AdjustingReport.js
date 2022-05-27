@@ -23,6 +23,7 @@ import { loadingContext } from 'App';
 import * as htmlToImage from 'html-to-image';
 import { shapeBackgroundColors, shapeBorderColors } from 'utils/color';
 import { ConstructionOutlined } from "@mui/icons-material";
+import jsPDF from "jspdf";
 // import { updateAvatar } from 'api/Account'
 // import { dataURLtoFile } from 'utils/utils'
 
@@ -1023,6 +1024,23 @@ export default function AdjustingReport(props) {
         setConfirmDialog({ ...ConfirmDialog, isOpen: true })
     }
 
+    const savePDF = async () => {
+        setIsLoading(true)
+        try {
+            let imgData = await takeScreenShot()
+            const pdf = new jsPDF('l', 'mm', [297, 210])
+            var width = pdf.internal.pageSize.getWidth();
+            var height = pdf.internal.pageSize.getHeight();
+            pdf.addImage(imgData, 'PNG', -50, -20, width + 40, height)
+            var blob = pdf.output("blob");
+            window.open(URL.createObjectURL(blob));
+            setIsLoading(false)
+        } catch (error) {
+            setIsLoading(false)
+            Store.addNotification(content("Warning", "Please try again", "warning"))
+        }
+    }
+
     const EditUI = () => {
         return <div style={{ cursor: cursor }}>
             <input ref={openImageRef} type={"file"} style={{ display: "none" }} accept="image/*" onChange={(e) => {
@@ -1071,7 +1089,9 @@ export default function AdjustingReport(props) {
             </div>
             <div className=" row m-0 p-0">
                 <div className="col-2 m-0 p-0"></div>
-                <div className="col-2 rightColumn customFontBold size22">{PName}</div>
+                <div className="col-2 rightColumn customFontBold size22" onClick={() => {
+                    nav(`/pDetail/${currentProject}`)
+                }}>{PName}</div>
                 <div className="col-8 "></div>
             </div>
             <div className="row">
@@ -1187,6 +1207,7 @@ export default function AdjustingReport(props) {
                             isEdit={isEdit}
                             saveACopyHandle={() => saveACopyHandle()}
                             saveATemplateHandle={() => handleOpen()}
+                            savePDF={savePDF}
                         />
 
                         <div className="content"
