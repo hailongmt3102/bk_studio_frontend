@@ -1,13 +1,16 @@
 import { ArcElement, BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, LineElement, PointElement, Title, Tooltip } from 'chart.js';
 import { Bar, Doughnut, Line, Pie } from 'react-chartjs-2';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { Rnd } from 'react-rnd';
-import React from 'react';
+import React, { useState } from 'react';
 import TableComponent from './table/TableComponent';
 import ErrorShape from './ErrorShape/ErrorShape';
 import { TextField } from '@mui/material';
 import { Form } from 'react-bootstrap'
 import warning from "resources/icons/warning.svg"
+import { min } from 'moment';
 ChartJS.register(
+
     CategoryScale,
     LinearScale,
     PointElement,
@@ -21,6 +24,8 @@ ChartJS.register(
 
 
 const Content = React.forwardRef((props, ref) => {
+
+
     const executeShape = (shape, index) => {
         if (shape.TypeParsed == "Error") {
             return (
@@ -137,7 +142,39 @@ const Content = React.forwardRef((props, ref) => {
                                 }}
                             />
                         </Form.Group>
-                        <Line data={shape.lineData} />
+                        <Line data={shape.lineData}
+                            plugins={[ChartDataLabels]}
+                            options={
+                                {
+                                    responsive: true,
+                                    plugins: {
+                                        datalabels: {
+                                            anchor: "end",
+                                            align: "end",
+                                            display: function (context) {
+                                                return (context.dataIndex === shape.lineData.maxIndex ||
+                                                    context.dataIndex === shape.lineData.minIndex)
+                                            }
+                                        }
+                                    },
+                                    scales: {
+                                        x: {
+                                            title: {
+                                                display: true,
+                                                text: shape.lineData.xAxisName
+                                            }
+                                        },
+                                        y: {
+                                            title: {
+                                                display: true,
+                                                text: shape.lineData.yAxisName
+                                            },
+
+                                        },
+                                    }
+                                }
+                            }
+                        />
                     </Rnd>
                 )
             case "Bar Chart":
@@ -177,7 +214,43 @@ const Content = React.forwardRef((props, ref) => {
                                 }}
                             />
                         </Form.Group>
-                        <Bar data={shape.barData} />
+                        <Bar data={shape.barData}
+                            plugins={[ChartDataLabels]}
+                            options={
+                                {
+                                    responsive: true,
+                                    plugins: {
+                                        datalabels: {
+                                            anchor: "end",
+                                            align: "end",
+                                            display: function (context) {
+                                                return (context.dataIndex === shape.barData.maxIndex ||
+                                                    context.dataIndex === shape.barData.minIndex)
+                                            }
+                                        }
+                                    },
+                                    scales: {
+                                        x: {
+                                            title: {
+                                                display: true,
+                                                text: shape.barData.xAxisName
+                                            }
+                                        },
+                                        y: {
+                                            title: {
+                                                display: true,
+                                                text: shape.barData.yAxisName
+                                            },
+
+                                        },
+                                    }
+                                }
+                            } />
+                        {/* <div className='row'>
+                            <div className='col text-end'><button onClick={() => setShowMax(true)}>max</button></div>
+                            <div className='col text-start'><button>min</button></div>
+                        </div> */}
+
                     </Rnd>
                 )
             case "Pie Chart":
@@ -260,7 +333,7 @@ const Content = React.forwardRef((props, ref) => {
                                     fontWeight: shape.TextTheme.decoration["font-weight"],
                                     fontStyle: shape.TextTheme.decoration["font-style"],
                                     textDecoration: shape.TextTheme.decoration["text-decoration"],
-                                    fontSize: shape.TextTheme.size+"px",
+                                    fontSize: shape.TextTheme.size + "px",
                                 }}
                             />
                         </div>
