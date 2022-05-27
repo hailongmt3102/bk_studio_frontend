@@ -22,6 +22,8 @@ export default function ModelDetail() {
     }
     const location = useLocation()
     const [MName, setMName] = useState("")
+    const [MDescription, setMDescription] = useState("")
+
     const nav = useNavigate()
     const [rows, setRows] = useState([])
     const [columns, setColumns] = useState([])
@@ -96,7 +98,8 @@ export default function ModelDetail() {
                     input: location.state.input,
                     output: location.state.output,
                     MName: MName,
-                    Api: location.state.Api
+                    Api: location.state.Api,
+                    MDescription : MDescription
                 }
             })
         } catch (error) {
@@ -110,6 +113,7 @@ export default function ModelDetail() {
         if (location.state) {
             setMName(location.state.MName)
             setMId(location.state.MId)
+            setMDescription(location.state.MDescription ? location.state.MDescription : "")
             try {
                 parseInputModel()
                 parseOutputModel()
@@ -178,7 +182,7 @@ export default function ModelDetail() {
                 Description:
             </div>
             <Form.Group className="mb-3 ms-3" controlId="exampleForm.ControlTextarea1" >
-                <Form.Control as="textarea" rows={6} style={{ "overflow": "auto", "resize": "none" }} value="" onChange={(event) => {
+                <Form.Control as="textarea" rows={6} style={{ "overflow": "auto", "resize": "none" }} value={MDescription} onChange={(event) => {
                     // setprojectInformation({ ...projectInformation, Description: event.target.value })
                 }} />
             </Form.Group>

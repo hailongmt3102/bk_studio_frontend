@@ -36,6 +36,8 @@ export default function EditModel() {
     const [rowsOut, setRowsOut] = useState([])
     const [columnsOut, setColumnsOut] = useState([])
     const [isEditInput, setIsEditInput] = useState(true)
+    const [MDescription, setMDescription] = useState("")
+
 
     const selectDataSource = () => {
         nav("/datasources", {
@@ -43,7 +45,10 @@ export default function EditModel() {
                 ...location.state,
                 isModel: true,
                 isEditModel: true,
-                isEditInput: isEditInput
+                isEditInput: isEditInput,
+                MName: MName,
+                Api: Api,
+                MDescription : MDescription,
             }
         })
     }
@@ -55,7 +60,10 @@ export default function EditModel() {
                 ...location.state,
                 isModel: true,
                 isEditModel: true,
-                isEditInput: isEditInput
+                isEditInput: isEditInput,
+                MName: MName,
+                Api: Api,
+                MDescription : MDescription,
             }
         })
     }
@@ -155,8 +163,7 @@ export default function EditModel() {
         modifyModel(Id, {
             Name: MName,
             Api: Api,
-            Input: input,
-            output: output
+             output: output
         })
             .then(res => {
                 Store.addNotification(content("Success", "Edited", "success"))
@@ -256,6 +263,12 @@ export default function EditModel() {
                     </div>
                     <div className='col-5'></div>
                 </div>
+                <Form.Group className="mb-3 ms-3" controlId="exampleForm.ControlTextarea1" >
+                    <Form.Label className='col-2 ms-4 mt-1 customFontBold SecondFontColor size40'>Description</Form.Label>
+                    <Form.Control as="textarea" rows={6} style={{ "overflow": "auto", "resize": "none" }} value={MDescription} onChange={(event) => {
+                        setMDescription(event.target.value)
+                    }} />
+                </Form.Group>
                 <div className='row'>
                     <div className='col-2 ms-4 mt-1 customFontBold SecondFontColor size40'>
                         Test data:

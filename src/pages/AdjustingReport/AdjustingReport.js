@@ -1062,7 +1062,9 @@ export default function AdjustingReport(props) {
             </div>
             <div className=" row m-0 p-0">
                 <div className="col-2 m-0 p-0"></div>
-                <div className="col-2 rightColumn customFontBold size22">{PName}</div>
+                <div className="col-2 rightColumn customFontBold size22" onClick={() => {
+                    nav(`/pDetail/${currentProject}`)
+                }}>{PName}</div>
                 <div className="col-8 "></div>
             </div>
             <div className="row">
