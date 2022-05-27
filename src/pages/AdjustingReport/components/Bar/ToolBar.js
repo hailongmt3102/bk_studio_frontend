@@ -107,17 +107,18 @@ export default function ToolBar(props) {
                     <img src={copy} width="20px" height="20px" />
                     <p className="p-0 m-0">create a copy</p>
                 </button>
-                {/* <button
+                <button
                     className="col m-0 p-0 btn btn-sm"
                     style={{ "minWidth": "80px", "minHeight": "50px" }}
                     onClick={() => {
                         if (props.isEdit)
                             props.setAddShapeType("none")
+                        props.savePDF()
                     }}
                 >
                     <img src={save} width="20px" height="20px" />
-                    <p className="p-0 m-0">download</p>
-                </button> */}
+                    <p className="p-0 m-0">save PDF</p>
+                </button>
                 <button
                     className="col m-0 p-0 btn btn-sm"
                     style={{ "minWidth": "80px", "minHeight": "50px" }}

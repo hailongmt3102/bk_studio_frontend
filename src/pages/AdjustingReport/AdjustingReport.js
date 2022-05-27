@@ -1198,6 +1198,7 @@ export default function AdjustingReport(props) {
                             isEdit={isEdit}
                             saveACopyHandle={() => saveACopyHandle()}
                             saveATemplateHandle={() => handleOpen()}
+                            savePDF={savePDF}
                         />
 
                         <div className="content"
@@ -1219,8 +1220,6 @@ export default function AdjustingReport(props) {
                     </div>
                 </div>
             </div>
-
-            <button onClick={() => { savePDF() }}> </button>
         </div >
     }
 
