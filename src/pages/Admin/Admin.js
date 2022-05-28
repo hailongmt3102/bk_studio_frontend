@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react'
 
-import { addNewUser as addNewUserAPI, deleteUser as deleteUserAPI, checkPermission, changePosition as changePositionAPI } from 'api/Admin'
+import { addNewUser as addNewUserAPI, deleteUser as deleteUserAPI, checkPermission, changePosition as changePositionAPI, getRegisterRequest, confirmRegisterRequest, rejectRegisterRequest } from 'api/Admin'
 import { getListPeople } from 'api/People'
 import { useNavigate } from 'react-router-dom'
 import { loadingContext } from 'App';
@@ -16,6 +16,7 @@ export default function Admin() {
     const [userInfo, setUserInfo] = useState([])
     const navigation = useNavigate()
     const setIsLoading = useContext(loadingContext)
+    const [registerUsers, setRegisterUsers] = useState([])
 
     const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, index: 0 })
     const [shownewUserModel, setShowNewUserModel] = useState(false)
@@ -46,6 +47,16 @@ export default function Admin() {
         setConfirmDialog({ ...ConfirmDialog, isOpen: true, index: index })
     }
 
+    // get all user register request
+    const getRegisterUsers = async () => {
+        try {
+            let res = await getRegisterRequest()
+            setRegisterUsers(res.data)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     const getData = async () => {
         let myEmail = localStorage.getItem("email") || ""
         setIsLoading(true)
@@ -58,6 +69,7 @@ export default function Admin() {
         try {
             let userResult = await getListPeople()
             setUserInfo(userResult.data.filter(user => user.Email !== myEmail))
+            await getRegisterUsers()
             setIsLoading(false)
         } catch (error) {
             setIsLoading(false)
@@ -127,11 +139,42 @@ export default function Admin() {
         }
     }
 
+    const confirmRegister = async (index) => {
+        if (index >= registerUsers.length) {
+            return
+        }
+
+        // send api to confirm new user 
+        try {
+            await confirmRegisterRequest(registerUsers[index].Email)
+            Store.addNotification(content('Success', 'Approved', "success"))
+            setUserInfo([...userInfo, registerUsers[index]])
+            setRegisterUsers([...registerUsers.slice(0, index), ...registerUsers.slice(index + 1)])
+        } catch (error) {
+
+        }
+    }
+
+    const rejectRegister = async (index) => {
+        if (index >= registerUsers.length) {
+            return
+        }
+
+        // send api to confirm new user 
+        try {
+            await rejectRegisterRequest(registerUsers[index].Email)
+            Store.addNotification(content('Success', 'Approved', "success"))
+            setRegisterUsers([...registerUsers.slice(0, index), ...registerUsers.slice(index + 1)])
+        } catch (error) {
+
+        }
+    }
+
     useEffect(() => {
         getData()
     }, [])
     return (
-        <div style={{ height: "100vh" }}>
+        <div style={{ minHeight: "100vh" }}>
             <NewUserPopup
                 show={shownewUserModel}
                 handleClose={() => {
@@ -157,6 +200,48 @@ export default function Admin() {
                     </button>
                 </div>
             </div>
+
+            <div className='m-5 '>
+                <table class="table table-bordered text-center ">
+                    <thead>
+                        <tr className='bg-success'>
+                            <th className='col'></th>
+                            <th className='col'> <div style={{ color: "white" }}>Email</div></th>
+                            <th className='col'> <div style={{ color: "white" }}>User</div></th>
+                            <th className='col'> <div style={{ color: "white" }}>Position</div></th>
+                            <th className='col'></th>
+                            <th className='col'></th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {registerUsers.map((user, index) =>
+                            <tr style={{ backgroundColor: "white" }}>
+                                <td className='col-1 '>{index + 1}</td>
+                                <td className='col '> {user.Email}</td>
+                                <td className='col '> {user.UserName}</td>
+                                <td className='col '> {user.Position}</td>
+                                <td className='col '>
+                                    <button className='btn btn-warning'
+                                        onClick={() => {
+                                            confirmRegister(index)
+                                        }}
+                                        style={{ color: 'white' }}
+                                    >Confirm</button>
+                                </td>
+                                <td className='col '>
+                                    <button className='btn btn-danger'
+                                        onClick={() => {
+                                            rejectRegister(index)
+                                        }}
+                                    >Delete</button>
+                                </td>
+                            </tr>
+                        )}
+                    </tbody>
+                </table>
+            </div>
+
             <div className='m-5 '>
                 <table class="table table-bordered text-center ">
                     <thead>

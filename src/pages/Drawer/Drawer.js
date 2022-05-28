@@ -46,6 +46,7 @@ export default function Drawer(props) {
 				setProjectList(res.data)
 				if (cProject == null && res.data.length > 0) {
 					setProjectToWork(res.data[0].Id)
+					localStorage.setItem("currentProjectName", res.data[0].Name)
 				} else if (res.data.length == 0) {
 					setProjectToWork(-1)
 				}

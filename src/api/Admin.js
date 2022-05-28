@@ -4,6 +4,10 @@ const checkPermission = () => {
     return axiosClient.get('/admin/permission')
 }
 
+const getRegisterRequest = () => {
+    return axiosClient.get('/admin/registerReq')
+}
+
 const addNewUser = (data) => {
     return axiosClient.post('/admin/newUser', data)
 }
@@ -18,9 +22,21 @@ const changePosition = (Email, Position) => {
         Position: Position
     })
 }
+
+const confirmRegisterRequest = (Email) => {
+    return axiosClient.post('/admin/confirmRegReq', {Email: Email})
+}
+
+const rejectRegisterRequest = (Email) => {
+    return axiosClient.post('/admin/rejectRegReq',{Email: Email})
+}
+
 export {
     checkPermission,
     addNewUser,
     deleteUser,
-    changePosition
+    changePosition,
+    getRegisterRequest,
+    confirmRegisterRequest,
+    rejectRegisterRequest
 }

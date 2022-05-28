@@ -38,6 +38,7 @@ export default function ProjectListPopUp(props) {
                                             onClick={() => {
                                                 localStorage.setItem("currentProject", ele.Id)
                                                 props.setCurrentProject(ele.Id)
+                                                localStorage.setItem("currentProjectName", ele.Name)
                                             }}
                                         />
                                     }

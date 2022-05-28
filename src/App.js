@@ -79,6 +79,12 @@ function App() {
     })
 
     useEffect(() => {
+        let Email = localStorage.getItem('email')
+        let UserName = localStorage.getItem('username')
+        setCurrentUser({
+            Email: Email,
+            UserName: UserName
+        })
         const socket = socketIOClient.connect(process.env.REACT_APP_BASE_URL || "http://localhost:3000")
         setSocket(socket)
     }, [])
