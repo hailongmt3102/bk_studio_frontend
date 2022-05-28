@@ -102,7 +102,8 @@ export default function ReportCard(props) {
             deleteReport(currentProject, RId)
                 .then(res => {
                     Store.addNotification(content("Success", "Deleted Report", "success"))
-                    setTimeout(() => window.location.reload(), 1000);
+                    props.deleteAReport()
+                    handleCloseNo()
                 })
                 .catch(err => {
                     Store.addNotification(content("Fail", err.response.data, "danger"))
@@ -113,7 +114,7 @@ export default function ReportCard(props) {
             deleteTemplate(RId)
                 .then(res => {
                     Store.addNotification(content("Success", "Deleted Template", "success"))
-                    setTimeout(() => window.location.reload(), 1000);
+                    props.deleteAReport()
                 })
                 .catch(err => {
                     Store.addNotification(content("Fail", err.response.data, "danger"))
@@ -242,13 +243,13 @@ export default function ReportCard(props) {
     }
     const NavigationHandle = async (Id) => {
         try {
-            let permission = (await getPermission(props.data.PId, props.data.RId)).data
+            let permission = (await getPermission(props.data.PId, Id)).data
             if (permission == 'Edit') {
                 nav(`${Id}/edit`, {
                     state: {
                         PId: props.data.PId,
                         Type: props.data.Type,
-                        RId: props.data.RId,
+                        RId: props.data.Id,
                         Permission: permission,
                     }
                 })
@@ -258,7 +259,7 @@ export default function ReportCard(props) {
                     state: {
                         PId: props.data.PId,
                         Type: props.data.Type,
-                        RId: props.data.RId,
+                        RId: props.data.Id,
                         Permission: permission,
                     }
                 })

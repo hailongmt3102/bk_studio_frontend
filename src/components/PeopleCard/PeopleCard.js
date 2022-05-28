@@ -28,7 +28,7 @@ export default function PeopleCard(props) {
     const handleOpen = () => {
         setConfirmDialog({ ...ConfirmDialog, isOpen: true })
     }
-    const option_list = ["Edit role", "Delete People"]
+    const option_list = ["Edit permissions", "Delete People"]
 
 
 
@@ -54,7 +54,7 @@ export default function PeopleCard(props) {
         return <div>
             {!props.isManager ? <div >
                 {props.showThreeDotButton ? <ThreeDotButton title={'adđ'} items={option_list} icons_list={icons_list} icon={three_dot} onClick={(val) => {
-                    if (val === "Edit role") {
+                    if (val === "Edit permissions") {
                         if (props.peopleCanEditRoleList === true) {
                             props.getEmail()
                             props.setshowRolePopUp();
