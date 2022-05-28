@@ -929,7 +929,7 @@ export default function AdjustingReport(props) {
                 RID = RID[0]
 
 
-                let rInfo =( await getReportInfoWithoutProjectId(RID)).data
+                let rInfo = (await getReportInfoWithoutProjectId(RID)).data
                 getAllData(rInfo.PId, rInfo.Id, rInfo.Type == "Template")
 
                 setRId(rInfo.Id)
@@ -937,7 +937,7 @@ export default function AdjustingReport(props) {
                 setIsTemplate(rInfo.Type == "Template")
                 setIsEdit(rInfo.Type == "Template" ? false : rInfo.isEdit)
             } catch (error) {
-                console.log("asdfhaklsdfjklasdfjlkasdfjakldsf",error)
+                console.log("asdfhaklsdfjklasdfjlkasdfjakldsf", error)
                 nav('/project/gallery/')
             }
             return

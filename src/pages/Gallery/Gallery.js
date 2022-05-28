@@ -41,8 +41,9 @@ export default function Gallery(props) {
 
     return (
         <div>
+            <h5 className='ms-4 mt-2 size22 customFontBold'>{localStorage.getItem("currentProjectName") ? localStorage.getItem("currentProjectName") + ":" : ""}</h5>
             <h2 class="ms-4 mt-2 PrimaryFontColor" style={{ "fontWeight": "bold", fontSize: "40px" }}>
-                {localStorage.getItem("currentProjectName") ? localStorage.getItem("currentProjectName") + "- " : ""}{localization.gallery}:
+                {localization.gallery}
             </h2>
 
             <div className='row m-0 p-0 pb-5 justify-content-center customforeground'>
