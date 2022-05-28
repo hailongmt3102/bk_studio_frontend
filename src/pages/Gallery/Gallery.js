@@ -33,6 +33,10 @@ export default function Gallery(props) {
         }
     }, [])
 
+    const deleteAReport = (index) => {
+        setReports([...reports.slice(0, index), ...reports.slice(index + 1)])
+    }
+
 
 
     return (
@@ -42,10 +46,16 @@ export default function Gallery(props) {
             </h2>
 
             <div className='row m-0 p-0 pb-5 justify-content-center customforeground'>
-                {reports.map(ele =>
+                {reports.map((ele, index) =>
                     <div className='col m-0 p-0' style={{ "minWidth": "600px", "maxWidth": "600px" }} >
                         <div className='ms-4 mt-5 pe-4'>
-                            <ReportCard data={ele} type="Report" />
+                            <ReportCard
+                                data={ele}
+                                type="Report"
+                                deleteAReport={() => {
+                                    deleteAReport(index)
+                                }}
+                            />
                         </div>
                     </div>
                 )}
