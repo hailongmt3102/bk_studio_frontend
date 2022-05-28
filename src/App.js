@@ -133,7 +133,7 @@ function App() {
                                         />
 
                                         <Route path="/people" element={<People />} />
-                                        <Route path="/account/login" element={<Login />} />
+                                        <Route path="/account/login" element={<Login setCurrentUser={setCurrentUser}/>} />
 
                                         <Route path="/account/forgetPassword" element={<ForgetPassword />} />
                                         <Route path="/account/register" element={<Register />} />
