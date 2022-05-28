@@ -961,7 +961,6 @@ export default function AdjustingReport(props) {
 
                 let rInfo = (await getReportInfoWithoutProjectId(RID)).data
                 getAllData(rInfo.PId, rInfo.Id, rInfo.Type == "Template")
-
                 setRId(rInfo.Id)
                 setCurrentProject(rInfo.PId)
                 setIsTemplate(rInfo.Type == "Template")
@@ -978,6 +977,7 @@ export default function AdjustingReport(props) {
             setIsTemplate(location.state.Type == "Template")
             setIsEdit(location.state.Permission == "Edit" && location.state.Type != "Template")
         }
+        console.log(location.state)
         getAllData(location.state.PId, location.state.RId, location.state.Type == "Template")
 
         var keydown = document.addEventListener("keydown", _handleKeyDown);
@@ -988,7 +988,7 @@ export default function AdjustingReport(props) {
 
     useEffect(() => {
         getData()
-    }, [])
+    }, [location.pathname])
 
     // trigger on change of tabData
     // useEffect(() => {
@@ -1035,11 +1035,8 @@ export default function AdjustingReport(props) {
     const switchToViewMode = () => {
         nav('/project/gallery/' + RId + '/view', {
             state: {
-                PId: location.state.PId,
-                Type: location.state.Type,
-                RId: location.state.RID,
+                ...location.state,
                 Permission: "View",
-                PName: PName
             }
         })
     }

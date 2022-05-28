@@ -56,7 +56,7 @@ export default function RolePopUp(props) {
                 props.handleClose()
             })
             .catch(error => {
-                Store.addNotification(content("Fail", error.data, "danger"))
+                Store.addNotification(content("Fail", error.response.data, "danger"))
                 props.handleClose()
             })
     }
