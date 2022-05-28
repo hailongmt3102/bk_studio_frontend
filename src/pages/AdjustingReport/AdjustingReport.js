@@ -41,10 +41,11 @@ export default function AdjustingReport(props) {
 
     // console.log("path", reportLink)
 
-    const RId = location.state.RId
-    const currentProject = location.state.PId
-    const isTemplate = location.state.Type == "Template"
-    const isEdit = location.state.Permission == "Edit" && !isTemplate
+    const [RId, setRId] = useState(0)
+    const [currentProject, setCurrentProject] = useState(0)
+    const [isTemplate, setIsTemplate] = useState(false)
+    const [isEdit, setIsEdit] = useState(false)
+
 
     const nav = useNavigate()
     const contentWrappingBox = useRef(null)
@@ -303,7 +304,7 @@ export default function AdjustingReport(props) {
     }
 
     // ** get all shape from server
-    const fetchAllShapesFromServer = async () => {
+    const fetchAllShapesFromServer = async (currentProject,RId,  isTemplate) => {
         let colorIndex = currentColorIndex;
         if (currentProject == null) return
         try {
@@ -492,8 +493,8 @@ export default function AdjustingReport(props) {
     }
 
     // ** combine all function relative to getting content of report
-    const getReportContent = async () => {
-        let res = await fetchAllShapesFromServer()
+    const getReportContent = async (PId, RId, isTemplate) => {
+        let res = await fetchAllShapesFromServer(PId, RId, isTemplate)
         setShapeComponent(res)
         // console.log(res)
     }
@@ -865,11 +866,11 @@ export default function AdjustingReport(props) {
     }, [keydown])
 
     const [PName, setPName] = useState("")
-    const getAllData = async () => {
+    const getAllData = async ( currentProject, RId, isTemplate) => {
         setIsLoading(true)
         getReportInfo()
         getDataFields()
-        await getReportContent()
+        await getReportContent(currentProject, RId, isTemplate)
         getInformationByPId(currentProject)
             .then(res => {
                 setPName(res.data.Name)
@@ -911,7 +912,21 @@ export default function AdjustingReport(props) {
 
 
     useEffect(() => {
-        getAllData()
+        //check state
+
+        if (location.state == null) {
+            // state is nul
+            // let get some parameter to render this report in view mode
+            
+            return
+        }
+        else {
+            setRId(location.state.RId)
+            setCurrentProject(location.state.PId)
+            setIsTemplate(location.state.Type == "Template")
+            setIsEdit(location.state.Permission == "Edit" && !isTemplate)
+        }
+        getAllData(location.state.PId, location.state.RId, location.state.Type == "Template")
 
         var keydown = document.addEventListener("keydown", _handleKeyDown);
         return () => {
@@ -1089,9 +1104,13 @@ export default function AdjustingReport(props) {
             </div>
             <div className=" row m-0 p-0">
                 <div className="col-2 m-0 p-0"></div>
-                <div className="col-2 rightColumn customFontBold size22" onClick={() => {
-                    nav(`/pDetail/${currentProject}`)
-                }}>{PName}</div>
+                <div className="col-2 rightColumn customFontBold size22"
+                // onClick={() => {
+                //     nav(`/pDetail/${currentProject}`)
+                // }}
+                >
+                    {localStorage.getItem("currentProjectName") ? localStorage.getItem("currentProjectName") + ": " : ""}
+                </div>
                 <div className="col-8 "></div>
             </div>
             <div className="row">
@@ -1259,7 +1278,10 @@ export default function AdjustingReport(props) {
         return <div>
             <div className="row">
                 <div className=" row ">
-                    <div className="col-2 rightColumn customFontBold size22 "><div className="ms-3">{location.state.PName}</div></div>
+                    <div className="col-2 rightColumn customFontBold size22 ">
+                        <div className="ms-3">{localStorage.getItem("currentProjectName") ? localStorage.getItem("currentProjectName") + ": " : ""}
+                        </div>
+                    </div>
                     <div className="col-10 "></div>
                 </div>
                 <div className="leftColumn p-3">
@@ -1330,7 +1352,7 @@ export default function AdjustingReport(props) {
                                 </div>
                                 <div className="row mt-4">
                                     <div className="col PrimaryFontColor size16 customFontBold">Last Modified:</div>
-                                    <div className="col">{reportInformation.LastModified.substring(0, 10)} </div>
+                                    <div className="col">{ reportInformation.LastModified ? reportInformation.LastModified.substring(0, 10) : ""} </div>
                                 </div>
                             </div>
                         </div>

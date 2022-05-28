@@ -77,7 +77,7 @@ export default function EditData(props) {
             <div>
                 <div className='row'>
                     <h2 className='m-3 col PrimaryFontColor size40 customFontBold '>
-                        Review data source
+                        {localStorage.getItem("currentProjectName") ? localStorage.getItem("currentProjectName") + "- " : ""}Review data source
                     </h2>
                     <div className='col mt-3  text-end'>
                         <button className='btn btn-success me-3 p-2' onClick={() => { props.submit(props.fileInformation.name, columnProperties) }}>

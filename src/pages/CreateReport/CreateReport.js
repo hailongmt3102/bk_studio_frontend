@@ -54,7 +54,7 @@ export default function CreateReport() {
         <div>
             <div className='m-2 mt-4 mb-4'>
                 <h2 class="ms-4 mt-1 customFontBold PrimaryFontColor size40" >
-                    Create a report
+                    {localStorage.getItem("currentProjectName") ?  localStorage.getItem("currentProjectName") + ": " : ""}Create a report
                 </h2>
             </div>
             <div className='customforeground p-3'>
