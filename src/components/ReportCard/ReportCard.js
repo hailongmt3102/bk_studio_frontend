@@ -283,6 +283,7 @@ export default function ReportCard(props) {
     return (
         <div>
             <ShareWithPopUp
+                author={props.data.Author}
                 type={props.type}
                 currentProject={currentProject}
                 RId={RId}

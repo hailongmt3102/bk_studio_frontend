@@ -34,6 +34,10 @@ const updateAvatar = (data) => {
     return axiosClient.post("/upload/upload-images", form)
 }
 
+const Verify = (data) => {
+    return axiosClient.post("/account/verify/new", data)
+}
+
 export {
     LoginApi,
     RegisterApi,
@@ -43,5 +47,6 @@ export {
     GetInformationApi,
     SetNewPasswordAPI,
     updateInformation,
-    updateAvatar
+    updateAvatar,
+    Verify
 }

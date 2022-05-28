@@ -34,7 +34,7 @@ export default function ShareWithPopUp(props) {
     useEffect(() => {
         getSharedListPeople(props.currentProject, props.RId)
             .then(res => {
-                setListSharedPeople(res.data)
+                setListSharedPeople(res.data.filter(shareInfo => shareInfo.Email !== props.author))
                 setListSharedName(res.data.map((e) => e.Email))
                 //console.log("list share", res.data)
                 //console.log("list share", res.data.map((e) => e.Email))
@@ -134,7 +134,7 @@ export default function ShareWithPopUp(props) {
             props.handleClose()
 
         } catch (err) {
-            Store.addNotification(content("Fail", err, "danger"))
+            Store.addNotification(content("Fail", err.response.data, "danger"))
 
         }
     }

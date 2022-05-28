@@ -1,5 +1,5 @@
 import { getColumnsOfTable, GetDataSourcesListInformationInProject, QueryData as QueryDataApi } from "api/DataSources";
-import { createNewComponent as createNewComponentApi, createNewReport, deleteReport, deleteShape as deleteShapeApi, getAllComponent, getAllDatasourceNameInReport, getReportInformation, saveAsCopy, saveAsTemplate, updateAComponent, updateReportInformation } from 'api/Report';
+import { createNewComponent as createNewComponentApi, createNewReport, deleteReport, deleteShape as deleteShapeApi, getAllComponent, getAllDatasourceNameInReport, getReportInformation, saveAsCopy, saveAsTemplate, updateAComponent, updateReportInformation, getReportInfoWithoutProjectId } from 'api/Report';
 import { createAReportByTemplate, deleteTemplate, getAllDatasourceNameInTemplate } from "api/Templates";
 import TabComponent from "pages/AdjustingReport/components/tabComponent/TabComponent";
 import { useContext, useEffect, useRef, useState } from "react";
@@ -29,7 +29,7 @@ import jsPDF from "jspdf";
 
 
 // declare some chart type of this app 
-const shapeTypes = ["Table", "Pie Chart", "Doughnut Chart", "Line Chart", "Bar Chart"]
+const shapeTypes = ["Table", "Pie Chart", "Doughnut Chart", "Line Chart", "Bar Chart", "Scatter Chart"]
 
 export default function AdjustingReport(props) {
     const setIsLoading = useContext(loadingContext)
@@ -140,7 +140,7 @@ export default function AdjustingReport(props) {
     // ** ---------------------------------------------------------------------------------------------
     // ** some function get info of this report
     // ** get report information
-    const getReportInfo = async () => {
+    const getReportInfo = async (currentProject, RId, isTemplate) => {
         try {
             let res = await getReportInformation(currentProject, RId, isTemplate)
             setReportInformation(res.data)
@@ -151,7 +151,7 @@ export default function AdjustingReport(props) {
     }
 
     // ** get data source fields of this report
-    const getDataFields = async () => {
+    const getDataFields = async (currentProject) => {
         try {
             let dataSourceList = await GetDataSourcesListInformationInProject({
                 PId: currentProject
@@ -304,7 +304,7 @@ export default function AdjustingReport(props) {
     }
 
     // ** get all shape from server
-    const fetchAllShapesFromServer = async (currentProject,RId,  isTemplate) => {
+    const fetchAllShapesFromServer = async (currentProject, RId, isTemplate) => {
         let colorIndex = currentColorIndex;
         if (currentProject == null) return
         try {
@@ -453,6 +453,36 @@ export default function AdjustingReport(props) {
                 }
                 currentIndexOfShapeColor += keys.length + 1
                 break;
+            case "Scatter Chart":
+                if (queryResult.data.length == 0) return
+                keys = Object.keys(queryResult.data[0])
+                if (keys.length == 0) return
+
+                // convert data to array
+                arrayData = {}
+                keys.map(key => arrayData[key] = [])
+
+                queryResult.data.map(row => {
+                    keys.map((key, index) => index == 0 ? arrayData[key].push(row[key]) : arrayData[key].push(parseInt(row[key])))
+                })
+                result.lineData = {
+                    labels: arrayData[keys[0]],
+                    xAxisName: keys.length > 0 ? keys[0] : "",
+                    yAxisName: keys.slice(1),
+                    maxIndex: arrayData[keys[1]].indexOf(Math.max(...arrayData[keys[1]])),
+                    minIndex: arrayData[keys[1]].indexOf(Math.min(...arrayData[keys[1]])),
+                    datasets: keys.slice(1).map((key, index) => {
+                        return {
+                            label: key,
+                            data: arrayData[key],
+                            fill: true,
+                            backgroundColor: shapeBackgroundColors[(index + currentIndexOfShapeColor) % shapeBackgroundColors.length],
+                            borderColor: shapeBorderColors[(index + currentIndexOfShapeColor) % shapeBorderColors.length]
+                        }
+                    })
+                }
+                currentIndexOfShapeColor += keys.length + 1
+                break;
             case "Bar Chart":
                 if (queryResult.data.length == 0) return
                 keys = Object.keys(queryResult.data[0])
@@ -495,6 +525,7 @@ export default function AdjustingReport(props) {
     // ** combine all function relative to getting content of report
     const getReportContent = async (PId, RId, isTemplate) => {
         let res = await fetchAllShapesFromServer(PId, RId, isTemplate)
+        console.log(res)
         setShapeComponent(res)
         // console.log(res)
     }
@@ -866,10 +897,11 @@ export default function AdjustingReport(props) {
     }, [keydown])
 
     const [PName, setPName] = useState("")
-    const getAllData = async ( currentProject, RId, isTemplate) => {
+    const getAllData = async (currentProject, RId, isTemplate) => {
+        console.log("asjdfjaklsdf", currentProject, RId, isTemplate)
         setIsLoading(true)
-        getReportInfo()
-        getDataFields()
+        getReportInfo(currentProject, RId, isTemplate)
+        getDataFields(currentProject)
         await getReportContent(currentProject, RId, isTemplate)
         getInformationByPId(currentProject)
             .then(res => {
@@ -911,28 +943,52 @@ export default function AdjustingReport(props) {
     }
 
 
-    useEffect(() => {
+    const getData = async () => {
         //check state
 
         if (location.state == null) {
             // state is nul
             // let get some parameter to render this report in view mode
-            
+            try {
+                let RID = /\d+/.exec(location.pathname)
+                if (!RID) {
+                    nav('/project/gallery/')
+                    return
+                }
+
+                RID = RID[0]
+
+
+                let rInfo = (await getReportInfoWithoutProjectId(RID)).data
+                getAllData(rInfo.PId, rInfo.Id, rInfo.Type == "Template")
+                setRId(rInfo.Id)
+                setCurrentProject(rInfo.PId)
+                setIsTemplate(rInfo.Type == "Template")
+                setIsEdit(rInfo.Type == "Template" ? false : rInfo.isEdit)
+            } catch (error) {
+                console.log("asdfhaklsdfjklasdfjlkasdfjakldsf", error)
+                nav('/project/gallery/')
+            }
             return
         }
         else {
             setRId(location.state.RId)
             setCurrentProject(location.state.PId)
             setIsTemplate(location.state.Type == "Template")
-            setIsEdit(location.state.Permission == "Edit" && !isTemplate)
+            setIsEdit(location.state.Permission == "Edit" && location.state.Type != "Template")
         }
+        console.log(location.state)
         getAllData(location.state.PId, location.state.RId, location.state.Type == "Template")
 
         var keydown = document.addEventListener("keydown", _handleKeyDown);
         return () => {
             document.removeEventListener("keydown", keydown)
         }
-    }, [])
+    }
+
+    useEffect(() => {
+        getData()
+    }, [location.pathname])
 
     // trigger on change of tabData
     // useEffect(() => {
@@ -979,11 +1035,8 @@ export default function AdjustingReport(props) {
     const switchToViewMode = () => {
         nav('/project/gallery/' + RId + '/view', {
             state: {
-                PId: location.state.PId,
-                Type: location.state.Type,
-                RId: location.state.RID,
+                ...location.state,
                 Permission: "View",
-                PName: PName
             }
         })
     }
@@ -1352,7 +1405,7 @@ export default function AdjustingReport(props) {
                                 </div>
                                 <div className="row mt-4">
                                     <div className="col PrimaryFontColor size16 customFontBold">Last Modified:</div>
-                                    <div className="col">{ reportInformation.LastModified ? reportInformation.LastModified.substring(0, 10) : ""} </div>
+                                    <div className="col">{reportInformation.LastModified ? reportInformation.LastModified.substring(0, 10) : ""} </div>
                                 </div>
                             </div>
                         </div>
