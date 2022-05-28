@@ -29,7 +29,7 @@ import jsPDF from "jspdf";
 
 
 // declare some chart type of this app 
-const shapeTypes = ["Table", "Pie Chart", "Doughnut Chart", "Line Chart", "Bar Chart"]
+const shapeTypes = ["Table", "Pie Chart", "Doughnut Chart", "Line Chart", "Bar Chart", "Scatter Chart"]
 
 export default function AdjustingReport(props) {
     const setIsLoading = useContext(loadingContext)
@@ -424,6 +424,36 @@ export default function AdjustingReport(props) {
                 result.doughnutData = doughnutData
                 break
             case "Line Chart":
+                if (queryResult.data.length == 0) return
+                keys = Object.keys(queryResult.data[0])
+                if (keys.length == 0) return
+
+                // convert data to array
+                arrayData = {}
+                keys.map(key => arrayData[key] = [])
+
+                queryResult.data.map(row => {
+                    keys.map((key, index) => index == 0 ? arrayData[key].push(row[key]) : arrayData[key].push(parseInt(row[key])))
+                })
+                result.lineData = {
+                    labels: arrayData[keys[0]],
+                    xAxisName: keys.length > 0 ? keys[0] : "",
+                    yAxisName: keys.slice(1),
+                    maxIndex: arrayData[keys[1]].indexOf(Math.max(...arrayData[keys[1]])),
+                    minIndex: arrayData[keys[1]].indexOf(Math.min(...arrayData[keys[1]])),
+                    datasets: keys.slice(1).map((key, index) => {
+                        return {
+                            label: key,
+                            data: arrayData[key],
+                            fill: true,
+                            backgroundColor: shapeBackgroundColors[(index + currentIndexOfShapeColor) % shapeBackgroundColors.length],
+                            borderColor: shapeBorderColors[(index + currentIndexOfShapeColor) % shapeBorderColors.length]
+                        }
+                    })
+                }
+                currentIndexOfShapeColor += keys.length + 1
+                break;
+            case "Scatter Chart":
                 if (queryResult.data.length == 0) return
                 keys = Object.keys(queryResult.data[0])
                 if (keys.length == 0) return
