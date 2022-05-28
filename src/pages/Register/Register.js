@@ -14,7 +14,7 @@ import { Link } from "react-router-dom";
 import { getListCompanies } from "api/ListCompanies"
 import NoIconDropDownButton from "../../components/NoIconDropDownButton"
 import "@fontsource/poppins";
-
+import ConfirmDialog from "components/ConfirmDialog";
 
 import { Store } from 'react-notifications-component'
 import { content } from "../../utils/notification"
@@ -66,9 +66,14 @@ export default function Register() {
 
         return (false)
     }
-
+    const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: '', subTitle: '' })
     const onSubmitHandler = () => {
+
         console.log("gui", information);
+        if ([information.Email.length, information.Password.length].includes(0)) {
+            Store.addNotification(content("Warning", "Please fill in email or password", "warning"))
+            return
+        }
         if (!ValidateEmail(information.Email)) {
             Store.addNotification(content("Warning", "You have entered an invalid email address!", "warning"))
             return
@@ -82,10 +87,16 @@ export default function Register() {
             return
 
         }
+        if (information.Company === "" && newCompany) {
+            Store.addNotification(content("Warning", "Please fill in your company name", "warning"))
+            return
+        }
         RegisterApi(information)
             .then((res) => {
-                Store.addNotification(content("Success", "Registered and Please verify account from us email", "success"))
-                // navigate("/account/login")
+                setConfirmDialog({ ...confirmDialog, isOpen: true })
+                // Store.addNotification(content("Success", "Registered and Please verify account from us email", "success"))
+
+
             })
             .catch((e) => {
                 Store.addNotification(content("Fail", e.response.data, "danger"))
@@ -93,9 +104,21 @@ export default function Register() {
             })
 
     }
+    const handleCloseNo = () => {
+        setConfirmDialog({ ...ConfirmDialog, isOpen: false })
+        navigate("/account/login")
+    }
     return (
         <section class="vh-100" style={{ backgroundColor: "#fff" }}>
-
+            <ConfirmDialog
+                haveOK={true}
+                haveContent={true}
+                content={"To complete the signup proccess, please check your mail " + `(${information.Email})` + " and click on the provided activation link"}
+                confirmDialog={confirmDialog}
+                title="Account successfully created ?"
+                // handleCloseYes={() => handleCloseYes()}
+                handleCloseNo={() => handleCloseNo()}
+            />
             <div class="container h-100 ">
                 <div class="row justify-content-center align-items-center h-100">
                     <div class="">
@@ -357,7 +380,7 @@ export default function Register() {
 
                                                 </div>
                                             }
-                                            <div class="d-grid gap-2  mt-2">
+                                            <div class="d-grid gap-2  mt-4">
                                                 <button class="btn btn-primary p-2" type="button" style={{ backgroundColor: "#034078", borderRadius: "25px " }} onClick={onSubmitHandler}>Register</button>
 
                                             </div>

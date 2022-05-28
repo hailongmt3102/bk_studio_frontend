@@ -8,8 +8,8 @@ import { useEffect, useState, useContext } from 'react'
 import { Store } from 'react-notifications-component'
 import { useDemoData } from "@mui/x-data-grid-generator";
 import { getDataSourcesInformationByDId, showDataSourceContent } from "api/DataSources"
-import {modifyModel, canModifyModel } from "api/ML_API"
-
+import { modifyModel, canModifyModel } from "api/ML_API"
+import { Form } from 'react-bootstrap';
 import { loadingContext } from 'App'
 export default function ModelDetail() {
 
@@ -22,6 +22,8 @@ export default function ModelDetail() {
     }
     const location = useLocation()
     const [MName, setMName] = useState("")
+    const [MDescription, setMDescription] = useState("")
+
     const nav = useNavigate()
     const [rows, setRows] = useState([])
     const [columns, setColumns] = useState([])
@@ -96,12 +98,13 @@ export default function ModelDetail() {
                     input: location.state.input,
                     output: location.state.output,
                     MName: MName,
-                    Api: location.state.Api
+                    Api: location.state.Api,
+                    MDescription : MDescription
                 }
             })
         } catch (error) {
             Store.addNotification(content("Warning", error.response.data, "danger"))
-            
+
         }
         setIsLoading(false)
     }
@@ -110,6 +113,7 @@ export default function ModelDetail() {
         if (location.state) {
             setMName(location.state.MName)
             setMId(location.state.MId)
+            setMDescription(location.state.MDescription ? location.state.MDescription : "")
             try {
                 parseInputModel()
                 parseOutputModel()
@@ -160,7 +164,7 @@ export default function ModelDetail() {
                                         rows: rows,
                                         columns: columns,
                                         MName: MName,
-                                        Api : location.state.Api
+                                        Api: location.state.Api
                                     }
                                 })
                             }
@@ -174,6 +178,14 @@ export default function ModelDetail() {
                     </button>
                 </div>
             </div>
+            <div className='ms-4 mt-1 customFontBold SecondFontColor size40'>
+                Description:
+            </div>
+            <Form.Group className="mb-3 ms-3" controlId="exampleForm.ControlTextarea1" >
+                <Form.Control as="textarea" rows={6} style={{ "overflow": "auto", "resize": "none" }} value={MDescription} onChange={(event) => {
+                    // setprojectInformation({ ...projectInformation, Description: event.target.value })
+                }} />
+            </Form.Group>
             <div className='bg-white p-3'>
                 <div className='col ms-4 mt-1 customFontBold SecondFontColor size40'>
                     Test data:

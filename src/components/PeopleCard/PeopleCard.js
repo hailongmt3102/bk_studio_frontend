@@ -178,11 +178,11 @@ export default function PeopleCard(props) {
 
     const ContentComponent = () => {
         return <div className='ms-4 mb-4'>
-            <h2 className='ms-2 customFontRoboto size30 customFontBold' >
-                {props.name.substring(0, 12)}
+            <h2 className='ms-2 customFontRoboto size28 customFontBold' >
+                {props.name.length > 12 ? props.name.substring(0, 12) + "..." : props.name}
             </h2>
             <div className='ms-2  customFontRoboto' >
-                Email: {props.email.substring(0, 18) + "..."}
+                Email: {props.email.length > 18 ? props.email.substring(0, 18) + "..." : props.email}
             </div>
             <div className='ms-2  customFontRoboto' >
                 Rank: {props.rank}

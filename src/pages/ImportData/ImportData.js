@@ -64,7 +64,7 @@ export default function ImportData() {
                 }
             }
         } catch (error) {
-
+            console.log("Loi")
         }
     }, [dataFile])
 

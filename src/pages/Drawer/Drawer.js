@@ -31,12 +31,15 @@ export default function Drawer(props) {
 	useEffect(() => {
 		let cProject = localStorage.getItem("currentProject")
 		if (cProject != null) setCurrentProject(cProject)
+		if (props.currentUser.Email === "" || props.currentUser.UserName === "") return
 
 		checkAdminPermissionAPI()
 			.then(res => {
 				setIsAdmin(true)
 			})
-			.catch(err => { })
+			.catch(err => {
+				setIsAdmin(false)
+			 })
 		// get all project
 		getListProject()
 			.then(res => {
@@ -49,7 +52,7 @@ export default function Drawer(props) {
 			})
 			.catch(err => {
 			})
-	}, [localStorage.getItem("username")])
+	}, [props.currentUser])
 
 	useEffect(() => {
 		// this function call when the url changed

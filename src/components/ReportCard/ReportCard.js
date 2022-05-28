@@ -307,18 +307,21 @@ export default function ReportCard(props) {
                 </div>
                 <div className='col-7  m-0 p-0'>
                     <div class="d-flex flex-row-reverse me-3">
-                        <button type="button" class="btn btn-sm" onClick={() => {
-                            if (heart == false) {
-                                likeSubmit()
-                            }
-                            else {
-                                unlikeSubmit()
-                            }
-                        }}>
+                        <button type="button" class="btn btn-sm"
+                            style={{ "box-shadow": "none", "outline": "none" }}
+                            onClick={() => {
+                                if (heart == false) {
+                                    likeSubmit()
+                                }
+                                else {
+                                    unlikeSubmit()
+                                }
+                            }}>
                             <img src={heart == false ? heart_img : hearted} height="20px" width="20px" />
                         </button>
-                        <div>
+                        <div >
                             <ThreeDotButton
+
                                 title={'adđ'}
                                 items={option_list}
                                 icons_list={icons_list}

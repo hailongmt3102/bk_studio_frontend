@@ -41,6 +41,7 @@ export default function ModelCard(props) {
                                 output: props.info.Output,
                                 MName: props.info.Name,
                                 Api: props.info.Api,
+                                MDescription: props.info.Token
                             }
                         })
                     }} height="120px" width="120px" />

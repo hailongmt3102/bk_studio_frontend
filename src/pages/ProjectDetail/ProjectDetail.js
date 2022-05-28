@@ -207,7 +207,7 @@ export default function ProjectDetail() {
                             <div class="p-2 col-1"> {
                                 peopleInProject.map((ele, index) => {
                                     if (ele.Email === getEmail) {
-                                        if (ele.Position !== "Manager") return null
+                                        if (ele.Position !== "Manager" && ele.Position !== "Admin") return null
                                         else {
                                             return <PeopleCard
                                                 Status={passStatus(ele.Email)}
@@ -216,7 +216,7 @@ export default function ProjectDetail() {
                                                 email={ele.Email}
                                                 avatar={ele.Avatar}
                                                 rank={ele.RankAccount}
-                                                birthday={ele.Birthday.substring(0, 10).split('-').reverse().join('-')}
+                                                // birthday={ele.Birthday.substring(0, 10).split('-').reverse().join('-')}
                                                 gender={ele.Gender}
                                                 isManager={true}
                                                 showThreeDotButton={false}
@@ -228,7 +228,7 @@ export default function ProjectDetail() {
                                         }
                                     }
                                     else {
-                                        if (ele.Position !== "Manager") return null
+                                        if (ele.Position !== "Manager" && ele.Position !== "Admin") return null
                                         return <div class="col"> <PeopleCard
                                             Status={passStatus(ele.Email)}
                                             position={ele.Position}
@@ -236,7 +236,7 @@ export default function ProjectDetail() {
                                             email={ele.Email}
                                             avatar={ele.Avatar}
                                             rank={ele.RankAccount}
-                                            birthday={ele.Birthday.substring(0, 10).split('-').reverse().join('-')}
+                                            // birthday={ele.Birthday.substring(0, 10).split('-').reverse().join('-')}
                                             gender={ele.Gender}
                                             isManager={true}
                                             showThreeDotButton={false}
@@ -270,7 +270,7 @@ export default function ProjectDetail() {
                                                 email={ele.Email}
                                                 avatar={ele.Avatar}
                                                 rank={ele.RankAccount}
-                                                birthday={ele.Birthday.substring(0, 10).split('-').reverse().join('-')}
+                                                // birthday={ele.Birthday.substring(0, 10).split('-').reverse().join('-')}
                                                 gender={ele.Gender}
                                                 isManager={false}
                                                 showThreeDotButton={true}
@@ -295,7 +295,7 @@ export default function ProjectDetail() {
                                                 email={ele.Email}
                                                 avatar={ele.Avatar}
                                                 rank={ele.RankAccount}
-                                                birthday={ele.Birthday.substring(0, 10).split('-').reverse().join('-')}
+                                                // birthday={ele.Birthday.substring(0, 10).split('-').reverse().join('-')}
                                                 gender={ele.Gender}
                                                 isManager={false}
                                                 showThreeDotButton={true}

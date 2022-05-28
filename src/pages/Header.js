@@ -14,7 +14,7 @@ import { GetInformationApi } from "api/Account"
 import Badge from "@mui/material/Badge";
 
 
-export default function Header() {
+export default function Header(props) {
     var url = useLocation().pathname
     const [visible, setVisible] = useState(true)
     var nav = useNavigate()
@@ -31,21 +31,26 @@ export default function Header() {
     const logout = () => {
         localStorage.removeItem("token")
         localStorage.removeItem("username")
+        props.setCurrentUser({
+            Email: "",
+            UserName: "",
+        })
         nav('account/login')
     }
     const [searchContent, setSearchContent] = useState("")
 
     useEffect(() => {
+        if (props.currentUser.UserName === "") return
         GetInformationApi()
             .then(response => {
-                console.log(response.data)
                 setinformation(response.data)
             })
             .catch(
                 error => {
                 }
             )
-    }, [])
+    }, [props.currentUser])
+
     const [information, setinformation] = useState({
         Email: "",
         LastLoginTime: null,
@@ -150,13 +155,13 @@ export default function Header() {
                                 }
                             />
                         </div>
-                        <div className='col-2 m-0 p-0 m-auto'>
+                        {/* <div className='col-2 m-0 p-0 m-auto'>
                             <div className='me-5'>
                                 <Badge color="error" overlap="circular" badgeContent=" 12">
                                     <Avatar src={bell} sx={{ width: 35, height: 35 }} />
                                 </Badge>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
 

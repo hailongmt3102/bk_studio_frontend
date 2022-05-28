@@ -36,6 +36,9 @@ export default function Admin() {
             handleCloseNo()
         }
     }
+
+
+
     const handleCloseNo = () => {
         setConfirmDialog({ ...ConfirmDialog, isOpen: false })
     }
@@ -67,13 +70,39 @@ export default function Admin() {
     }
 
     // ------------------------------
+
+    function ValidateEmail(mail) {
+        if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail)) {
+            return (true)
+        }
+
+        return (false)
+    }
+
+
+
     const addNewUser = async (data) => {
         console.log(data)
+        if ([data.Email.length, data.Password.length].includes(0)) {
+            Store.addNotification(content("Warning", "Please fill in email or password", "warning"))
+            return
+        }
+        if (!ValidateEmail(data.Email)) {
+            Store.addNotification(content("Warning", "You have entered an invalid email address!", "warning"))
+            return
+        }
+        if (data.Password.length < 8) {
+            Store.addNotification(content("Warning", "Password have to more than 8 digit", "warning"))
+            return
+        }
+        // }
         try {
+
             let result = await addNewUserAPI(data)
             Store.addNotification(content("Success", "Insert successful", "success"))
             setShowNewUserModel(false)
             setUserInfo([...userInfo, result.data])
+            window.location.reload()
         } catch (error) {
             Store.addNotification(content("Error", error.response.data, "warning"))
         }

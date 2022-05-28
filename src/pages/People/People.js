@@ -39,7 +39,7 @@ export default function People() {
             if (status.Time === "") return "offline"
 
             // offline some minuted ago
-            let second =  Math.floor((Date.now() - status.Time)/1000)
+            let second = Math.floor((Date.now() - status.Time) / 1000)
             if (second < 60) return `online ${second} second ago`
             else if (second < 3600) return `online ${Math.floor(second / 60)} minute ago`
             return `online ${Math.floor(second / 3600)} hour ago`
@@ -66,7 +66,7 @@ export default function People() {
                                                 email={ele.Email}
                                                 avatar={ele.Avatar}
                                                 rank={ele.RankAccount}
-                                                birthday={ele.Birthday.substring(0, 10).split('-').reverse().join('-')}
+                                                // birthday={ele.Birthday.substring(0, 10).split('-').reverse().join('-')}
                                                 gender={ele.Gender}
                                                 isManager={true}
                                                 showThreeDotButton={false}
@@ -83,7 +83,7 @@ export default function People() {
                                             email={ele.Email}
                                             avatar={ele.Avatar}
                                             rank={ele.RankAccount}
-                                            birthday={ele.Birthday.substring(0, 10).split('-').reverse().join('-')}
+                                            // birthday={ele.Birthday.substring(0, 10).split('-').reverse().join('-')}
                                             gender={ele.Gender}
                                             isManager={true}
                                             showThreeDotButton={false}
@@ -111,7 +111,7 @@ export default function People() {
                                                 email={ele.Email}
                                                 avatar={ele.Avatar}
                                                 rank={ele.RankAccount}
-                                                birthday={ele.Birthday.substring(0, 10).split('-').reverse().join('-')}
+                                                // birthday={ele.Birthday.substring(0, 10).split('-').reverse().join('-')}
                                                 gender={ele.Gender}
                                                 isManager={false}
                                                 showThreeDotButton={false}
@@ -123,7 +123,7 @@ export default function People() {
                                                 email={ele.Email}
                                                 avatar={ele.Avatar}
                                                 rank={ele.RankAccount}
-                                                birthday={ele.Birthday.substring(0, 10).split('-').reverse().join('-')}
+                                                // birthday={ele.Birthday.substring(0, 10).split('-').reverse().join('-')}
                                                 gender={ele.Gender}
                                                 isManager={false}
                                                 showThreeDotButton={false}

@@ -18,7 +18,7 @@ import { content } from "../../utils/notification"
 import { localizationContext } from '../../App'
 
 
-export default function Login() {
+export default function Login(props) {
     // use localization
     const localization = useContext(localizationContext)
 
@@ -39,7 +39,7 @@ export default function Login() {
     const onSubmitHandler = () => {
         // check email and password
         if ([information.Email.length, information.Password.length].includes(0)) {
-            Store.addNotification(content("Warning", "Please fill in username or password", "danger"))
+            Store.addNotification(content("Warning", "Please fill in email or password", "danger"))
             return
         }
         if (!ValidateEmail(information.Email)) {
@@ -58,9 +58,13 @@ export default function Login() {
                 }
                 else {
                     localStorage.removeItem("password")
-                    localStorage.removeItem("remember")
+                    localStorage.removeItem("remember") 
                 }
-                navigate("/")
+                props.setCurrentUser({
+                    Email : information.Email,
+                    UserName: res.data.UserName
+                })
+                navigate(-1)
             })
             .catch((e) => {
                 console.log(e)
@@ -74,7 +78,6 @@ export default function Login() {
         let getusername = localStorage.getItem("email") || ""
         let getpassword = localStorage.getItem("password") || ""
         let getremember = localStorage.getItem("remember") || false
-        setinformation({ ...information, Email: "getusername" })
         setinformation({ Email: getusername, Password: getpassword })
         setRemember(getremember)
     }, [])
@@ -120,7 +123,7 @@ export default function Login() {
                                                 {localization.signInIf}
                                             </div>
                                             <label class="form-check-label"  >
-                                                {localization.youCan} <Link to="/account/register" class="border-0 PrimaryFontColor" style={{  "font-weight": "bold" }}>{localization.registerHere}
+                                                {localization.youCan} <Link to="/account/register" class="border-0 PrimaryFontColor" style={{ "font-weight": "bold" }}>{localization.registerHere}
                                                 </Link>
                                             </label>
 
