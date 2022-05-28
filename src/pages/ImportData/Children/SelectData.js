@@ -172,8 +172,9 @@ export default function SelectData(props) {
             />
             <div>
                 <div>
-                    <h2 class="ms-4 mt-2 PrimaryFontColor size40 customFontBold" >
-                        {localStorage.getItem("currentProjectName") ? localStorage.getItem("currentProjectName") + "- " : ""}{localization.importData}
+                    <h5 className='ms-4 mt-2 size22 customFontBold'>{localStorage.getItem("currentProjectName") ? localStorage.getItem("currentProjectName") + ":" : ""}</h5>
+                    <h2 className="ms-4 mt-2 PrimaryFontColor size40 customFontBold" >
+                        {localization.importData}
                     </h2>
                 </div>
                 <div className='row p-4 ms-4 p-4 m-0 p-0 customforeground'>

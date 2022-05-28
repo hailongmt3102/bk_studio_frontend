@@ -37,7 +37,8 @@ export default function ConfirmDialog(props) {
             <Button onClick={props.handleCloseNo} autoFocus>
               No
             </Button>
-            <Button onClick={props.handleCloseYes}>Yes</Button>
+            <Button onClick={props.handleCloseYes}>Yes </Button>
+
 
           </DialogActions>
         }

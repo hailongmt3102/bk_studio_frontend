@@ -68,7 +68,7 @@ export default function ShareDataSourcesPopUp(props) {
 
     }, [listSharedName])
 
-    const [role, setRole] = useState("View")
+    const [role, setRole] = useState("Edit")
     const [selectPeople, setSelectPeople] = useState([])
     const shareSubmit = () => {
         shareDataSources(props.DId, {
@@ -77,7 +77,7 @@ export default function ShareDataSourcesPopUp(props) {
         })
             .then(response => {
                 console.log(response)
-                // setTimeout(() => window.location.reload(), 1000);
+                setTimeout(() => window.location.reload(), 1000);
                 //Store.addNotification(content("Success", "Editted role", "success"))
                 //setTimeout(() => window.location.reload(), 1000);
                 // props.handleClose()
@@ -108,9 +108,10 @@ export default function ShareDataSourcesPopUp(props) {
                 }}
             />
             <div className='col-2 m-auto'>
-                <DropdownWithIndex0 title={role} items={roleList} icons_list={staus_icon_list} onClick={(val) => {
+                {/* <DropdownWithIndex0 title={role} items={roleList} icons_list={staus_icon_list} onClick={(val) => {
                     setRole(val)
-                }} />
+                }} /> */}
+                Edit
             </div>
         </div>
     }
@@ -156,10 +157,11 @@ export default function ShareDataSourcesPopUp(props) {
                                 <div className='ms-5'>{e.Email}</div>
                             </div>
                             <div className='col-2'>
-                                <DropdownWithIndex0 title={e.Permission} items={[e.Permission, e.Permission == "View" ? "Edit" : "View"]} icons_list={e.Permission === "View" ? [eye_bluecloud, edit] : [edit, eye_bluecloud]}
+                                {/* <DropdownWithIndex0 title={e.Permission} items={[e.Permission, e.Permission == "View" ? "Edit" : "View"]} icons_list={e.Permission === "View" ? [eye_bluecloud, edit] : [edit, eye_bluecloud]}
                                     onClick={(val) => {
                                         setListSharedPeople([...listSharedPeople.slice(0, index), { ...listSharedPeople[index], Permission: val }, ...listSharedPeople.slice(index + 1)])
-                                    }} />
+                                    }} /> */}
+                                Edit
                             </div>
 
                             <div className='col-2'>

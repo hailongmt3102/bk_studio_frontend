@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { Form, InputGroup, Col } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import login_image from "resources/images/login_image.png"
-import { GoogleLoginApi, LoginApi } from "api/Account"
+import { GoogleLoginApi, LoginApi, Verify } from "api/Account"
 import lock from "resources/icons/lock.svg";
 import google from "resources/icons/google.svg";
 import email from "resources/icons/email.svg";
@@ -12,7 +12,7 @@ import { Link } from "react-router-dom";
 import { deep_blue_primary } from "../../utils/color"
 
 import GoogleLogin from 'react-google-login';
-
+import CustomDialog from "components/CustomDialog";
 import { Store } from 'react-notifications-component'
 import { content } from "../../utils/notification"
 import { localizationContext } from '../../App'
@@ -21,7 +21,7 @@ import { localizationContext } from '../../App'
 export default function Login(props) {
     // use localization
     const localization = useContext(localizationContext)
-
+    const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: '', subTitle: '' })
     const [isVisible, setisVisible] = useState(false)
     const [information, setinformation] = useState({
         Email: "",
@@ -58,18 +58,21 @@ export default function Login(props) {
                 }
                 else {
                     localStorage.removeItem("password")
-                    localStorage.removeItem("remember") 
+                    localStorage.removeItem("remember")
                 }
                 props.setCurrentUser({
-                    Email : information.Email,
+                    Email: information.Email,
                     UserName: res.data.UserName
                 })
                 navigate(-1)
             })
             .catch((e) => {
                 console.log(e)
-                Store.addNotification(content("Warning", e.response.data, "danger"))
-                return
+                if (e.response.data == "Verify required") {
+                    setConfirmDialog({ ...confirmDialog, isOpen: true })
+                }
+                // Store.addNotification(content("Warning", e.response.data, "danger"))
+                // return
                 //alert(e.response.data);
             })
     }
@@ -97,12 +100,40 @@ export default function Login(props) {
                 .catch((err) => {
                     // login fail
                     Store.addNotification(content("Warning", "Google Login Fail", "danger"))
+                    return
                 })
         }
     }
 
+    const handleCloseNo = () => {
+        setConfirmDialog({ ...confirmDialog, isOpen: false })
+        // navigate("/account/login")
+    }
+    const handleCloseYes = () => {
+        Verify({ Email: information.Email })
+            .then((res) => {
+                Store.addNotification(content("Success", "Please check your email to verify", "success"))
+                return
+            }
+            ).catch((e) => {
+                Store.addNotification(content("Success", e.response.data, "success"))
+                return
+            }
+            )
+    }
+
     return (
         <section class="vh-100" style={{ backgroundColor: "#fff" }}>
+            <CustomDialog
+                style={{ width: "300px" }}
+                // haveOK={true}
+                haveContent={true}
+                content={"Please check your email to verify"}
+                confirmDialog={confirmDialog}
+                // title="Account successfully created ?"
+                handleCloseYes={() => handleCloseYes()}
+                handleCloseNo={() => handleCloseNo()}
+            />
             <div class="container h-100 w-100">
                 <div class="row d-flex justify-content-center align-items-center h-100">
                     <div class="">

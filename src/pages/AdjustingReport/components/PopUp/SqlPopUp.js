@@ -723,6 +723,8 @@ export default function SqlPopUp(props) {
                 return selectClauseTypeLineAndBar()
             case "Line Chart":
                 return selectClauseTypeLineAndBar()
+            case "Scatter Chart":
+                return selectClauseTypeLineAndBar()
             case "Pie Chart":
                 return selectClauseTypePieandDonut()
             case "Doughnut Chart":

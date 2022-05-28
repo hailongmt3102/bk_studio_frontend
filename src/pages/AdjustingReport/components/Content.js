@@ -1,5 +1,5 @@
 import { ArcElement, BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, LineElement, PointElement, Title, Tooltip } from 'chart.js';
-import { Bar, Doughnut, Line, Pie } from 'react-chartjs-2';
+import { Bar, Doughnut, Line, Pie, Scatter } from 'react-chartjs-2';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { Rnd } from 'react-rnd';
 import React, { useState } from 'react';
@@ -143,6 +143,77 @@ const Content = React.forwardRef((props, ref) => {
                             />
                         </Form.Group>
                         <Line data={shape.lineData}
+                            plugins={[ChartDataLabels]}
+                            options={
+                                {
+                                    responsive: true,
+                                    plugins: {
+                                        datalabels: {
+                                            anchor: "end",
+                                            align: "end",
+                                            display: function (context) {
+                                                return (context.dataIndex === shape.lineData.maxIndex ||
+                                                    context.dataIndex === shape.lineData.minIndex)
+                                            }
+                                        }
+                                    },
+                                    scales: {
+                                        x: {
+                                            title: {
+                                                display: true,
+                                                text: shape.lineData.xAxisName
+                                            }
+                                        },
+                                        y: {
+                                            title: {
+                                                display: true,
+                                                text: shape.lineData.yAxisName
+                                            },
+
+                                        },
+                                    }
+                                }
+                            }
+                        />
+                    </Rnd>
+                )
+            case "Scatter Chart":
+                if (shape.lineData == null) return null
+                return (
+                    <Rnd
+                        disableDragging={!props.isEdit}
+                        enableResizing={props.isEdit}
+                        size={{ width: shape.Width, height: shape.Height }}
+                        position={{ x: shape.Position.x, y: shape.Position.y }}
+                        onDragStop={(e, d) => {
+                            props.updateShapeComponent(index, {
+                                ...shape, Position: {
+                                    x: d.x,
+                                    y: d.y
+                                }
+                            })
+                        }}
+                        onResizeStop={(e, direction, ref, delta, position) => {
+                            props.updateShapeComponent(index, { ...shape, Width: ref.style.width, Height: ref.style.height })
+                        }}
+                        className={props.followingIndexComponent === index ? "customBorder" : ""}
+                    >
+                        <Form.Group controlId="duedate" className='mt-4'>
+                            <Form.Control
+                                type="text"
+                                placeholder="Enter data source name"
+                                value={shape.Title}
+                                onChange={(e) => {
+                                    props.updateShapeComponent(index, {
+                                        ...shape, Title: (e.target.value)
+                                    })
+                                }}
+                                style={{
+                                    border: "0px"
+                                }}
+                            />
+                        </Form.Group>
+                        <Scatter data={shape.lineData}
                             plugins={[ChartDataLabels]}
                             options={
                                 {
@@ -378,7 +449,7 @@ const Content = React.forwardRef((props, ref) => {
     return (
         <div ref={ref}>
             {
-                props.shapeComponents ?  props.shapeComponents.map((shape, index) =>
+                props.shapeComponents ? props.shapeComponents.map((shape, index) =>
                     <div
                         key={index} onMouseDown={() => {
                             props.setFollowingIndexComponent(index)
@@ -390,8 +461,8 @@ const Content = React.forwardRef((props, ref) => {
                         }
                     </div>
                 )
-                :
-                null
+                    :
+                    null
             }
             {/* {props.showingMouseDrag && <Rnd size={props.mouseDragValue.size} position={props.mouseDragValue.position} className="border" />} */}
         </div>

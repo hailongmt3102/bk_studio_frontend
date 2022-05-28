@@ -16,6 +16,7 @@ import done_round from "resources/icons/done_round.svg";
 import upload from "resources/icons/upload.svg";
 import bar_chart from "resources/icons/bar_chart.svg";
 import pie_chart from "resources/icons/pie_chart.svg";
+import scat from "resources/icons/scat.svg";
 import table from "resources/icons/table.svg";
 import edit_grey from "resources/icons/edit_grey.svg";
 import print from "resources/icons/print.svg";
@@ -40,8 +41,8 @@ export default function MenuBar(props) {
     const edit_option_icon_list = [keo, copy, paste, done_round]
     const edit_option = ['Cut', 'Copy', 'Paste', 'Delete']
     const function_option = ['SUM', 'MAX', 'MIN', 'AVERAGE']
-    const insert_option = ['Table', 'Bar Chart', 'Pie Chart', 'Doughnut Chart', 'Line Chart']
-    const insert_option_icon_list = [table, bar_chart, pie_chart, donut, linechart]
+    const insert_option = ['Table', 'Bar Chart', 'Pie Chart', 'Doughnut Chart', 'Line Chart', 'Scatter Chart']
+    const insert_option_icon_list = [table, bar_chart, pie_chart, donut, linechart, scat]
 
 
     return (
@@ -70,7 +71,12 @@ export default function MenuBar(props) {
                     <div className='mt-3 ms-2'>
                         {
                             props.isEdit ?
-                                <ThreeDotButton className="col-1 p-4 btn" style={{ "minHeight": "80px", "text-align": "center" }} title={'Edit'} items={edit_option} icons_list={edit_option_icon_list}
+                                <ThreeDotButton
+                                    className="col-1 p-4 btn"
+                                    style={{ "minHeight": "80px", "text-align": "center" }}
+                                    title={'Edit'}
+                                    items={edit_option}
+                                    icons_list={edit_option_icon_list}
                                     onClick={(val) => {
                                         switch (val) {
                                             case 'Copy':
@@ -104,7 +110,12 @@ export default function MenuBar(props) {
                     <div className='mt-3 ms-2'>
                         {
                             props.isEdit ?
-                                <ThreeDotButton className="col-1 p-4 btn" style={{ "minHeight": "80px", "text-align": "center" }} title={'Insert'} items={insert_option} icons_list={insert_option_icon_list}
+                                <ThreeDotButton c
+                                    lassName="col-1 p-4 btn"
+                                    style={{ "minHeight": "80px", "text-align": "center" }}
+                                    title={'Insert'}
+                                    items={insert_option}
+                                    icons_list={insert_option_icon_list}
                                     onClick={(val) => {
                                         props.showSqlPopUpFunction(val)
                                         props.componentTypeHandle(val)
