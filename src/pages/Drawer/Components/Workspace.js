@@ -57,10 +57,18 @@ export default function Workspace(props) {
 					title="Machine learning"
 					onClick={props.swapDrawerVisible}
 				/>
+				<DrawerItem
+					link="/pList"
+					active={props.selectedIndex === currentFollowingDrawer.yourProject ? true : false}
+					child={<YourProjectIcon fill={props.selectedIndex == currentFollowingDrawer.yourProject ? colors.drawerActive : colors.drawerToggle} />}
+					title="Your projects"
+					onClick={props.swapDrawerVisible}
+				/>
 
-				<div className="d-flex justify-content-start p-2 ps-4" style={{ textDecoration: "none", backgroundColor: props.selectedIndex === currentFollowingDrawer.yourProject ? colors.drawerBackgroundActive : colors.drawerBackgroundToggle }}
+				{/* <div className="d-flex justify-content-start p-2 ps-4" style={{ textDecoration: "none", backgroundColor: props.selectedIndex === currentFollowingDrawer.yourProject ? colors.drawerBackgroundActive : colors.drawerBackgroundToggle }}
 					onClick={() => {
-						setShowProject(!showProject)
+						navigator()
+						// setShowProject(!showProject)
 						props.setSelectedIndex(currentFollowingDrawer.yourProject)
 					}}
 				>
@@ -103,7 +111,7 @@ export default function Workspace(props) {
 							</Link>
 						</div>
 						: null
-				}
+				} */}
 			</ul>
 		</div>
 	);
