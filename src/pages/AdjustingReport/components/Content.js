@@ -378,7 +378,7 @@ const Content = React.forwardRef((props, ref) => {
     return (
         <div ref={ref}>
             {
-                props.shapeComponents.map((shape, index) =>
+                props.shapeComponents ?  props.shapeComponents.map((shape, index) =>
                     <div
                         key={index} onMouseDown={() => {
                             props.setFollowingIndexComponent(index)
@@ -390,6 +390,8 @@ const Content = React.forwardRef((props, ref) => {
                         }
                     </div>
                 )
+                :
+                null
             }
             {/* {props.showingMouseDrag && <Rnd size={props.mouseDragValue.size} position={props.mouseDragValue.position} className="border" />} */}
         </div>

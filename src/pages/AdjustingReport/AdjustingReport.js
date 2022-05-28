@@ -1,5 +1,5 @@
 import { getColumnsOfTable, GetDataSourcesListInformationInProject, QueryData as QueryDataApi } from "api/DataSources";
-import { createNewComponent as createNewComponentApi, createNewReport, deleteReport, deleteShape as deleteShapeApi, getAllComponent, getAllDatasourceNameInReport, getReportInformation, saveAsCopy, saveAsTemplate, updateAComponent, updateReportInformation } from 'api/Report';
+import { createNewComponent as createNewComponentApi, createNewReport, deleteReport, deleteShape as deleteShapeApi, getAllComponent, getAllDatasourceNameInReport, getReportInformation, saveAsCopy, saveAsTemplate, updateAComponent, updateReportInformation, getReportInfoWithoutProjectId } from 'api/Report';
 import { createAReportByTemplate, deleteTemplate, getAllDatasourceNameInTemplate } from "api/Templates";
 import TabComponent from "pages/AdjustingReport/components/tabComponent/TabComponent";
 import { useContext, useEffect, useRef, useState } from "react";
@@ -140,7 +140,7 @@ export default function AdjustingReport(props) {
     // ** ---------------------------------------------------------------------------------------------
     // ** some function get info of this report
     // ** get report information
-    const getReportInfo = async () => {
+    const getReportInfo = async (currentProject, RId, isTemplate) => {
         try {
             let res = await getReportInformation(currentProject, RId, isTemplate)
             setReportInformation(res.data)
@@ -151,7 +151,7 @@ export default function AdjustingReport(props) {
     }
 
     // ** get data source fields of this report
-    const getDataFields = async () => {
+    const getDataFields = async (currentProject) => {
         try {
             let dataSourceList = await GetDataSourcesListInformationInProject({
                 PId: currentProject
@@ -304,7 +304,7 @@ export default function AdjustingReport(props) {
     }
 
     // ** get all shape from server
-    const fetchAllShapesFromServer = async (currentProject,RId,  isTemplate) => {
+    const fetchAllShapesFromServer = async (currentProject, RId, isTemplate) => {
         let colorIndex = currentColorIndex;
         if (currentProject == null) return
         try {
@@ -495,6 +495,7 @@ export default function AdjustingReport(props) {
     // ** combine all function relative to getting content of report
     const getReportContent = async (PId, RId, isTemplate) => {
         let res = await fetchAllShapesFromServer(PId, RId, isTemplate)
+        console.log(res)
         setShapeComponent(res)
         // console.log(res)
     }
@@ -866,10 +867,11 @@ export default function AdjustingReport(props) {
     }, [keydown])
 
     const [PName, setPName] = useState("")
-    const getAllData = async ( currentProject, RId, isTemplate) => {
+    const getAllData = async (currentProject, RId, isTemplate) => {
+        console.log("asjdfjaklsdf", currentProject, RId, isTemplate)
         setIsLoading(true)
-        getReportInfo()
-        getDataFields()
+        getReportInfo(currentProject, RId, isTemplate)
+        getDataFields(currentProject)
         await getReportContent(currentProject, RId, isTemplate)
         getInformationByPId(currentProject)
             .then(res => {
@@ -911,20 +913,40 @@ export default function AdjustingReport(props) {
     }
 
 
-    useEffect(() => {
+    const getData = async () => {
         //check state
 
         if (location.state == null) {
             // state is nul
             // let get some parameter to render this report in view mode
-            
+            try {
+                let RID = /\d+/.exec(location.pathname)
+                if (!RID) {
+                    nav('/project/gallery/')
+                    return
+                }
+
+                RID = RID[0]
+
+
+                let rInfo =( await getReportInfoWithoutProjectId(RID)).data
+                getAllData(rInfo.PId, rInfo.Id, rInfo.Type == "Template")
+
+                setRId(rInfo.Id)
+                setCurrentProject(rInfo.PId)
+                setIsTemplate(rInfo.Type == "Template")
+                setIsEdit(rInfo.Type == "Template" ? false : rInfo.isEdit)
+            } catch (error) {
+                console.log("asdfhaklsdfjklasdfjlkasdfjakldsf",error)
+                nav('/project/gallery/')
+            }
             return
         }
         else {
             setRId(location.state.RId)
             setCurrentProject(location.state.PId)
             setIsTemplate(location.state.Type == "Template")
-            setIsEdit(location.state.Permission == "Edit" && !isTemplate)
+            setIsEdit(location.state.Permission == "Edit" && location.state.Type != "Template")
         }
         getAllData(location.state.PId, location.state.RId, location.state.Type == "Template")
 
@@ -932,6 +954,10 @@ export default function AdjustingReport(props) {
         return () => {
             document.removeEventListener("keydown", keydown)
         }
+    }
+
+    useEffect(() => {
+        getData()
     }, [])
 
     // trigger on change of tabData
@@ -1352,7 +1378,7 @@ export default function AdjustingReport(props) {
                                 </div>
                                 <div className="row mt-4">
                                     <div className="col PrimaryFontColor size16 customFontBold">Last Modified:</div>
-                                    <div className="col">{ reportInformation.LastModified ? reportInformation.LastModified.substring(0, 10) : ""} </div>
+                                    <div className="col">{reportInformation.LastModified ? reportInformation.LastModified.substring(0, 10) : ""} </div>
                                 </div>
                             </div>
                         </div>

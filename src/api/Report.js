@@ -74,6 +74,10 @@ const getAllDatasourceNameInReport = (PId, RId) => {
     return axiosClient.get(`/project/${PId}/${RId}/dataSourceName`)
 }
 
+const getReportInfoWithoutProjectId = (Rid) => {
+    return axiosClient.get(`/project/RId/${Rid}`)
+}
+
 export {
     createNewReport,
     getAllReport,
@@ -93,5 +97,6 @@ export {
     getPermission,
     saveAsCopy,
     saveAsTemplate,
-    getAllDatasourceNameInReport
+    getAllDatasourceNameInReport,
+    getReportInfoWithoutProjectId
 }
