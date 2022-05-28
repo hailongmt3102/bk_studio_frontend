@@ -87,8 +87,8 @@ export default function Register() {
             return
 
         }
-        if (information.Company === "" && newCompany) {
-            Store.addNotification(content("Warning", "Please fill in your company name", "warning"))
+        if (information.Company === "") {
+            Store.addNotification(content("Warning", "Please fill in your organization", "warning"))
             return
         }
         RegisterApi(information)
