@@ -9,8 +9,8 @@ import threeLine from "resources/icons/threeLine.svg"
 import './Drawer.css'
 import { currentFollowingDrawer } from "utils/utils";
 import { checkPermission as checkAdminPermissionAPI } from 'api/Admin'
-
-
+import SwitchSvg from 'resources/icons/drawerIcons/switch.svg'
+import ProjectListPopUp from "./Components/ProjectListPopUp"
 
 export default function Drawer(props) {
 
@@ -39,7 +39,7 @@ export default function Drawer(props) {
 			})
 			.catch(err => {
 				setIsAdmin(false)
-			 })
+			})
 		// get all project
 		getListProject()
 			.then(res => {
@@ -121,9 +121,28 @@ export default function Drawer(props) {
 		setCurrentProject(Id)
 		localStorage.setItem("currentProject", Id)
 	}
+	const [showPopUp, setShowPopUp] = useState(false)
 
+	const handleCloseNo = () => {
+		setShowPopUp(false)
+	}
 	return props.state !== "" ? (
 		<div>
+			<ProjectListPopUp
+				title="Switch Project"
+				showPopUp={showPopUp}
+				handleCloseNo={handleCloseNo}
+				projectList={projectList}
+				curProject={localStorage.getItem("currentProject")}
+				setCurrentProject={setCurrentProject}
+			// haveOK={true}
+			// haveContent={true}
+			// content={"To complete the signup proccess, please check your mail " + `(${information.Email})` + " and click on the provided activation link"}
+			// confirmDialog={confirmDialog}
+			// title="Account successfully created ?"
+			// // handleCloseYes={() => handleCloseYes()}
+			// handleCloseNo={() => handleCloseNo()}
+			/>
 			<button className="m-2  text-center drawer-button shine" style={{ width: "40px", height: "40px" }}
 				onClick={() => {
 					setToggle(!toggle)
@@ -158,14 +177,31 @@ export default function Drawer(props) {
 							setCurrentProject={setProjectToWork}
 						/>
 					) : null}
-					<a className="list-group-item border-0 p-0" onClick={() => {
-						navigate("project/create")
-						// setSelectedIndex(4)
-					}}>
-						<h6 className="p-3 m-0">PROJECT : {
-							projectList.filter(ele => ele.Id == currentProject ? true : false).length > 0 ? projectList.filter(ele => ele.Id == currentProject ? true : false)[0].Name : ""
-						}
-						</h6>
+					<a className="list-group-item border-0 p-0" >
+						<div className="row">
+							<div className="col">
+								<h6 className="p-3 m-0"
+									onClick={() => {
+										navigate("project/create")
+										// setSelectedIndex(4)
+									}}>
+									PROJECT :
+									{
+										projectList.filter(ele => ele.Id == currentProject ? true : false).length > 0 ? projectList.filter(ele => ele.Id == currentProject ? true : false)[0].Name : ""
+									}
+								</h6>
+							</div>
+							<div className="col-3 "
+								onClick={() => {
+									setShowPopUp(true)
+								}}>
+								<h6 className="p-3 m-auto">
+									<img width="20px" height="20px" src={SwitchSvg} />
+								</h6>
+
+							</div >
+						</div>
+
 					</a>
 					{props.state === "project" ? (
 						<Project selectedIndex={selectedIndex} swapDrawerVisible={swapDrawerVisible} />

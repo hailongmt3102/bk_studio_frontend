@@ -142,7 +142,7 @@ export default function PeoplePopup(props) {
             size="lg"
         >
             <Modal.Header closeButton>
-                <Modal.Title><div className='d-flex align-items-center' style={{ color: deep_blue_primary, "fontWeight": "bold", fontSize: "30px" }}>Invite member to project</div></Modal.Title>
+                <Modal.Title><div className='d-flex align-items-center' style={{ color: deep_blue_primary, "fontWeight": "bold", fontSize: "30px" }}>Invite people to project</div></Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 {
