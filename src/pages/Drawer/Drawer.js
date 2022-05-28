@@ -31,6 +31,7 @@ export default function Drawer(props) {
 	useEffect(() => {
 		let cProject = localStorage.getItem("currentProject")
 		if (cProject != null) setCurrentProject(cProject)
+		if (props.currentUser.Email === "" || props.currentUser.UserName === "") return
 
 		checkAdminPermissionAPI()
 			.then(res => {

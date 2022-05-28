@@ -18,7 +18,7 @@ import { content } from "../../utils/notification"
 import { localizationContext } from '../../App'
 
 
-export default function Login() {
+export default function Login(props) {
     // use localization
     const localization = useContext(localizationContext)
 
@@ -60,6 +60,10 @@ export default function Login() {
                     localStorage.removeItem("password")
                     localStorage.removeItem("remember") 
                 }
+                props.setCurrentUser({
+                    Email : information.Email,
+                    UserName: res.data.UserName
+                })
                 navigate(-1)
             })
             .catch((e) => {

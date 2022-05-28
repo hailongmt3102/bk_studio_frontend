@@ -33,13 +33,14 @@ export default function Header(props) {
         localStorage.removeItem("username")
         props.setCurrentUser({
             Email: "",
-            UserName: ""
+            UserName: "",
         })
         nav('account/login')
     }
     const [searchContent, setSearchContent] = useState("")
 
     useEffect(() => {
+        if (props.currentUser.UserName === "") return
         GetInformationApi()
             .then(response => {
                 setinformation(response.data)
