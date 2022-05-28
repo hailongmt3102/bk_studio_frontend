@@ -23,7 +23,7 @@ export default function Register() {
 
 
     const navigate = useNavigate()
-    const [newCompany, setNewCompany] = useState(true)
+    const [newCompany, setNewCompany] = useState(null)
     const [confirmPassword, setConfirmPassword] = useState("")
     const [listCompany, setlistCompany] = useState([])
     const [isVisible, setisVisible] = useState(false)
@@ -87,8 +87,8 @@ export default function Register() {
             return
 
         }
-        if (information.Company === "" && newCompany) {
-            Store.addNotification(content("Warning", "Please fill in your company name", "warning"))
+        if (information.Company === "") {
+            Store.addNotification(content("Warning", "Please fill in your organization", "warning"))
             return
         }
         RegisterApi(information)
@@ -128,8 +128,8 @@ export default function Register() {
                                     <div class="col-md-10 col-lg-6 col-xl-7 order-2 order-lg-1">
                                         <img src={login_image} style={{ borderTopLeftRadius: "25px", borderBottomLeftRadius: "25px" }} class="img-fluid" alt="Sample image" />
                                     </div>
-                                    <div class="col-md-10 col-lg-6 col-xl-5 order-1 order-lg-2 mt-4 ">
-                                        <p class="h1 fw-bold  mx-1 mx-md-4 PrimaryFontColor">
+                                    <div class="col-md-10 col-lg-6 col-xl-5 order-1 order-lg-2 mt-5">
+                                        <p class="h1 fw-bold  mx-1 mx-md-4 PrimaryFontColor mt-3">
                                             Sign up
                                         </p>
                                         <div class="form-check mb-2">
@@ -142,7 +142,7 @@ export default function Register() {
                                             </label>
 
                                         </div>
-                                        <form class="mx-1 mx-md-4 " style={{ fontSize: 16 }}>
+                                        <form class="mx-1 mx-md-4 mt-4 " style={{ fontSize: 16 }}>
 
                                             <Form.Group as={Col} md="12" controlId="validationCustomUsername">
                                                 <Form.Label>Email</Form.Label>
@@ -226,7 +226,7 @@ export default function Register() {
 
                                                 </InputGroup>
                                             </Form.Group>
-                                            <div class="mt-2">
+                                            {/* <div class="mt-2">
                                                 <Form.Label>Birthday</Form.Label>
                                                 <div>
                                                     <div className="row">
@@ -281,7 +281,7 @@ export default function Register() {
                                                     type="radio"
                                                     id="FemaleGender"
                                                 />
-                                            </div>
+                                            </div> */}
                                             <div class="d-md-flex justify-content-start align-items-center py-2">
 
                                                 <Form.Check
@@ -294,7 +294,7 @@ export default function Register() {
                                                         //console.log(newCompany);
                                                     }}
                                                     inline
-                                                    label="New Company"
+                                                    label="New Organization"
                                                     name="group2"
                                                     type="radio"
                                                     id="Company"
@@ -308,18 +308,18 @@ export default function Register() {
                                                         //console.log(newCompany);
                                                     }}
                                                     inline
-                                                    label="Created Company"
+                                                    label="Created Organization"
                                                     name="group2"
                                                     type="radio"
                                                     id="Company"
                                                 />
                                             </div>
-                                            {!newCompany ?
+                                            {newCompany == false ?
                                                 <div>
                                                     <div className='row m-0 p-0'>
-                                                        <h6 class="col-4 m-0 p-0 mt-2">Company name: </h6>
+                                                        <h6 class="col-4 m-0 p-0 mt-2">Organization name: </h6>
                                                         <div class=" col-8 m-0 p-0 ">
-                                                            <NoIconDropDownButton title={information.Company === "" ? "Company" : information.Company} items={listCompany.map(ele => ele.Company)} onClick={(val, index) => {
+                                                            <NoIconDropDownButton title={information.Company === "" ? "Organization" : information.Company} items={listCompany.map(ele => ele.Company)} onClick={(val, index) => {
                                                                 setinformation({
                                                                     ...information, Company: val, Tenant: listCompany[index].Tenant
                                                                 })
@@ -339,33 +339,31 @@ export default function Register() {
                                                         </div>
                                                     </div>
                                                 </div>
+                                                : newCompany != null ?
+                                                    <div>
+                                                        <Form.Group as={Col} md="12" controlId="validationCustomUsername">
+                                                            <InputGroup hasValidation>
+                                                                <InputGroup.Text id="inputGroupPrepend">Organization name</InputGroup.Text>
+                                                                <Form.Control
+                                                                    onChange={(e) => {
+                                                                        setinformation({
+                                                                            ...information, Company: e.target.value
+                                                                        })
+                                                                        // setinformation({
+                                                                        //     ...information, Tenant: e.target.value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replaceAll(' ', '')
+                                                                        // })
+                                                                        //console.log(information);
+                                                                    }}
 
-                                                : <div>
+                                                                    type="text"
+                                                                    placeholder="Enter new organization name"
+                                                                    aria-describedby="inputGroupPrepend"
+                                                                    required
+                                                                />
 
-                                                    <Form.Group as={Col} md="12" controlId="validationCustomUsername">
-
-                                                        <InputGroup hasValidation>
-                                                            <InputGroup.Text id="inputGroupPrepend">Company name</InputGroup.Text>
-                                                            <Form.Control
-                                                                onChange={(e) => {
-                                                                    setinformation({
-                                                                        ...information, Company: e.target.value
-                                                                    })
-                                                                    // setinformation({
-                                                                    //     ...information, Tenant: e.target.value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replaceAll(' ', '')
-                                                                    // })
-                                                                    //console.log(information);
-                                                                }}
-
-                                                                type="text"
-                                                                placeholder="Enter new company name"
-                                                                aria-describedby="inputGroupPrepend"
-                                                                required
-                                                            />
-
-                                                        </InputGroup>
-                                                    </Form.Group>
-                                                    {/* <div className="row mt-1 ">
+                                                            </InputGroup>
+                                                        </Form.Group>
+                                                        {/* <div className="row mt-1 ">
                                                         <h6 className="col-3 mt-3">Position: </h6>
                                                         <div className='col-8 m-auto'>
                                                             <NoIconDropDownButton title={information.Position === "" ? "Position" : information.Position} items={["Manager", "Member"]} onClick={(val) => {
@@ -378,9 +376,9 @@ export default function Register() {
 
                                                     </div> */}
 
-                                                </div>
+                                                    </div> : null
                                             }
-                                            <div class="d-grid gap-2  mt-4">
+                                            <div class="d-grid gap-2  mt-5">
                                                 <button class="btn btn-primary p-2" type="button" style={{ backgroundColor: "#034078", borderRadius: "25px " }} onClick={onSubmitHandler}>Register</button>
 
                                             </div>
