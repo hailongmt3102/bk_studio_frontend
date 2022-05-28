@@ -281,7 +281,7 @@ export default function ProjectDetail() {
                                                 }}
                                                 setdontshowRolePopUp={() => {
                                                     setshowRolePopUp(false)
-                                                    Store.addNotification(content("Fail", "You can't edit member's role because you also are member position", "danger"))
+                                                    Store.addNotification(content("Fail", "You can't edit member's permissions because you also are member position", "danger"))
 
                                                 }}
                                                 getEmail={() => {
@@ -306,7 +306,7 @@ export default function ProjectDetail() {
                                                 }}
                                                 setdontshowRolePopUp={() => {
                                                     setshowRolePopUp(false)
-                                                    Store.addNotification(content("Fail", "You can't edit member's role because you also are member position", "danger"))
+                                                    Store.addNotification(content("Fail", "You can't edit member's permissions because you also are member position", "danger"))
                                                 }}
                                                 getEmail={() => {
                                                     setEmail(ele.Email)

@@ -16,13 +16,13 @@ import Checkbox from '@mui/material/Checkbox';
 export default function RolePopUp(props) {
 
     const [showList, setShowList] = useState({
-        "Invite": false,
-        "Import data to project": false,
+        "Change project status": false,
         "Edit project information": false,
         "Delete project": false,
-        "Change project status": false,
+        "Invite": false,
         "Delete member": false,
-        "Edit role member": false
+        "Edit role member": false,
+        "Import data to project": false,
     })
 
     const checked = (value) => () => {
@@ -61,6 +61,17 @@ export default function RolePopUp(props) {
             })
     }
 
+    const keyMapping = (key) => {
+        switch (key) {
+            case "Invite":
+                return "Invite people"
+            case "Edit role member":
+                return "Edit permissions of member"
+            default:
+                return key
+        }
+    }
+
     const body = () => {
         return (
             <div>
@@ -83,7 +94,7 @@ export default function RolePopUp(props) {
                                             inputProps={{ 'aria-labelledby': labelId }}
                                         />
                                     </ListItemIcon>
-                                    <ListItemText id={labelId} primary={key} />
+                                    <ListItemText id={labelId} primary={keyMapping(key)} />
                                 </ListItemButton>
                             </ListItem>
                         );
@@ -101,7 +112,7 @@ export default function RolePopUp(props) {
             size="lg"
         >
             <Modal.Header closeButton>
-                <Modal.Title><div className='d-flex align-items-center PrimaryFontColor' style={{"fontWeight": "bold", fontSize: "30px" }}>Edit Role</div></Modal.Title>
+                <Modal.Title><div className='d-flex align-items-center PrimaryFontColor' style={{ "fontWeight": "bold", fontSize: "30px" }}>Edit Permissions</div></Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 {
