@@ -402,6 +402,7 @@ const Content = React.forwardRef((props, ref) => {
                                     fontStyle: shape.TextTheme.decoration["font-style"],
                                     textDecoration: shape.TextTheme.decoration["text-decoration"],
                                     fontSize: shape.TextTheme.size + "px",
+                                    fontFamily: shape.TextTheme.font
                                 }}
                             />
                         </div>
