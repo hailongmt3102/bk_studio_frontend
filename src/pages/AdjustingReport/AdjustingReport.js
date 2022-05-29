@@ -662,7 +662,7 @@ export default function AdjustingReport(props) {
     const pasteShape = () => {
         if (currentProject == null || copyIndexComponent == -1) return
         try {
-            let selectedShape = shapeComponents[followingIndexComponent]
+            let selectedShape = shapeComponents[copyIndexComponent]
             let newShape = {
                 Title: selectedShape.Title,
                 Type: selectedShape.Type,
