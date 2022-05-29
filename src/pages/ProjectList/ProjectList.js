@@ -49,7 +49,7 @@ export default function ProjectList() {
             <div className='d-flex flex-row pt-2'>
 
                 <h2 class="ms-4 mt-1" style={{ color: deep_blue_primary, "fontWeight": "bold", fontSize: "40px" }}>
-                    Project list
+                    Your projects:
                 </h2>
                 <div className='d-flex flex-row pt-1'>
 

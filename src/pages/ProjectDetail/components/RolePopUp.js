@@ -40,7 +40,7 @@ export default function RolePopUp(props) {
                 setShowList({ ...showList, ...updateList })
             })
             .catch(err => {
-                Store.addNotification(content("Fail", err.response.data, "danger"))
+                // Store.addNotification(content("Fail", err.response.data, "danger"))
                 props.handleClose()
             })
     }, [props.Email])

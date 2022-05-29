@@ -1035,7 +1035,9 @@ export default function AdjustingReport(props) {
     const switchToViewMode = () => {
         nav('/project/gallery/' + RId + '/view', {
             state: {
-                ...location.state,
+                PId: currentProject,
+                Type: isTemplate ? "Template" : "Report",
+                RId: RId,
                 Permission: "View",
             }
         })

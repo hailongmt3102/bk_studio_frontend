@@ -36,7 +36,7 @@ axiosClient.interceptors.response.use(
             // remove username in local storage
             localStorage.removeItem("username")
             localStorage.removeItem("currentProject")
-            window.location.assign('/account/login')
+            window.location.assign('/account/login/expired')
             return
         }
         return new Promise((resolve, reject) => {
