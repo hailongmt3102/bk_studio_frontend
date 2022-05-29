@@ -39,7 +39,7 @@ export default function SelectData(props) {
         if (files) {
             // console.log(files[0]);
             const file = files[0]
-            props.setFileInformation({ ...file, name: file.name.replaceAll('.', '_') })
+            props.setFileInformation({ ...file, name: file.name.replace(/[\s\.-]/g, "_") })
             Papa.parse(file, {
                 complete: function (results) {
                     console.log("Finished:", results.data);
@@ -63,7 +63,7 @@ export default function SelectData(props) {
             alert("invalid format, expected : .json")
             return
         }
-        props.setFileInformation({ ...file, name: file.name.replaceAll('.', '_') })
+        props.setFileInformation({ ...file, name: file.name.replace(/[\s\.-]/g, "_") })
         const fileReader = new FileReader();
         fileReader.onload = function (event) {
             const jsonOutput = event.target.result;
@@ -76,7 +76,7 @@ export default function SelectData(props) {
     const [items, setItems] = useState([]);
 
     const readExcel = (file) => {
-        props.setFileInformation({ ...file, name: file.name.replaceAll('.', '_') })
+        props.setFileInformation({ ...file, name: file.name.replace(/[\s\.-]/g, "_") })
         const promise = new Promise((resolve, reject) => {
             const fileReader = new FileReader();
             fileReader.readAsArrayBuffer(file);

@@ -10,6 +10,7 @@ import bold from "resources/icons/bold.svg";
 import italic from "resources/icons/italic.svg";
 import underline from "resources/icons/underline.svg";
 import MappingPopUp from "../../components/PopUp/MappingPopUp";
+import { colorTemplates } from 'utils/color'
 
 const selectReg = /select.*(?= from)/
 const fromReg = /from.*(?= where|$)/
@@ -22,7 +23,7 @@ const orderbyReg = /order by.*/
 export default function TabComponent(props) {
 	const [key, setKey] = useState('Data');
 	const fonts = ['Roboto', 'Poppins'];
-	const size = ['14', '16', "32", '45'];
+	const size = ['10', '11', '12', '14', '16', '18', '20', '24', '28', "32", '36', '40', '44', '48'];
 	const [commandData, setCommandData] = useState({
 		command: "",
 		data: {
@@ -246,7 +247,7 @@ export default function TabComponent(props) {
 						<img src={align_justify} height="20px" width="20px" />
 					</div>
 				</div>
-				<div>Fill</div>
+				<div>Font color</div>
 				<Form.Control
 					type="color"
 					id="exampleColorInput"
@@ -255,7 +256,7 @@ export default function TabComponent(props) {
 					onChange={(e) => props.EditStyle({ ...props.data.style, fill: e.target.value })}
 				/>
 
-				<div>Stroke</div>
+				<div>Background color</div>
 				<Form.Control
 					type="color"
 					id="exampleColorInput"
@@ -263,6 +264,33 @@ export default function TabComponent(props) {
 					title="Choose your color"
 					onChange={(e) => props.EditStyle({ ...props.data.style, stroke: e.target.value })}
 				/>
+			</Tab>
+
+			<Tab className="p-4" eventKey="Format" label="Theme color">
+				{
+					colorTemplates.map((template, index) =>
+						<div>
+							<div
+								className={index == props.data.style.colorTemplate ? 'row mt-4 customBorder' : 'row mt-4'}
+							>
+								{`Theme ${index + 1}:`}
+							</div>
+							<div
+								className='row'
+								onClick={() => {
+									props.EditStyle({ ...props.data.style, colorTemplate: index })
+								}}
+							>
+								{
+									template.backgroundColors.map(color =>
+										<div className='m-1' style={{ width: "20px", height: "20px", backgroundColor: color }}></div>
+									)
+								}
+							</div>
+						</div>
+
+					)
+				}
 			</Tab>
 		</Tabs>
 	</div >

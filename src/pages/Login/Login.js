@@ -248,8 +248,8 @@ export default function Login(props) {
                                                     </button>
                                                 )}
                                                 buttonText="Login"
-                                                onSuccess={responseGoogle}
-                                                onFailure={responseGoogle}
+                                                onSuccess={(res) => { responseGoogle(res) }}
+                                                onFailure={(err) => { responseGoogle(err) }}
                                                 cookiePolicy={'single_host_origin'}
                                             />,
                                             <p class=" mt-3 mb-2 mx-1 mx-md-4 " style={{ fontSize: 14 }}>{localization.GGAccount}</p>

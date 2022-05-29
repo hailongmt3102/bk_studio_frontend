@@ -31,7 +31,7 @@ export default function Dashboard() {
             let peopleList = await getListPeople()
             let templateList = await getAllTemplate()
 
-            setProjectList(projectList.data)
+            setProjectList(projectList.data.reverse())
             setPeopleList(peopleList.data)
             console.log(peopleList)
             setReports(templateList.data.reverse())
