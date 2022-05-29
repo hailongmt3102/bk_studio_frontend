@@ -78,8 +78,8 @@ export default function ProjectDetail() {
             })
             .catch(err => {
                 setPeopleCanEditRoleList(false)
-                Store.addNotification(content("Fail", err.response.data, "danger"))
-                return
+                // Store.addNotification(content("Fail", err.response.data, "danger"))
+                // return
             })
         GetDataSourcesListInformationInProject({ PId: project_id })
             .then(res => {
@@ -90,7 +90,7 @@ export default function ProjectDetail() {
             .catch(err => {
                 console.log(err)
                 Store.addNotification(content("Fail", err.response.data, "danger"))
-                return
+                // return
             })
         getListPeopleByProjectID(project_id)
             .then(response => {
@@ -102,7 +102,7 @@ export default function ProjectDetail() {
                 error => {
                     setIsLoading(false)
                     Store.addNotification(content("Fail", error.response.data, "danger"))
-                    return
+                    // return
 
                 }
             )

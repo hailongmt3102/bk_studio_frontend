@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Form, InputGroup, Col } from 'react-bootstrap'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import login_image from "resources/images/login_image.png"
 import { GoogleLoginApi, LoginApi, Verify } from "api/Account"
 import lock from "resources/icons/lock.svg";
@@ -36,6 +36,7 @@ export default function Login(props) {
 
         return (false)
     }
+    const location = useLocation()
     const onSubmitHandler = () => {
         // check email and password
         if ([information.Email.length, information.Password.length].includes(0)) {
@@ -64,7 +65,12 @@ export default function Login(props) {
                     Email: information.Email,
                     UserName: res.data.UserName
                 })
-                navigate(-1)
+                // console.log(navigate.)
+                console.log(navigate.length)
+                console.log(navigate[0], navigate[-1])
+
+                if (props.havePreRoot) navigate(-1)
+                else navigate('/')
             })
             .catch((e) => {
                 console.log(e)
@@ -90,12 +96,18 @@ export default function Login(props) {
             alert("error")
         }
         else {
+            console.log("gg response ok")
             GoogleLoginApi({ tokenId: res.tokenId })
                 .then((res) => {
                     // login successful
                     localStorage.setItem("token", res.data.AccessToken)
                     localStorage.setItem("username", res.data.UserName)
-                    navigate(-1)
+                    props.setCurrentUser({
+                        Email: information.Email,
+                        UserName: res.data.UserName
+                    })
+                    if (props.havePreRoot) navigate(-1)
+                    else navigate('/')
                 })
                 .catch((err) => {
                     // login fail
@@ -236,8 +248,8 @@ export default function Login(props) {
                                                     </button>
                                                 )}
                                                 buttonText="Login"
-                                                onSuccess={() => responseGoogle}
-                                                onFailure={() => responseGoogle}
+                                                onSuccess={responseGoogle}
+                                                onFailure={responseGoogle}
                                                 cookiePolicy={'single_host_origin'}
                                             />,
                                             <p class=" mt-3 mb-2 mx-1 mx-md-4 " style={{ fontSize: 14 }}>{localization.GGAccount}</p>
