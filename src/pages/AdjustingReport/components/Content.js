@@ -89,10 +89,9 @@ const Content = React.forwardRef((props, ref) => {
                         }}
                         className={props.followingIndexComponent === index ? "customBorder" : ""}
                     >
-                        <Form.Group controlId="duedate" className='mt-4'>
+                        <Form.Group controlId="duedate">
                             <Form.Control
                                 type="text"
-                                placeholder="Enter data source name"
                                 value={shape.Title}
                                 onChange={(e) => {
                                     props.updateShapeComponent(index, {
@@ -127,10 +126,9 @@ const Content = React.forwardRef((props, ref) => {
                         }}
                         className={props.followingIndexComponent === index ? "customBorder" : ""}
                     >
-                        <Form.Group controlId="duedate" className='mt-4'>
+                        <Form.Group controlId="duedate" >
                             <Form.Control
                                 type="text"
-                                placeholder="Enter data source name"
                                 value={shape.Title}
                                 onChange={(e) => {
                                     props.updateShapeComponent(index, {
@@ -198,10 +196,9 @@ const Content = React.forwardRef((props, ref) => {
                         }}
                         className={props.followingIndexComponent === index ? "customBorder" : ""}
                     >
-                        <Form.Group controlId="duedate" className='mt-4'>
+                        <Form.Group controlId="duedate" >
                             <Form.Control
                                 type="text"
-                                placeholder="Enter data source name"
                                 value={shape.Title}
                                 onChange={(e) => {
                                     props.updateShapeComponent(index, {
@@ -270,10 +267,9 @@ const Content = React.forwardRef((props, ref) => {
                         }}
                         className={props.followingIndexComponent === index ? "customBorder" : ""}
                     >
-                        <Form.Group controlId="duedate" className='mt-4'>
+                        <Form.Group controlId="duedate" >
                             <Form.Control
                                 type="text"
-                                placeholder="Enter data source name"
                                 value={shape.Title}
                                 onChange={(e) => {
                                     props.updateShapeComponent(index, {
@@ -346,10 +342,9 @@ const Content = React.forwardRef((props, ref) => {
                         }}
                         className={props.followingIndexComponent === index ? "customBorder" : ""}
                     >
-                        <Form.Group controlId="duedate" className='mt-4'>
+                        <Form.Group controlId="duedate">
                             <Form.Control
                                 type="text"
-                                placeholder="Enter data source name"
                                 value={shape.Title}
                                 onChange={(e) => {
                                     props.updateShapeComponent(index, {
@@ -396,7 +391,9 @@ const Content = React.forwardRef((props, ref) => {
                                 }}
                                 placeholder="Text"
                                 style={{
-                                    border: `1px solid ${shape.FrameTheme.color}`,
+                                    backgroundColor : shape.FrameTheme.color,
+                                    // border: `1px solid ${shape.FrameTheme.color}`,
+                                    border: 'none',
                                     width: "100%",
                                     height: "100%",
                                     textAlign: shape.TextTheme.alignment,

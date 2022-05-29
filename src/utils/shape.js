@@ -12,6 +12,7 @@ const textStyleDefault = {
 
 const frameStyleDefault = {
     color: "#FFFFFF",
+    colorTemplate: 0
 }
 
 const positionDefault = {
