@@ -21,7 +21,7 @@ import SqlPopUp from "./components/PopUp/SqlPopUp";
 import { getInformationByPId } from "api/Project"
 import { loadingContext } from 'App';
 import * as htmlToImage from 'html-to-image';
-import { shapeBackgroundColors, shapeBorderColors } from 'utils/color';
+import { shapeBackgroundColors, shapeBorderColors, colorTemplates } from 'utils/color';
 import { ConstructionOutlined } from "@mui/icons-material";
 import jsPDF from "jspdf";
 // import { updateAvatar } from 'api/Account'
@@ -74,7 +74,8 @@ export default function AdjustingReport(props) {
             decoration: "",
             alignment: "",
             fill: "",
-            stroke: ""
+            stroke: "",
+            colorTemplate: 0
         }
     })
 
@@ -109,28 +110,134 @@ export default function AdjustingReport(props) {
         setTabData({ ...tabData, style: newStyle })
     }
 
+    const checkNeedToRerenderColor = (type) => {
+        return ["Pie Chart", "Doughnut Chart", "Line Chart", "Bar Chart", "Scatter Chart"].includes(type)
+    }
+
+    const parseDataKey = (type) => {
+        switch (type) {
+            case "Pie Chart":
+                return 'pieData'
+            case "Doughnut Chart":
+                return 'doughnutData'
+            case "Line Chart":
+                return 'lineData'
+            case "Bar Chart":
+                return 'barData'
+            case "Scatter Chart":
+                return 'pieData'
+            default:
+                return ''
+        }
+    }
+
+    const generateListColorTemplate = (templateIndex, num) => {
+        let backgroundColors = Array(num).fill(''), borderColors = Array(num).fill('')
+
+        for (let index = 0; index < num; index++) {
+            backgroundColors[index] = colorTemplates[templateIndex].backgroundColors[index % colorTemplates[templateIndex].size]
+            borderColors[index] = colorTemplates[templateIndex].borderColors[index % colorTemplates[templateIndex].size]
+        }
+
+        return { backgroundColors, borderColors }
+    }
+
     useEffect(() => {
         console.log("tab data changed ", tabData)
 
         if (followingIndexComponent < 0 || followingIndexComponent >= shapeComponents.length) {
             return
         }
-        updateShapeComponent(followingIndexComponent, {
-            ...shapeComponents[followingIndexComponent],
-            TextTheme: {
-                ...shapeComponents[followingIndexComponent].TextTheme,
-                alignment: tabData.style.alignment,
-                decoration: tabData.style.decoration,
-                font: tabData.style.font,
-                size: tabData.style.size,
-                color: tabData.style.fill,
-            },
-            FrameTheme: {
-                ...shapeComponents[followingIndexComponent].FrameTheme,
-                color: tabData.style.stroke
+        if (!checkNeedToRerenderColor(shapeComponents[followingIndexComponent].Type)) {
+            updateShapeComponent(followingIndexComponent, {
+                ...shapeComponents[followingIndexComponent],
+                TextTheme: {
+                    ...shapeComponents[followingIndexComponent].TextTheme,
+                    alignment: tabData.style.alignment,
+                    decoration: tabData.style.decoration,
+                    font: tabData.style.font,
+                    size: tabData.style.size,
+                    color: tabData.style.fill,
+                },
+                FrameTheme: {
+                    ...shapeComponents[followingIndexComponent].FrameTheme,
+                    color: tabData.style.stroke,
+                    colorTemplate: tabData.style.colorTemplate
+                }
+            })
+        }
+
+        else {
+            try {
+
+                let chartDataKey = parseDataKey(shapeComponents[followingIndexComponent].Type)
+                // generate new background color template and border color template
+                if (["Pie Chart", "Doughnut Chart"].includes(shapeComponents[followingIndexComponent].Type)) {
+                    let { backgroundColors, borderColors } = generateListColorTemplate(tabData.style.colorTemplate, shapeComponents[followingIndexComponent][chartDataKey].labels.length)
+                    updateShapeComponent(followingIndexComponent, {
+                        ...shapeComponents[followingIndexComponent],
+                        [chartDataKey]: {
+                            ...shapeComponents[followingIndexComponent][chartDataKey],
+                            datasets: [
+                                {
+                                    ...shapeComponents[followingIndexComponent][chartDataKey].datasets[0],
+                                    backgroundColor: backgroundColors,
+                                    borderColor: borderColors
+                                }
+                            ]
+                        },
+                        TextTheme: {
+                            ...shapeComponents[followingIndexComponent].TextTheme,
+                            alignment: tabData.style.alignment,
+                            decoration: tabData.style.decoration,
+                            font: tabData.style.font,
+                            size: tabData.style.size,
+                            color: tabData.style.fill,
+                        },
+                        FrameTheme: {
+                            ...shapeComponents[followingIndexComponent].FrameTheme,
+                            color: tabData.style.stroke,
+                            colorTemplate: tabData.style.colorTemplate
+                        }
+                    })
+                }
+                else {
+                    let { backgroundColors, borderColors } = generateListColorTemplate(tabData.style.colorTemplate, shapeComponents[followingIndexComponent][chartDataKey].datasets.length)
+                    updateShapeComponent(followingIndexComponent, {
+                        ...shapeComponents[followingIndexComponent],
+                        [chartDataKey]: {
+                            ...shapeComponents[followingIndexComponent][chartDataKey],
+                            datasets: shapeComponents[followingIndexComponent][chartDataKey].datasets.map((dataset, index) => {
+                                return {
+                                    ...dataset,
+                                    backgroundColor: backgroundColors[index],
+                                    borderColor: borderColors[index]
+                                }
+                            })
+                        },
+                        TextTheme: {
+                            ...shapeComponents[followingIndexComponent].TextTheme,
+                            alignment: tabData.style.alignment,
+                            decoration: tabData.style.decoration,
+                            font: tabData.style.font,
+                            size: tabData.style.size,
+                            color: tabData.style.fill,
+                        },
+                        FrameTheme: {
+                            ...shapeComponents[followingIndexComponent].FrameTheme,
+                            color: tabData.style.stroke,
+                            colorTemplate: tabData.style.colorTemplate
+                        }
+                    })
+                }
+
+            } catch (error) {
+                console.log(error)
             }
-        })
+
+        }
     }, [tabData])
+
 
     useEffect(() => {
         console.log(shapeComponents)
@@ -314,6 +421,9 @@ export default function AdjustingReport(props) {
                 componentResult[i].Position = JSON.parse(componentResult[i].Position)
                 componentResult[i].TextTheme = JSON.parse(componentResult[i].TextTheme)
                 componentResult[i].FrameTheme = JSON.parse(componentResult[i].FrameTheme)
+                let colorTemplateIndex = componentResult[i].FrameTheme.colorTemplate
+                if (!colorTemplateIndex) colorTemplateIndex = 0
+                else if (colorTemplateIndex > colorTemplates.length) colorTemplateIndex = colorTemplateIndex % colorTemplates.length
                 // don't need to fetch data from query command
                 if (!checkNeedToQueryData(componentResult[i].Type)) {
                     continue
@@ -325,9 +435,8 @@ export default function AdjustingReport(props) {
                     componentResult[i].TypeParsed = "Error"
                 } else {
                     try {
-                        let { parseResult, _colorIndex } = parseDataQueried(componentResult[i].Type, queryResult, colorIndex)
+                        let parseResult = parseDataQueried(componentResult[i].Type, queryResult, colorTemplateIndex)
 
-                        colorIndex = _colorIndex
                         // parse them json data from server
                         componentResult[i] = { ...componentResult[i], ...parseResult }
                     }
@@ -362,8 +471,7 @@ export default function AdjustingReport(props) {
 
 
     // ** parse data after query complete 
-    const parseDataQueried = (type, queryResult, currentIndexOfShapeColor) => {
-        console.log(currentIndexOfShapeColor)
+    const parseDataQueried = (type, queryResult, colorTemplateIndex) => {
         let keys, result = {}, arrayData
         switch (type) {
             case "Table":
@@ -387,14 +495,13 @@ export default function AdjustingReport(props) {
                         {
                             label: result.title,
                             data: arrayData[keys[1]],
-                            backgroundColor: arrayData[keys[0]].map((_, index) => shapeBackgroundColors[(index + currentIndexOfShapeColor) % shapeBackgroundColors.length]),
-                            borderColor: arrayData[keys[0]].map((_, index) => shapeBorderColors[(index + currentIndexOfShapeColor) % shapeBorderColors.length]),
+                            backgroundColor: arrayData[keys[0]].map((_, index) => colorTemplates[colorTemplateIndex].backgroundColors[index % colorTemplates[colorTemplateIndex].size]),
+                            borderColor: arrayData[keys[0]].map((_, index) => colorTemplates[colorTemplateIndex].borderColors[index % colorTemplates[colorTemplateIndex].size]),
                             borderWidth: 1,
                         }
                     ]
                 }
                 result.pieData = pieData
-                currentIndexOfShapeColor += arrayData[keys[0]].length
                 break
             case "Doughnut Chart":
                 keys = Object.keys(queryResult.data[0])
@@ -414,13 +521,12 @@ export default function AdjustingReport(props) {
                         {
                             label: result.title,
                             data: arrayData[keys[1]],
-                            backgroundColor: arrayData[keys[0]].map((_, index) => shapeBackgroundColors[(index + currentIndexOfShapeColor) % shapeBackgroundColors.length]),
-                            borderColor: arrayData[keys[0]].map((_, index) => shapeBorderColors[(index + currentIndexOfShapeColor) % shapeBorderColors.length]),
+                            backgroundColor: arrayData[keys[0]].map((_, index) => colorTemplates[colorTemplateIndex].backgroundColors[index % colorTemplates[colorTemplateIndex].size]),
+                            borderColor: arrayData[keys[0]].map((_, index) => colorTemplates[colorTemplateIndex].borderColors[index % colorTemplates[colorTemplateIndex].size]),
                             borderWidth: 1,
                         }
                     ]
                 }
-                currentIndexOfShapeColor += arrayData[keys[0]].length
                 result.doughnutData = doughnutData
                 break
             case "Line Chart":
@@ -446,12 +552,11 @@ export default function AdjustingReport(props) {
                             label: key,
                             data: arrayData[key],
                             fill: true,
-                            backgroundColor: shapeBackgroundColors[(index + currentIndexOfShapeColor) % shapeBackgroundColors.length],
-                            borderColor: shapeBorderColors[(index + currentIndexOfShapeColor) % shapeBorderColors.length]
+                            backgroundColor: colorTemplates[colorTemplateIndex].backgroundColors[index % colorTemplates[colorTemplateIndex].size],
+                            borderColor: colorTemplates[colorTemplateIndex].borderColors[index % colorTemplates[colorTemplateIndex].size]
                         }
                     })
                 }
-                currentIndexOfShapeColor += keys.length + 1
                 break;
             case "Scatter Chart":
                 if (queryResult.data.length == 0) return
@@ -476,12 +581,11 @@ export default function AdjustingReport(props) {
                             label: key,
                             data: arrayData[key],
                             fill: true,
-                            backgroundColor: shapeBackgroundColors[(index + currentIndexOfShapeColor) % shapeBackgroundColors.length],
-                            borderColor: shapeBorderColors[(index + currentIndexOfShapeColor) % shapeBorderColors.length]
+                            backgroundColor: colorTemplates[colorTemplateIndex].backgroundColors[index % colorTemplates[colorTemplateIndex].size],
+                            borderColor: colorTemplates[colorTemplateIndex].borderColors[index % colorTemplates[colorTemplateIndex].size]
                         }
                     })
                 }
-                currentIndexOfShapeColor += keys.length + 1
                 break;
             case "Bar Chart":
                 if (queryResult.data.length == 0) return
@@ -508,18 +612,17 @@ export default function AdjustingReport(props) {
                             label: key,
                             data: arrayData[key],
                             fill: true,
-                            backgroundColor: shapeBackgroundColors[(index + currentIndexOfShapeColor) % shapeBackgroundColors.length],
-                            borderColor: shapeBorderColors[(index + currentIndexOfShapeColor) % shapeBorderColors.length]
+                            backgroundColor: colorTemplates[colorTemplateIndex].backgroundColors[index % colorTemplates[colorTemplateIndex].size],
+                            borderColor: colorTemplates[colorTemplateIndex].borderColors[index % colorTemplates[colorTemplateIndex].size]
                         }
                     })
                 }
-                currentIndexOfShapeColor += keys.length + 1
                 break;
             default:
                 console.log("Unresolve shape type : ", props.data.Type)
                 break
         }
-        return { parseResult: result, _colorIndex: currentIndexOfShapeColor }
+        return result
     }
 
     // ** combine all function relative to getting content of report
@@ -548,8 +651,7 @@ export default function AdjustingReport(props) {
             if (checkNeedToQueryData(component.Type)) {
                 // fetch data
                 let queryResult = await queryDataOfAShape(component.QueryCommand)
-                let { parseResult, _colorIndex } = parseDataQueried(component.Type, queryResult, currentColorIndex)
-                setCurrentColorIndex(currentColorIndex + _colorIndex)
+                let parseResult = parseDataQueried(component.Type, queryResult, currentColorIndex)
                 if (queryResult == null) {
                     component.TypeParsed = "Error"
                 } else {
@@ -573,7 +675,7 @@ export default function AdjustingReport(props) {
             if (checkNeedToQueryData(shapeComponents[index].Type)) {
                 // fetch data
                 let queryResult = await queryDataOfAShape(query)
-                let { parseResult } = parseDataQueried(shapeComponents[index].Type, queryResult, 0)
+                let parseResult = parseDataQueried(shapeComponents[index].Type, queryResult, 0)
                 if (queryResult == null) {
                     // error to query data of this shape
                     parseResult.TypeParsed = "Error"
@@ -786,8 +888,8 @@ export default function AdjustingReport(props) {
                 Title: "Title",
                 Type: "Text",
                 QueryCommand: "",
-                Height: 100,
-                Width: 300,
+                Height: 50,
+                Width: 200,
                 Position: JSON.stringify(position),
                 TitleTheme: "",
                 TextTheme: JSON.stringify(textStyleDefault),
@@ -856,7 +958,8 @@ export default function AdjustingReport(props) {
                     decoration: shapeData.TextTheme.decoration,
                     alignment: shapeData.TextTheme.alignment,
                     fill: shapeData.TextTheme.color,
-                    stroke: shapeData.FrameTheme.color
+                    stroke: shapeData.FrameTheme.color,
+                    colorTemplate: shapeData.FrameTheme.colorTemplate ? shapeData.FrameTheme.colorTemplate : 0
                 }
             }
             setTabData(tab)

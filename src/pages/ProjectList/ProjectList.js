@@ -29,9 +29,9 @@ export default function ProjectList() {
         getListProject()
             .then(response => {
 
-                setProjectList(response.data)
+                setProjectList(response.data.reverse())
                 //console.log(response.data.length)
-                setLastProjectId(response.data.length !== 0 ? response.data.length : 0)
+                setLastProjectId(response.data.length)
                 setIsLoading(false)
                 //console.log(lastProjectId)
             })
@@ -43,6 +43,14 @@ export default function ProjectList() {
                 }
             )
     }, [appendProject])
+
+    const updateData = (index, newData) => {
+        try {
+            setProjectList([...projectList.slice(0, index), newData, ...projectList.slice(index + 1)])
+        } catch (error) {
+
+        }
+    }
 
     return (
         <div>
@@ -79,11 +87,11 @@ export default function ProjectList() {
 
                 <div className='row'  >
                     {
-                        projectList.slice(0).reverse().map((project, index) => {
+                        projectList.map((project, index) => {
                             return <div id={index} className="col mt-4" style={{ maxWidth: "450px" }}>
                                 <ProjectBox
                                     data={project}
-
+                                    updateData={(newData) => updateData(index, newData)}
                                 />
                             </div>
                         })
