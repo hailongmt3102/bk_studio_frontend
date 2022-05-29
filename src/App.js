@@ -124,7 +124,7 @@ function App() {
                                 <Drawer state={drawerState} setDrawerState={setDrawerState} currentUser={currentUser} />
                                 <ChatOverlay visibility={true} />
                                 <div className="custombackground">
-                                    <Header currentUser={currentUser} setCurrentUser={setCurrentUser}/>
+                                    <Header currentUser={currentUser} setCurrentUser={setCurrentUser} />
                                     <Routes>
                                         <Route path="/" exact element={<Dashboard />} >
                                         </Route>
@@ -139,7 +139,9 @@ function App() {
                                         />
 
                                         <Route path="/people" element={<People />} />
-                                        <Route path="/account/login" element={<Login setCurrentUser={setCurrentUser}/>} />
+                                        <Route path="/account/login" element={<Login setCurrentUser={setCurrentUser} havePreRoot={false} />} />
+                                        <Route path="/account/login/expired" element={<Login setCurrentUser={setCurrentUser} havePreRoot={true} />} />
+
 
                                         <Route path="/account/forgetPassword" element={<ForgetPassword />} />
                                         <Route path="/account/register" element={<Register />} />
