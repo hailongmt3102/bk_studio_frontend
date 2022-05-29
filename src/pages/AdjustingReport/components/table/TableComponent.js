@@ -64,8 +64,8 @@ export default function TableComponent(props) {
     return (
         <div
             onClick={(e) => {
-                console.log("asdf")
-                console.log(optionRef.current.contains(e.target))
+                // console.log("asdf")
+                // console.log(optionRef.current.contains(e.target))
             }}
         >
 

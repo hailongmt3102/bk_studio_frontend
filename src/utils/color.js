@@ -149,7 +149,7 @@ const colorTemplate4 = {
 }
 
 const colorTemplate5 = {
-    size: 5,
+    size: 8,
     backgroundColors: [
         'rgba(119,136,153, 0.8)',
         'rgba(178,34,34, 0.8)',
@@ -173,7 +173,7 @@ const colorTemplate5 = {
 }
 
 const colorTemplate6 = {
-    size: 5,
+    size: 8,
     backgroundColors: [
         'rgba(29, 6, 184, 0.8)',
         'rgba(78, 70, 133, 0.8)',
