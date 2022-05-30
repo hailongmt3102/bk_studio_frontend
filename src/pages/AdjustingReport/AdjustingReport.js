@@ -125,7 +125,7 @@ export default function AdjustingReport(props) {
             case "Bar Chart":
                 return 'barData'
             case "Scatter Chart":
-                return 'pieData'
+                return 'lineData'
             default:
                 return ''
         }
