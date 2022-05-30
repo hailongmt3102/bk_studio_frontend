@@ -132,7 +132,7 @@ export default function Profile() {
                             </Col>
                         </Form.Group>
                     </div>
-                    <div class=" justify-content-start align-items-center py-2">
+                    {/* <div class=" justify-content-start align-items-center py-2">
                         <Form.Group as={Row} controlId="formPlaintextPassword">
                             <Form.Label style={{ fontSize: 14 }} >Email</Form.Label>
                             <Col sm="5" onChange={(e) => {
@@ -143,6 +143,11 @@ export default function Profile() {
                                 <Form.Control type="text" value={information.Email} />
                             </Col>
                         </Form.Group>
+                    </div> */}
+                    <div className="mt-2">
+                        Email:{
+                            " " + information.Email
+                        }
                     </div>
                     <div class="d-md-flex justify-content-start align-items-center py-2 mt-1 mb-1">
                         <div class="mb-0 me-4 customwhitetext" style={{ fontSize: 14 }}>Gender: </div>
@@ -199,7 +204,7 @@ export default function Profile() {
                             </Col>
                         </Form.Group>
                     </div>
-
+                    {/* 
                     <div class=" justify-content-start align-items-center py-2">
                         <Form.Group as={Row} controlId="formPlaintextPassword">
                             <Form.Label style={{ fontSize: 14 }} >Company</Form.Label>
@@ -211,7 +216,7 @@ export default function Profile() {
                                 <Form.Control type="text" value={information.Company} />
                             </Col>
                         </Form.Group>
-                    </div>
+                    </div> */}
                     <div class=" justify-content-start align-items-center py-2">
                         <Form.Group as={Row} controlId="formPlaintextPassword">
                             <Form.Label style={{ fontSize: 14 }} >Address</Form.Label>
