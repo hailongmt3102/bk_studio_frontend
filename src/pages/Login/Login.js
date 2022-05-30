@@ -93,7 +93,8 @@ export default function Login(props) {
 
     const responseGoogle = (res) => {
         if (res.error) {
-            alert("error")
+            // alert("error")
+            console.log("error")
         }
         else {
             console.log("gg response ok")

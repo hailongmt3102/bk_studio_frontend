@@ -22,7 +22,7 @@ const orderbyReg = /order by.*/
 
 export default function TabComponent(props) {
 	const [key, setKey] = useState('Data');
-	const fonts = ['Roboto', 'Poppins'];
+	const fonts = ['Arial', 'Calibri', 'Noto' ,'Roboto', 'Poppins'];
 	const size = ['10', '11', '12', '14', '16', '18', '20', '24', '28', "32", '36', '40', '44', '48'];
 	const [commandData, setCommandData] = useState({
 		command: "",
@@ -266,17 +266,17 @@ export default function TabComponent(props) {
 				/>
 			</Tab>
 
-			<Tab className="p-4" eventKey="Format" label="Theme color">
+			<Tab className="p-2" eventKey="Format" label="Theme color">
 				{
 					colorTemplates.map((template, index) =>
 						<div>
 							<div
-								className={index == props.data.style.colorTemplate ? 'row mt-4 customBorder' : 'row mt-4'}
+								className='mt-4'
 							>
 								{`Theme ${index + 1}:`}
 							</div>
 							<div
-								className='row'
+								className={index == props.data.style.colorTemplate ? 'm-1 row customBorder' : 'm-1 row'}
 								onClick={() => {
 									props.EditStyle({ ...props.data.style, colorTemplate: index })
 								}}

@@ -170,6 +170,16 @@ export default function EditModel() {
         })
             .then(res => {
                 Store.addNotification(content("Success", "Edited", "success"))
+                nav("/machinelearning/modelDetail/" + Id, {
+                    state: {
+                        MId: Id,
+                        input: input,
+                        output: output,
+                        MName: MName,
+                        Api: Api,
+                        MDescription: MDescription,
+                    }
+                })
             })
             .catch(err => {
                 Store.addNotification(content("Fail", err.response.data, "danger"))
