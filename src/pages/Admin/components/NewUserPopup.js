@@ -21,7 +21,7 @@ export default function NewUserPopup(props) {
 
     const [newUserInfo, setNewUserInfo] = useState({
         Email: "",
-        Password: "",
+        // Password: "",
         UserName: "",
         Position: "Member"
     })
@@ -66,7 +66,7 @@ export default function NewUserPopup(props) {
                             placeholder="Enter Username"
                         />
                     </Form.Group>
-                    <Form.Group controlId="duedate" className='mt-4'>
+                    {/* <Form.Group controlId="duedate" className='mt-4'>
                         <Form.Label>
                             Password
                         </Form.Label>
@@ -82,12 +82,12 @@ export default function NewUserPopup(props) {
                             <a class="btn shadow-none border-top border-bottom border-end" onClick={() => { setisVisible(!isVisible) }}><img width="20px" height="20px" src={isVisible ? visible : invisible}></img></a>
                         </InputGroup>
 
-                        {/* <Form.Control
+                        <Form.Control
                             type="text"
                             name="duedate"
 
-                        /> */}
-                    </Form.Group>
+                        />
+                    </Form.Group> */}
 
 
 
