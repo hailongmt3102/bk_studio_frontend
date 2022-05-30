@@ -10,12 +10,17 @@ export default function Template(props) {
     const localization = useContext(localizationContext)
     const [reports, setReports] = useState([])
     const setIsLoading = useContext(loadingContext)
+
+
+    const deleteAReport = (index) => {
+        setReports([...reports.slice(0, index), ...reports.slice(index + 1)])
+    }
     useEffect(() => {
         setIsLoading(true)
         getAllTemplate()
             .then(res => {
                 console.log(res.data)
-                setReports(res.data.reverse())
+                setReports(res.data)
                 setIsLoading(false)
             })
             .catch(err => {
@@ -33,10 +38,10 @@ export default function Template(props) {
 
             <div className='customforeground'>
                 <div className='row m-0 p-0 justify-content-center'>
-                    {reports.map(ele =>
+                    {reports.map((ele, index) =>
                         <div className='col m-0 p-0' style={{ "minWidth": "600px", "maxWidth": "600px" }} >
                             <div className='ms-4 mt-5 pe-4'>
-                                <ReportCard data={ele} type="Template" />
+                                <ReportCard data={ele} type="Template" deleteAReport={() => deleteAReport(index)} />
                             </div>
                         </div>
                     )}

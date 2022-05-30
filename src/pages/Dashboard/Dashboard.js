@@ -34,7 +34,7 @@ export default function Dashboard() {
             setProjectList(projectList.data.reverse())
             setPeopleList(peopleList.data)
             console.log(peopleList)
-            setReports(templateList.data.reverse())
+            setReports(templateList.data)
             setIsLoading(false)
         } catch (error) {
             setIsLoading(false)
