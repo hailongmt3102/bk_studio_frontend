@@ -94,6 +94,7 @@ const data = {
         Free: "Miễn phí",
         VIP: "VIP",
         usetool: "Sử dụng tool",
+        createreports: "Tạo báo cáo",
         addData: "Không giới hạn thêm nguồn dữ liệu",
         sharereports: "Chia sẻ nhiều báo cáo",
         limitPro: "Không giới hạn dự án",

@@ -77,8 +77,8 @@ export default function Login(props) {
                 if (e.response.data == "Verify required") {
                     setConfirmDialog({ ...confirmDialog, isOpen: true })
                 }
-                // Store.addNotification(content("Warning", e.response.data, "danger"))
-                // return
+                Store.addNotification(content("Warning", "Your email or password was wrong", "danger"))
+                return
                 //alert(e.response.data);
             })
     }
@@ -98,23 +98,23 @@ export default function Login(props) {
         }
         else {
             console.log("gg response ok")
-            GoogleLoginApi({ tokenId: res.tokenId })
-                .then((res) => {
-                    // login successful
-                    localStorage.setItem("token", res.data.AccessToken)
-                    localStorage.setItem("username", res.data.UserName)
-                    props.setCurrentUser({
-                        Email: information.Email,
-                        UserName: res.data.UserName
-                    })
-                    if (props.havePreRoot) navigate(-1)
-                    else navigate('/')
-                })
-                .catch((err) => {
-                    // login fail
-                    Store.addNotification(content("Warning", "Google Login Fail", "danger"))
-                    return
-                })
+            // GoogleLoginApi({ tokenId: res.tokenId })
+            //     .then((res) => {
+            //         // login successful
+            //         localStorage.setItem("token", res.data.AccessToken)
+            //         localStorage.setItem("username", res.data.UserName)
+            //         props.setCurrentUser({
+            //             Email: information.Email,
+            //             UserName: res.data.UserName
+            //         })
+            //         if (props.havePreRoot) navigate(-1)
+            //         else navigate('/')
+            //     })
+            //     .catch((err) => {
+            //         // login fail
+            //         Store.addNotification(content("Warning", "Google Login Fail", "danger"))
+            //         return
+            //     })
         }
     }
 

@@ -18,8 +18,8 @@ import reportDefault from "resources/images/reportDefault.jpg"
 export default function TemplateMiniCard(props) {
     const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: '', subTitle: '' })
 
-    const option_list = ["Download", "Delete"]
-    const icons_list = [download_blue, delete_icon]
+    const option_list = ["Delete"]
+    const icons_list = [delete_icon]
     const nav = useNavigate()
     const RId = props.data.Id
     const currentProject = localStorage.getItem("currentProject")

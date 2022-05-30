@@ -460,7 +460,7 @@ export default function SqlPopUp(props) {
             </div>
 
             {
-                where_clause.map((clause, index) =>
+                where_clause.map((clause, index) => clause.active &&
                     <div className='row m-0 p-0'>
                         <div className='col-5  ms-1 m-auto'>
                             <Autocomplete
@@ -569,7 +569,7 @@ export default function SqlPopUp(props) {
                 </div>
             </div>
             {
-                having_clause.map((clause, index) =>
+                having_clause.map((clause, index) => clause.active &&
                     <div className='row m-0 p-0'>
                         <div className='col-5  m-auto'>
                             <div className='ms-5'>
@@ -658,7 +658,7 @@ export default function SqlPopUp(props) {
 
             <div className='row p-0 m-0 mt-3'>
                 {
-                    order_clause.map((clause, index) =>
+                    order_clause.map((clause, index) => clause.active &&
                         <div className='row'>
                             <div className='col-5 m-auto'>
                                 <div className='ms-3'>
