@@ -39,6 +39,7 @@ export default function ReportCard(props) {
     }, [])
     const handleCloseNo = () => {
         setConfirmDialog({ ...ConfirmDialog, isOpen: false })
+
     }
     const handleOpen = () => {
         setConfirmDialog({ ...ConfirmDialog, isOpen: true })
@@ -115,6 +116,7 @@ export default function ReportCard(props) {
                 .then(res => {
                     Store.addNotification(content("Success", "Deleted Template", "success"))
                     props.deleteAReport()
+                    handleCloseNo()
                 })
                 .catch(err => {
                     Store.addNotification(content("Fail", err.response.data, "danger"))
