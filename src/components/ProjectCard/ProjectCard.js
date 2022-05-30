@@ -99,6 +99,7 @@ export default function ProjectCard(props) {
             .catch((e) => {
                 //console.log(e.response)
                 Store.addNotification(content("Fail", e.response.data, "danger"))
+                setpressEdit(false)
                 return
                 // alert(e.response.data);
             })

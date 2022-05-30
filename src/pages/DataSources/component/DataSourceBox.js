@@ -64,6 +64,7 @@ export default function DataSourceBox(props) {
             })
             .catch(err => {
                 Store.addNotification(content("Fail", "Rename Fail", "danger"))
+                setPressRename(false)
                 console.log(err.response.data)
             })
     }
@@ -200,7 +201,6 @@ export default function DataSourceBox(props) {
                     onClick={(val) => {
                         if (val == "Delete") {
                             handleOpen()
-
                         }
                         else if (val === "Rename") {
                             setPressRename(true)
