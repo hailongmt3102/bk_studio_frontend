@@ -46,6 +46,7 @@ export default function ML() {
                         output: "",
                         MName: "New model",
                         Api: "",
+                        Token: "",
                     }
                 })
             }).catch(err => {
