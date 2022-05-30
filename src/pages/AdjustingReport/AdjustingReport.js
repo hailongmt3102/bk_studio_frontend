@@ -1238,6 +1238,7 @@ export default function AdjustingReport(props) {
                 />
 
                 <ShareWithPopUp
+                    author={reportInformation.Author}
                     currentProject={currentProject}
                     RId={RId}
                     show={showSharePopUp}
