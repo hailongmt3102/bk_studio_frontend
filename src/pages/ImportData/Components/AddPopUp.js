@@ -16,13 +16,17 @@ const orangeStyle = {
 
 export default function AddPopUp(props) {
 
-    const [name, setName] = useState("")
-    const [url, setUrl] = useState("")
+    const [connection, setConnection] = useState({
+        host: "",
+        port: "",
+        user: "",
+        password: ""
+    })
     // useEffect(() => {
     //     setProjectInfo({ ...projectInfo, Name: `Project ${props.newProjectId}` })
     // }, [props.newProjectId])
     const onsubmit = () => {
-        props.onComplete(name, url)
+        props.onComplete(connection)
     }
     const body = () => {
         return (
@@ -32,10 +36,11 @@ export default function AddPopUp(props) {
 
                         <Form.Control
                             type="text"
-                            placeholder="Enter data source name"
-                            value={name}
+                            placeholder="URL"
+                            // value={name}
                             onChange={(e) => {
-                                setName(e.target.value)
+                                setConnection({ ...connection, host: e.target.value })
+                                // setName(e.target.value)
                             }}
                         />
                     </Form.Group>
@@ -43,13 +48,36 @@ export default function AddPopUp(props) {
 
                         <Form.Control
                             type="text"
-                            placeholder="URL"
-                            value={url}
+                            placeholder="Port"
+                            // value={url}
                             onChange={(e) => {
-                                setUrl(e.target.value)
+                                setConnection({ ...connection, port: e.target.value })
                             }}
                         />
                     </Form.Group>
+                    <Form.Group controlId="duedate" className='mt-4'>
+
+                        <Form.Control
+                            type="text"
+                            placeholder="User"
+                            // value={url}
+                            onChange={(e) => {
+                                setConnection({ ...connection, user: e.target.value })
+                            }}
+                        />
+                    </Form.Group>
+                    <Form.Group controlId="duedate" className='mt-4'>
+
+                        <Form.Control
+                            type="text"
+                            placeholder="Password"
+                            // value={url}
+                            onChange={(e) => {
+                                setConnection({ ...connection, password: e.target.value })
+                            }}
+                        />
+                    </Form.Group>
+
 
 
                 </Form>
@@ -64,7 +92,7 @@ export default function AddPopUp(props) {
             size="lg"
         >
             <Modal.Header closeButton>
-                API:
+                Database connection:
             </Modal.Header>
             <Modal.Body>
                 {
