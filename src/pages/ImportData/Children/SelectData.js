@@ -60,8 +60,38 @@ export default function SelectData(props) {
             const result = fileReader.result.split('\n');
             console.log("Mang ne", result)
             // console.log("doc dc file", fileReader.result)
-            setConnection({ ...connection, host: result[0], port: result[1], user: result[2], password: result[3] })
-            // fetchFromTxt()
+            // setConnection({ ...connection, host: result[0], port: result[1], user: result[2], password: result[3] })
+            ScanTableFromSQL(
+                {
+                    connectionInfo: {
+                        host: result[0].replace('\r', ''),
+                        port: parseInt(result[1].replace('\r', '')),
+                        user: result[2].replace('\r', ''),
+                        password: result[3].replace('\r', ''),
+                    }
+                })
+                .then(res => {
+                    console("gui thanh cong", res.response.data)
+                    // setIsLoading(false)
+                    // Store.addNotification(content("Success", "Imported data", "success"), {
+                    //     duration: 5000
+                    // })
+                    // navigate("/pDetail/" + currentProjectId)
+                    // setStep(1)
+
+
+                    // props.setDataFile(data)
+                    // props.onloadComplete()
+                })
+                .catch(err => {
+                    // setIsLoading(false)
+                    // Store.addNotification(content("Fail", err.response.data, "danger"), {
+                    //     duration: 10000
+                    // })
+                    // console.log("Loi ne", )
+                    return
+                })
+
         }
         fileReader.onerror = () => {
             console.log("Khong thanh cong")
@@ -135,53 +165,53 @@ export default function SelectData(props) {
         password: ""
     })
 
-    const fetchFromTxt = () => {
+    // const fetchFromTxt = (param) => {
 
-        console.log(connection)
+    //     console.log('param', param)
 
-        ScanTableFromSQL({ connectionInfo: connection })
-            .then(res => {
-                console("gui thanh cong", res.response.data)
-                // setIsLoading(false)
-                // Store.addNotification(content("Success", "Imported data", "success"), {
-                //     duration: 5000
-                // })
-                // navigate("/pDetail/" + currentProjectId)
-                // setStep(1)
+    //     ScanTableFromSQL({ connectionInfo: param })
+    //         .then(res => {
+    //             console.log("gui thanh cong", res.response.data)
+    //             // setIsLoading(false)
+    //             // Store.addNotification(content("Success", "Imported data", "success"), {
+    //             //     duration: 5000
+    //             // })
+    //             // navigate("/pDetail/" + currentProjectId)
+    //             // setStep(1)
 
 
-                // props.setDataFile(data)
-                // props.onloadComplete()
-            })
-            .catch(err => {
-                // setIsLoading(false)
-                // Store.addNotification(content("Fail", err.response.data, "danger"), {
-                //     duration: 10000
-                // })
-                // console.log("Loi ne", )
-                return
-            })
-        // let response = await getAPI(api)
-        // props.setFileInformation({ name: name })
-        // props.setDataFile(response)
-        // props.onloadComplete()
+    //             // props.setDataFile(data)
+    //             // props.onloadComplete()
+    //         })
+    //         .catch(err => {
+    //             // setIsLoading(false)
+    //             // Store.addNotification(content("Fail", err.response.data, "danger"), {
+    //             //     duration: 10000
+    //             // })
+    //             // console.log("Loi ne", )
+    //             return
+    //         })
+    //     // let response = await getAPI(api)
+    //     // props.setFileInformation({ name: name })
+    //     // props.setDataFile(response)
+    //     // props.onloadComplete()
 
-    }
-
-    // const fetchFromAPI = async (name, api) => {
-    //     try {
-    //         let response = await getAPI(api)
-    //         props.setFileInformation({ name: name })
-    //         props.setDataFile(response)
-    //         props.onloadComplete()
-    //     } catch (error) {
-    //         Store.addNotification(content("Warning", "Some thing went wrong from your api link\nPlease check carefully", "danger"))
-    //     }
     // }
+
+    // // const fetchFromAPI = async (name, api) => {
+    // //     try {
+    // //         let response = await getAPI(api)
+    // //         props.setFileInformation({ name: name })
+    // //         props.setDataFile(response)
+    // //         props.onloadComplete()
+    // //     } catch (error) {
+    // //         Store.addNotification(content("Warning", "Some thing went wrong from your api link\nPlease check carefully", "danger"))
+    // //     }
+    // // }
 
     const [show, setShow] = useState(false)
 
-    const submitAPIHandle = (param) => {
+    const submitConnectDatabaseByUserFillinHandle = (param) => {
         setShow(false)
 
         // fetchFromAPI(name, url)
@@ -216,8 +246,9 @@ export default function SelectData(props) {
                 handleClose={() => {
                     setShow(false)
                 }}
-                onComplete={submitAPIHandle}
+                onComplete={submitConnectDatabaseByUserFillinHandle}
             />
+
             <div>
                 <div>
                     <h5 className='ms-4 mt-2 size22 customFontBold'>{localStorage.getItem("currentProjectName") ? localStorage.getItem("currentProjectName") + ":" : ""}</h5>
