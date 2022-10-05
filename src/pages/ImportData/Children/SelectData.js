@@ -204,7 +204,7 @@ export default function SelectData(props) {
             <AddPopUp
                 show={showAddPopUp}
                 handleClose={() => {
-                    // setShow(false)
+                    setShowAddPopUp(false)
                 }}
                 onComplete={submitConnectDatabaseByUserFillinHandle}
             />
