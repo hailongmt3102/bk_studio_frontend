@@ -11,7 +11,8 @@ import { getAPI } from 'api/ML_API'
 import AddPopUp from "../Components/AddPopUp";
 import Papa from "papaparse";
 
-
+import { ScanTableFromSQL, GetTableContent } from 'api/DataSources'
+import ShowListTablePopUp from '../Components/ShowListTablePopUp'
 
 export default function SelectData(props) {
     const localization = useContext(localizationContext)
@@ -26,16 +27,6 @@ export default function SelectData(props) {
             alert("invalid format, expected : .csv")
             return
         }
-        // props.setFileInformation({ ...file, name: file.name.replaceAll('.', '_') })
-        // const fileReader = new FileReader();
-        // fileReader.onload = function (event) {
-        //     const csvOutput = event.target.result;
-        //     executeStringResult(csvOutput)
-        // };
-        // fileReader.readAsText(file);
-
-        // const files = e.target.files;
-        // console.log(files);
         if (files) {
             // console.log(files[0]);
             const file = files[0]
@@ -55,6 +46,31 @@ export default function SelectData(props) {
 
 
         }
+    };
+    const handleReadTextOnChange = (e) => {
+        let file = e.target.files[0];
+        if (!file.name.includes('.txt')) {
+            alert("invalid format, expected : .txt")
+            return
+        }
+
+        const fileReader = new FileReader();
+        fileReader.readAsText(file);
+        fileReader.onload = () => {
+            const result = fileReader.result.split('\n');
+            submitConnectDatabaseByUserFillinHandle(
+                {
+                    host: result[0].replace('\r', ''),
+                    port: parseInt(result[1].replace('\r', '')),
+                    user: result[2].replace('\r', ''),
+                    password: result[3].replace('\r', ''),
+                }
+            )
+        }
+        fileReader.onerror = () => {
+            console.log("Khong thanh cong")
+        }
+
     };
 
     const JsonHandleOnChange = (e) => {
@@ -95,6 +111,7 @@ export default function SelectData(props) {
                 // console.log(data)
 
                 props.setDataFile(data)
+                console.log("excel file: \n", data)
                 props.onloadComplete()
             };
 
@@ -113,63 +130,93 @@ export default function SelectData(props) {
     const inputFile = useRef(null)
     const inputXLSXFile = useRef(null)
     const inputJsonFile = useRef(null)
+    const inputTxtFile = useRef(null)
 
-    const fetchFromAPI = async (name, api) => {
-        try {
-            let response = await getAPI(api)
-            props.setFileInformation({ name: name })
-            props.setDataFile(response)
-            props.onloadComplete()
-        } catch (error) {
-            Store.addNotification(content("Warning", "Some thing went wrong from your api link\nPlease check carefully", "danger"))
-        }
+
+    const [connection, setConnection] = useState({
+        host: "",
+        port: "",
+        user: "",
+        password: ""
+    })
+
+
+
+    const [showListTablePopUp, setShowListTablePopUp] = useState(false)
+    const [showAddPopUp, setShowAddPopUp] = useState(false)
+    const [data, setData] = useState([])
+
+    const submitConnectDatabaseByUserFillinHandle = (param) => {
+        setShowAddPopUp(false)
+        // fetchFromAPI(name, url)
+        setConnection(param)
+        ScanTableFromSQL({ connectionInfo: param })
+            .then(res => {
+                console.log("gui thanh cong", res.data)
+                setShowListTablePopUp(true)
+                setData(res.data)
+            })
+            .catch(err => {
+                return
+            })
     }
 
-    const [show, setShow] = useState(false)
+    const fetchDataFromTable = (name, schema) => {
 
-    const submitAPIHandle = (name, url) => {
-        setShow(false)
+        // console.log("connectionInfo", connection)
+        // console.log("name", name)
+        // console.log("schema", schema)
+        props.setFileInformation({ ...props.fileInformation, name: name.replace(/[\s\.-]/g, "_") })
+        GetTableContent(
+            {
+                connectionInfo: connection,
+                table: name,
+                schema: schema
+            }
+        )
+            .then(res => {
+                console.log("gui thanh cong", res.data)
+                // setShowListTablePopUp(true)
+                props.setDataFile(res.data)
+                console.log("data ne: \n", res.data)
+                props.onloadComplete()
+                // Store.addNotification(content("Success", "Imported data", "success"), {
+                //     duration: 5000
+                // })
+                // navigate("/pDetail/" + currentProjectId)
+                // setStep(1)
 
-        fetchFromAPI(name, url)
+
+                // props.setDataFile(data)
+                // props.onloadComplete()
+            })
+            .catch(err => {
+                // Store.addNotification(content("Fail", err.response.data, "danger"), {
+                //     duration: 10000
+                // })
+                // console.log("Loi ne")
+                return
+            })
     }
-    // const executeStringResult = (result) => {
-    //     if (!result) {
-    //         Store.addNotification(content("Warning", "Some thing went wrong from your data source\nPlease check carefully", "danger"))
-    //         return
-    //     }
-    //     let data = []
-    //     let endline = "\n"
-    //     if (/\r\n/.test(result)) endline = "\r\n"
-    //     else if (/\r/.test(result)) endline = "\r"
-    //     let dataSheet = result.split(endline)
-    //     if (dataSheet.length === 0) return
-    //     // find the sign to split string
-    //     let divider = dataSheet[0].includes(',') ? ',' : ';'
-    //     let keys = dataSheet[0].split(divider).filter(key => key != "")
-    //     keys.map((ele, index) => ele.includes('\"') ? keys[index] = ele.substring(1, ele.length - 1) : ele)
-    //     dataSheet.map((row, index) => {
-    //         if (row.includes(divider)) {
-    //             if (index !== 0) {
-    //                 let rows = {}
-    //                 row.split(divider).map((ele, index) => {
-    //                     rows[keys[index]] = ele.includes('\"') ? ele.substring(1, ele.length - 1) : ele
-    //                 })
-    //                 data.push(rows)
-    //             }
-    //         }
-    //     })
-    //     props.setDataFile([...data])
-    //     props.onloadComplete()
-    // }
+
     return (
         <div>
             <AddPopUp
-                show={show}
+                show={showAddPopUp}
                 handleClose={() => {
-                    setShow(false)
+                    setShowAddPopUp(false)
                 }}
-                onComplete={submitAPIHandle}
+                onComplete={submitConnectDatabaseByUserFillinHandle}
             />
+            <ShowListTablePopUp
+                show={showListTablePopUp}
+                handleClose={() => {
+                    setShowListTablePopUp(false)
+                }}
+                data={data}
+                onComplete={fetchDataFromTable}
+            />
+
             <div>
                 <div>
                     <h5 className='ms-4 mt-2 size22 customFontBold'>{localStorage.getItem("currentProjectName") ? localStorage.getItem("currentProjectName") + ":" : ""}</h5>
@@ -225,13 +272,24 @@ export default function SelectData(props) {
                             type={"file"}
                             id={"jsonFileInput"}
                             accept={".json"}
-                            //onChange={handleOnChange}
                             style={{ display: "none" }}
                         />
                         <ImportButton text={localization.connectToDB} image={db} onClick={() => {
                             // openFile()
-                            setShow(true)
+                            setShowAddPopUp(true)
 
+                        }} />
+                    </div>
+                    <div className='col-4 ms-4 m-0 p-0' style={{ maxWidth: "240px" }}>
+                        <input
+                            ref={inputTxtFile}
+                            type={"file"}
+                            id={"configfile"}
+                            onChange={handleReadTextOnChange}
+                            style={{ display: "none" }}
+                        />
+                        <ImportButton text="Config file" image={ImportFileImage} onClick={() => {
+                            inputTxtFile.current.click()
                         }} />
                     </div>
                 </div>

@@ -12,8 +12,8 @@ import DialogTitle from '@mui/material/DialogTitle';
 import SwitchSvg from 'resources/icons/drawerIcons/switch.svg'
 import CheckedSvg from 'resources/icons/drawerIcons/checked.svg'
 export default function ProjectListPopUp(props) {
-    console.log(props.projectList)
-    console.log("cur", props.curProject, props)
+    // console.log(props.projectList)
+    // console.log("cur", props.curProject, props)
     return (
         <div>
             <Dialog
