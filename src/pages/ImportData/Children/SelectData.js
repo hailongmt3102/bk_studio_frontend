@@ -12,6 +12,7 @@ import AddPopUp from "../Components/AddPopUp";
 import Papa from "papaparse";
 
 import { ScanTableFromSQL } from 'api/DataSources'
+import ShowListTablePopUp from '../Components/ShowListTablePopUp'
 
 export default function SelectData(props) {
     const localization = useContext(localizationContext)
@@ -48,7 +49,6 @@ export default function SelectData(props) {
     };
     const handleReadTextOnChange = (e) => {
         let file = e.target.files[0];
-
         if (!file.name.includes('.txt')) {
             alert("invalid format, expected : .txt")
             return
@@ -58,45 +58,19 @@ export default function SelectData(props) {
         fileReader.readAsText(file);
         fileReader.onload = () => {
             const result = fileReader.result.split('\n');
-            console.log("Mang ne", result)
-            // console.log("doc dc file", fileReader.result)
-            // setConnection({ ...connection, host: result[0], port: result[1], user: result[2], password: result[3] })
-            ScanTableFromSQL(
+            submitConnectDatabaseByUserFillinHandle(
                 {
-                    connectionInfo: {
-                        host: result[0].replace('\r', ''),
-                        port: parseInt(result[1].replace('\r', '')),
-                        user: result[2].replace('\r', ''),
-                        password: result[3].replace('\r', ''),
-                    }
-                })
-                .then(res => {
-                    console("gui thanh cong", res.response.data)
-                    // setIsLoading(false)
-                    // Store.addNotification(content("Success", "Imported data", "success"), {
-                    //     duration: 5000
-                    // })
-                    // navigate("/pDetail/" + currentProjectId)
-                    // setStep(1)
-
-
-                    // props.setDataFile(data)
-                    // props.onloadComplete()
-                })
-                .catch(err => {
-                    // setIsLoading(false)
-                    // Store.addNotification(content("Fail", err.response.data, "danger"), {
-                    //     duration: 10000
-                    // })
-                    // console.log("Loi ne", )
-                    return
-                })
-
+                    host: result[0].replace('\r', ''),
+                    port: parseInt(result[1].replace('\r', '')),
+                    user: result[2].replace('\r', ''),
+                    password: result[3].replace('\r', ''),
+                }
+            )
         }
         fileReader.onerror = () => {
             console.log("Khong thanh cong")
         }
-        // console.log("result txt file", fileReader.result)
+
     };
 
     const JsonHandleOnChange = (e) => {
@@ -165,60 +139,20 @@ export default function SelectData(props) {
         password: ""
     })
 
-    // const fetchFromTxt = (param) => {
-
-    //     console.log('param', param)
-
-    //     ScanTableFromSQL({ connectionInfo: param })
-    //         .then(res => {
-    //             console.log("gui thanh cong", res.response.data)
-    //             // setIsLoading(false)
-    //             // Store.addNotification(content("Success", "Imported data", "success"), {
-    //             //     duration: 5000
-    //             // })
-    //             // navigate("/pDetail/" + currentProjectId)
-    //             // setStep(1)
 
 
-    //             // props.setDataFile(data)
-    //             // props.onloadComplete()
-    //         })
-    //         .catch(err => {
-    //             // setIsLoading(false)
-    //             // Store.addNotification(content("Fail", err.response.data, "danger"), {
-    //             //     duration: 10000
-    //             // })
-    //             // console.log("Loi ne", )
-    //             return
-    //         })
-    //     // let response = await getAPI(api)
-    //     // props.setFileInformation({ name: name })
-    //     // props.setDataFile(response)
-    //     // props.onloadComplete()
+    const [showListTablePopUp, setShowListTablePopUp] = useState(false)
+    const [showAddPopUp, setShowAddPopUp] = useState(false)
 
-    // }
-
-    // // const fetchFromAPI = async (name, api) => {
-    // //     try {
-    // //         let response = await getAPI(api)
-    // //         props.setFileInformation({ name: name })
-    // //         props.setDataFile(response)
-    // //         props.onloadComplete()
-    // //     } catch (error) {
-    // //         Store.addNotification(content("Warning", "Some thing went wrong from your api link\nPlease check carefully", "danger"))
-    // //     }
-    // // }
-
-    const [show, setShow] = useState(false)
 
     const submitConnectDatabaseByUserFillinHandle = (param) => {
-        setShow(false)
-
+        setShowAddPopUp(false)
         // fetchFromAPI(name, url)
         ScanTableFromSQL({ connectionInfo: param })
             .then(res => {
-                console("gui thanh cong", res.response.data)
-                // setIsLoading(false)
+                console.log("gui thanh cong", res.data)
+                setShowListTablePopUp(true)
+                // setShow(true)
                 // Store.addNotification(content("Success", "Imported data", "success"), {
                 //     duration: 5000
                 // })
@@ -230,11 +164,10 @@ export default function SelectData(props) {
                 // props.onloadComplete()
             })
             .catch(err => {
-                // setIsLoading(false)
                 // Store.addNotification(content("Fail", err.response.data, "danger"), {
                 //     duration: 10000
                 // })
-                // console.log("Loi ne", )
+                // console.log("Loi ne")
                 return
             })
     }
@@ -242,11 +175,18 @@ export default function SelectData(props) {
     return (
         <div>
             <AddPopUp
-                show={show}
+                show={showAddPopUp}
                 handleClose={() => {
-                    setShow(false)
+                    // setShow(false)
                 }}
                 onComplete={submitConnectDatabaseByUserFillinHandle}
+            />
+            <ShowListTablePopUp
+                show={showListTablePopUp}
+                handleClose={() => {
+                    setShowListTablePopUp(false)
+                }}
+            // onComplete={submitConnectDatabaseByUserFillinHandle}
             />
 
             <div>
@@ -308,7 +248,7 @@ export default function SelectData(props) {
                         />
                         <ImportButton text={localization.connectToDB} image={db} onClick={() => {
                             // openFile()
-                            setShow(true)
+                            setShowAddPopUp(true)
 
                         }} />
                     </div>
