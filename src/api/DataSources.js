@@ -13,6 +13,10 @@ const ScanTableFromSQL = (connectionInfo) => {
     return axiosClient.post("/data/dyn/all-table", connectionInfo)
 }
 
+const GetTableContent = (connectionInfo) => {
+    return axiosClient.post("/data/dyn/table", connectionInfo)
+}
+
 const GetTableColumns = () => {
     return axiosClient.get("/data/")
 }
@@ -108,5 +112,6 @@ export {
     updateShareDataSourcePermission,
     GetSampleDataSource,
     updateTableContentApi,
-    ScanTableFromSQL
+    ScanTableFromSQL,
+    GetTableContent
 }

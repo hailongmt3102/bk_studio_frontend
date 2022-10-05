@@ -11,7 +11,7 @@ import { getAPI } from 'api/ML_API'
 import AddPopUp from "../Components/AddPopUp";
 import Papa from "papaparse";
 
-import { ScanTableFromSQL } from 'api/DataSources'
+import { ScanTableFromSQL, GetTableContent } from 'api/DataSources'
 import ShowListTablePopUp from '../Components/ShowListTablePopUp'
 
 export default function SelectData(props) {
@@ -53,7 +53,7 @@ export default function SelectData(props) {
             alert("invalid format, expected : .txt")
             return
         }
-        props.setFileInformation({ ...file, name: file.name.replace(/[\s\.-]/g, "_") })
+
         const fileReader = new FileReader();
         fileReader.readAsText(file);
         fileReader.onload = () => {
@@ -111,6 +111,7 @@ export default function SelectData(props) {
                 // console.log(data)
 
                 props.setDataFile(data)
+                console.log("excel file: \n", data)
                 props.onloadComplete()
             };
 
@@ -143,16 +144,42 @@ export default function SelectData(props) {
 
     const [showListTablePopUp, setShowListTablePopUp] = useState(false)
     const [showAddPopUp, setShowAddPopUp] = useState(false)
-
+    const [data, setData] = useState([])
 
     const submitConnectDatabaseByUserFillinHandle = (param) => {
         setShowAddPopUp(false)
         // fetchFromAPI(name, url)
+        setConnection(param)
         ScanTableFromSQL({ connectionInfo: param })
             .then(res => {
                 console.log("gui thanh cong", res.data)
                 setShowListTablePopUp(true)
-                // setShow(true)
+                setData(res.data)
+            })
+            .catch(err => {
+                return
+            })
+    }
+
+    const fetchDataFromTable = (name, schema) => {
+
+        // console.log("connectionInfo", connection)
+        // console.log("name", name)
+        // console.log("schema", schema)
+        props.setFileInformation({ ...props.fileInformation, name: name.replace(/[\s\.-]/g, "_") })
+        GetTableContent(
+            {
+                connectionInfo: connection,
+                table: name,
+                schema: schema
+            }
+        )
+            .then(res => {
+                console.log("gui thanh cong", res.data)
+                // setShowListTablePopUp(true)
+                props.setDataFile(res.data)
+                console.log("data ne: \n", res.data)
+                props.onloadComplete()
                 // Store.addNotification(content("Success", "Imported data", "success"), {
                 //     duration: 5000
                 // })
@@ -186,7 +213,8 @@ export default function SelectData(props) {
                 handleClose={() => {
                     setShowListTablePopUp(false)
                 }}
-            // onComplete={submitConnectDatabaseByUserFillinHandle}
+                data={data}
+                onComplete={fetchDataFromTable}
             />
 
             <div>

@@ -16,22 +16,23 @@ const orangeStyle = {
 
 export default function ShowListTablePopUp(props) {
 
-    const [connection, setConnection] = useState({
-        host: "",
-        port: "",
-        user: "",
-        password: ""
-    })
-    // useEffect(() => {
-    //     setProjectInfo({ ...projectInfo, Name: `Project ${props.newProjectId}` })
-    // }, [props.newProjectId])
-    const onsubmit = () => {
-        props.onComplete(connection)
-    }
+
+
+
     const body = () => {
         return (
             <div>
-                BANg
+                {
+                    props.data.map((e) =>
+                        <div className='row mt-2 p-4'
+                            onClick={() => {
+                                props.handleClose()
+                                props.onComplete(e.TABLE_NAME, e.TABLE_SCHEMA)
+                            }}>
+                            {e.TABLE_NAME}
+                        </div>
+                    )
+                }
             </div>
         )
     }
