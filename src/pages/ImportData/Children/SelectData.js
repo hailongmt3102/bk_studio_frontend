@@ -53,19 +53,34 @@ export default function SelectData(props) {
             alert("invalid format, expected : .txt")
             return
         }
-
         const fileReader = new FileReader();
         fileReader.readAsText(file);
         fileReader.onload = () => {
-            const result = fileReader.result.split('\n');
-            submitConnectDatabaseByUserFillinHandle(
-                {
-                    host: result[0].replace('\r', ''),
-                    port: parseInt(result[1].replace('\r', '')),
-                    user: result[2].replace('\r', ''),
-                    password: result[3].replace('\r', ''),
-                }
-            )
+            let result = fileReader.result.split(/\r?\n/);
+            result = result.filter(value => value !== "")
+            if (result.length >= 5) {
+                submitConnectDatabaseByUserFillinHandle(
+                    {
+                        host: result[0].replace('\r', ''),
+                        port: parseInt(result[1].replace('\r', '')),
+                        user: result[2].replace('\r', ''),
+                        password: result[3].replace('\r', ''),
+                        database : result[4].replace('\r', '')
+                    }
+                )
+            }else if (result.length >= 4) {
+                submitConnectDatabaseByUserFillinHandle(
+                    {
+                        host: result[0].replace('\r', ''),
+                        port: parseInt(result[1].replace('\r', '')),
+                        user: result[2].replace('\r', ''),
+                        password: result[3].replace('\r', ''),
+                    }
+                )
+            }else {
+                alert("Invalid config format, Please check it carefully")
+            }
+            e.target.value  = null
         }
         fileReader.onerror = () => {
             console.log("Khong thanh cong")
@@ -137,7 +152,8 @@ export default function SelectData(props) {
         host: "",
         port: "",
         user: "",
-        password: ""
+        password: "",
+        database: ""
     })
 
 
@@ -154,7 +170,14 @@ export default function SelectData(props) {
             .then(res => {
                 console.log("gui thanh cong", res.data)
                 setShowListTablePopUp(true)
-                setData(res.data)
+                let dataResult = res.data.reduce(
+                    (pre, cur) => { 
+                        let previousArr = Object.keys(pre).includes(cur.TABLE_SCHEMA) ? pre[cur.TABLE_SCHEMA] : []
+                        return {...pre, [cur.TABLE_SCHEMA] : [...previousArr, cur.TABLE_NAME]}
+                    }, 
+                    {}
+                    )
+                setData(dataResult)
             })
             .catch(err => {
                 return
@@ -178,7 +201,6 @@ export default function SelectData(props) {
                 console.log("gui thanh cong", res.data)
                 // setShowListTablePopUp(true)
                 props.setDataFile(res.data)
-                console.log("data ne: \n", res.data)
                 props.onloadComplete()
                 // Store.addNotification(content("Success", "Imported data", "success"), {
                 //     duration: 5000
@@ -287,6 +309,10 @@ export default function SelectData(props) {
                             id={"configfile"}
                             onChange={handleReadTextOnChange}
                             style={{ display: "none" }}
+                            // onInputClick ={ (event) => {
+                            //         event.target.value = ''
+                            //     }
+                            // }
                         />
                         <ImportButton text="Config file" image={ImportFileImage} onClick={() => {
                             inputTxtFile.current.click()
