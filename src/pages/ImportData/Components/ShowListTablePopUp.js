@@ -23,14 +23,23 @@ export default function ShowListTablePopUp(props) {
         return (
             <div>
                 {
-                    props.data.map((e) =>
-                        <div className='row mt-2 p-4'
-                            onClick={() => {
-                                props.handleClose()
-                                props.onComplete(e.TABLE_NAME, e.TABLE_SCHEMA)
-                            }}>
-                            {e.TABLE_NAME}
-                        </div>
+                    // console.log(props.data)
+                    Object.keys(props.data).map((schemaName) =>
+                    <div className='row ms-2 mt-2'>
+                        <p><strong>database: </strong> {schemaName}</p>
+                        {
+                            props.data[schemaName].map(table =>
+                                <div className='row ms-2 mt-2'
+                                    onClick={() => {
+                                        props.handleClose()
+                                        props.onComplete(table, schemaName)
+                                    }}
+                                >
+                                    {table}
+                                </div>
+                            )
+                        }
+                    </div>
                     )
                 }
             </div>
